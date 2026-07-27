@@ -1,6 +1,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 const DATA = JSON.parse(readFileSync(new URL('./viz-data.json', import.meta.url)));
 const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf8');
+// Editorial before/after proposals, keyed "City|day" — separate file so a snapshot rebuild never wipes them.
+let PROPOSALS = {};
+try { PROPOSALS = JSON.parse(readFileSync(new URL('./proposals.json', import.meta.url))); } catch { PROPOSALS = {}; }
 
 // axis: 06:00 -> 04:00 (some over-packed days now get you home after 02:00)
 const T0 = 360, T1 = 1680, SPAN = T1 - T0;
@@ -12,6 +15,35 @@ const wd = iso => WD[new Date(iso + 'T00:00:00Z').getUTCDay()];
 const dm = iso => { const d = new Date(iso + 'T00:00:00Z'); return d.getUTCDate() + ' ' + MO[d.getUTCMonth()]; };
 const sev = s => s === 'severe' ? 'var(--bad)' : s === 'moderate' ? 'var(--warn)' : 'var(--ok)';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// Render an editorial before/after proposal panel (shown inside a day's unfold when a proposal exists).
+function renderProposal(prop) {
+  const t0 = prop.axis?.t0 ?? 300, t1 = prop.axis?.t1 ?? 1410, span = t1 - t0;
+  const pp = m => Math.max(0, Math.min(100, (m - t0) / span * 100));
+  const seg = st => {
+    const l = pp(st.s), w = Math.max(0.6, pp(st.s + st.d) - l);
+    const inner = `<span class="pl">${esc(st.label)}</span>${st.sub ? `<span class="ps">${esc(st.sub)}</span>` : ''}`;
+    return `<div class="pseg k-${st.kind}" style="left:${l.toFixed(2)}%;width:${w.toFixed(2)}%" title="${esc(st.tip || st.label)}">${inner}</div>`;
+  };
+  const track = arr => (arr || []).map(seg).join('');
+  const ticks = [[360, '06'], [540, '09'], [720, '12'], [900, '15'], [1080, '18'], [1260, '21']]
+    .filter(([m]) => m >= t0 && m <= t1)
+    .map(([m, l]) => `<span class="ptk" style="left:${pp(m).toFixed(2)}%">${l}</span>`).join('');
+  const chips = (prop.changes || []).map(c => `<span class="pchip"><i>${esc(c.i)}</i>${esc(c.t)}</span>`).join('');
+  const note = prop.homeNewNote ? ` <span class="pdim">(${esc(prop.homeNewNote)})</span>` : '';
+  return `<div class="prop">` +
+    `<div class="phead">Proposed · <b>${esc(prop.title || 'revised day')}</b> — home <s>${esc(prop.homeNow)}</s> <span class="parr">→</span> <b class="pgood">${esc(prop.homeNew)}</b>${note}</div>` +
+    `<div class="prow"><span class="pcap">Now</span><div class="ptrack">${track(prop.now)}</div></div>` +
+    `<div class="prow"><span class="pcap new">New</span><div class="ptrack">${track(prop.new)}</div></div>` +
+    `<div class="prow"><span class="pcap"></span><div class="ptrack pax">${ticks}</div></div>` +
+    `<div class="pchips">${chips}</div>` +
+    `<div class="plegend"><span class="pit"><span class="psw k-bloat"></span>auto-timer bloat</span>` +
+    `<span class="pit"><span class="psw k-rest"></span>added rest</span>` +
+    `<span class="pit"><span class="psw k-sighthi"></span>right-sized</span>` +
+    `<span class="pit"><span class="psw k-move"></span>moved off day 1</span>` +
+    `<span class="pit"><span class="psw k-opt"></span>optional</span></div>` +
+    `</div>`;
+}
 
 const flagged = DATA.filter(d => d.flagged), severe = DATA.filter(d => d.sev === 'severe'), moderate = DATA.filter(d => d.sev === 'moderate');
 const worst = [...severe].sort((a, b) => (b.jammed - a.jammed) || (b.endMin - a.endMin))[0];
@@ -56,15 +88,17 @@ for (const d of DATA) {
       `<td class="tm act${rc}">${st.act != null ? st.act + 'm' : '—'}</td>` +
       `<td class="tv">${travel}</td></tr>`;
   }).join('');
-  const detail = `<div class="detail"><table class="acts"><thead><tr><th>Activity</th><th>Start</th><th>End</th><th>Default</th><th class="hres">Suggested</th><th class="hact">Actual</th><th class="htv">Travel → next</th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  out += `<div class="day${d.flagged ? '' : ' ok-day'}">` +
-    `<div class="row" role="button" tabindex="0" aria-expanded="false" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
-    `<div class="lbl"><div class="d"><span class="cv">›</span>Day ${d.day}</div><div class="dt">${wd(d.date)} ${dm(d.date)}</div><span class="stops">${d.nStops} stops</span></div>` +
+  const prop = PROPOSALS[`${d.city}|${d.day}`];
+  const fixText = prop && prop.fix ? prop.fix : d.fix;
+  const detail = `<div class="detail">${prop ? renderProposal(prop) : ''}<table class="acts"><thead><tr><th>Activity</th><th>Start</th><th>End</th><th>Default</th><th class="hres">Suggested</th><th class="hact">Actual</th><th class="htv">Travel → next</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  out += `<div class="day${d.flagged ? '' : ' ok-day'}${prop ? ' open has-prop' : ''}">` +
+    `<div class="row" role="button" tabindex="0" aria-expanded="${prop ? 'true' : 'false'}" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
+    `<div class="lbl"><div class="d"><span class="cv">›</span>Day ${d.day}</div><div class="dt">${wd(d.date)} ${dm(d.date)}</div><span class="stops">${d.nStops} stops</span>${prop ? '<span class="pflag">proposal</span>' : ''}</div>` +
     `<div class="track" title="${tip}"><div class="gl" style="left:${P(540)}%"></div><div class="gl" style="left:${P(720)}%"></div>` +
       `<div class="gl" style="left:${P(900)}%"></div><div class="gl" style="left:${P(1080)}%"></div><div class="gl mid" style="left:${P(1440)}%"></div><div class="gl tgt" style="left:${P(1290)}%"></div>` +
       `<div class="bar ${d.sev}" style="left:${L}%;right:${100 - R}%"><div class="fill" style="width:${fw}%"></div></div>${of}${mealPip(d.lunchMin, 'L')}${mealPip(d.dinnerMin, 'D')}` +
       `<div class="endlbl" style="${es};color:${ec}">${EL(d.endMin)}</div></div></div>` +
-    (d.fix ? `<div class="fix">${esc(d.fix)}</div>` : '') + detail + '</div>';
+    (fixText ? `<div class="fix${prop ? ' fix-prop' : ''}">${esc(fixText)}</div>` : '') + detail + '</div>';
 }
 out += '</div></section>';
 
@@ -115,7 +149,43 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .xbtn{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:6px 12px;cursor:pointer;}
 .wrap .xbtn:hover{color:var(--ink);}
 .wrap .xbtn:focus-visible{outline:2px solid var(--target);outline-offset:2px;}
-@media (max-width:520px){.wrap .day .fix,.wrap .detail{padding-left:82px;}.wrap table.acts{min-width:300px;}}
+.wrap .lbl .pflag{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--target);background:color-mix(in srgb,var(--target) 14%,transparent);border:1px solid color-mix(in srgb,var(--target) 34%,transparent);border-radius:5px;padding:1px 5px;margin-top:4px;}
+.wrap .fix.fix-prop{max-width:84ch;color:var(--ink-2);}
+.wrap .prop{margin:2px 0 16px;padding:14px 16px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;}
+.wrap .phead{font-size:12.5px;color:var(--ink-2);margin-bottom:12px;}
+.wrap .phead b{color:var(--ink);font-weight:800;}
+.wrap .phead s{color:var(--ink-3);}
+.wrap .phead .parr{color:var(--ink-3);margin:0 3px;}
+.wrap .phead .pgood{color:var(--ok);}
+.wrap .phead .pdim{color:var(--ink-3);}
+.wrap .prow{display:flex;align-items:center;gap:0;margin-bottom:7px;}
+.wrap .pcap{flex:none;width:40px;padding-right:10px;text-align:right;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.wrap .pcap.new{color:var(--ok);}
+.wrap .ptrack{position:relative;flex:1;height:36px;border-radius:7px;background:var(--band);}
+.wrap .ptrack.pax{height:15px;background:transparent;}
+.wrap .ptk{position:absolute;transform:translateX(-50%);top:0;font-size:9.5px;font-family:var(--mono);color:var(--ink-3);}
+.wrap .pseg{position:absolute;top:4px;height:28px;border-radius:6px;padding:0 5px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;line-height:1.15;}
+.wrap .pseg .pl{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wrap .pseg .ps{font-size:9px;font-weight:600;opacity:.9;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.wrap .pseg.k-log,.wrap .pseg.k-meal{background:var(--surface);border:1px solid var(--line);color:var(--ink-3);}
+.wrap .pseg.k-meal .pl{font-style:italic;}
+.wrap .pseg.k-bloat{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 55%,transparent);color:var(--bad);}
+.wrap .pseg.k-rest{background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 55%,transparent);color:var(--ok);}
+.wrap .pseg.k-sighthi{background:var(--surface);border:1.5px solid var(--ok);color:var(--ink);}
+.wrap .pseg.k-move{background:var(--surface);border:1px dashed color-mix(in srgb,var(--bad) 50%,var(--line));color:var(--ink-2);}
+.wrap .pseg.k-opt{background:var(--surface);border:1px dashed var(--ink-3);color:var(--ink-3);}
+.wrap .pchips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:12px;}
+.wrap .pchip{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:3px 9px;}
+.wrap .pchip i{font-style:normal;font-weight:800;color:var(--target);font-family:var(--mono);}
+.wrap .plegend{display:flex;flex-wrap:wrap;gap:8px 15px;margin-top:11px;font-size:10.5px;color:var(--ink-3);}
+.wrap .pit{display:inline-flex;align-items:center;gap:6px;}
+.wrap .psw{width:13px;height:13px;border-radius:4px;flex:none;}
+.wrap .psw.k-bloat{background:var(--bad-soft);box-shadow:inset 0 0 0 1px var(--bad);}
+.wrap .psw.k-rest{background:var(--ok-soft);box-shadow:inset 0 0 0 1px var(--ok);}
+.wrap .psw.k-sighthi{background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--ok);}
+.wrap .psw.k-move{background:var(--surface);border:1px dashed color-mix(in srgb,var(--bad) 55%,var(--line));}
+.wrap .psw.k-opt{background:var(--surface);border:1px dashed var(--ink-3);}
+@media (max-width:520px){.wrap .day .fix,.wrap .detail{padding-left:82px;}.wrap table.acts{min-width:300px;}.wrap .pseg .pl{font-size:9px;}}
 </style>`;
 
 const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
