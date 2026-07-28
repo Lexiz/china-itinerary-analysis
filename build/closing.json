@@ -11,14 +11,18 @@
   "lastEntry": "16:00",
   "conf": "med",
   "source": "Researched note in rebuild/beijing.json. CONFLICT: Notion's Hours prose for this place says 'To 17:30 in summer, last entry 16:30'. Planning against the EARLIER pair, because being wrong the other way loses the visit; if 17:30 turns out to be right you simply gain 30 min.",
-  "closedDays": ["Monday"]
+  "closedDays": [
+   "Monday"
+  ]
  },
  "Forbidden City": {
   "closes": "17:00",
   "lastEntry": "16:00",
   "conf": "high",
   "source": "Palace Museum summer hours 08:30-17:00, last entry 16:00. Entry is by timed slot; the morning slot admits 08:30-12:00.",
-  "closedDays": ["Monday"]
+  "closedDays": [
+   "Monday"
+  ]
  },
  "Jingshan Park": {
   "closes": "21:00",
@@ -32,14 +36,18 @@
   "lastEntry": "17:30",
   "conf": "med",
   "source": "Notion Hours field: 'Galleries ~10:00-18:00'. The district streets stay walkable later but the galleries — the reason to be there — shut at 18:00.",
-  "closedDays": ["Monday"]
+  "closedDays": [
+   "Monday"
+  ]
  },
  "UCCA": {
   "closes": "19:00",
   "lastEntry": "18:30",
   "conf": "med",
   "source": "Notion has no Hours value for UCCA. 19:00 comes from the researched note in rebuild/beijing.json ('UCCA stays open to 19:00 when the smaller galleries have already shut'), which is why it is scheduled last. 14 Aug 2026 is a Friday, so the Monday closure does not bite.",
-  "closedDays": ["Monday"]
+  "closedDays": [
+   "Monday"
+  ]
  },
  "Summer Palace": {
   "closes": "18:00",
@@ -60,7 +68,9 @@
   "lastEntry": "18:00",
   "conf": "high",
   "source": "Notion Hours: 'Jul-Aug 08:30-20:00 (last entry 18:00); closed Mondays'. 21 Aug 2026 is a Friday. The late summer hours are insurance against a morning slip, not licence to start late — a late start kills Wuhou and Jinli.",
-  "closedDays": ["Monday"]
+  "closedDays": [
+   "Monday"
+  ]
  },
  "Daci Temple": {
   "closes": "17:30",
@@ -102,6 +112,13 @@
   "lastEntry": "16:00",
   "conf": "med",
   "source": "Park gates 06:00-21:00 but the ticketed halls run 08:00-17:00 — the halls are the binding constraint.",
+  "closedDays": []
+ },
+ "Tuojiang night boat": {
+  "closes": "23:00",
+  "lastEntry": "22:30",
+  "conf": "med",
+  "source": "Notion Hours: night sailings ~18:00-23:00. The city note narrows it: do not board before ~20:00 (it must be genuinely dark and the illumination comes up 19:30-20:00), and sailings stop about 23:00. Ride is ~30 min round trip from the North Gate wharf past the lit Wanming Tower. Booking required.",
   "closedDays": []
  }
 }

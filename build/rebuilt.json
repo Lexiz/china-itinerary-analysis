@@ -3239,12 +3239,12 @@
    "day": 1,
    "date": "2026-08-28",
    "theme": "One riverside walk: upstream in the last light, back downstream once the lanterns are on",
-   "why": "Train in at 16:00, cleared 16:15, ~25 min transfer, checked in and free at roughly 17:05. That is an evening, not a day, so this is deliberately ONE continuous walk along a 900 m stretch of the Tuojiang rather than a list of sights. Sunset in late August is ~19:30, so the first block (East Gate Tower 15 min, Hong Bridge 20 min, the old-town lanes 75 min, jumping stones 15 min) uses every minute of remaining daylight walking west/upstream to the North Gate, arriving at the stones around 19:00 for dusk. Dinner lands near the North Gate while the lights come on. The second block is the actual reason to be in Fenghuang and is all within 700 m: Snow Bridge for the elevated night panorama (~20:25), then the night boat from the North Gate wharf once it is genuinely dark (~20:45; sailings run to ~23:00, so there is no need to rush the meal), then the lit Wanming Pagoda as a 10-minute detour on the walk home, back by ~21:40. Stop time is 3h00, at the top of the evening-only budget and roughly a third of what was previously crammed in here. The old 10-stop version is what produced a 09:26 finish.",
-   "endMin": 1449,
+   "why": "Train in at 16:00, cleared 16:15, ~25 min transfer, free at roughly 17:05. That is an evening, not a day, so this is ONE continuous walk along a 900 m stretch of the Tuojiang. The daylight block runs unbroken to dusk — East Gate Tower and Hong Bridge by the hotel, then the old-town lanes 18:38-19:53 against a ~19:30 sunset — because dinner is held to 19:30 rather than the default 18:00, which had been firing mid-afternoon and splitting the daylight walk in half. Dinner then lands exactly as the riverside illumination comes up. The night block is the actual reason to be here: the boat from the North Gate wharf at 21:39 (held to 20:00 at the earliest; it must be genuinely dark, and sailings stop ~23:00), then Snow Bridge for the elevated night panorama. The boat goes FIRST because it is the stop with a last sailing and a booking — if anything slips, it should cost the bridge, not the boat. Home 22:47 against a 05:38 dawn call.",
+   "endMin": 1381,
    "homeTravel": {
     "mode": "walk",
-    "minutes": 16,
-    "km": 0.6,
+    "minutes": 9,
+    "km": 0.22,
     "estimated": true
    },
    "missed": null,
@@ -3336,26 +3336,8 @@
      "hub": null
     },
     {
-     "name": "Dinner",
-     "s": 1099,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Fenghuang Ancient Town",
-     "s": 1216,
+     "s": 1118,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -3372,45 +3354,45 @@
      "hub": null
     },
     {
-     "name": "Jumping stones",
-     "s": 1311,
-     "d": 15,
-     "kind": "sight",
-     "meal": null,
+     "name": "Dinner",
+     "s": 1201,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
      "travelIn": {
-      "mode": "walk",
-      "minutes": 12,
-      "km": 0.37,
-      "est": true,
-      "coloc": false
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
      },
-     "advice": 15,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Snow Bridge (Xueqiao)",
-     "s": 1347,
-     "d": 15,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 13,
-      "km": 0.42,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 15,
+     "advice": 90,
      "cap": null,
      "lateFor": null,
      "hub": null
     },
     {
      "name": "Tuojiang night boat",
-     "s": 1370,
+     "s": 1319,
      "d": 30,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "walk",
+      "minutes": 20,
+      "km": 0.8,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 30,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Snow Bridge (Xueqiao)",
+     "s": 1357,
+     "d": 15,
      "kind": "sight",
      "meal": null,
      "travelIn": {
@@ -3420,25 +3402,7 @@
       "est": false,
       "coloc": false
      },
-     "advice": 30,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Wanming Pagoda",
-     "s": 1423,
-     "d": 10,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 15,
-      "km": 0.8,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 10,
+     "advice": 15,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -3476,7 +3440,7 @@
     },
     {
      "name": "Breakfast",
-     "s": 403,
+     "s": 391,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -5290,6 +5254,14 @@
    {
     "name": "Station shuttle / taxi",
     "why": "Logistics, not a sight — the station transfer is inserted automatically. Listed here because it is the hidden cost that guts this stop: ~25 min each way, which is what turns day 2 into a 25-minute dawn and nothing else."
+   },
+   {
+    "name": "Jumping stones",
+    "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears."
+   },
+   {
+    "name": "Wanming Pagoda",
+    "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight."
    }
   ],
   "Furong (Hibiscus)": [
@@ -5417,6 +5389,18 @@
    }
   ],
   "Fenghuang|1": [
+   {
+    "name": "Jumping stones",
+    "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears.",
+    "status": "parked",
+    "from": 1
+   },
+   {
+    "name": "Wanming Pagoda",
+    "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight.",
+    "status": "parked",
+    "from": 1
+   },
    {
     "name": "Bar street",
     "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise.",

@@ -8,13 +8,19 @@
     "East Gate Tower",
     "Hong Bridge",
     "Fenghuang Ancient Town",
-    "Jumping stones",
-    "Snow Bridge (Xueqiao)",
     "Tuojiang night boat",
-    "Wanming Pagoda"
+    "Snow Bridge (Xueqiao)"
    ],
-   "why": "Train in at 16:00, cleared 16:15, ~25 min transfer, checked in and free at roughly 17:05. That is an evening, not a day, so this is deliberately ONE continuous walk along a 900 m stretch of the Tuojiang rather than a list of sights. Sunset in late August is ~19:30, so the first block (East Gate Tower 15 min, Hong Bridge 20 min, the old-town lanes 75 min, jumping stones 15 min) uses every minute of remaining daylight walking west/upstream to the North Gate, arriving at the stones around 19:00 for dusk. Dinner lands near the North Gate while the lights come on. The second block is the actual reason to be in Fenghuang and is all within 700 m: Snow Bridge for the elevated night panorama (~20:25), then the night boat from the North Gate wharf once it is genuinely dark (~20:45; sailings run to ~23:00, so there is no need to rush the meal), then the lit Wanming Pagoda as a 10-minute detour on the walk home, back by ~21:40. Stop time is 3h00, at the top of the evening-only budget and roughly a third of what was previously crammed in here. The old 10-stop version is what produced a 09:26 finish.",
-   "cut": "Bar street (45 min of loud bars against a 05:45 alarm) and everything that needs daylight or opening hours."
+   "why": "Train in at 16:00, cleared 16:15, ~25 min transfer, free at roughly 17:05. That is an evening, not a day, so this is ONE continuous walk along a 900 m stretch of the Tuojiang. The daylight block runs unbroken to dusk — East Gate Tower and Hong Bridge by the hotel, then the old-town lanes 18:38-19:53 against a ~19:30 sunset — because dinner is held to 19:30 rather than the default 18:00, which had been firing mid-afternoon and splitting the daylight walk in half. Dinner then lands exactly as the riverside illumination comes up. The night block is the actual reason to be here: the boat from the North Gate wharf at 21:39 (held to 20:00 at the earliest; it must be genuinely dark, and sailings stop ~23:00), then Snow Bridge for the elevated night panorama. The boat goes FIRST because it is the stop with a last sailing and a booking — if anything slips, it should cost the bridge, not the boat. Home 22:47 against a 05:38 dawn call.",
+   "cut": "Jumping stones and Wanming Pagoda, on this day's own stated drop order — the seven-stop version finished at 00:09. Also Bar street (45 min of loud bars against a 05:45 alarm) and everything needing daylight or opening hours.",
+   "mealWindows": {
+    "dinner": "19:30"
+   },
+   "stopTimes": {
+    "Tuojiang night boat": {
+     "notBefore": "20:00"
+    }
+   }
   },
   {
    "day": 2,
@@ -22,7 +28,10 @@
    "stops": [
     "Sunrise / mist session"
    ],
-   "why": "The 07:45 departure from Gucheng with a 45-minute buffer means standing at the station at 07:00; the station transfer is ~25 min, so you leave the hotel at ~06:25. Sunrise is ~06:20. That is a hard 06:00-06:25 window and it holds exactly one stop. It is worth setting the alarm for, because mist on the Tuojiang with an empty town is the payoff of staying the night, and this stop is on the water directly outside the hotel — no walking budget needed. Everything else on the old day 2 is fiction: Shen Congwen Residence does not open until ~08:00, the batik and silver shops and the ginger-candy stalls open later still. Breakfast is a grab-and-go on the way to the taxi, not a sit-down."
+   "why": "The 07:45 departure from Gucheng with a 45-minute buffer means standing at the station at 07:00; the station transfer is ~25 min, so you leave the hotel at ~06:25. Sunrise is ~06:20. That is a hard 06:00-06:25 window and it holds exactly one stop. It is worth setting the alarm for, because mist on the Tuojiang with an empty town is the payoff of staying the night, and this stop is on the water directly outside the hotel — no walking budget needed. Everything else on the old day 2 is fiction: Shen Congwen Residence does not open until ~08:00, the batik and silver shops and the ginger-candy stalls open later still. Breakfast is a grab-and-go on the way to the taxi, not a sit-down.",
+   "mealWindows": {
+    "breakfast": "06:30"
+   }
   }
  ],
  "ideas": [
@@ -53,6 +62,14 @@
   {
    "name": "Station shuttle / taxi",
    "why": "Logistics, not a sight — the station transfer is inserted automatically. Listed here because it is the hidden cost that guts this stop: ~25 min each way, which is what turns day 2 into a 25-minute dawn and nothing else."
+  },
+  {
+   "name": "Jumping stones",
+   "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears."
+  },
+  {
+   "name": "Wanming Pagoda",
+   "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight."
   }
  ],
  "notes": [
