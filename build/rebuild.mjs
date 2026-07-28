@@ -123,6 +123,16 @@ for (const day of V) {
   // Per-day meal windows, e.g. "mealWindows": { "breakfast": "06:30", "dinner": "17:00" }
   const MW = { ...MEAL_WIN };
   for (const [k, v] of Object.entries(dayPlan.mealWindows || {})) { const t = tkc(v); if (t != null) MW[k] = t; }
+  // Per-day stop timing, e.g.
+  //   "stopTimes": { "Lion Hill sunset": { "notBefore": "19:00" },
+  //                  "Impression Lijiang": { "at": "13:00" } }
+  // `notBefore` holds a stop until a real-world moment the chain knows nothing about — sunset, or
+  // dark. `at` pins it to a fixed clock time: a scheduled showtime you queue for, not a slot the
+  // chain is free to slide. Without these, a stop literally named "sunset" gets scheduled whenever
+  // the chain happens to arrive, which on Lijiang d2 was four hours early.
+  const ST = dayPlan.stopTimes || {};
+  const stopFloor = name => { const s = ST[name]; return s ? (tkc(s.at) ?? tkc(s.notBefore) ?? null) : null; };
+  const stopPinned = name => !!(ST[name] && ST[name].at);
   // Closing times cap a dwell — a stop cannot run past the hour the doors shut. The researched
   // advice stays visible as the advice; what changes is how much of it this day can actually buy.
   const capDwell = (name, start, dwell) => {
@@ -204,7 +214,14 @@ for (const day of V) {
 
       const t = legTo(rows, it.name);
       const dawn = /dawn|sunrise|mist|balloon/i.test(it.name);
-      const start = clock == null ? (dawn ? DAWN_START : DAY_START) : clock + t.minutes + SLACK;
+      let start = clock == null ? (dawn ? DAWN_START : DAY_START) : clock + t.minutes + SLACK;
+      const floor = stopFloor(it.name);
+      if (floor != null) {
+        // A pinned showtime that the chain cannot physically reach is a real conflict, not something
+        // to quietly slide past — record it and let the day report it.
+        if (stopPinned(it.name) && start > floor) it.lateFor = { at: hhmm(floor), by: start - floor };
+        start = Math.max(start, floor);
+      }
       const { dwell, cap } = capDwell(it.name, start, dwellOf(it.name));
       emit(it, start, dwell, t, cap);
       clock = start + dwell;
@@ -248,7 +265,7 @@ for (const day of V) {
     stops: res.rows.map(r => ({
       name: r.name, s: r.s, d: r.d, kind: r.kind, meal: r.meal || null,
       travelIn: r.travelIn ? { mode: r.travelIn.mode, minutes: r.travelIn.minutes, km: r.travelIn.km ?? null, est: !!r.travelIn.estimated, coloc: !!r.travelIn.coloc } : null,
-      advice: RES[r.name]?.m ?? null, cap: r.cap || null,
+      advice: RES[r.name]?.m ?? null, cap: r.cap || null, lateFor: r.lateFor || null,
       hub: r.st?.hub || null,
     })),
   };
@@ -274,8 +291,15 @@ for (const city of Object.keys(plans)) {
     for (const st of d.stops)
       if (!SKIP.test(st.name) && !st.hub && st.ptype !== 'Hotel' && !origDay.has(st.name)) origDay.set(st.name, d.day);
 
+  // Read the day from what was ACTUALLY chained, not from the curator's stop list — the builder
+  // also inserts stops of its own (the hotel check-in). Reading the list alone reported a stop as
+  // "parked" while it sat scheduled in the day right above the Ideas table.
   const newDay = new Map();                // name → day in the rebuilt plan
   for (const dp of (plans[city].days || [])) for (const n of (dp.stops || [])) newDay.set(n, dp.day);
+  for (const [k, d] of Object.entries(out)) {
+    if (!k.startsWith(`${city}|`)) continue;
+    for (const s of d.stops) if (!SKIP.test(s.name) && !s.hub) newDay.set(s.name, d.day);
+  }
 
   for (const [name, od] of origDay) {
     const nd = newDay.get(name) ?? null;
@@ -290,7 +314,7 @@ for (const city of Object.keys(plans)) {
   // An idea written by hand that was never in the original schedule at all still needs a home:
   // attribute it to the city's first day so it stays visible rather than vanishing.
   for (const i of (plans[city].ideas || [])) {
-    if (origDay.has(i.name)) continue;
+    if (origDay.has(i.name) || newDay.has(i.name)) continue;   // scheduled after all → not an idea
     const firstDay = (plans[city].days || [])[0]?.day ?? 1;
     (ideasByDay[`${city}|${firstDay}`] ||= []).push({ ...i, status: 'parked', from: null });
   }

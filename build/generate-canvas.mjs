@@ -1,5 +1,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 const DATA = JSON.parse(readFileSync(new URL('./viz-data.json', import.meta.url)));
+// Every stop the snapshot knows, by name, regardless of which day it originally sat on — so a stop
+// moved between days keeps its coordinates and its researched advice.
+const STOP_ANY = new Map();
+for (const d of DATA) for (const s of (d.stops || [])) if (!STOP_ANY.has(s.name)) STOP_ANY.set(s.name, s);
 const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf8');
 // Working plan, keyed "City|day": machine-replanned days, overridden by hand-agreed ones.
 import { changeList, matchStop, nk } from './lib-plan.mjs';
@@ -110,7 +114,7 @@ for (const d of DATA) {
   const tip = esc(`${d.city} Day ${d.day} · ${wd(d.date)} ${dm(d.date)}\n${d.nStops} stops · ${d.lunchMin ? 'lunch ' + hhmm(d.lunchMin) : 'no lunch'} · ${d.dinnerMin ? 'dinner ' + hhmm(d.dinnerMin) : 'no dinner'}${homeTxt} · home ${EL(d.endMin)}`);
   const RB = REBUILT.days[`${d.city}|${d.day}`] || null;
   const rbStops = RB ? RB.stops : [];
-  const advOf = n => { const st = (d.stops || []).find(x => x.name === n); return st || {}; };
+  const advOf = n => (d.stops || []).find(x => x.name === n) || STOP_ANY.get(n) || {};
   const cell = (min, on, ttl) => `<td class="tm tv${on ? ' rec' : ''}"${ttl ? ` title="${ttl}"` : ''}>${min != null ? fmtDur(min) : '—'}</td>`;
 
   // "Travel to next" means exactly that: row i carries the leg OUT of it, which is the travelIn of
@@ -204,7 +208,13 @@ for (const d of DATA) {
   const sugHTML = sug.length ? `<div class="chg sug"><div class="chgh">Your call</div><ul>` + sug.map(t => `<li>${t}</li>`).join('') + `</ul></div>` : '';
   // Per-day map: the stops in the sequence you actually walk them, numbered. Uses the proposed
   // order when there is one, otherwise the current order. Coordless places are skipped.
-  const mapSeq = rbStops.map(r => { const st = (d.stops || []).find(x => x.name === r.name); return st || { name: r.name }; });
+  // Look the stop up across the WHOLE snapshot, not just this day's original stop list: a stop that
+  // moved between days has no entry on its new day, so every moved stop was silently dropped from
+  // the map ("6 stops without coordinates" on a day whose six stops all had perfectly good coords).
+  const mapSeq = rbStops.map(r => {
+    const st = (d.stops || []).find(x => x.name === r.name) || STOP_ANY.get(r.name);
+    return st || { name: r.name };
+  });
   const pts = mapSeq.map((s, i) => (s && s.lat != null)
     ? { n: i + 1, lat: s.lat, lng: s.lng, name: s.name || s.label, k: nk(s.name || s.label),
         t: s.ptype === 'Hotel' ? 'hotel' : s.ptype === 'Food' ? 'food' : 'act' } : null).filter(Boolean);

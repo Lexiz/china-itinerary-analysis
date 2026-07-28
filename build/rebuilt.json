@@ -31,6 +31,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "Flight",
@@ -61,6 +62,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -78,6 +80,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -95,6 +98,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -112,6 +116,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -129,6 +134,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -146,6 +152,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -163,6 +170,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -180,6 +188,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -197,6 +206,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -232,6 +242,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -249,6 +260,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -266,6 +278,7 @@
      },
      "advice": 210,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -283,6 +296,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -306,6 +320,7 @@
       "tooLate": false,
       "conf": "med"
      },
+     "lateFor": null,
      "hub": null
     },
     {
@@ -323,6 +338,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -340,6 +356,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -375,6 +392,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -392,6 +410,7 @@
      },
      "advice": 165,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -409,6 +428,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -426,6 +446,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -443,6 +464,7 @@
      },
      "advice": 150,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -460,6 +482,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -477,6 +500,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -512,6 +536,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -529,6 +554,7 @@
      },
      "advice": 210,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -546,6 +572,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -563,6 +590,7 @@
      },
      "advice": 150,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -580,6 +608,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -597,6 +626,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -627,6 +657,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -644,6 +675,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "Flight",
@@ -692,6 +724,7 @@
      },
      "advice": 40,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "Flight",
@@ -722,6 +755,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -739,6 +773,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -756,6 +791,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -773,6 +809,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -790,6 +827,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -807,6 +845,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -816,8 +855,8 @@
    "day": 2,
    "date": "2026-08-16",
    "theme": "Baisha and Shuhe — acclimatization day, Lion Hill for sunset",
-   "why": "Two adjacent clusters on the same road north of town, run north-to-south so you never backtrack: Baisha (26.95) first — the original Naxi capital, farm lanes with Jade Dragon filling the skyline, then the Ming murals at Dabaoji Palace and the embroidery institute 100 m away — then 15 minutes south to Shuhe for lunch, the canals, and the Tea Horse Road Museum on its edge. Roughly 6.3 h of stops plus transfers: a full but unhurried day that keeps you between 2,400 and 2,500 m, which is exactly the acclimatization you want before tomorrow's 4,680 m. It ends back in the old town with the short climb to Wangu Tower for sunset (~19:55 mid-August) — a modest set of steps that is a much better idea on your second day than your first, and the payoff is the whole tiled roofscape with the mountain you are about to climb behind it.",
-   "endMin": 1183,
+   "why": "Two adjacent clusters on the same road north of town, run north-to-south so you never backtrack: Baisha (26.95) first — the original Naxi capital, farm lanes with Jade Dragon filling the skyline, then the Ming murals at Dabaoji Palace and the embroidery institute 100 m away — then 15 minutes south to Shuhe for lunch, the canals, and the Tea Horse Road Museum on its edge. Roughly 6.3 h of stops plus transfers: a full but unhurried day that keeps you between 2,400 and 2,500 m, which is exactly the acclimatization you want before tomorrow's 4,680 m. It ends back in the old town with the short climb to Wangu Tower — HELD to 19:00, because sunset is ~19:50 mid-August and the chain otherwise reached the hill at 15:50, four hours early, on a stop whose name is its purpose. The stops run out around 16:26, so the late afternoon is deliberately unstructured: you drive back into Dayan and rest before the climb. That is the acclimatization this day exists for, the night before 4,680 m. Dinner falls after the tower, ~20:23, which is a normal hour to eat in China and the right order for the view.",
+   "endMin": 1326,
    "homeTravel": {
     "mode": "walk",
     "minutes": 13,
@@ -829,7 +868,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 480,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -842,11 +881,12 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Baisha Village",
-     "s": 490,
+     "s": 550,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -859,11 +899,12 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Baisha Murals",
-     "s": 577,
+     "s": 637,
      "d": 40,
      "kind": "sight",
      "meal": null,
@@ -876,11 +917,12 @@
      },
      "advice": 40,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Baisha embroidery",
-     "s": 626,
+     "s": 686,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -893,28 +935,12 @@
      },
      "advice": 30,
      "cap": null,
-     "hub": null
-    },
-    {
-     "name": "Shuhe Old Town",
-     "s": 677,
-     "d": 120,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 13,
-      "km": 4.7,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 120,
-     "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Lunch",
-     "s": 805,
+     "s": 724,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -927,11 +953,30 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Shuhe Old Town",
+     "s": 805,
+     "d": 120,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 13,
+      "km": 4.7,
+      "est": false,
+      "coloc": false
+     },
+     "advice": 120,
+     "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Tea Horse Road Museum",
-     "s": 886,
+     "s": 946,
      "d": 40,
      "kind": "sight",
      "meal": null,
@@ -944,11 +989,12 @@
      },
      "advice": 40,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Lion Hill sunset",
-     "s": 950,
+     "s": 1140,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -961,11 +1007,12 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Dinner",
-     "s": 1080,
+     "s": 1223,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -978,6 +1025,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -987,8 +1035,8 @@
    "day": 3,
    "date": "2026-08-17",
    "theme": "Jade Dragon Snow Mountain — the anchor, top to bottom",
-   "why": "The whole mountain on one day, and nothing else — 6.75 h of stop time plus an hour each way and the in-park shuttles makes this a ~06:30-to-18:00 day on its own. Go straight to the Glacier Park cableway on the first shuttle: the 2 h budgeted is queue-dominated in August peak, and morning is both the shortest line and the only reliable window for a clear summit in rainy season. Boardwalk to the 4,680 m platform, then work back down the mountain in descent order — the Impression Lijiang theatre sits at Ganhaizi (3,100 m) near the exit road, so the 14:00 summer show catches you on the way down with time for lunch first; seating is unreserved, so be there by 13:00. Blue Moon Valley (~2,900 m) closes the day as the gentlest thing on the mountain: a flat 3 km walk past the turquoise terraced pools. Nothing demanding is stacked after the summit, and there is deliberately nothing in the old town tonight.",
-   "endMin": 1214,
+   "why": "The whole mountain on one day, and nothing else — 6.75 h of stop time plus an hour each way and the in-park shuttles makes this a ~06:30-to-18:00 day on its own. Go straight to the Glacier Park cableway on the first shuttle: the 2 h budgeted is queue-dominated in August peak, and morning is both the shortest line and the only reliable window for a clear summit in rainy season. Boardwalk to the 4,680 m platform, then work back down the mountain in descent order — the Impression Lijiang theatre sits at Ganhaizi (3,100 m) near the exit road, so the 14:00 summer show catches you on the way down. Seating is unreserved, so arrival is PINNED to 13:00 for the full hour of queuing the 105 min assumes — on the default chain you arrived 13:43, seventeen minutes before curtain, which is not a seat. Lunch therefore falls after the show at 14:53 rather than before it: the 53-minute window between the summit and the theatre cannot hold a real meal, and the show is the thing with a fixed time. Blue Moon Valley (~2,900 m) closes the day as the gentlest thing on the mountain: a flat 3 km walk past the turquoise terraced pools. Nothing demanding is stacked after the summit, and there is deliberately nothing in the old town tonight.",
+   "endMin": 1213,
    "homeTravel": {
     "mode": "didi",
     "minutes": 43,
@@ -1013,62 +1061,48 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Glacier Park cable car",
-     "s": 491,
+     "s": 509,
      "d": 120,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 28,
-      "km": 8.8,
-      "est": false,
+      "minutes": 46,
+      "km": 26.06,
+      "est": true,
       "coloc": false
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Jade Dragon summit",
-     "s": 673,
+     "s": 637,
      "d": 90,
      "kind": "sight",
      "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 54,
-      "km": 31.28,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 90,
-     "cap": null,
-     "hub": null
-    },
-    {
-     "name": "Lunch",
-     "s": 771,
-     "d": 60,
-     "kind": "meal",
-     "meal": "lunch",
      "travelIn": {
       "mode": "none",
       "minutes": 0,
       "km": 0,
       "est": false,
-      "coloc": true
+      "coloc": false
      },
-     "advice": 60,
+     "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Impression Lijiang",
-     "s": 859,
+     "s": 780,
      "d": 105,
      "kind": "sight",
      "meal": null,
@@ -1081,11 +1115,30 @@
      },
      "advice": 105,
      "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Lunch",
+     "s": 893,
+     "d": 60,
+     "kind": "meal",
+     "meal": "lunch",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 60,
+     "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Blue Moon Valley",
-     "s": 983,
+     "s": 972,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -1098,11 +1151,12 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
      "name": "Dinner",
-     "s": 1081,
+     "s": 1080,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -1115,6 +1169,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -1150,6 +1205,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1167,6 +1223,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1184,6 +1241,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1201,6 +1259,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1218,6 +1277,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1235,6 +1295,7 @@
      },
      "advice": 180,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1252,6 +1313,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -1261,7 +1323,7 @@
    "day": 5,
    "date": "2026-08-19",
    "theme": "Departure — Black Dragon Pool at opening, last loop, then the airport",
-   "why": "TV9812 at 18:20 means being at Sanyi by 16:20, so leave the old town by ~15:00 — that still leaves a genuine morning. Be at Black Dragon Pool when it opens at 07:00 (free entry, 20 min walk north): the water is glass before the wind picks up and, in August, morning is far and away your best chance of getting Jade Dragon mirrored behind the Deyue Pavilion — the single shot you will regret not having. Back into Dayan for a last unhurried circuit of the lanes while the shops are still opening, then a 60-minute massage as the reward for yesterday's cliff descent and the sensible way to burn the last hour before lunch and checkout. Three and a half hours of stops, all within walking distance of the hotel, all droppable in reverse order if the morning runs slow.",
+   "why": "TV9812 at 18:20 means being at Sanyi by 16:20, so leave the old town by ~15:00 — that still leaves a genuine morning. Be at Black Dragon Pool when it opens at 07:00 (free entry, 20 min walk north): the water is glass before the wind picks up and, in August, morning is far and away your best chance of getting Jade Dragon mirrored behind the Deyue Pavilion — the single shot you will regret not having. Back into Dayan for a last unhurried circuit of the lanes while the shops are still opening, then a 60-minute massage as the reward for yesterday's cliff descent and the sensible way to burn the last hour before lunch and checkout. Three and a half hours of stops, all within walking distance of the hotel, all droppable in reverse order if the morning runs slow. The massage stays on this day rather than moving up: it is what carries the morning to a 12:10 lunch, and without it the departure day empties out before noon and the chain drops lunch altogether. Lunch ends 13:10 against a 15:00 hard exit — that ~1h50 is deliberate slack for bag pickup and the 39-minute run to Sanyi, not waste.",
    "endMin": 1100,
    "homeTravel": null,
    "missed": null,
@@ -1282,6 +1344,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1299,6 +1362,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1316,6 +1380,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1333,6 +1398,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1350,6 +1416,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1367,6 +1434,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "Flight",
@@ -1415,6 +1483,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "Flight",
@@ -1445,6 +1514,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1462,6 +1532,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -1497,6 +1568,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1514,6 +1586,7 @@
      },
      "advice": 210,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1531,6 +1604,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1548,6 +1622,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1565,6 +1640,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1582,6 +1658,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1599,6 +1676,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1616,6 +1694,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -1651,6 +1730,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1668,6 +1748,7 @@
      },
      "advice": 210,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1685,6 +1766,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1702,6 +1784,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1719,6 +1802,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1736,6 +1820,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -1766,6 +1851,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1783,6 +1869,7 @@
      },
      "advice": null,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "High-speed train",
@@ -1831,6 +1918,7 @@
      },
      "advice": null,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "High-speed train",
@@ -1861,6 +1949,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1878,6 +1967,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1895,6 +1985,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1912,6 +2003,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1929,6 +2021,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1946,6 +2039,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1963,6 +2057,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1980,6 +2075,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -1997,6 +2093,7 @@
      },
      "advice": 105,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -2032,6 +2129,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2049,6 +2147,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2066,6 +2165,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2083,6 +2183,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2100,6 +2201,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2117,6 +2219,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2134,6 +2237,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2151,6 +2255,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2168,6 +2273,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2185,6 +2291,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -2215,6 +2322,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2232,6 +2340,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "High-speed train",
@@ -2280,6 +2389,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "High-speed train",
@@ -2310,6 +2420,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2327,6 +2438,7 @@
      },
      "advice": 25,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2344,6 +2456,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2361,6 +2474,7 @@
      },
      "advice": 165,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2378,6 +2492,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -2413,6 +2528,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2430,6 +2546,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2447,6 +2564,7 @@
      },
      "advice": 180,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2464,6 +2582,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2481,6 +2600,7 @@
      },
      "advice": 150,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2498,6 +2618,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2515,6 +2636,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2532,6 +2654,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -2567,6 +2690,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2584,6 +2708,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2601,6 +2726,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2618,6 +2744,7 @@
      },
      "advice": 255,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2635,6 +2762,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2652,6 +2780,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -2682,6 +2811,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2699,6 +2829,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "High-speed train",
@@ -2747,6 +2878,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "High-speed train",
@@ -2777,6 +2909,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2794,6 +2927,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2811,6 +2945,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2828,6 +2963,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2845,6 +2981,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2862,6 +2999,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2879,6 +3017,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2896,6 +3035,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2913,6 +3053,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2930,6 +3071,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -2960,6 +3102,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2977,6 +3120,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -2994,6 +3138,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3011,6 +3156,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3028,6 +3174,7 @@
      },
      "advice": null,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "High-speed train",
@@ -3076,6 +3223,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "High-speed train",
@@ -3106,6 +3254,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3123,6 +3272,7 @@
      },
      "advice": 15,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3140,6 +3290,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3157,6 +3308,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3174,6 +3326,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3191,6 +3344,7 @@
      },
      "advice": 15,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3208,6 +3362,7 @@
      },
      "advice": 15,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3225,6 +3380,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3242,6 +3398,7 @@
      },
      "advice": 10,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -3272,6 +3429,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3289,6 +3447,7 @@
      },
      "advice": null,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "High-speed train",
@@ -3319,6 +3478,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -3354,6 +3514,7 @@
      },
      "advice": null,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "High-speed train",
@@ -3384,6 +3545,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3401,6 +3563,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3418,6 +3581,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3435,6 +3599,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3452,6 +3617,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -3484,6 +3650,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "Ferry",
@@ -3514,6 +3681,7 @@
      },
      "advice": null,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "Ferry",
@@ -3544,6 +3712,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3561,6 +3730,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3578,6 +3748,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3595,6 +3766,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -3630,6 +3802,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3647,6 +3820,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3664,6 +3838,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3681,6 +3856,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3698,6 +3874,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3715,6 +3892,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3732,6 +3910,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -3767,6 +3946,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3784,6 +3964,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3801,6 +3982,7 @@
      },
      "advice": 150,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3818,6 +4000,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3835,6 +4018,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3852,6 +4036,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -3882,6 +4067,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3899,6 +4085,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "Flight",
@@ -3947,6 +4134,7 @@
      },
      "advice": 40,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "arrive",
       "mode": "Flight",
@@ -3977,6 +4165,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -3994,6 +4183,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4011,6 +4201,7 @@
      },
      "advice": 25,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4028,6 +4219,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4045,6 +4237,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4062,6 +4255,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4079,6 +4273,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -4114,6 +4309,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4131,6 +4327,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4148,6 +4345,7 @@
      },
      "advice": 120,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4165,6 +4363,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4182,6 +4381,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4199,6 +4399,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4216,6 +4417,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4233,6 +4435,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -4268,6 +4471,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4285,6 +4489,7 @@
      },
      "advice": 20,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4302,6 +4507,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4319,6 +4525,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4336,6 +4543,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4353,6 +4561,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4370,6 +4579,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4387,6 +4597,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4404,6 +4615,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4421,6 +4633,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -4456,6 +4669,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4473,6 +4687,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4490,6 +4705,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4507,6 +4723,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4524,6 +4741,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4541,6 +4759,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4558,6 +4777,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4575,6 +4795,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4592,6 +4813,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -4627,6 +4849,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4644,6 +4867,7 @@
      },
      "advice": 75,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4661,6 +4885,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4678,6 +4903,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4695,6 +4921,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4712,6 +4939,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4729,6 +4957,7 @@
      },
      "advice": 90,
      "cap": null,
+     "lateFor": null,
      "hub": null
     }
    ]
@@ -4759,6 +4988,7 @@
      },
      "advice": 35,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4776,6 +5006,7 @@
      },
      "advice": 180,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4793,6 +5024,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4810,6 +5042,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4827,6 +5060,7 @@
      },
      "advice": 60,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4844,6 +5078,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4861,6 +5096,7 @@
      },
      "advice": 30,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4878,6 +5114,7 @@
      },
      "advice": 45,
      "cap": null,
+     "lateFor": null,
      "hub": null
     },
     {
@@ -4895,6 +5132,7 @@
      },
      "advice": 180,
      "cap": null,
+     "lateFor": null,
      "hub": {
       "role": "depart",
       "mode": "Flight",
@@ -5134,12 +5372,6 @@
     "why": "Cut purely to avoid four night viewpoints in one evening. It is the wide across-the-river panorama of Hongya Cave with reflections — genuinely lovely, but it is the same subject as Qiansimen Bridge from a whisker away, and Qiansimen wins because it is on the direct walking line between dinner and Hongya Cave with zero detour. Pick this up instead of the bridge if you want reflections over the head-on framing, or add it after Hongya Cave on day 1 if you still have legs at 22:45.",
     "status": "parked",
     "from": 1
-   },
-   {
-    "name": "Check in at KS Kongshang",
-    "why": "Not a sight — logistics, kept out of the stop list per the no-hotels rule. Practically: the hotel is on the 52nd floor of the Xinhua International Building at Jiefangbei, formal check-in is after 14:00, so on arrival day drop bags around 12:15, eat, and collect the room later in the afternoon. Passport needed at the desk.",
-    "status": "parked",
-    "from": null
    }
   ],
   "Chongqing|3": [
@@ -5162,12 +5394,6 @@
     "why": "Logistics, not a sight — the station transfer is inserted automatically. Listed here because it is the hidden cost that guts this stop: ~25 min each way, which is what turns day 2 into a 25-minute dawn and nothing else.",
     "status": "parked",
     "from": 1
-   },
-   {
-    "name": "Check in at Jinshuian",
-    "why": "Logistics, not a sight — the hotel block is inserted automatically. Budgeted at 20 min between the taxi and the 17:05 start of the walk. Booking required.",
-    "status": "parked",
-    "from": null
    }
   ],
   "Fenghuang|2": [
@@ -5196,32 +5422,12 @@
     "from": 2
    }
   ],
-  "Furong (Hibiscus)|1": [
-   {
-    "name": "Liu Xiaoqing rice tofu",
-    "why": null,
-    "status": "parked",
-    "from": 1
-   },
-   {
-    "name": "Check in at Waterfall Bay",
-    "why": "Logistics, not a sight — the hotel block is inserted automatically. Budget 30 min because it is also where you buy the ¥108 ticket, which is valid 2-3 days and covers the waterfall, Tuwang Palace and every Baishetang performance. Booking required; do not schedule anything else until it is done.",
-    "status": "parked",
-    "from": null
-   }
-  ],
   "Guilin|1": [
    {
     "name": "Reed Flute Cave",
     "why": "Does not fit and should not be forced. It closes at 18:00 (Apr 1–Oct 31 07:30–18:00) with last guided entry ~30 min before, and it is out of town to the northwest. Even the optimistic line — clear the station 14:50, straight there without checking in, 75 min inside — lands you back downtown around 17:00 having dragged luggage to a cave, and it only works at all from Guilin North (~3.5 km away). If the arrival is actually Guilin West, it is ~20 km further and the maths collapses entirely. The sight's own note already says to skip it in favour of the stronger Silver Cave later in the trip — take that advice. Keep it as a wet-weather substitute only if a later Guilin morning materialises.",
     "status": "parked",
     "from": 1
-   },
-   {
-    "name": "Check in at RongShi",
-    "why": "Not a sight — logistics, kept out of the stop list per the no-hotels rule. Budget 30 min around 15:40, on the cruise-wharf side of downtown, which is why both real stops are within walking distance of it.",
-    "status": "parked",
-    "from": null
    }
   ],
   "Lijiang|4": [
@@ -5232,21 +5438,7 @@
     "from": 4
    }
   ],
-  "Lijiang|1": [
-   {
-    "name": "Check in at Anyin",
-    "why": "Hotel logistics rather than a sight, so it is left out of the stop list for the builder to place. Worth protecting the hour though: reach the courtyard around 14:15, drop bags, and sit still for an hour before going out — the first afternoon at 2,400 m is where altitude headaches get made.",
-    "status": "parked",
-    "from": null
-   }
-  ],
   "Shanghai|1": [
-   {
-    "name": "Check in at Marriott",
-    "why": "Hotel admin, not a sight — slots itself between the Maglev and Nanjing Rd East on day 1.",
-    "status": "parked",
-    "from": null
-   },
    {
     "name": "Check in — J Hotel (Tower)",
     "why": "Hotel admin — the day 5 evening move from Puxi to Lujiazui, roughly 17:00–18:00.",
@@ -5272,14 +5464,6 @@
     "why": "The best thing here that does not fit. It is a second dawn (04:00-06:00 pickup) in a stay with room for exactly one, and it collides head-on with Xianggong — same hour, same light, same karst. At ~USD 260-300 pp it is flagged as a big-budget swap, so treat it that way: fly it INSTEAD of Xianggong on day 2 morning if the spend appeals and the forecast is clear, rather than as an addition. Note the current plan had it at 21:20, which is not a thing — balloons only fly at dawn. Weather-dependent either way, and a scrub with no backup dawn left is the real risk.",
     "status": "parked",
     "from": 2
-   }
-  ],
-  "Yangshuo|1": [
-   {
-    "name": "Fengqi Homestay",
-    "why": "Not a sight — this is the lodging itself (3 nights, check-in on arrival ~14:15 after clearing the wharf at 13:45). Deliberately kept out of the day plans so it does not consume a stop slot; it is simply where each day starts and ends.",
-    "status": "parked",
-    "from": null
    }
   ],
   "Zhangjiajie|3": [

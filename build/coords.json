@@ -6,6 +6,13 @@
   "delete travel time. Notion is NOT modified — fix it there separately if you ever want to.",
   "Each entry records what was wrong and where the right value came from."
  ],
+ "Glacier Park cable car": {
+  "lat": 27.1,
+  "lng": 100.1667,
+  "was": [26.825017, 100.23583],
+  "why": "Was sitting in Lijiang old town, ~30 km south of the mountain it climbs. The chain therefore drove you to the old town, then charged a phantom 54-min / 31 km DiDi from there up to the Jade Dragon summit — when in reality the cableway IS the ascent and the two are one continuous stop.",
+  "source": "Co-located with 'Jade Dragon summit'. Not a surveyed base-station fix: for travel-time purposes the drive is to the scenic area and the ascent is the cable car, so treating them as one location is what the chain actually needs. Confidence: the old-town value was definitely wrong; this value is right to within the scenic area."
+ },
  "Toboggan down": {
   "lat": 40.430765,
   "lng": 116.564501,
