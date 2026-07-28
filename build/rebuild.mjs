@@ -189,6 +189,23 @@ for (const day of V) {
 
     for (let i = 0; i < seq.length; i++) {
       const it = seq[i];
+      // Nothing left but the train/flight: a meal whose window has not opened yet must WAIT for it,
+      // not be skipped. The normal rule below only fires a meal that is already due, so a morning
+      // that ran out of sights before noon dropped lunch entirely — Furong d2 sat idle 08:42→13:15
+      // with no lunch at all, and the departure day simply never ate.
+      if (it.kind === 'hub' && it.st.hub?.role === 'depart' && clock != null) {
+        const anchor = hubAnchor(it.st);
+        while (pending.length) {
+          const m = pending[0];
+          const win = MW[m.meal] + (hasDeadline ? shift : 0);
+          const t = legTo(rows, m.name);
+          const start = Math.max(clock + t.minutes + SLACK, win);
+          const dur = mealDur(m);
+          if (start + dur + SLACK > anchor) break;      // genuinely no room before check-in
+          emit(pending.shift(), start, dur, t);
+          clock = start + dur;
+        }
+      }
       // a meal is due if its window has opened and a sight isn't mid-flow
       while (pending.length && clock != null) {
         const m = pending[0];

@@ -638,7 +638,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 330,
+     "s": 338,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -1850,7 +1850,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 390,
+     "s": 398,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -2327,7 +2327,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 390,
+     "s": 398,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -2822,7 +2822,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 428,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -2876,8 +2876,8 @@
    "day": 1,
    "date": "2026-08-27",
    "theme": "Down the stone street to the waterfall, then the night circuit once the falls light up",
-   "why": "An 11:30 arrival, cleared 11:45, ~15 min from the station (only ~5 km), checked in and ticketed by ~12:35, rice tofu, free from ~13:15. That is a real afternoon plus a full evening. Daylight block: Wuli Stone Street (60 min) as the orientation spine, Tuwang Palace (30) on the cliff edge above it, then the waterfall and the plank walkway behind the 60 m curtain (60), then the Youshui cruise (30) for the only angle that shows the falls, the stacked town and the reflections in one frame — off the water by ~16:45. Then a genuine 1h15 of nothing before dinner, which an arrival day has earned. Night block starts at 19:30 exactly, because that is both when the illumination comes on and when the free evening Tujia set runs at Baishetang: show 19:30-20:00, Shenpu Camp Square panorama 20:05, far-bank platform for the postcard angle 20:30-21:00. The falls stay lit to ~22:00-22:30, so nothing here is rushed. Stop time 4h20 across an 8h window.",
-   "endMin": 1211,
+   "why": "An 11:30 arrival, cleared 11:45, ~15 min from the station (only ~5 km), checked in and ticketed by ~12:35, rice tofu, free from ~13:15. That is a real afternoon plus a full evening. Daylight block: Wuli Stone Street (60 min) as the orientation spine, Tuwang Palace (30) on the cliff edge above it, then the waterfall and the plank walkway behind the 60 m curtain (60), then the Youshui cruise (30) for the only angle that shows the falls, the stacked town and the reflections in one frame — off the water by ~16:45. Then a genuine 1h15 of nothing before dinner, which an arrival day has earned. Night block starts at 19:30 exactly, because that is both when the illumination comes on and when the free evening Tujia set runs at Baishetang: show 19:30-20:00, Shenpu Camp Square panorama 20:05, far-bank platform for the postcard angle 20:30-21:00. The falls stay lit to ~22:00-22:30, so nothing here is rushed. Stop time 4h20 across an 8h window. The entire night circuit was running in daylight. Baishetang Square is a SHOW, not a square you walk into — sets run ~10:30/11:00/13:00/14:00/15:00/16:00 and then the free evening set at 19:30, and the chain had you arriving 16:55, in the gap between two of them, to an empty stage. It is now held to 19:30, which is also the moment the whole town and the waterfall light up, so Shenpu Camp Square (tagged night) and the Far-bank platform follow it into actual darkness at 20:09 and 20:38 instead of 17:34 and 18:03. Dinner is pulled to 16:30 so it sits after the river cruise and before the lights: you finish eating at 18:24, the town illuminates at 19:30, and you are already out in it. Illumination runs to 22:00-22:30, so the 19:30-21:08 sequence is a floor, not a deadline.",
+   "endMin": 1268,
    "homeTravel": {
     "mode": "none",
     "minutes": 0,
@@ -3027,8 +3027,26 @@
      "hub": null
     },
     {
-     "name": "Baishetang Square",
+     "name": "Dinner",
      "s": 1015,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Baishetang Square",
+     "s": 1170,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -3046,7 +3064,7 @@
     },
     {
      "name": "Shenpu Camp Square",
-     "s": 1054,
+     "s": 1209,
      "d": 20,
      "kind": "sight",
      "meal": null,
@@ -3064,7 +3082,7 @@
     },
     {
      "name": "Far-bank platform",
-     "s": 1083,
+     "s": 1238,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -3079,24 +3097,6 @@
      "cap": null,
      "lateFor": null,
      "hub": null
-    },
-    {
-     "name": "Dinner",
-     "s": 1121,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
     }
    ]
   },
@@ -3105,7 +3105,7 @@
    "day": 2,
    "date": "2026-08-28",
    "theme": "Mist on the Youshui, one relic, a second unhurried pass",
-   "why": "The 13:15 departure with a 45-minute buffer means the station at 12:30 and leaving town at ~12:05 — so this is a full six-hour morning, the opposite of Fenghuang's day 2. Out at 06:00 for mist on the Youshui and empty flagstones (45 min, sunrise ~06:05), back for breakfast, then the Xizhou Bronze Pillar (20 min) — the 940 AD peace-treaty column, deliberately held back to day 2 so the arrival afternoon stays walkable and so the one indoor-ish relic stop is not competing with the waterfall. Then the mop-up (60 min): the behind-the-falls walkway again in morning light with a fraction of yesterday's crowd, and anything on Wuli Street missed at speed. That lands you done by ~09:40 with slack before lunch and the 12:05 departure — intentional. Total stop time 2h05 in a window that could hold four hours; the second day of a two-day stop in a town this size should not be filled just because it can be.",
+   "why": "The 13:15 departure with a 45-minute buffer means the station at 12:30 and leaving town at ~12:05 — so this is a full six-hour morning, the opposite of Fenghuang's day 2. Out at 06:00 for mist on the Youshui and empty flagstones (45 min, sunrise ~06:05), back for breakfast, then the Xizhou Bronze Pillar (20 min) — the 940 AD peace-treaty column, deliberately held back to day 2 so the arrival afternoon stays walkable and so the one indoor-ish relic stop is not competing with the waterfall. Then the mop-up (60 min): the behind-the-falls walkway again in morning light with a fraction of yesterday's crowd, and anything on Wuli Street missed at speed. That lands you done by ~09:40 with slack before lunch and the 12:05 departure — intentional. Total stop time 2h05 in a window that could hold four hours; the second day of a two-day stop in a town this size should not be filled just because it can be. Lunch is back. The chain had been dropping it silently: the morning runs out of sights at 08:42 and the old rule only fired a meal already due, so a day whose last activity ended before noon simply never ate before its train. It now waits for the window and eats 11:55-12:55, clear of the 13:15 station call. The 08:42-11:55 gap is genuine free time in a town you can cross in ten minutes — everything researched here is already placed.",
    "endMin": 840,
    "homeTravel": null,
    "missed": null,
@@ -3179,6 +3179,24 @@
       "coloc": true
      },
      "advice": 35,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Lunch",
+     "s": 715,
+     "d": 60,
+     "kind": "meal",
+     "meal": "lunch",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 60,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -3433,7 +3451,7 @@
    "date": "2026-08-29",
    "theme": "Twenty-five minutes of dawn river, then gone",
    "why": "The 07:45 departure from Gucheng with a 45-minute buffer means standing at the station at 07:00; the station transfer is ~25 min, so you leave the hotel at ~06:25. Sunrise is ~06:20. That is a hard 06:00-06:25 window and it holds exactly one stop. It is worth setting the alarm for, because mist on the Tuojiang with an empty town is the payoff of staying the night, and this stop is on the water directly outside the hotel — no walking budget needed. Everything else on the old day 2 is fiction: Shen Congwen Residence does not open until ~08:00, the batik and silver shops and the ginger-candy stalls open later still. Breakfast is a grab-and-go on the way to the taxi, not a sit-down.",
-   "endMin": 553,
+   "endMin": 510,
    "homeTravel": null,
    "missed": null,
    "absorbed": null,
@@ -3452,6 +3470,24 @@
       "coloc": true
      },
      "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Breakfast",
+     "s": 403,
+     "d": 35,
+     "kind": "meal",
+     "meal": "breakfast",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 35,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -3486,24 +3522,6 @@
       "clearBy": null,
       "dwell": 45
      }
-    },
-    {
-     "name": "Breakfast",
-     "s": 518,
-     "d": 35,
-     "kind": "meal",
-     "meal": "breakfast",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 35,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
     }
    ]
   },
@@ -5137,6 +5155,24 @@
       "coloc": false
      },
      "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1080,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
      "cap": null,
      "lateFor": null,
      "hub": null
