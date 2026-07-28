@@ -304,7 +304,15 @@ function selectSeg(el){
     Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key));m.setZIndex(k===key?999:1);});
     const hit=mp._marks[key];
     if(hit&&mp._gmap){
-      const g=mp._gmap,go=()=>{g.panTo(hit.getPosition());g.setZoom(16);};
+      // Centre the stop, but keep the day's own scale. A fixed setZoom(16) landed you at
+      // street level, where the selected pin fills the frame and the rest of the route —
+      // the reason you clicked it — is off-screen. Only pull back if the user had manually
+      // zoomed in tighter than the day's fitted view; never zoom IN on a selection.
+      const g=mp._gmap,go=()=>{
+        g.panTo(hit.getPosition());
+        const fit=mp._fitZoom;
+        if(fit!=null&&g.getZoom()>fit)g.setZoom(fit);
+      };
       g.getCenter()?go():google.maps.event.addListenerOnce(g,"idle",go);
     }
   }
@@ -352,6 +360,9 @@ function initMaps(day){
     el._marks=marks; el._gmap=map; el._bounds=b;
     map.fitBounds(b,40);
     if(pts.length===1)google.maps.event.addListenerOnce(map,"idle",()=>map.setZoom(15));
+    // Remember the scale that shows the WHOLE day. Selecting a stop pans to it but never
+    // zooms tighter than this, so the route around it stays visible.
+    google.maps.event.addListenerOnce(map,"idle",()=>{el._fitZoom=map.getZoom();});
   });
 }
 if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);`;
