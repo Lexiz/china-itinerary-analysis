@@ -76,6 +76,20 @@
   "source": "Notion Hours: 'Opens 07:30; pandas most active 07:30-09:30'. Closing not stated in the source; 18:00 is the standard summer close. Not binding — the visit is deliberately front-loaded and ends before noon.",
   "closedDays": []
  },
+ "Hongya Cave": {
+  "closes": "23:00",
+  "lastEntry": "22:30",
+  "conf": "med",
+  "source": "Notes: light-up ~20:00 in summer (NOT the 19:00 the original data assumed), running to ~23:00; shops trade 10:00-23:00. The 19:30-22:00 window is peak crush and after 21:00 is materially calmer, which is why day 1 puts it late — but the 105-min advice then runs past the lights going out.",
+  "closedDays": []
+ },
+ "Raffles Crystal deck": {
+  "closes": "21:00",
+  "lastEntry": "20:00",
+  "conf": "high",
+  "source": "Notion Hours: '10:00-21:00', booking required. Not binding — the 15:00 slot is heat management as much as sightseeing.",
+  "closedDays": []
+ },
  "Temple of Heaven": {
   "closes": "17:00",
   "lastEntry": "16:00",

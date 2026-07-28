@@ -1910,8 +1910,8 @@
    "day": 1,
    "date": "2026-08-22",
    "theme": "Yuzhong peninsula on foot — monument, 250 m skywalk, confluence, then Hongya Cave once the lights come on",
-   "why": "Train clears ~11:20, hotel is at Jiefangbei, so the whole day stays inside one walkable peninsula and never needs a second metro hop. Jiefangbei is literally at the door — do it while bags are being dropped. Raffles Crystal deck (10:00–21:00, book ahead) is deliberately parked in the 15:00–16:30 slot: late-August Chongqing is 38 °C+ and this is a ticketed, air-conditioned lift-and-glass-deck block that also gives you the aerial read of the confluence you are about to walk. Chaotianmen Docks sits directly under Raffles, so it is a free ten-minute transition, and it lets you eyeball tomorrow's night-cruise pier in daylight. Evening is sequenced against the actual light-up: research confirms Hongya Cave lights come on around 20:00 in summer (not 19:00) and run to 23:00, and it thins out noticeably after 21:00. So Kuixinglou Plaza takes the pre-dinner dusk slot (~18:30) — it is a 30-minute walk-in-at-street-level-onto-the-22nd-floor trick, the single best demonstration of Chongqing's verticality and 400 m from the hotel — then dinner, then Qiansimen Bridge (~20:15) for the head-on framed shot, then Hongya Cave itself from ~21:00 for the full 105 minutes through eleven levels with the crush already easing. Only three evening pieces, one of which is the destination; Jiangbei riverbank is cut to ideas because it is the same subject from a near-identical angle 130 m away.",
-   "endMin": 1402,
+   "why": "Train clears ~11:20, hotel is at Jiefangbei, so the whole day stays inside one walkable peninsula and never needs a second metro hop. Jiefangbei is literally at the door — do it while bags are being dropped. Raffles Crystal deck (10:00–21:00, book ahead) is deliberately parked in the 15:00–16:30 slot: late-August Chongqing is 38 °C+ and this is a ticketed, air-conditioned lift-and-glass-deck block that also gives you the aerial read of the confluence you are about to walk. Chaotianmen Docks sits directly under Raffles, so it is a free ten-minute transition, and it lets you eyeball tomorrow's night-cruise pier in daylight. Evening is sequenced against the actual light-up: research confirms Hongya Cave lights come on around 20:00 in summer (not 19:00) and run to 23:00, and it thins out noticeably after 21:00. So Kuixinglou Plaza takes the pre-dinner dusk slot (~18:30) — it is a 30-minute walk-in-at-street-level-onto-the-22nd-floor trick, the single best demonstration of Chongqing's verticality and 400 m from the hotel — then dinner, then Qiansimen Bridge (~20:15) for the head-on framed shot, then Hongya Cave itself from ~21:00 for the full 105 minutes through eleven levels with the crush already easing. Only three evening pieces, one of which is the destination; Jiangbei riverbank is cut to ideas because it is the same subject from a near-identical angle 130 m away. Dinner is held to 17:45 and eaten at Chaotianmen, which is what rescues the two dusk viewpoints: on the default window it fired at 18:45 and left Kuixinglou stranded at 18:07 in broad daylight. It now lands 19:45, exactly at sunset, with Qiansimen after dark at 20:44. Hongya Cave keeps its deliberate post-21:00 slot — the 19:30-22:00 crush is the reason — but it is CAPPED at 23:00 when the lights go out and the shops shut, so it gets 1h23 of its 1h45 advice rather than pretending to run to 23:22.",
+   "endMin": 1380,
    "homeTravel": {
     "mode": "none",
     "minutes": 0,
@@ -2043,26 +2043,8 @@
      "hub": null
     },
     {
-     "name": "Kuixinglou Plaza",
-     "s": 1087,
-     "d": 30,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 9,
-      "km": 1.38,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 30,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Dinner",
-     "s": 1125,
+     "s": 1078,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -2074,6 +2056,24 @@
       "coloc": true
      },
      "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Kuixinglou Plaza",
+     "s": 1185,
+     "d": 30,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 9,
+      "km": 1.38,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 30,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -2099,7 +2099,7 @@
     {
      "name": "Hongya Cave",
      "s": 1297,
-     "d": 105,
+     "d": 83,
      "kind": "sight",
      "meal": null,
      "travelIn": {
@@ -2110,7 +2110,13 @@
       "coloc": false
      },
      "advice": 105,
-     "cap": null,
+     "cap": {
+      "closes": "23:00",
+      "lastEntry": "22:30",
+      "lost": 22,
+      "tooLate": false,
+      "conf": "med"
+     },
      "lateFor": null,
      "hub": null
     }
@@ -2121,8 +2127,8 @@
    "day": 2,
    "date": "2026-08-23",
    "theme": "West end in the morning, cross the Yangtze by cable car mid-afternoon, south-bank lanes at dusk, both rivers by boat at night",
-   "why": "One clean west-to-east-to-south sweep with no backtracking, which matters more here than raw distance — Chongqing's coordinates lie, everything is stairs, ramps and lift shafts. Morning is the Eling cluster: Liziba monorail first at ~09:00 (30 min, trains every 5–10 min, shoot from the platform across the road), then straight uphill to Eling Park for the Liangjiang Pavilion two-rivers panorama before the afternoon haze, then Testbed 2 — which is the old Eling printing works immediately adjacent, not a separate trip — and lunch inside its cafés. Afternoon crosses east: Baixiang Ju by metro to Xiaoshizi, then the Yangtze Cableway is used as actual transport rather than a detour, carrying you north→south straight to Longmenhao Old Street, which sits at the south station. Longmenhao then takes the dusk slot it wants (~17:00–18:15, golden light on the terraced hillside) with dinner following on the same street. The night belongs to one thing only: the Two Rivers night cruise, boarding Chaotianmen ~19:45 for a 20:00 sailing (departures run roughly 19:00–22:00, about every half hour, ~45 min afloat plus boarding). Deliberately NOT stacking the cableway into the evening as a second night viewpoint — the queues after dark are the worst of the day and a blown queue would cost you the boat.",
-   "endMin": 1245,
+   "why": "One clean west-to-east-to-south sweep with no backtracking, which matters more here than raw distance — Chongqing's coordinates lie, everything is stairs, ramps and lift shafts. Morning is the Eling cluster: Liziba monorail first at ~09:00 (30 min, trains every 5–10 min, shoot from the platform across the road), then straight uphill to Eling Park for the Liangjiang Pavilion two-rivers panorama before the afternoon haze, then Testbed 2 — which is the old Eling printing works immediately adjacent, not a separate trip — and lunch inside its cafés. Afternoon crosses east: Baixiang Ju by metro to Xiaoshizi, then the Yangtze Cableway is used as actual transport rather than a detour, carrying you north→south straight to Longmenhao Old Street, which sits at the south station. Longmenhao then takes the dusk slot it wants (~17:00–18:15, golden light on the terraced hillside) with dinner following on the same street. The night belongs to one thing only: the Two Rivers night cruise, boarding Chaotianmen ~19:45 for a 20:00 sailing (departures run roughly 19:00–22:00, about every half hour, ~45 min afloat plus boarding). Deliberately NOT stacking the cableway into the evening as a second night viewpoint — the queues after dark are the worst of the day and a blown queue would cost you the boat. Two corrections. The night cruise was scheduled at 17:29, when no boat exists — departures run ~19:30-22:00 and the aim is 20:00-20:30; it is now held to 20:00 and sails 20:07. And breakfast moves to 08:00, which slides the whole day so dinner lands at 18:21, a normal hour, immediately before the boat — the alternative was a three-hour hole in the evening or dinner after 21:20. NOTE: the cableway slot still has to be bought at 07:45 on the mini-program, now BEFORE breakfast rather than after it.",
+   "endMin": 1305,
    "homeTravel": {
     "mode": "walk",
     "minutes": 23,
@@ -2134,7 +2140,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 480,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -2152,7 +2158,7 @@
     },
     {
      "name": "Liziba monorail",
-     "s": 483,
+     "s": 543,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -2170,7 +2176,7 @@
     },
     {
      "name": "Eling Park",
-     "s": 531,
+     "s": 591,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -2188,7 +2194,7 @@
     },
     {
      "name": "Testbed 2",
-     "s": 628,
+     "s": 688,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -2205,26 +2211,8 @@
      "hub": null
     },
     {
-     "name": "Baixiang Ju",
-     "s": 739,
-     "d": 45,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 13,
-      "km": 4.28,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 45,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Lunch",
-     "s": 792,
+     "s": 786,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -2241,8 +2229,26 @@
      "hub": null
     },
     {
+     "name": "Baixiang Ju",
+     "s": 867,
+     "d": 45,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 13,
+      "km": 4.28,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "Yangtze Cableway",
-     "s": 879,
+     "s": 939,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -2260,7 +2266,7 @@
     },
     {
      "name": "Longmenhao Old Street",
-     "s": 958,
+     "s": 1018,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -2277,26 +2283,8 @@
      "hub": null
     },
     {
-     "name": "Two Rivers night cruise",
-     "s": 1049,
-     "d": 75,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 8,
-      "km": 1.03,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 75,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Dinner",
-     "s": 1132,
+     "s": 1101,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -2311,6 +2299,24 @@
      "cap": null,
      "lateFor": null,
      "hub": null
+    },
+    {
+     "name": "Two Rivers night cruise",
+     "s": 1207,
+     "d": 75,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 8,
+      "km": 1.03,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 75,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
     }
    ]
   },
@@ -2319,7 +2325,7 @@
    "day": 3,
    "date": "2026-08-24",
    "theme": "Departure only — 08:00 train from Chongqing North, nothing else is real",
-   "why": "An 08:00 departure with a 60-minute station buffer means leaving the hotel around 06:45 and being awake at 06:00. There is no sight in Chongqing worth attempting in that window, and attempting one risks the train. Breakfast at the hotel, go. Everything that would have lived here has been absorbed into days 1 and 2.",
+   "why": "An 08:00 departure with a 60-minute station buffer means leaving the hotel around 06:45 and being awake at 06:00. There is no sight in Chongqing worth attempting in that window, and attempting one risks the train. Breakfast at the hotel, go. Everything that would have lived here has been absorbed into days 1 and 2. Breakfast to 06:30: the run to Chongqing North is 15 minutes against an 08:00 be-there-by, which on a 07:00 start left two minutes of margin. It now arrives about 07:28. Both the arrival and this departure are provisional, so do not plan tightly against either.",
    "endMin": 540,
    "homeTravel": null,
    "missed": null,
@@ -2327,7 +2333,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 390,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
