@@ -90,6 +90,13 @@
   "source": "Notion Hours: '10:00-21:00', booking required. Not binding — the 15:00 slot is heat management as much as sightseeing.",
   "closedDays": []
  },
+ "Golden Whip Stream": {
+  "closes": "19:00",
+  "lastEntry": "17:30",
+  "conf": "low",
+  "source": "ASSUMED, and the least certain entry in this file. The binding constraint is not a gate but the last eco-shuttle out of the valley — the trail is a 7.5 km unlit gorge and Wulingyuan's inner shuttles wind down around 18:00-19:00. Confirm the last shuttle from Shuiraosimen when you buy the park ticket. The day-1 note already anticipates this: walk part-way and turn back rather than committing to the full length.",
+  "closedDays": []
+ },
  "Temple of Heaven": {
   "closes": "17:00",
   "lastEntry": "16:00",

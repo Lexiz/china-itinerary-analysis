@@ -21,6 +21,7 @@ const SNAP = JSON.parse(readFileSync('/Users/alexlisitzky/ClaudeCode/sandbox/Chi
 const RES = JSON.parse(readFileSync(new URL('./researched.json', import.meta.url)));
 const CLOSE = JSON.parse(readFileSync(new URL('./closing.json', import.meta.url)));
 const COORDS = JSON.parse(readFileSync(new URL('./coords.json', import.meta.url)));
+const ZERO = new Set(JSON.parse(readFileSync(new URL('./zero-legs.json', import.meta.url))).legs.map(l => `${l.from}|${l.to}`));
 
 const SLACK = 8;
 // Default meal windows = "not before". A day may override them in rebuild/<city>.json via
@@ -87,13 +88,18 @@ for (const day of V) {
   //   · travel OUT of a meal must be measured from that same anchor, NOT zeroed.
   // The old code zeroed both directions, which silently deleted real legs (Breakfast → Temple of
   // Heaven is 5 km, and was being drawn as free) and left blanks in the travel column.
+  // When a day OPENS with breakfast there is no real stop behind it, and falling back to the meal
+  // itself measured from its stale placeholder coord — Zhangjiajie d3 read the 28 km run to the
+  // Zhangjiajie-city bus as a 22-minute walk. The hotel is where you eat breakfast, so anchor there.
   const anchorOf = (rows, fallback) => {
     for (let i = rows.length - 1; i >= 0; i--) if (!GENERIC_MEAL.test(rows[i].name)) return rows[i].name;
-    return fallback;
+    return hotelStop?.name || fallback;
   };
   const hop = (fromName, toName) => {
     if (GENERIC_MEAL.test(toName)) return { mode: 'none', minutes: 0, km: 0, estimated: false, coloc: true };
     if (!fromName) return { mode: 'none', minutes: 0, km: 0, estimated: false, coloc: true };
+    // A cableway/lift IS the journey to the place it serves — its dwell already contains the ride.
+    if (ZERO.has(`${fromName}|${toName}`)) return { mode: 'none', minutes: 0, km: 0, estimated: false, coloc: true };
     const r = realLeg.get(`${fromName}|${toName}`);
     if (r) return r;
     return travel(coordOf(fromName), coordOf(toName), day.city);

@@ -1,0 +1,22 @@
+{
+ "_readme": [
+  "Pairs whose travel between them is ZERO because the first stop IS the transit to the second.",
+  "A cableway, lift or funicular is both a stop and a journey: its dwell already contains the ride,",
+  "so routing a road distance between it and the place it delivers you to invents travel that does",
+  "not exist. Co-locating the coordinates would fix the time but put the stop in the wrong place on",
+  "the map (a downtown cableway station is genuinely downtown), so the leg is zeroed instead.",
+  "Direction matters: listed as from → to."
+ ],
+ "legs": [
+  {
+   "from": "Tianmen cableway",
+   "to": "Tianmen Mountain",
+   "why": "The cableway station is in downtown Zhangjiajie and the summit is 7 km away over the cliff, so the router returned a 51-min / 27.2 km road trip around the mountain. You do not drive it — the 75-min cableway dwell already covers the 20-min shuttle, the 7-min express cableway and its 30-45 min peak queue, and it lands you at Tianmen Cave."
+  },
+  {
+   "from": "Bailong Elevator",
+   "to": "Yuanjiajie (Avatar)",
+   "why": "The lift is the ascent to the Yuanjiajie plateau; its 60-min dwell is queue plus ride. Already effectively zero (2 min walk) but pinned so a future re-route cannot reintroduce a drive."
+  }
+ ]
+}

@@ -217,7 +217,7 @@
    "date": "2026-08-12",
    "theme": "The imperial core",
    "why": "Everything sits inside one 3 km square and the order is dictated by timed entry. The two meals are deliberately off-convention and they are what make the day work: a 06:30 breakfast buys the National Museum its afternoon back (the museum shuts at 17:00, and on a 07:00 start the chain only reached it at 14:54 — barely 2 h of a 3 h visit), and a 17:00 dinner, eaten as the museum closes, is what puts you on Jingshan at 19:06 with sunset at 19:22. Order: square from 07:42, Forbidden City on the 08:30 morning slot, museum through the worst of the heat in air conditioning, then dinner, then the climb for the golden-roof panorama.",
-   "endMin": 1201,
+   "endMin": 1198,
    "homeTravel": {
     "mode": "didi",
     "minutes": 10,
@@ -247,15 +247,15 @@
     },
     {
      "name": "Tiananmen Square",
-     "s": 452,
+     "s": 443,
      "d": 75,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "metro",
-      "minutes": 19,
-      "km": 3.5,
-      "est": false,
+      "mode": "didi",
+      "minutes": 10,
+      "km": 2.17,
+      "est": true,
       "coloc": false
      },
      "advice": 75,
@@ -265,7 +265,7 @@
     },
     {
      "name": "Forbidden City",
-     "s": 551,
+     "s": 542,
      "d": 210,
      "kind": "sight",
      "meal": null,
@@ -283,7 +283,7 @@
     },
     {
      "name": "Lunch",
-     "s": 769,
+     "s": 760,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -301,8 +301,8 @@
     },
     {
      "name": "National Museum",
-     "s": 846,
-     "d": 174,
+     "s": 837,
+     "d": 180,
      "kind": "sight",
      "meal": null,
      "travelIn": {
@@ -313,37 +313,13 @@
       "coloc": false
      },
      "advice": 180,
-     "cap": {
-      "closes": "17:00",
-      "lastEntry": "16:00",
-      "lost": 6,
-      "tooLate": false,
-      "conf": "med"
-     },
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Dinner",
-     "s": 1028,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
      "cap": null,
      "lateFor": null,
      "hub": null
     },
     {
      "name": "Jingshan Park",
-     "s": 1146,
+     "s": 1045,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -358,6 +334,24 @@
      "cap": null,
      "lateFor": null,
      "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1098,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
     }
    ]
   },
@@ -367,7 +361,7 @@
    "date": "2026-08-13",
    "theme": "Great Wall, then the CBD lit up",
    "why": "Walk the wall before the heat and luge straight down it (the toboggan is the descent, not a separate trip — it shuts at 17:00), eat at Mutianyu, then let the 90-minute drive back down the north-east corridor deliver you into Sanlitun. Dinner is pulled to 17:30 so it lands as Taikoo Li closes out and CCTV moves to 19:31 — past the 19:19 sunset, which is the only time that stop is worth making. CCTV now takes the full hour its research allows rather than the 30-minute minimum: it is the lit tower, plus the free China World Mall terrace.",
-   "endMin": 1243,
+   "endMin": 1256,
    "homeTravel": {
     "mode": "didi",
     "minutes": 12,
@@ -397,15 +391,15 @@
     },
     {
      "name": "Mutianyu Great Wall",
-     "s": 545,
+     "s": 558,
      "d": 165,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 82,
-      "km": 74.9,
-      "est": false,
+      "minutes": 95,
+      "km": 58.69,
+      "est": true,
       "coloc": false
      },
      "advice": 165,
@@ -414,26 +408,8 @@
      "hub": null
     },
     {
-     "name": "Toboggan down",
-     "s": 718,
-     "d": 20,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 20,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Lunch",
-     "s": 746,
+     "s": 731,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -450,8 +426,26 @@
      "hub": null
     },
     {
+     "name": "Toboggan down",
+     "s": 799,
+     "d": 20,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": false
+     },
+     "advice": 20,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "Sanlitun Taikoo Li",
-     "s": 905,
+     "s": 918,
      "d": 150,
      "kind": "sight",
      "meal": null,
@@ -469,7 +463,7 @@
     },
     {
      "name": "Dinner",
-     "s": 1063,
+     "s": 1076,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -487,7 +481,7 @@
     },
     {
      "name": "CCTV 'Big Pants'",
-     "s": 1171,
+     "s": 1184,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -541,15 +535,15 @@
     },
     {
      "name": "Summer Palace",
-     "s": 501,
+     "s": 493,
      "d": 210,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 38,
-      "km": 23.6,
-      "est": false,
+      "minutes": 30,
+      "km": 15.32,
+      "est": true,
       "coloc": false
      },
      "advice": 210,
@@ -559,7 +553,7 @@
     },
     {
      "name": "Lunch",
-     "s": 719,
+     "s": 711,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -577,7 +571,7 @@
     },
     {
      "name": "798 Art District",
-     "s": 823,
+     "s": 815,
      "d": 150,
      "kind": "sight",
      "meal": null,
@@ -595,7 +589,7 @@
     },
     {
      "name": "UCCA",
-     "s": 989,
+     "s": 981,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -886,15 +880,15 @@
     },
     {
      "name": "Baisha Village",
-     "s": 550,
+     "s": 543,
      "d": 75,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 27,
-      "km": 11.9,
-      "est": false,
+      "minutes": 20,
+      "km": 9.17,
+      "est": true,
       "coloc": false
      },
      "advice": 75,
@@ -904,7 +898,7 @@
     },
     {
      "name": "Baisha Murals",
-     "s": 637,
+     "s": 630,
      "d": 40,
      "kind": "sight",
      "meal": null,
@@ -922,7 +916,7 @@
     },
     {
      "name": "Baisha embroidery",
-     "s": 686,
+     "s": 679,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -940,7 +934,7 @@
     },
     {
      "name": "Lunch",
-     "s": 724,
+     "s": 717,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -958,7 +952,7 @@
     },
     {
      "name": "Shuhe Old Town",
-     "s": 805,
+     "s": 798,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -976,7 +970,7 @@
     },
     {
      "name": "Tea Horse Road Museum",
-     "s": 946,
+     "s": 939,
      "d": 40,
      "kind": "sight",
      "meal": null,
@@ -1073,7 +1067,7 @@
      "travelIn": {
       "mode": "didi",
       "minutes": 46,
-      "km": 26.06,
+      "km": 26.28,
       "est": true,
       "coloc": false
      },
@@ -1210,15 +1204,15 @@
     },
     {
      "name": "Depart for the gorge",
-     "s": 480,
+     "s": 485,
      "d": 30,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "didi",
-      "minutes": 17,
-      "km": 4.2,
-      "est": false,
+      "mode": "walk",
+      "minutes": 22,
+      "km": 0.93,
+      "est": true,
       "coloc": false
      },
      "advice": 30,
@@ -1228,7 +1222,7 @@
     },
     {
      "name": "Qiaotou gateway",
-     "s": 603,
+     "s": 608,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -1246,7 +1240,7 @@
     },
     {
      "name": "Tiger Leaping Gorge",
-     "s": 649,
+     "s": 654,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -1264,7 +1258,7 @@
     },
     {
      "name": "Lunch",
-     "s": 777,
+     "s": 782,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -1282,7 +1276,7 @@
     },
     {
      "name": "Middle Gorge descent",
-     "s": 876,
+     "s": 881,
      "d": 180,
      "kind": "sight",
      "meal": null,
@@ -1573,15 +1567,15 @@
     },
     {
      "name": "Chengdu Panda Base",
-     "s": 502,
+     "s": 486,
      "d": 210,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 39,
-      "km": 27.8,
-      "est": false,
+      "minutes": 23,
+      "km": 10.85,
+      "est": true,
       "coloc": false
      },
      "advice": 210,
@@ -1591,7 +1585,7 @@
     },
     {
      "name": "People’s Park",
-     "s": 744,
+     "s": 728,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -1609,7 +1603,7 @@
     },
     {
      "name": "Lunch",
-     "s": 797,
+     "s": 781,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -1627,7 +1621,7 @@
     },
     {
      "name": "Heming Teahouse",
-     "s": 870,
+     "s": 854,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -1645,7 +1639,7 @@
     },
     {
      "name": "Kuanzhai Alleys",
-     "s": 983,
+     "s": 967,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -1705,7 +1699,7 @@
    "date": "2026-08-21",
    "theme": "Sanxingdui half-day out, Three Kingdoms at dusk",
    "why": "Sanxingdui eats the whole morning and cannot share a day with another major sight: ~40 km north, so Chengdu East → Guanghan North (18 min on the high-speed train, plus station security) then a 15–20 min taxi, roughly 1.5 h each way on top of 3.5 h on site. Leave the hotel ~07:45, on site ~09:30–13:00, back at Chengdu East ~14:45. Confirmed summer hours 08:30–20:00 (last entry 18:00) 1 Jul–31 Aug, closed Mondays — 21 Aug is a Friday, fine. The afternoon then runs to a single southwest cluster: Wuhou Shrine and Jinli share a wall, so it is one taxi for both. Wuhou 15:15–17:30, Jinli next door from 17:45 into the lantern hour with dinner at the snack stalls. Stop time ~7 h plus ~3 h of travel — a full but not brutal day. Taikoo Li comes back off the ideas bench and closes the day. It was parked as the thing that works with no plan at all, but this is the one Chengdu day with genuine headroom left, and it is open-air, free, alive late and a ten-minute walk from the hotel — so scheduling it costs nothing and uses the evening properly. Wuhou still enters 14:58, inside its 17:00 last-ticket, which remains the fragile point of the day.",
-   "endMin": 1344,
+   "endMin": 1331,
    "homeTravel": {
     "mode": "didi",
     "minutes": 8,
@@ -1735,14 +1729,14 @@
     },
     {
      "name": "Sanxingdui Museum",
-     "s": 543,
+     "s": 530,
      "d": 210,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 80,
-      "km": 48.94,
+      "minutes": 67,
+      "km": 40.16,
       "est": true,
       "coloc": false
      },
@@ -1753,7 +1747,7 @@
     },
     {
      "name": "Lunch",
-     "s": 761,
+     "s": 748,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -1771,7 +1765,7 @@
     },
     {
      "name": "Wuhou Shrine",
-     "s": 898,
+     "s": 885,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -1789,7 +1783,7 @@
     },
     {
      "name": "Jinli Old Street",
-     "s": 1039,
+     "s": 1026,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -1807,7 +1801,7 @@
     },
     {
      "name": "Dinner",
-     "s": 1137,
+     "s": 1124,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -1825,7 +1819,7 @@
     },
     {
      "name": "Taikoo Li",
-     "s": 1246,
+     "s": 1233,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -2128,7 +2122,7 @@
    "date": "2026-08-23",
    "theme": "West end in the morning, cross the Yangtze by cable car mid-afternoon, south-bank lanes at dusk, both rivers by boat at night",
    "why": "One clean west-to-east-to-south sweep with no backtracking, which matters more here than raw distance — Chongqing's coordinates lie, everything is stairs, ramps and lift shafts. Morning is the Eling cluster: Liziba monorail first at ~09:00 (30 min, trains every 5–10 min, shoot from the platform across the road), then straight uphill to Eling Park for the Liangjiang Pavilion two-rivers panorama before the afternoon haze, then Testbed 2 — which is the old Eling printing works immediately adjacent, not a separate trip — and lunch inside its cafés. Afternoon crosses east: Baixiang Ju by metro to Xiaoshizi, then the Yangtze Cableway is used as actual transport rather than a detour, carrying you north→south straight to Longmenhao Old Street, which sits at the south station. Longmenhao then takes the dusk slot it wants (~17:00–18:15, golden light on the terraced hillside) with dinner following on the same street. The night belongs to one thing only: the Two Rivers night cruise, boarding Chaotianmen ~19:45 for a 20:00 sailing (departures run roughly 19:00–22:00, about every half hour, ~45 min afloat plus boarding). Deliberately NOT stacking the cableway into the evening as a second night viewpoint — the queues after dark are the worst of the day and a blown queue would cost you the boat. Two corrections. The night cruise was scheduled at 17:29, when no boat exists — departures run ~19:30-22:00 and the aim is 20:00-20:30; it is now held to 20:00 and sails 20:07. And breakfast moves to 08:00, which slides the whole day so dinner lands at 18:21, a normal hour, immediately before the boat — the alternative was a three-hour hole in the evening or dinner after 21:20. NOTE: the cableway slot still has to be bought at 07:45 on the mini-program, now BEFORE breakfast rather than after it.",
-   "endMin": 1305,
+   "endMin": 1298,
    "homeTravel": {
     "mode": "walk",
     "minutes": 23,
@@ -2158,15 +2152,15 @@
     },
     {
      "name": "Liziba monorail",
-     "s": 543,
+     "s": 536,
      "d": 30,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "metro",
-      "minutes": 20,
-      "km": 4.3,
-      "est": false,
+      "mode": "didi",
+      "minutes": 13,
+      "km": 4.14,
+      "est": true,
       "coloc": false
      },
      "advice": 30,
@@ -2176,7 +2170,7 @@
     },
     {
      "name": "Eling Park",
-     "s": 591,
+     "s": 584,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -2194,7 +2188,7 @@
     },
     {
      "name": "Testbed 2",
-     "s": 688,
+     "s": 681,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -2212,7 +2206,7 @@
     },
     {
      "name": "Lunch",
-     "s": 786,
+     "s": 779,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -2230,7 +2224,7 @@
     },
     {
      "name": "Baixiang Ju",
-     "s": 867,
+     "s": 860,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -2248,7 +2242,7 @@
     },
     {
      "name": "Yangtze Cableway",
-     "s": 939,
+     "s": 932,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -2266,7 +2260,7 @@
     },
     {
      "name": "Longmenhao Old Street",
-     "s": 1018,
+     "s": 1011,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -2284,7 +2278,7 @@
     },
     {
      "name": "Dinner",
-     "s": 1101,
+     "s": 1094,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -2302,7 +2296,7 @@
     },
     {
      "name": "Two Rivers night cruise",
-     "s": 1207,
+     "s": 1200,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -2387,8 +2381,8 @@
    "day": 1,
    "date": "2026-08-24",
    "theme": "Arrive Wulingyuan, clear the East Gate, walk the valley floor",
-   "why": "Train clears 12:45 at Zhangjiajie West, ~1 h transfer to Wulingyuan, so the park day realistically starts ~14:30 — about 3.5 h of stop time. The East Gate's 45 min is not a queue, it's the manual counter for passport + facial registration that ties the ticket to your passport; doing it today activates the 4-day pass and makes tomorrow's 07:00 re-entry fast. Golden Whip Stream is the only thing that survives a late train: flat, shaded, no cableway, no timed slot, no queue. Shuttle from East Gate to Shuiraosimen and walk it downstream toward the Forest Park gate. Nothing requiring a lift or a cable car can start this late.",
-   "endMin": 1302,
+   "why": "Train clears 12:45 at Zhangjiajie West, ~1 h transfer to Wulingyuan, so the park day realistically starts ~14:30 — about 3.5 h of stop time. The East Gate's 45 min is not a queue, it's the manual counter for passport + facial registration that ties the ticket to your passport; doing it today activates the 4-day pass and makes tomorrow's 07:00 re-entry fast. Golden Whip Stream is the only thing that survives a late train: flat, shaded, no cableway, no timed slot, no queue. Shuttle from East Gate to Shuiraosimen and walk it downstream toward the Forest Park gate. Nothing requiring a lift or a cable car can start this late. Golden Whip Stream is CAPPED at 19:00 and gets 2h03 of its 2h45 advice. The binding constraint is the last eco-shuttle out, not a gate — the trail is a 7.5 km unlit gorge and the chain had you finishing at 19:42, after sunset, deep in the valley. This is exactly the fallback this day already anticipated: walk part-way and turn back to Shuiraosimen rather than committing to the full length. Confidence on that 19:00 is LOW; confirm the last shuttle when you buy the park ticket.",
+   "endMin": 1260,
    "homeTravel": {
     "mode": "didi",
     "minutes": 22,
@@ -2486,7 +2480,7 @@
     {
      "name": "Golden Whip Stream",
      "s": 1017,
-     "d": 165,
+     "d": 123,
      "kind": "sight",
      "meal": null,
      "travelIn": {
@@ -2497,13 +2491,19 @@
       "coloc": false
      },
      "advice": 165,
-     "cap": null,
+     "cap": {
+      "closes": "19:00",
+      "lastEntry": "17:30",
+      "lost": 42,
+      "tooLate": false,
+      "conf": "low"
+     },
      "lateFor": null,
      "hub": null
     },
     {
      "name": "Dinner",
-     "s": 1190,
+     "s": 1148,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -2526,8 +2526,8 @@
    "day": 2,
    "date": "2026-08-25",
    "theme": "Wulingyuan plateau — Bailong up, Avatar peaks, Tianzi, cable car down",
-   "why": "9 h of stop time — the day the whole city exists for. The order is dictated by the mountain, not by preference: you can only ascend at Bailong, traverse the plateau north to Tianzi by shuttle (~40 min), then descend, and the Tianzi cableway lands in the Shili valley where Ten-Mile Gallery starts, so it is free to add. Be at the East Gate for 07:00 opening: the Bailong queue is 1–2 h from mid-morning in August and the 60 min budgeted here only holds if you are early. Tianzi cableway's last car is ~17:30, which the sequence clears by roughly 90 min. Yangjiajie was cut here — it hangs off the far west of the plateau and costs its own cableway plus ~1 h of extra shuttling, which would push this day past 13 h.",
-   "endMin": 1325,
+   "why": "9 h of stop time — the day the whole city exists for. The order is dictated by the mountain, not by preference: you can only ascend at Bailong, traverse the plateau north to Tianzi by shuttle (~40 min), then descend, and the Tianzi cableway lands in the Shili valley where Ten-Mile Gallery starts, so it is free to add. Be at the East Gate for 07:00 opening: the Bailong queue is 1–2 h from mid-morning in August and the 60 min budgeted here only holds if you are early. Tianzi cableway's last car is ~17:30, which the sequence clears by roughly 90 min. Yangjiajie was cut here — it hangs off the far west of the plateau and costs its own cableway plus ~1 h of extra shuttling, which would push this day past 13 h. Breakfast to 06:30 and lunch to 11:30. The early start is what pulls Ten-Mile Gallery out of the dark: on a 07:00 start it ran 20:19-21:49, well after both sunset and the last tram, on a stop whose whole point is the valley floor at the foot of the Tianzi descent. It now runs 17:33-19:03. Lunch is held to 11:30 so it lands straight off Yuanjiajie — the default noon window fired it after Tianzi instead, which meant climbing 2.5 h on an empty stomach and eating at 14:38.",
+   "endMin": 1257,
    "homeTravel": {
     "mode": "didi",
     "minutes": 16,
@@ -2539,7 +2539,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 390,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -2557,15 +2557,15 @@
     },
     {
      "name": "Bailong Elevator",
-     "s": 517,
+     "s": 451,
      "d": 60,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 54,
-      "km": 38.8,
-      "est": false,
+      "minutes": 18,
+      "km": 7.45,
+      "est": true,
       "coloc": false
      },
      "advice": 60,
@@ -2575,16 +2575,16 @@
     },
     {
      "name": "Yuanjiajie (Avatar)",
-     "s": 587,
+     "s": 519,
      "d": 180,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "walk",
-      "minutes": 2,
-      "km": 0.1,
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
       "est": false,
-      "coloc": false
+      "coloc": true
      },
      "advice": 180,
      "cap": null,
@@ -2593,7 +2593,7 @@
     },
     {
      "name": "Lunch",
-     "s": 775,
+     "s": 707,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -2611,7 +2611,7 @@
     },
     {
      "name": "Tianzi Mountain",
-     "s": 856,
+     "s": 788,
      "d": 150,
      "kind": "sight",
      "meal": null,
@@ -2629,7 +2629,7 @@
     },
     {
      "name": "Tianzi cableway down",
-     "s": 1031,
+     "s": 963,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -2646,26 +2646,8 @@
      "hub": null
     },
     {
-     "name": "Dinner",
-     "s": 1099,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Ten-Mile Gallery",
-     "s": 1219,
+     "s": 1053,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -2680,6 +2662,24 @@
      "cap": null,
      "lateFor": null,
      "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1151,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
     }
    ]
   },
@@ -2688,7 +2688,7 @@
    "day": 3,
    "date": "2026-08-26",
    "theme": "Tianmen Mountain — day trip to Zhangjiajie city",
-   "why": "Separate park, ~40 km away above the city — it cannot share a day with Wulingyuan, and at 4–5 h on the summit plus the transfer it fills one. 6 h of stop time plus ~2.5 h of intercity bus makes a full but tapered day before the early departure. Leave the hotel ~06:15 for the first bus: the mountain runs nine timed slots 07:00–16:00, and the difference between the 07:00 slot and an afternoon one is 0–15 min of queue versus 90–120 min. With the cableway's upper section shut until 2027, Line C is the clean version — shuttle from downtown to the Tianmen Cave gate, then the express cableway up and back the same way, which is why the transport block is 75 min rather than a simple lift ride.",
+   "why": "Separate park, ~40 km away above the city — it cannot share a day with Wulingyuan, and at 4–5 h on the summit plus the transfer it fills one. 6 h of stop time plus ~2.5 h of intercity bus makes a full but tapered day before the early departure. Leave the hotel ~06:15 for the first bus: the mountain runs nine timed slots 07:00–16:00, and the difference between the 07:00 slot and an afternoon one is 0–15 min of queue versus 90–120 min. With the cableway's upper section shut until 2027, Line C is the clean version — shuttle from downtown to the Tianmen Cave gate, then the express cableway up and back the same way, which is why the transport block is 75 min rather than a simple lift ride. Two data corrections. The Tianmen cableway is the ASCENT, not a stop 27 km from the mountain — the router was charging a 51-minute road trip around the massif between the cableway and the summit it delivers you to; that leg is now zero, and the 75-min cableway dwell carries the shuttle, the ride and its peak queue. And the run down to Zhangjiajie city was being measured from breakfast rather than the hotel, so 28 km read as a 22-minute walk; it is 48 minutes. Lunch at 15:07 is late and deliberate: Tianmen is a single 4h15 block and you come straight down into it — carry something for the summit.",
    "endMin": 1228,
    "homeTravel": {
     "mode": "didi",
@@ -2719,14 +2719,14 @@
     },
     {
      "name": "Bus to Zhangjiajie city",
-     "s": 485,
+     "s": 511,
      "d": 30,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "walk",
-      "minutes": 22,
-      "km": 0.93,
+      "mode": "didi",
+      "minutes": 48,
+      "km": 27.77,
       "est": true,
       "coloc": false
      },
@@ -2737,7 +2737,7 @@
     },
     {
      "name": "Tianmen cableway",
-     "s": 535,
+     "s": 561,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -2755,16 +2755,16 @@
     },
     {
      "name": "Tianmen Mountain",
-     "s": 669,
+     "s": 644,
      "d": 255,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "didi",
-      "minutes": 51,
-      "km": 27.2,
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
       "est": false,
-      "coloc": false
+      "coloc": true
      },
      "advice": 255,
      "cap": null,
@@ -2773,7 +2773,7 @@
     },
     {
      "name": "Lunch",
-     "s": 932,
+     "s": 907,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -3975,15 +3975,15 @@
     },
     {
      "name": "Yulong bamboo rafting",
-     "s": 485,
+     "s": 479,
      "d": 90,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 22,
-      "km": 12.1,
-      "est": false,
+      "minutes": 16,
+      "km": 6.53,
+      "est": true,
       "coloc": false
      },
      "advice": 90,
@@ -3993,7 +3993,7 @@
     },
     {
      "name": "Yulong valley cycling",
-     "s": 599,
+     "s": 593,
      "d": 150,
      "kind": "sight",
      "meal": null,
@@ -4011,7 +4011,7 @@
     },
     {
      "name": "Lunch",
-     "s": 757,
+     "s": 751,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -4029,7 +4029,7 @@
     },
     {
      "name": "Moon Hill",
-     "s": 850,
+     "s": 844,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -4338,15 +4338,15 @@
     },
     {
      "name": "Recovery massage / spa",
-     "s": 463,
+     "s": 474,
      "d": 90,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
+      "mode": "didi",
+      "minutes": 11,
+      "km": 2.67,
+      "est": true,
       "coloc": false
      },
      "advice": 90,
@@ -4356,7 +4356,7 @@
     },
     {
      "name": "M50 Creative Park",
-     "s": 573,
+     "s": 584,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -4374,7 +4374,7 @@
     },
     {
      "name": "Jing’an Temple",
-     "s": 712,
+     "s": 723,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4392,7 +4392,7 @@
     },
     {
      "name": "Lunch",
-     "s": 780,
+     "s": 791,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -4410,7 +4410,7 @@
     },
     {
      "name": "Nanjing Road West",
-     "s": 871,
+     "s": 882,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -4428,7 +4428,7 @@
     },
     {
      "name": "Zhangyuan",
-     "s": 961,
+     "s": 972,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4500,15 +4500,15 @@
     },
     {
      "name": "Wukang Building",
-     "s": 488,
+     "s": 480,
      "d": 20,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "metro",
-      "minutes": 25,
-      "km": 6.5,
-      "est": false,
+      "mode": "didi",
+      "minutes": 17,
+      "km": 7.18,
+      "est": true,
       "coloc": false
      },
      "advice": 20,
@@ -4518,7 +4518,7 @@
     },
     {
      "name": "Wukang Road",
-     "s": 526,
+     "s": 518,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4536,7 +4536,7 @@
     },
     {
      "name": "Ferguson Lane",
-     "s": 598,
+     "s": 590,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4554,7 +4554,7 @@
     },
     {
      "name": "Anfu Road",
-     "s": 665,
+     "s": 657,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4572,7 +4572,7 @@
     },
     {
      "name": "Wulumuqi Road",
-     "s": 732,
+     "s": 724,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -4590,7 +4590,7 @@
     },
     {
      "name": "Lunch",
-     "s": 770,
+     "s": 762,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -4608,7 +4608,7 @@
     },
     {
      "name": "Fuxing Park",
-     "s": 848,
+     "s": 840,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4626,7 +4626,7 @@
     },
     {
      "name": "Sinan Mansions",
-     "s": 906,
+     "s": 898,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4698,15 +4698,15 @@
     },
     {
      "name": "Yu Garden",
-     "s": 481,
+     "s": 471,
      "d": 90,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "metro",
-      "minutes": 18,
-      "km": 3.1,
-      "est": false,
+      "mode": "didi",
+      "minutes": 8,
+      "km": 1.27,
+      "est": true,
       "coloc": false
      },
      "advice": 90,
@@ -4716,7 +4716,7 @@
     },
     {
      "name": "Mid-Lake Teahouse",
-     "s": 593,
+     "s": 583,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4734,7 +4734,7 @@
     },
     {
      "name": "Yuyuan Bazaar",
-     "s": 667,
+     "s": 657,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4751,26 +4751,8 @@
      "hub": null
     },
     {
-     "name": "Lunch",
-     "s": 735,
-     "d": 60,
-     "kind": "meal",
-     "meal": "lunch",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 60,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "City God Temple",
-     "s": 813,
+     "s": 735,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4787,8 +4769,26 @@
      "hub": null
     },
     {
+     "name": "Lunch",
+     "s": 788,
+     "d": 60,
+     "kind": "meal",
+     "meal": "lunch",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 60,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "People’s Square",
-     "s": 875,
+     "s": 865,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4806,7 +4806,7 @@
     },
     {
      "name": "Huangpu night cruise",
-     "s": 938,
+     "s": 928,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -4878,14 +4878,14 @@
     },
     {
      "name": "TANK Shanghai",
-     "s": 480,
+     "s": 482,
      "d": 75,
      "kind": "sight",
      "meal": null,
      "travelIn": {
       "mode": "didi",
-      "minutes": 17,
-      "km": 7.16,
+      "minutes": 19,
+      "km": 8.6,
       "est": true,
       "coloc": false
      },
@@ -4896,7 +4896,7 @@
     },
     {
      "name": "West Bund Museum",
-     "s": 580,
+     "s": 582,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -4914,7 +4914,7 @@
     },
     {
      "name": "West Bund riverside",
-     "s": 693,
+     "s": 695,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4932,7 +4932,7 @@
     },
     {
      "name": "Lunch",
-     "s": 746,
+     "s": 748,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -4950,7 +4950,7 @@
     },
     {
      "name": "Long Museum West Bund",
-     "s": 831,
+     "s": 833,
      "d": 90,
      "kind": "sight",
      "meal": null,

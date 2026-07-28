@@ -234,10 +234,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Tiananmen Square",
-   "travelMode": "metro",
-   "travelMin": 19,
-   "travelKm": 3.5,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 10,
+   "travelKm": 2.17,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -250,8 +250,8 @@
    "order": 20,
    "activity": "Tiananmen Square",
    "kind": "Sight",
-   "newStart": "07:32",
-   "newEnd": "08:47",
+   "newStart": "07:23",
+   "newEnd": "08:38",
    "newDurMin": 75,
    "durBasis": "Guides say allocate ~2h including queuing, but note non-holiday weekday security waits are under 30 min and before 09:00 is the quietest slot - so ~30 min entry plus 45 min on the square.",
    "durConf": "med",
@@ -263,7 +263,7 @@
    "origDay": 2,
    "origStart": "08:42",
    "origDurMin": 75,
-   "action": "RETIME 08:42 → 07:32"
+   "action": "RETIME 08:42 → 07:23"
   },
   {
    "city": "Beijing",
@@ -272,8 +272,8 @@
    "order": 30,
    "activity": "Forbidden City",
    "kind": "Sight",
-   "newStart": "09:11",
-   "newEnd": "12:41",
+   "newStart": "09:02",
+   "newEnd": "12:32",
    "newDurMin": 210,
    "durBasis": "Guides put the central axis at 2-3h and 4-5h if you add the Treasure and Clock galleries; Meridian Gate security is a further 15-20 min off-peak, so 3.5h is the unhurried first-timer figure.",
    "durConf": "high",
@@ -285,7 +285,7 @@
    "origDay": 2,
    "origStart": "10:36",
    "origDurMin": 210,
-   "action": "RETIME 10:36 → 09:11"
+   "action": "RETIME 10:36 → 09:02"
   },
   {
    "city": "Beijing",
@@ -294,8 +294,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:49",
-   "newEnd": "13:49",
+   "newStart": "12:40",
+   "newEnd": "13:40",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -307,7 +307,7 @@
    "origDay": 2,
    "origStart": "12:26",
    "origDurMin": 60,
-   "action": "RETIME 12:26 → 12:49"
+   "action": "RETIME 12:26 → 12:40"
   },
   {
    "city": "Beijing",
@@ -316,54 +316,54 @@
    "order": 50,
    "activity": "National Museum",
    "kind": "Sight",
-   "newStart": "14:06",
-   "newEnd": "17:00",
-   "newDurMin": 174,
-   "durBasis": "CUT SHORT BY CLOSING TIME: closes 17:00, last entry 16:00; 6 min less than the 180 min advice. TripAdvisor reviewers and museum guides say most people spend 2-3h and enthusiasts 4-6h, with the Ancient China galleries alone quoted at 2-3h; add the passport/security check on entry.",
+   "newStart": "13:57",
+   "newEnd": "16:57",
+   "newDurMin": 180,
+   "durBasis": "TripAdvisor reviewers and museum guides say most people spend 2-3h and enthusiasts 4-6h, with the Ancient China galleries alone quoted at 2-3h; add the passport/security check on entry.",
    "durConf": "high",
-   "toNext": "Dinner",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 2,
-   "origStart": "15:08",
-   "origDurMin": 180,
-   "action": "RETIME 15:08 → 14:06; DURATION 180m → 174m; ORDER 60 → 50"
-  },
-  {
-   "city": "Beijing",
-   "day": 2,
-   "date": "2026-08-12",
-   "order": 60,
-   "activity": "Dinner",
-   "kind": "Food",
-   "newStart": "17:08",
-   "newEnd": "18:38",
-   "newDurMin": 90,
-   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
-   "durConf": "med",
    "toNext": "Jingshan Park",
    "travelMode": "metro",
    "travelMin": 20,
    "travelKm": 4.1,
    "travelSource": "routed (real leg)",
    "origDay": 2,
-   "origStart": "18:04",
-   "origDurMin": 90,
-   "action": "RETIME 18:04 → 17:08; ORDER 70 → 60"
+   "origStart": "15:08",
+   "origDurMin": 180,
+   "action": "RETIME 15:08 → 13:57; ORDER 60 → 50"
+  },
+  {
+   "city": "Beijing",
+   "day": 2,
+   "date": "2026-08-12",
+   "order": 60,
+   "activity": "Jingshan Park",
+   "kind": "Sight",
+   "newStart": "17:25",
+   "newEnd": "18:10",
+   "newDurMin": 45,
+   "durBasis": "Trip.com and TripAdvisor reports give a 5-15 min climb each way (about 150 steps) and an average visit around 30 min, stretching to 2h only for dedicated photographers.",
+   "durConf": "med",
+   "toNext": "Dinner",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 2,
+   "origStart": "13:40",
+   "origDurMin": 45,
+   "action": "RETIME 13:40 → 17:25; ORDER 50 → 60"
   },
   {
    "city": "Beijing",
    "day": 2,
    "date": "2026-08-12",
    "order": 70,
-   "activity": "Jingshan Park",
-   "kind": "Sight",
-   "newStart": "19:06",
-   "newEnd": "19:51",
-   "newDurMin": 45,
-   "durBasis": "Trip.com and TripAdvisor reports give a 5-15 min climb each way (about 150 steps) and an average visit around 30 min, stretching to 2h only for dedicated photographers.",
+   "activity": "Dinner",
+   "kind": "Food",
+   "newStart": "18:18",
+   "newEnd": "19:48",
+   "newDurMin": 90,
+   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Hotel (home)",
    "travelMode": "didi",
@@ -371,9 +371,9 @@
    "travelKm": 2.1,
    "travelSource": "estimated (fitted model)",
    "origDay": 2,
-   "origStart": "13:40",
-   "origDurMin": 45,
-   "action": "RETIME 13:40 → 19:06; ORDER 50 → 70"
+   "origStart": "18:04",
+   "origDurMin": 90,
+   "action": "RETIME 18:04 → 18:18"
   },
   {
    "city": "Beijing",
@@ -389,9 +389,9 @@
    "durConf": "med",
    "toNext": "Mutianyu Great Wall",
    "travelMode": "didi",
-   "travelMin": 82,
-   "travelKm": 74.9,
-   "travelSource": "routed (real leg)",
+   "travelMin": 95,
+   "travelKm": 58.69,
+   "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -404,54 +404,54 @@
    "order": 20,
    "activity": "Mutianyu Great Wall",
    "kind": "Sight",
-   "newStart": "09:05",
-   "newEnd": "11:50",
+   "newStart": "09:18",
+   "newEnd": "12:03",
    "newDurMin": 165,
    "durBasis": "TripAdvisor Q&A and China guides say most visitors spend 2-3h at Mutianyu including the cable car and several watchtowers (3-4h for a thorough hike); the toboggan is counted separately here.",
    "durConf": "high",
-   "toNext": "Toboggan down",
-   "travelMode": "none",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "routed (real leg)",
-   "origDay": 3,
-   "origStart": "09:45",
-   "origDurMin": 165,
-   "action": "RETIME 09:45 → 09:05"
-  },
-  {
-   "city": "Beijing",
-   "day": 3,
-   "date": "2026-08-13",
-   "order": 30,
-   "activity": "Toboggan down",
-   "kind": "Sight",
-   "newStart": "11:58",
-   "newEnd": "12:18",
-   "newDurMin": 20,
-   "durBasis": "Rider reports and operator guides put the descent itself at 5-10 min depending on braking; the rest is the walk to the launch platform, the safety briefing and the summer queue.",
-   "durConf": "med",
    "toNext": "Lunch",
    "travelMode": "none (same place)",
    "travelMin": 0,
    "travelKm": 0,
    "travelSource": "co-located",
    "origDay": 3,
-   "origStart": "14:16",
-   "origDurMin": 20,
-   "action": "RETIME 14:16 → 11:58; ORDER 40 → 30"
+   "origStart": "09:45",
+   "origDurMin": 165,
+   "action": "RETIME 09:45 → 09:18"
+  },
+  {
+   "city": "Beijing",
+   "day": 3,
+   "date": "2026-08-13",
+   "order": 30,
+   "activity": "Lunch",
+   "kind": "Food",
+   "newStart": "12:11",
+   "newEnd": "13:11",
+   "newDurMin": 60,
+   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
+   "durConf": "med",
+   "toNext": "Toboggan down",
+   "travelMode": "none",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "routed (real leg)",
+   "origDay": 3,
+   "origStart": "12:41",
+   "origDurMin": 60,
+   "action": "RETIME 12:41 → 12:11"
   },
   {
    "city": "Beijing",
    "day": 3,
    "date": "2026-08-13",
    "order": 40,
-   "activity": "Lunch",
-   "kind": "Food",
-   "newStart": "12:26",
-   "newEnd": "13:26",
-   "newDurMin": 60,
-   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
+   "activity": "Toboggan down",
+   "kind": "Sight",
+   "newStart": "13:19",
+   "newEnd": "13:39",
+   "newDurMin": 20,
+   "durBasis": "Rider reports and operator guides put the descent itself at 5-10 min depending on braking; the rest is the walk to the launch platform, the safety briefing and the summer queue.",
    "durConf": "med",
    "toNext": "Sanlitun Taikoo Li",
    "travelMode": "didi",
@@ -459,9 +459,9 @@
    "travelKm": 55.94,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
-   "origStart": "12:41",
-   "origDurMin": 60,
-   "action": "RETIME 12:41 → 12:26; ORDER 30 → 40"
+   "origStart": "14:16",
+   "origDurMin": 20,
+   "action": "RETIME 14:16 → 13:19"
   },
   {
    "city": "Beijing",
@@ -470,8 +470,8 @@
    "order": 50,
    "activity": "Sanlitun Taikoo Li",
    "kind": "Sight",
-   "newStart": "15:05",
-   "newEnd": "17:35",
+   "newStart": "15:18",
+   "newEnd": "17:48",
    "newDurMin": 150,
    "durBasis": "Beijing guides suggest 3-5h to explore both Taikoo Li zones leisurely and 1-2h for a quick pass; with dinner folded in, 2.5h is a realistic evening.",
    "durConf": "med",
@@ -483,7 +483,7 @@
    "origDay": 3,
    "origStart": "16:51",
    "origDurMin": 150,
-   "action": "RETIME 16:51 → 15:05"
+   "action": "RETIME 16:51 → 15:18"
   },
   {
    "city": "Beijing",
@@ -492,8 +492,8 @@
    "order": 60,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "17:43",
-   "newEnd": "19:13",
+   "newStart": "17:56",
+   "newEnd": "19:26",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -505,7 +505,7 @@
    "origDay": 3,
    "origStart": "18:50",
    "origDurMin": 90,
-   "action": "RETIME 18:50 → 17:43"
+   "action": "RETIME 18:50 → 17:56"
   },
   {
    "city": "Beijing",
@@ -514,8 +514,8 @@
    "order": 70,
    "activity": "CCTV 'Big Pants'",
    "kind": "Sight",
-   "newStart": "19:31",
-   "newEnd": "20:31",
+   "newStart": "19:44",
+   "newEnd": "20:44",
    "newDurMin": 60,
    "durBasis": "Guides note interior access is staff-only and visitors typically spend 20-60 min photographing from the open plaza or the free China World Mall viewing terrace. Set to the TOP of that documented range (was 30): this is the stop whose entire value is the tower after dark, it is now scheduled post-sunset, and an hour lets you shoot the plaza and ride up to the mall terrace rather than just stop for one photo.",
    "durConf": "med",
@@ -527,7 +527,7 @@
    "origDay": 3,
    "origStart": "20:33",
    "origDurMin": 60,
-   "action": "RETIME 20:33 → 19:31"
+   "action": "RETIME 20:33 → 19:44"
   },
   {
    "city": "Beijing",
@@ -543,9 +543,9 @@
    "durConf": "med",
    "toNext": "Summer Palace",
    "travelMode": "didi",
-   "travelMin": 38,
-   "travelKm": 23.6,
-   "travelSource": "routed (real leg)",
+   "travelMin": 30,
+   "travelKm": 15.32,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -558,8 +558,8 @@
    "order": 20,
    "activity": "Summer Palace",
    "kind": "Sight",
-   "newStart": "08:21",
-   "newEnd": "11:51",
+   "newStart": "08:13",
+   "newEnd": "11:43",
    "newDurMin": 210,
    "durBasis": "Multiple guides state 3-4h is the minimum for a visit that feels worthwhile and that 2h is only a skim of this very spread-out site; the North Palace Gate to Longevity Hill to ferry route fits 3.5h.",
    "durConf": "high",
@@ -571,7 +571,7 @@
    "origDay": 4,
    "origStart": "09:01",
    "origDurMin": 210,
-   "action": "RETIME 09:01 → 08:21"
+   "action": "RETIME 09:01 → 08:13"
   },
   {
    "city": "Beijing",
@@ -580,8 +580,8 @@
    "order": 30,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "11:59",
-   "newEnd": "12:59",
+   "newStart": "11:51",
+   "newEnd": "12:51",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -593,7 +593,7 @@
    "origDay": 4,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 11:59"
+   "action": "RETIME 12:00 → 11:51"
   },
   {
    "city": "Beijing",
@@ -602,8 +602,8 @@
    "order": 40,
    "activity": "798 Art District",
    "kind": "Sight",
-   "newStart": "13:43",
-   "newEnd": "16:13",
+   "newStart": "13:35",
+   "newEnd": "16:05",
    "newDurMin": 150,
    "durBasis": "TripAdvisor and district guides give 2h for a highlights loop and 2-4h for a typical visit (4-5h for art devotees); 2.5h covers the outdoor art and smaller galleries with UCCA timed separately.",
    "durConf": "med",
@@ -615,7 +615,7 @@
    "origDay": 4,
    "origStart": "13:09",
    "origDurMin": 150,
-   "action": "RETIME 13:09 → 13:43"
+   "action": "RETIME 13:09 → 13:35"
   },
   {
    "city": "Beijing",
@@ -624,8 +624,8 @@
    "order": 50,
    "activity": "UCCA",
    "kind": "Sight",
-   "newStart": "16:29",
-   "newEnd": "17:44",
+   "newStart": "16:21",
+   "newEnd": "17:36",
    "newDurMin": 75,
    "durBasis": "Visitor write-ups say the UCCA halls are compact enough to walk through in about an hour; the extra 15 min covers ticketing and the UCCA Store.",
    "durConf": "med",
@@ -637,7 +637,7 @@
    "origDay": 4,
    "origStart": "15:25",
    "origDurMin": 75,
-   "action": "RETIME 15:25 → 16:29"
+   "action": "RETIME 15:25 → 16:21"
   },
   {
    "city": "Beijing",
@@ -873,9 +873,9 @@
    "durConf": "med",
    "toNext": "Baisha Village",
    "travelMode": "didi",
-   "travelMin": 27,
-   "travelKm": 11.9,
-   "travelSource": "routed (real leg)",
+   "travelMin": 20,
+   "travelKm": 9.17,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -888,8 +888,8 @@
    "order": 20,
    "activity": "Baisha Village",
    "kind": "Sight",
-   "newStart": "09:10",
-   "newEnd": "10:25",
+   "newStart": "09:03",
+   "newEnd": "10:18",
    "newDurMin": 75,
    "durBasis": "Guides give Baisha 2-3 h in total; with the murals and embroidery institute counted separately, 75 min covers the main street, farm lanes and mountain views.",
    "durConf": "med",
@@ -901,7 +901,7 @@
    "origDay": 4,
    "origStart": "08:50",
    "origDurMin": 75,
-   "action": "MOVE day 4 → 2; RETIME 08:50 → 09:10"
+   "action": "MOVE day 4 → 2; RETIME 08:50 → 09:03"
   },
   {
    "city": "Lijiang",
@@ -910,8 +910,8 @@
    "order": 30,
    "activity": "Baisha Murals",
    "kind": "Sight",
-   "newStart": "10:37",
-   "newEnd": "11:17",
+   "newStart": "10:30",
+   "newEnd": "11:10",
    "newDurMin": 40,
    "durBasis": "The 55 surviving Ming-Qing panels sit in a handful of small halls (CNY 30); TripAdvisor reviewers describe a compact 30-45 min visit, longer only with a guide.",
    "durConf": "med",
@@ -923,7 +923,7 @@
    "origDay": 4,
    "origStart": "10:17",
    "origDurMin": 40,
-   "action": "MOVE day 4 → 2; RETIME 10:17 → 10:37"
+   "action": "MOVE day 4 → 2; RETIME 10:17 → 10:30"
   },
   {
    "city": "Lijiang",
@@ -932,8 +932,8 @@
    "order": 40,
    "activity": "Baisha embroidery",
    "kind": "Sight",
-   "newStart": "11:26",
-   "newEnd": "11:56",
+   "newStart": "11:19",
+   "newEnd": "11:49",
    "newDurMin": 30,
    "durBasis": "TripAdvisor reviewers call it worth 10-20 min to see the pieces and artists at work; listings quote up to an hour, so 30 min covers a genuine look plus a browse.",
    "durConf": "med",
@@ -945,7 +945,7 @@
    "origDay": 4,
    "origStart": "12:26",
    "origDurMin": 30,
-   "action": "MOVE day 4 → 2; RETIME 12:26 → 11:26"
+   "action": "MOVE day 4 → 2; RETIME 12:26 → 11:19"
   },
   {
    "city": "Lijiang",
@@ -954,8 +954,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:04",
-   "newEnd": "13:04",
+   "newStart": "11:57",
+   "newEnd": "12:57",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -967,7 +967,7 @@
    "origDay": 2,
    "origStart": "14:31",
    "origDurMin": 60,
-   "action": "RETIME 14:31 → 12:04"
+   "action": "RETIME 14:31 → 11:57"
   },
   {
    "city": "Lijiang",
@@ -976,8 +976,8 @@
    "order": 60,
    "activity": "Shuhe Old Town",
    "kind": "Sight",
-   "newStart": "13:25",
-   "newEnd": "15:25",
+   "newStart": "13:18",
+   "newEnd": "15:18",
    "newDurMin": 120,
    "durBasis": "Guides recommend 3-4 h for a full Shuhe visit, but for travellers who have already walked Dayan, 2 h covers the core lanes, canals and Qinglong Bridge; museum and lunch are separate stops.",
    "durConf": "med",
@@ -989,7 +989,7 @@
    "origDay": 4,
    "origStart": "14:47",
    "origDurMin": 120,
-   "action": "MOVE day 4 → 2; RETIME 14:47 → 13:25; ORDER 50 → 60"
+   "action": "MOVE day 4 → 2; RETIME 14:47 → 13:18; ORDER 50 → 60"
   },
   {
    "city": "Lijiang",
@@ -998,8 +998,8 @@
    "order": 70,
    "activity": "Tea Horse Road Museum",
    "kind": "Sight",
-   "newStart": "15:46",
-   "newEnd": "16:26",
+   "newStart": "15:39",
+   "newEnd": "16:19",
    "newDurMin": 40,
    "durBasis": "Listings give a recommended 0.5-1 h; reviewers note it is small with mostly Chinese-only captions, so 40 min covers the halls and the Ming murals at Dajue Palace.",
    "durConf": "high",
@@ -1011,7 +1011,7 @@
    "origDay": 4,
    "origStart": "17:26",
    "origDurMin": 40,
-   "action": "MOVE day 4 → 2; RETIME 17:26 → 15:46"
+   "action": "MOVE day 4 → 2; RETIME 17:26 → 15:39"
   },
   {
    "city": "Lijiang",
@@ -1072,7 +1072,7 @@
    "toNext": "Glacier Park cable car",
    "travelMode": "didi",
    "travelMin": 46,
-   "travelKm": 26.06,
+   "travelKm": 26.28,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
@@ -1224,10 +1224,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Depart for the gorge",
-   "travelMode": "didi",
-   "travelMin": 17,
-   "travelKm": 4.2,
-   "travelSource": "routed (real leg)",
+   "travelMode": "walk",
+   "travelMin": 22,
+   "travelKm": 0.93,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -1240,8 +1240,8 @@
    "order": 20,
    "activity": "Depart for the gorge",
    "kind": "Sight",
-   "newStart": "08:00",
-   "newEnd": "08:30",
+   "newStart": "08:05",
+   "newEnd": "08:35",
    "newDurMin": 30,
    "durBasis": "Chinese long-distance bus stations require ID check plus bag security and advise arriving ~30 min before departure; a private driver would cut this to ~10 min.",
    "durConf": "med",
@@ -1253,7 +1253,7 @@
    "origDay": 2,
    "origStart": "08:40",
    "origDurMin": 30,
-   "action": "MOVE day 2 → 4; RETIME 08:40 → 08:00"
+   "action": "MOVE day 2 → 4; RETIME 08:40 → 08:05"
   },
   {
    "city": "Lijiang",
@@ -1262,8 +1262,8 @@
    "order": 30,
    "activity": "Qiaotou gateway",
    "kind": "Sight",
-   "newStart": "10:03",
-   "newEnd": "10:33",
+   "newStart": "10:08",
+   "newEnd": "10:38",
    "newDurMin": 30,
    "durBasis": "Qiaotou (Hutiaoxia town) is where the gorge entrance fee is paid and onward vans are arranged; trip reports describe 20-40 min of formalities and waiting.",
    "durConf": "med",
@@ -1275,7 +1275,7 @@
    "origDay": 2,
    "origStart": "10:58",
    "origDurMin": 30,
-   "action": "MOVE day 2 → 4; RETIME 10:58 → 10:03"
+   "action": "MOVE day 2 → 4; RETIME 10:58 → 10:08"
   },
   {
    "city": "Lijiang",
@@ -1284,8 +1284,8 @@
    "order": 40,
    "activity": "Tiger Leaping Gorge",
    "kind": "Sight",
-   "newStart": "10:49",
-   "newEnd": "12:49",
+   "newStart": "10:54",
+   "newEnd": "12:54",
    "newDurMin": 120,
    "durBasis": "China Highlights and other guides put the Upper Gorge scenic spot at 1-2 hours on the paved plank path down to the tiger statue and back up the stairs.",
    "durConf": "high",
@@ -1297,7 +1297,7 @@
    "origDay": 2,
    "origStart": "11:59",
    "origDurMin": 120,
-   "action": "MOVE day 2 → 4; RETIME 11:59 → 10:49"
+   "action": "MOVE day 2 → 4; RETIME 11:59 → 10:54"
   },
   {
    "city": "Lijiang",
@@ -1306,8 +1306,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:57",
-   "newEnd": "13:57",
+   "newStart": "13:02",
+   "newEnd": "14:02",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -1319,7 +1319,7 @@
    "origDay": 4,
    "origStart": "16:17",
    "origDurMin": 60,
-   "action": "RETIME 16:17 → 12:57; ORDER 60 → 50"
+   "action": "RETIME 16:17 → 13:02; ORDER 60 → 50"
   },
   {
    "city": "Lijiang",
@@ -1328,8 +1328,8 @@
    "order": 60,
    "activity": "Middle Gorge descent",
    "kind": "Sight",
-   "newStart": "14:36",
-   "newEnd": "17:36",
+   "newStart": "14:41",
+   "newEnd": "17:41",
    "newDurMin": 180,
    "durBasis": "Trip reports consistently give 2-3 h for the descent from Tina's to the river and the steep climb back via Teacher Zhang's trail or the 168-step Sky Ladder.",
    "durConf": "high",
@@ -1341,7 +1341,7 @@
    "origDay": 2,
    "origStart": "15:48",
    "origDurMin": 180,
-   "action": "MOVE day 2 → 4; RETIME 15:48 → 14:36"
+   "action": "MOVE day 2 → 4; RETIME 15:48 → 14:41"
   },
   {
    "city": "Lijiang",
@@ -1577,9 +1577,9 @@
    "durConf": "med",
    "toNext": "Chengdu Panda Base",
    "travelMode": "didi",
-   "travelMin": 39,
-   "travelKm": 27.8,
-   "travelSource": "routed (real leg)",
+   "travelMin": 23,
+   "travelKm": 10.85,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -1592,8 +1592,8 @@
    "order": 20,
    "activity": "Chengdu Panda Base",
    "kind": "Sight",
-   "newStart": "08:22",
-   "newEnd": "11:52",
+   "newStart": "08:06",
+   "newEnd": "11:36",
    "newDurMin": 210,
    "durBasis": "Guides advise at least 3–4 h because the base is large; walking the whole park is about 3 h, and 2.5 h is described on TripAdvisor as the rushed minimum.",
    "durConf": "high",
@@ -1605,7 +1605,7 @@
    "origDay": 2,
    "origStart": "09:02",
    "origDurMin": 210,
-   "action": "RETIME 09:02 → 08:22"
+   "action": "RETIME 09:02 → 08:06"
   },
   {
    "city": "Chengdu",
@@ -1614,8 +1614,8 @@
    "order": 30,
    "activity": "People’s Park",
    "kind": "Sight",
-   "newStart": "12:24",
-   "newEnd": "13:09",
+   "newStart": "12:08",
+   "newEnd": "12:53",
    "newDurMin": 45,
    "durBasis": "Guides bundle park plus teahouse into 1–2 h; with Heming timed separately, the lake loop and marriage-market corner take about 45 min.",
    "durConf": "med",
@@ -1627,7 +1627,7 @@
    "origDay": 2,
    "origStart": "15:53",
    "origDurMin": 45,
-   "action": "RETIME 15:53 → 12:24; ORDER 50 → 30"
+   "action": "RETIME 15:53 → 12:08; ORDER 50 → 30"
   },
   {
    "city": "Chengdu",
@@ -1636,8 +1636,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "13:17",
-   "newEnd": "14:17",
+   "newStart": "13:01",
+   "newEnd": "14:01",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -1649,7 +1649,7 @@
    "origDay": 2,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 13:17; ORDER 30 → 40"
+   "action": "RETIME 12:00 → 13:01; ORDER 30 → 40"
   },
   {
    "city": "Chengdu",
@@ -1658,8 +1658,8 @@
    "order": 50,
    "activity": "Heming Teahouse",
    "kind": "Sight",
-   "newStart": "14:30",
-   "newEnd": "16:00",
+   "newStart": "14:14",
+   "newEnd": "15:44",
    "newDurMin": 90,
    "durBasis": "Teahouse sources put the average Heming visit at 1–2 h with no table time limit, and caier ear cleaning adds roughly 20–30 min.",
    "durConf": "med",
@@ -1671,7 +1671,7 @@
    "origDay": 2,
    "origStart": "18:06",
    "origDurMin": 90,
-   "action": "RETIME 18:06 → 14:30; ORDER 60 → 50"
+   "action": "RETIME 18:06 → 14:14; ORDER 60 → 50"
   },
   {
    "city": "Chengdu",
@@ -1680,8 +1680,8 @@
    "order": 60,
    "activity": "Kuanzhai Alleys",
    "kind": "Sight",
-   "newStart": "16:23",
-   "newEnd": "18:23",
+   "newStart": "16:07",
+   "newEnd": "18:07",
    "newDurMin": 120,
    "durBasis": "TripAdvisor and Chinese guides recommend 2–3 h for the wide, narrow and well lanes, best from about 17:00 once the lights come on.",
    "durConf": "med",
@@ -1693,7 +1693,7 @@
    "origDay": 2,
    "origStart": "19:29",
    "origDurMin": 120,
-   "action": "RETIME 19:29 → 16:23; ORDER 70 → 60"
+   "action": "RETIME 19:29 → 16:07; ORDER 70 → 60"
   },
   {
    "city": "Chengdu",
@@ -1753,8 +1753,8 @@
    "durConf": "med",
    "toNext": "Sanxingdui Museum",
    "travelMode": "didi",
-   "travelMin": 80,
-   "travelKm": 48.94,
+   "travelMin": 67,
+   "travelKm": 40.16,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
@@ -1768,8 +1768,8 @@
    "order": 20,
    "activity": "Sanxingdui Museum",
    "kind": "Sight",
-   "newStart": "09:03",
-   "newEnd": "12:33",
+   "newStart": "08:50",
+   "newEnd": "12:20",
    "newDurMin": 210,
    "durBasis": "Official and tour guidance since the 2023 new building recommends 3–4 h (some say 3–5 h) for the new halls plus the old bronze hall; it is genuinely a half-day.",
    "durConf": "high",
@@ -1781,7 +1781,7 @@
    "origDay": 3,
    "origStart": "12:30",
    "origDurMin": 210,
-   "action": "RETIME 12:30 → 09:03; ORDER 40 → 20"
+   "action": "RETIME 12:30 → 08:50; ORDER 40 → 20"
   },
   {
    "city": "Chengdu",
@@ -1790,8 +1790,8 @@
    "order": 30,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:41",
-   "newEnd": "13:41",
+   "newStart": "12:28",
+   "newEnd": "13:28",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -1803,7 +1803,7 @@
    "origDay": 3,
    "origStart": "16:23",
    "origDurMin": 60,
-   "action": "RETIME 16:23 → 12:41; ORDER 50 → 30"
+   "action": "RETIME 16:23 → 12:28; ORDER 50 → 30"
   },
   {
    "city": "Chengdu",
@@ -1812,8 +1812,8 @@
    "order": 40,
    "activity": "Wuhou Shrine",
    "kind": "Sight",
-   "newStart": "14:58",
-   "newEnd": "16:58",
+   "newStart": "14:45",
+   "newEnd": "16:45",
    "newDurMin": 120,
    "durBasis": "Chengdu guides state the main sights take about two hours, three if you linger in the gardens or the Three Kingdoms history.",
    "durConf": "high",
@@ -1825,7 +1825,7 @@
    "origDay": 3,
    "origStart": "19:48",
    "origDurMin": 120,
-   "action": "RETIME 19:48 → 14:58; ORDER 70 → 40"
+   "action": "RETIME 19:48 → 14:45; ORDER 70 → 40"
   },
   {
    "city": "Chengdu",
@@ -1834,8 +1834,8 @@
    "order": 50,
    "activity": "Jinli Old Street",
    "kind": "Sight",
-   "newStart": "17:19",
-   "newEnd": "18:49",
+   "newStart": "17:06",
+   "newEnd": "18:36",
    "newDurMin": 90,
    "durBasis": "Guides suggest 2–3 h for Jinli at sunset; 1.5 h fits a walk plus snacks when Wuhou Shrine next door is visited the same evening.",
    "durConf": "med",
@@ -1847,7 +1847,7 @@
    "origDay": 3,
    "origStart": "21:39",
    "origDurMin": 90,
-   "action": "RETIME 21:39 → 17:19; ORDER 80 → 50"
+   "action": "RETIME 21:39 → 17:06; ORDER 80 → 50"
   },
   {
    "city": "Chengdu",
@@ -1856,8 +1856,8 @@
    "order": 60,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "18:57",
-   "newEnd": "20:27",
+   "newStart": "18:44",
+   "newEnd": "20:14",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -1869,7 +1869,7 @@
    "origDay": 3,
    "origStart": "23:53",
    "origDurMin": 90,
-   "action": "RETIME 23:53 → 18:57; ORDER 90 → 60"
+   "action": "RETIME 23:53 → 18:44; ORDER 90 → 60"
   },
   {
    "city": "Chengdu",
@@ -1878,8 +1878,8 @@
    "order": 70,
    "activity": "Taikoo Li",
    "kind": "Sight",
-   "newStart": "20:46",
-   "newEnd": "22:16",
+   "newStart": "20:33",
+   "newEnd": "22:03",
    "newDurMin": 90,
    "durBasis": "Chengdu guides put a relaxed walk through Taikoo Li at 1–2 hours, longer only if you stop to dine.",
    "durConf": "med",
@@ -1891,7 +1891,7 @@
    "origDay": 1,
    "origStart": "00:17",
    "origDurMin": 90,
-   "action": "MOVE day 1 → 3; RETIME 00:17 → 20:46; ORDER 40 → 70"
+   "action": "MOVE day 1 → 3; RETIME 00:17 → 20:33; ORDER 40 → 70"
   },
   {
    "city": "Chengdu",
@@ -2170,10 +2170,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Liziba monorail",
-   "travelMode": "metro",
-   "travelMin": 20,
-   "travelKm": 4.3,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 13,
+   "travelKm": 4.14,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -2186,8 +2186,8 @@
    "order": 20,
    "activity": "Liziba monorail",
    "kind": "Sight",
-   "newStart": "09:03",
-   "newEnd": "09:33",
+   "newStart": "08:56",
+   "newEnd": "09:26",
    "newDurMin": 30,
    "durBasis": "Chongqing city guides give a suggested stay of 30min at the purpose-built viewing platform, with trains passing every 2-4 minutes so waits are short.",
    "durConf": "high",
@@ -2199,7 +2199,7 @@
    "origDay": 2,
    "origStart": "08:43",
    "origDurMin": 30,
-   "action": "RETIME 08:43 → 09:03"
+   "action": "RETIME 08:43 → 08:56"
   },
   {
    "city": "Chongqing",
@@ -2208,8 +2208,8 @@
    "order": 30,
    "activity": "Eling Park",
    "kind": "Sight",
-   "newStart": "09:51",
-   "newEnd": "11:06",
+   "newStart": "09:44",
+   "newEnd": "10:59",
    "newDurMin": 75,
    "durBasis": "Trip.com suggests 1-2h; the park is small but the Liangjiang Pavilion is a seven-to-nine storey climb worth lingering at for the panorama.",
    "durConf": "med",
@@ -2221,7 +2221,7 @@
    "origDay": 2,
    "origStart": "10:01",
    "origDurMin": 75,
-   "action": "RETIME 10:01 → 09:51"
+   "action": "RETIME 10:01 → 09:44"
   },
   {
    "city": "Chongqing",
@@ -2230,8 +2230,8 @@
    "order": 40,
    "activity": "Testbed 2",
    "kind": "Sight",
-   "newStart": "11:28",
-   "newEnd": "12:58",
+   "newStart": "11:21",
+   "newEnd": "12:51",
    "newDurMin": 90,
    "durBasis": "Trip.com's suggested sightseeing time is 1-3h for the shops, galleries and rooftop of the old printing works; 90min covers a proper wander without a meal.",
    "durConf": "med",
@@ -2243,7 +2243,7 @@
    "origDay": 2,
    "origStart": "11:23",
    "origDurMin": 90,
-   "action": "RETIME 11:23 → 11:28"
+   "action": "RETIME 11:23 → 11:21"
   },
   {
    "city": "Chongqing",
@@ -2252,8 +2252,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "13:06",
-   "newEnd": "14:06",
+   "newStart": "12:59",
+   "newEnd": "13:59",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -2265,7 +2265,7 @@
    "origDay": 2,
    "origStart": "14:10",
    "origDurMin": 60,
-   "action": "RETIME 14:10 → 13:06"
+   "action": "RETIME 14:10 → 12:59"
   },
   {
    "city": "Chongqing",
@@ -2274,8 +2274,8 @@
    "order": 60,
    "activity": "Baixiang Ju",
    "kind": "Sight",
-   "newStart": "14:27",
-   "newEnd": "15:12",
+   "newStart": "14:20",
+   "newEnd": "15:05",
    "newDurMin": 45,
    "durBasis": "Guides report most visitors spend 40min to 1.5h, with the main corridors and the three street-level exits coverable in about 20min.",
    "durConf": "med",
@@ -2287,7 +2287,7 @@
    "origDay": 2,
    "origStart": "15:20",
    "origDurMin": 45,
-   "action": "RETIME 15:20 → 14:27"
+   "action": "RETIME 15:20 → 14:20"
   },
   {
    "city": "Chongqing",
@@ -2296,8 +2296,8 @@
    "order": 70,
    "activity": "Yangtze Cableway",
    "kind": "Sight",
-   "newStart": "15:39",
-   "newEnd": "16:39",
+   "newStart": "15:32",
+   "newEnd": "16:32",
    "newDurMin": 60,
    "durBasis": "Ride is only 3.6-5min but queues run 40-60min at peak windows (1-2h on holidays); late August is peak season even with WeChat queue numbers.",
    "durConf": "med",
@@ -2309,7 +2309,7 @@
    "origDay": 2,
    "origStart": "17:17",
    "origDurMin": 60,
-   "action": "RETIME 17:17 → 15:39"
+   "action": "RETIME 17:17 → 15:32"
   },
   {
    "city": "Chongqing",
@@ -2318,8 +2318,8 @@
    "order": 80,
    "activity": "Longmenhao Old Street",
    "kind": "Sight",
-   "newStart": "16:58",
-   "newEnd": "18:13",
+   "newStart": "16:51",
+   "newEnd": "18:06",
    "newDurMin": 75,
    "durBasis": "Trip.com suggests 1-3h for the six-tier hillside precinct and reviewers warn of a lot of stairs; 75min covers the main lanes and viewpoints.",
    "durConf": "med",
@@ -2331,7 +2331,7 @@
    "origDay": 2,
    "origStart": "18:21",
    "origDurMin": 75,
-   "action": "RETIME 18:21 → 16:58"
+   "action": "RETIME 18:21 → 16:51"
   },
   {
    "city": "Chongqing",
@@ -2340,8 +2340,8 @@
    "order": 90,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "18:21",
-   "newEnd": "19:51",
+   "newStart": "18:14",
+   "newEnd": "19:44",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -2353,7 +2353,7 @@
    "origDay": 2,
    "origStart": "20:03",
    "origDurMin": 90,
-   "action": "RETIME 20:03 → 18:21"
+   "action": "RETIME 20:03 → 18:14"
   },
   {
    "city": "Chongqing",
@@ -2362,8 +2362,8 @@
    "order": 100,
    "activity": "Two Rivers night cruise",
    "kind": "Sight",
-   "newStart": "20:07",
-   "newEnd": "21:22",
+   "newStart": "20:00",
+   "newEnd": "21:15",
    "newDurMin": 75,
    "durBasis": "Operators state a fixed 45-50min sailing over the 16-20km loop, and Chinese booking guides advise arriving 30min before departure for ticket check and seating.",
    "durConf": "high",
@@ -2375,7 +2375,7 @@
    "origDay": 2,
    "origStart": "21:49",
    "origDurMin": 75,
-   "action": "RETIME 21:49 → 20:07"
+   "action": "RETIME 21:49 → 20:00"
   },
   {
    "city": "Chongqing",
@@ -2517,9 +2517,9 @@
    "activity": "Golden Whip Stream",
    "kind": "Sight",
    "newStart": "16:57",
-   "newEnd": "19:42",
-   "newDurMin": 165,
-   "durBasis": "Trail guides and trip reports put the full 7.5 km flat walk at 2.5-3 h at a relaxed pace with photo stops (some quote 3-4 h).",
+   "newEnd": "19:00",
+   "newDurMin": 123,
+   "durBasis": "CUT SHORT BY CLOSING TIME: closes 19:00, last entry 17:30; 42 min less than the 165 min advice. Trail guides and trip reports put the full 7.5 km flat walk at 2.5-3 h at a relaxed pace with photo stops (some quote 3-4 h).",
    "durConf": "high",
    "toNext": "Dinner",
    "travelMode": "none (same place)",
@@ -2529,7 +2529,7 @@
    "origDay": 1,
    "origStart": "18:00",
    "origDurMin": 165,
-   "action": "RETIME 18:00 → 16:57"
+   "action": "RETIME 18:00 → 16:57; DURATION 165m → 123m"
   },
   {
    "city": "Zhangjiajie",
@@ -2538,8 +2538,8 @@
    "order": 60,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "19:50",
-   "newEnd": "21:20",
+   "newStart": "19:08",
+   "newEnd": "20:38",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -2551,7 +2551,7 @@
    "origDay": 1,
    "origStart": "20:21",
    "origDurMin": 90,
-   "action": "RETIME 20:21 → 19:50"
+   "action": "RETIME 20:21 → 19:08"
   },
   {
    "city": "Zhangjiajie",
@@ -2560,20 +2560,20 @@
    "order": 10,
    "activity": "Breakfast",
    "kind": "Food",
-   "newStart": "07:00",
-   "newEnd": "07:35",
+   "newStart": "06:30",
+   "newEnd": "07:05",
    "newDurMin": 35,
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Bailong Elevator",
    "travelMode": "didi",
-   "travelMin": 54,
-   "travelKm": 38.8,
-   "travelSource": "routed (real leg)",
+   "travelMin": 18,
+   "travelKm": 7.45,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
-   "action": "RETIME 07:30 → 07:00"
+   "action": "RETIME 07:30 → 06:30"
   },
   {
    "city": "Zhangjiajie",
@@ -2582,20 +2582,20 @@
    "order": 20,
    "activity": "Bailong Elevator",
    "kind": "Sight",
-   "newStart": "08:37",
-   "newEnd": "09:37",
+   "newStart": "07:31",
+   "newEnd": "08:31",
    "newDurMin": 60,
    "durBasis": "Ride is only 92 seconds but peak-season (May-Oct) queues run 1-2 h and worse on summer mornings; arriving at the 07:00 opening is the one way to hold it near 30-45 min.",
    "durConf": "high",
    "toNext": "Yuanjiajie (Avatar)",
-   "travelMode": "walk",
-   "travelMin": 2,
-   "travelKm": 0.1,
-   "travelSource": "routed (real leg)",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
    "origDay": 2,
    "origStart": "09:17",
    "origDurMin": 60,
-   "action": "RETIME 09:17 → 08:37"
+   "action": "RETIME 09:17 → 07:31"
   },
   {
    "city": "Zhangjiajie",
@@ -2604,8 +2604,8 @@
    "order": 30,
    "activity": "Yuanjiajie (Avatar)",
    "kind": "Sight",
-   "newStart": "09:47",
-   "newEnd": "12:47",
+   "newStart": "08:39",
+   "newEnd": "11:39",
    "newDurMin": 180,
    "durBasis": "Guides put Yuanjiajie at 2-3 h (photographers 3-4 h); the loop trail is 1-2 h walking but viewing platforms are shoulder-to-shoulder after 09:00 and inter-stop shuttles queue 20 min+.",
    "durConf": "high",
@@ -2617,7 +2617,7 @@
    "origDay": 2,
    "origStart": "10:12",
    "origDurMin": 180,
-   "action": "RETIME 10:12 → 09:47"
+   "action": "RETIME 10:12 → 08:39"
   },
   {
    "city": "Zhangjiajie",
@@ -2626,8 +2626,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:55",
-   "newEnd": "13:55",
+   "newStart": "11:47",
+   "newEnd": "12:47",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -2639,7 +2639,7 @@
    "origDay": 2,
    "origStart": "12:58",
    "origDurMin": 60,
-   "action": "RETIME 12:58 → 12:55"
+   "action": "RETIME 12:58 → 11:47"
   },
   {
    "city": "Zhangjiajie",
@@ -2648,8 +2648,8 @@
    "order": 50,
    "activity": "Tianzi Mountain",
    "kind": "Sight",
-   "newStart": "14:16",
-   "newEnd": "16:46",
+   "newStart": "13:08",
+   "newEnd": "15:38",
    "newDurMin": 150,
    "durBasis": "He Long Park alone is recommended at 1-1.5 h and the classic Tianzi route at 2-3 h; add free-shuttle waits of 20 min or more between Imperial Brush Peaks and Fairy Scattering Flowers.",
    "durConf": "med",
@@ -2661,7 +2661,7 @@
    "origDay": 2,
    "origStart": "14:08",
    "origDurMin": 150,
-   "action": "RETIME 14:08 → 14:16"
+   "action": "RETIME 14:08 → 13:08"
   },
   {
    "city": "Zhangjiajie",
@@ -2670,32 +2670,10 @@
    "order": 60,
    "activity": "Tianzi cableway down",
    "kind": "Sight",
-   "newStart": "17:11",
-   "newEnd": "18:11",
+   "newStart": "16:03",
+   "newEnd": "17:03",
    "newDurMin": 60,
    "durBasis": "Ride is 6 min 26 s, but peak-summer queues at the Tianzi cableway reach 2 h and only drop under 15 min after 16:00 — an afternoon descent realistically costs about an hour.",
-   "durConf": "med",
-   "toNext": "Dinner",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 2,
-   "origStart": "16:33",
-   "origDurMin": 60,
-   "action": "RETIME 16:33 → 17:11"
-  },
-  {
-   "city": "Zhangjiajie",
-   "day": 2,
-   "date": "2026-08-25",
-   "order": 70,
-   "activity": "Dinner",
-   "kind": "Food",
-   "newStart": "18:19",
-   "newEnd": "19:49",
-   "newDurMin": 90,
-   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Ten-Mile Gallery",
    "travelMode": "didi",
@@ -2703,21 +2681,43 @@
    "travelKm": 11.1,
    "travelSource": "routed (real leg)",
    "origDay": 2,
-   "origStart": "19:57",
+   "origStart": "16:33",
+   "origDurMin": 60,
+   "action": "RETIME 16:33 → 16:03"
+  },
+  {
+   "city": "Zhangjiajie",
+   "day": 2,
+   "date": "2026-08-25",
+   "order": 70,
+   "activity": "Ten-Mile Gallery",
+   "kind": "Sight",
+   "newStart": "17:33",
+   "newEnd": "19:03",
+   "newDurMin": 90,
+   "durBasis": "Official guidance is ~1 h for the 2 km gallery; tram is 10-15 min each way and the walk-out ~40 min, so tram queue plus walk lands near 1.5 h in August.",
+   "durConf": "med",
+   "toNext": "Dinner",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 2,
+   "origStart": "17:48",
    "origDurMin": 90,
-   "action": "RETIME 19:57 → 18:19; ORDER 80 → 70"
+   "action": "RETIME 17:48 → 17:33"
   },
   {
    "city": "Zhangjiajie",
    "day": 2,
    "date": "2026-08-25",
    "order": 80,
-   "activity": "Ten-Mile Gallery",
-   "kind": "Sight",
-   "newStart": "20:19",
-   "newEnd": "21:49",
+   "activity": "Dinner",
+   "kind": "Food",
+   "newStart": "19:11",
+   "newEnd": "20:41",
    "newDurMin": 90,
-   "durBasis": "Official guidance is ~1 h for the 2 km gallery; tram is 10-15 min each way and the walk-out ~40 min, so tram queue plus walk lands near 1.5 h in August.",
+   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Hotel (home)",
    "travelMode": "didi",
@@ -2725,9 +2725,9 @@
    "travelKm": 6.14,
    "travelSource": "estimated (fitted model)",
    "origDay": 2,
-   "origStart": "17:48",
+   "origStart": "19:57",
    "origDurMin": 90,
-   "action": "RETIME 17:48 → 20:19; ORDER 70 → 80"
+   "action": "RETIME 19:57 → 19:11"
   },
   {
    "city": "Zhangjiajie",
@@ -2742,9 +2742,9 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Bus to Zhangjiajie city",
-   "travelMode": "walk",
-   "travelMin": 22,
-   "travelKm": 0.93,
+   "travelMode": "didi",
+   "travelMin": 48,
+   "travelKm": 27.77,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
@@ -2758,8 +2758,8 @@
    "order": 20,
    "activity": "Bus to Zhangjiajie city",
    "kind": "Sight",
-   "newStart": "08:05",
-   "newEnd": "08:35",
+   "newStart": "08:31",
+   "newEnd": "09:01",
    "newDurMin": 30,
    "durBasis": "Wulingyuan bus station departures to the city run every ~20-30 min; ticketing, bag handling and boarding wait total about half an hour before the ~1 h ride.",
    "durConf": "med",
@@ -2771,7 +2771,7 @@
    "origDay": 3,
    "origStart": "14:47",
    "origDurMin": 30,
-   "action": "RETIME 14:47 → 08:05; ORDER 50 → 20"
+   "action": "RETIME 14:47 → 08:31; ORDER 50 → 20"
   },
   {
    "city": "Zhangjiajie",
@@ -2780,20 +2780,20 @@
    "order": 30,
    "activity": "Tianmen cableway",
    "kind": "Sight",
-   "newStart": "08:55",
-   "newEnd": "10:10",
+   "newStart": "09:21",
+   "newEnd": "10:36",
    "newDurMin": 75,
    "durBasis": "Line C is a 20-min shuttle to the mountain gate then a 7-min express cableway to Tianmen Cave, with reported express-cableway queues of 30-45 min in peak season.",
    "durConf": "med",
    "toNext": "Tianmen Mountain",
-   "travelMode": "didi",
-   "travelMin": 51,
-   "travelKm": 27.2,
-   "travelSource": "routed (real leg)",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
    "origDay": 3,
    "origStart": "15:52",
    "origDurMin": 75,
-   "action": "RETIME 15:52 → 08:55; ORDER 60 → 30"
+   "action": "RETIME 15:52 → 09:21; ORDER 60 → 30"
   },
   {
    "city": "Zhangjiajie",
@@ -2802,8 +2802,8 @@
    "order": 40,
    "activity": "Tianmen Mountain",
    "kind": "Sight",
-   "newStart": "11:09",
-   "newEnd": "15:24",
+   "newStart": "10:44",
+   "newEnd": "14:59",
    "newDurMin": 255,
    "durBasis": "Trip reports put a full Tianmen visit at 5-7 h including waits (Line C 4.5-5.5 h): summit 2-3 h, West Line cliff walkway ~2 h, 999 steps 20-30 min, each glass skywalk 5-10 min, plus escalator and descent-bus queues — with the cableway stop this is ~5.5 h, most of the day.",
    "durConf": "high",
@@ -2815,7 +2815,7 @@
    "origDay": 3,
    "origStart": "17:36",
    "origDurMin": 255,
-   "action": "RETIME 17:36 → 11:09; ORDER 70 → 40"
+   "action": "RETIME 17:36 → 10:44; ORDER 70 → 40"
   },
   {
    "city": "Zhangjiajie",
@@ -2824,8 +2824,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "15:32",
-   "newEnd": "16:32",
+   "newStart": "15:07",
+   "newEnd": "16:07",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -2837,7 +2837,7 @@
    "origDay": 3,
    "origStart": "13:35",
    "origDurMin": 60,
-   "action": "RETIME 13:35 → 15:32; ORDER 40 → 50"
+   "action": "RETIME 13:35 → 15:07; ORDER 40 → 50"
   },
   {
    "city": "Zhangjiajie",
@@ -3975,9 +3975,9 @@
    "durConf": "med",
    "toNext": "Yulong bamboo rafting",
    "travelMode": "didi",
-   "travelMin": 22,
-   "travelKm": 12.1,
-   "travelSource": "routed (real leg)",
+   "travelMin": 16,
+   "travelKm": 6.53,
+   "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -3990,8 +3990,8 @@
    "order": 20,
    "activity": "Yulong bamboo rafting",
    "kind": "Sight",
-   "newStart": "08:05",
-   "newEnd": "09:35",
+   "newStart": "07:59",
+   "newEnd": "09:29",
    "newDurMin": 90,
    "durBasis": "Route tables for Yulong rafting list Jinlong Bridge to Jiuxian as 6 km / 90 min, the longest and most popular section with its nine small weirs.",
    "durConf": "high",
@@ -4003,7 +4003,7 @@
    "origDay": 2,
    "origStart": "08:55",
    "origDurMin": 90,
-   "action": "MOVE day 2 → 3; RETIME 08:55 → 08:05; ORDER 30 → 20"
+   "action": "MOVE day 2 → 3; RETIME 08:55 → 07:59; ORDER 30 → 20"
   },
   {
    "city": "Yangshuo",
@@ -4012,8 +4012,8 @@
    "order": 30,
    "activity": "Yulong valley cycling",
    "kind": "Sight",
-   "newStart": "09:59",
-   "newEnd": "12:29",
+   "newStart": "09:53",
+   "newEnd": "12:23",
    "newDurMin": 150,
    "durBasis": "The West Street round-trip loop through the Shili Gallery / Jiuxian-Chaoyang Weir section is 19 km and quoted at 2-3 hrs by cycling guides, including photo and drink stops.",
    "durConf": "high",
@@ -4025,7 +4025,7 @@
    "origDay": 2,
    "origStart": "13:28",
    "origDurMin": 150,
-   "action": "MOVE day 2 → 3; RETIME 13:28 → 09:59; ORDER 50 → 30"
+   "action": "MOVE day 2 → 3; RETIME 13:28 → 09:53; ORDER 50 → 30"
   },
   {
    "city": "Yangshuo",
@@ -4034,8 +4034,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:37",
-   "newEnd": "13:37",
+   "newStart": "12:31",
+   "newEnd": "13:31",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -4047,7 +4047,7 @@
    "origDay": 3,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 12:37"
+   "action": "RETIME 12:00 → 12:31"
   },
   {
    "city": "Yangshuo",
@@ -4056,8 +4056,8 @@
    "order": 50,
    "activity": "Moon Hill",
    "kind": "Sight",
-   "newStart": "14:10",
-   "newEnd": "15:40",
+   "newStart": "14:04",
+   "newEnd": "15:34",
    "newDurMin": 90,
    "durBasis": "800+ stone steps; guides quote ~30-40 min to the arch (China Highlights says ~1 hr to the top), plus time at the arch and the descent, and August heat slows everyone down.",
    "durConf": "med",
@@ -4069,7 +4069,7 @@
    "origDay": 2,
    "origStart": "16:01",
    "origDurMin": 90,
-   "action": "MOVE day 2 → 3; RETIME 16:01 → 14:10; ORDER 60 → 50"
+   "action": "MOVE day 2 → 3; RETIME 16:01 → 14:04; ORDER 60 → 50"
   },
   {
    "city": "Yangshuo",
@@ -4326,10 +4326,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Recovery massage / spa",
-   "travelMode": "none",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 11,
+   "travelKm": 2.67,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -4342,8 +4342,8 @@
    "order": 20,
    "activity": "Recovery massage / spa",
    "kind": "Sight",
-   "newStart": "07:43",
-   "newEnd": "09:13",
+   "newStart": "07:54",
+   "newEnd": "09:24",
    "newDurMin": 90,
    "durBasis": "Shanghai spa listings (Time Out, SmartShanghai, Culture Trip) show 60-80min foot/body packages as the standard tourist option; add foot bath, changing and tea for ~90min door to door.",
    "durConf": "med",
@@ -4355,7 +4355,7 @@
    "origDay": 2,
    "origStart": "13:28",
    "origDurMin": 90,
-   "action": "RETIME 13:28 → 07:43; ORDER 30 → 20"
+   "action": "RETIME 13:28 → 07:54; ORDER 30 → 20"
   },
   {
    "city": "Shanghai",
@@ -4364,8 +4364,8 @@
    "order": 30,
    "activity": "M50 Creative Park",
    "kind": "Sight",
-   "newStart": "09:33",
-   "newEnd": "11:33",
+   "newStart": "09:44",
+   "newEnd": "11:44",
    "newDurMin": 120,
    "durBasis": "Travel guides budget 2-4h (about 3h recommended) for 140+ studios and galleries plus the graffiti wall; 2h is a highlights-plus pass through the better galleries.",
    "durConf": "med",
@@ -4377,7 +4377,7 @@
    "origDay": 4,
    "origStart": "18:37",
    "origDurMin": 120,
-   "action": "MOVE day 4 → 2; RETIME 18:37 → 09:33; ORDER 80 → 30"
+   "action": "MOVE day 4 → 2; RETIME 18:37 → 09:44; ORDER 80 → 30"
   },
   {
    "city": "Shanghai",
@@ -4386,8 +4386,8 @@
    "order": 40,
    "activity": "Jing’an Temple",
    "kind": "Sight",
-   "newStart": "11:52",
-   "newEnd": "12:52",
+   "newStart": "12:03",
+   "newEnd": "13:03",
    "newDurMin": 60,
    "durBasis": "Multiple guides recommend about 1 hour for the compact walled complex (90min quoted as a generous middle ground); 45min is tight once you include ticketing and the Mahavira Hall.",
    "durConf": "high",
@@ -4399,7 +4399,7 @@
    "origDay": 2,
    "origStart": "15:55",
    "origDurMin": 60,
-   "action": "RETIME 15:55 → 11:52"
+   "action": "RETIME 15:55 → 12:03"
   },
   {
    "city": "Shanghai",
@@ -4408,8 +4408,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "13:00",
-   "newEnd": "14:00",
+   "newStart": "13:11",
+   "newEnd": "14:11",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -4421,7 +4421,7 @@
    "origDay": 2,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 13:00; ORDER 20 → 50"
+   "action": "RETIME 12:00 → 13:11; ORDER 20 → 50"
   },
   {
    "city": "Shanghai",
@@ -4430,8 +4430,8 @@
    "order": 60,
    "activity": "Nanjing Road West",
    "kind": "Sight",
-   "newStart": "14:31",
-   "newEnd": "15:46",
+   "newStart": "14:42",
+   "newEnd": "15:57",
    "newDurMin": 75,
    "durBasis": "Shopping guides: most visitors spend 1-2h on West Nanjing Road, 2-3h if working through Plaza 66 / HKRI Taikoo Hui; 75min covers the strip plus one mall.",
    "durConf": "med",
@@ -4443,7 +4443,7 @@
    "origDay": 2,
    "origStart": "19:32",
    "origDurMin": 75,
-   "action": "RETIME 19:32 → 14:31"
+   "action": "RETIME 19:32 → 14:42"
   },
   {
    "city": "Shanghai",
@@ -4452,8 +4452,8 @@
    "order": 70,
    "activity": "Zhangyuan",
    "kind": "Sight",
-   "newStart": "16:01",
-   "newEnd": "17:01",
+   "newStart": "16:12",
+   "newEnd": "17:12",
    "newDurMin": 60,
    "durBasis": "Reviews describe a restored shikumen retail precinct 'similar to Xintiandi but much quieter'; an unhurried wander of the lanes with a pop-up or two runs about an hour.",
    "durConf": "med",
@@ -4465,7 +4465,7 @@
    "origDay": 2,
    "origStart": "17:47",
    "origDurMin": 60,
-   "action": "RETIME 17:47 → 16:01; ORDER 50 → 70"
+   "action": "RETIME 17:47 → 16:12; ORDER 50 → 70"
   },
   {
    "city": "Shanghai",
@@ -4502,10 +4502,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Wukang Building",
-   "travelMode": "metro",
-   "travelMin": 25,
-   "travelKm": 6.5,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 17,
+   "travelKm": 7.18,
+   "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "09:00",
    "origDurMin": 35,
@@ -4518,8 +4518,8 @@
    "order": 20,
    "activity": "Wukang Building",
    "kind": "Sight",
-   "newStart": "08:08",
-   "newEnd": "08:28",
+   "newStart": "08:00",
+   "newEnd": "08:20",
    "newDurMin": 20,
    "durBasis": "Walking guides treat Wukang Mansion as a photo landmark on the corner (best 16:00-17:30); it is exterior-only, so 15-25min including crowd jostling.",
    "durConf": "med",
@@ -4531,7 +4531,7 @@
    "origDay": 3,
    "origStart": "10:18",
    "origDurMin": 20,
-   "action": "RETIME 10:18 → 08:08"
+   "action": "RETIME 10:18 → 08:00"
   },
   {
    "city": "Shanghai",
@@ -4540,8 +4540,8 @@
    "order": 30,
    "activity": "Wukang Road",
    "kind": "Sight",
-   "newStart": "08:46",
-   "newEnd": "09:46",
+   "newStart": "08:38",
+   "newEnd": "09:38",
    "newDurMin": 60,
    "durBasis": "Guides quote 2-3h for Wukang Road with photos and coffee, but that bundles Ferguson Lane and cafes which are separate stops here; the 1.17km street alone walks in about an hour.",
    "durConf": "med",
@@ -4553,7 +4553,7 @@
    "origDay": 3,
    "origStart": "12:06",
    "origDurMin": 60,
-   "action": "RETIME 12:06 → 08:46"
+   "action": "RETIME 12:06 → 08:38"
   },
   {
    "city": "Shanghai",
@@ -4562,8 +4562,8 @@
    "order": 40,
    "activity": "Ferguson Lane",
    "kind": "Sight",
-   "newStart": "09:58",
-   "newEnd": "10:43",
+   "newStart": "09:50",
+   "newEnd": "10:35",
    "newDurMin": 45,
    "durBasis": "Ferguson Lane (376 Wukang Rd) is described as a small tucked-away courtyard of galleries and bistros — 15min to look, 45min if you actually sit for the coffee it exists for.",
    "durConf": "low",
@@ -4575,7 +4575,7 @@
    "origDay": 3,
    "origStart": "13:33",
    "origDurMin": 45,
-   "action": "RETIME 13:33 → 09:58"
+   "action": "RETIME 13:33 → 09:50"
   },
   {
    "city": "Shanghai",
@@ -4584,8 +4584,8 @@
    "order": 50,
    "activity": "Anfu Road",
    "kind": "Sight",
-   "newStart": "11:05",
-   "newEnd": "11:50",
+   "newStart": "10:57",
+   "newEnd": "11:42",
    "newDurMin": 45,
    "durBasis": "Wukang+Anfu combined walking routes are quoted at 3-4h over 2.5km; Anfu Road's own share, browsing a couple of shops, is roughly 45min.",
    "durConf": "med",
@@ -4597,7 +4597,7 @@
    "origDay": 3,
    "origStart": "15:25",
    "origDurMin": 45,
-   "action": "RETIME 15:25 → 11:05"
+   "action": "RETIME 15:25 → 10:57"
   },
   {
    "city": "Shanghai",
@@ -4606,8 +4606,8 @@
    "order": 60,
    "activity": "Wulumuqi Road",
    "kind": "Sight",
-   "newStart": "12:12",
-   "newEnd": "12:42",
+   "newStart": "12:04",
+   "newEnd": "12:34",
    "newDurMin": 30,
    "durBasis": "Guides frame Wulumuqi Middle Road as a short local-life detour (markets, Art Deco corner at Fuxing West Rd) rather than a destination; ~30min walk-through.",
    "durConf": "low",
@@ -4619,7 +4619,7 @@
    "origDay": 3,
    "origStart": "17:02",
    "origDurMin": 30,
-   "action": "RETIME 17:02 → 12:12"
+   "action": "RETIME 17:02 → 12:04"
   },
   {
    "city": "Shanghai",
@@ -4628,8 +4628,8 @@
    "order": 70,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:50",
-   "newEnd": "13:50",
+   "newStart": "12:42",
+   "newEnd": "13:42",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -4641,7 +4641,7 @@
    "origDay": 3,
    "origStart": "18:46",
    "origDurMin": 60,
-   "action": "RETIME 18:46 → 12:50"
+   "action": "RETIME 18:46 → 12:42"
   },
   {
    "city": "Shanghai",
@@ -4650,8 +4650,8 @@
    "order": 80,
    "activity": "Fuxing Park",
    "kind": "Sight",
-   "newStart": "14:08",
-   "newEnd": "14:53",
+   "newStart": "14:00",
+   "newEnd": "14:45",
    "newDurMin": 45,
    "durBasis": "Guides say Fuxing Park is 'worth a 30-60 minute walk'; 45min lets you watch the dancing and chess without circling twice.",
    "durConf": "med",
@@ -4663,7 +4663,7 @@
    "origDay": 3,
    "origStart": "21:42",
    "origDurMin": 45,
-   "action": "RETIME 21:42 → 14:08; ORDER 90 → 80"
+   "action": "RETIME 21:42 → 14:00; ORDER 90 → 80"
   },
   {
    "city": "Shanghai",
@@ -4672,8 +4672,8 @@
    "order": 90,
    "activity": "Sinan Mansions",
    "kind": "Sight",
-   "newStart": "15:06",
-   "newEnd": "16:06",
+   "newStart": "14:58",
+   "newEnd": "15:58",
    "newDurMin": 60,
    "durBasis": "Travel guides advise 1-2h to walk the estate, admire the facades and browse boutiques/side galleries; 60min is the lower, unhurried-but-not-lingering end.",
    "durConf": "med",
@@ -4685,7 +4685,7 @@
    "origDay": 3,
    "origStart": "19:59",
    "origDurMin": 60,
-   "action": "RETIME 19:59 → 15:06; ORDER 80 → 90"
+   "action": "RETIME 19:59 → 14:58; ORDER 80 → 90"
   },
   {
    "city": "Shanghai",
@@ -4722,10 +4722,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Yu Garden",
-   "travelMode": "metro",
-   "travelMin": 18,
-   "travelKm": 3.1,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 8,
+   "travelKm": 1.27,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -4738,8 +4738,8 @@
    "order": 20,
    "activity": "Yu Garden",
    "kind": "Sight",
-   "newStart": "08:01",
-   "newEnd": "09:31",
+   "newStart": "07:51",
+   "newEnd": "09:21",
    "newDurMin": 90,
    "durBasis": "TripAdvisor/guide consensus is ~2h for a complete visit and 45-60min for a fast loop; at opening with fewer crowds, a highlights-plus circuit of the rockeries and pavilions is ~90min.",
    "durConf": "high",
@@ -4751,7 +4751,7 @@
    "origDay": 4,
    "origStart": "08:41",
    "origDurMin": 90,
-   "action": "RETIME 08:41 → 08:01"
+   "action": "RETIME 08:41 → 07:51"
   },
   {
    "city": "Shanghai",
@@ -4760,8 +4760,8 @@
    "order": 30,
    "activity": "Mid-Lake Teahouse",
    "kind": "Sight",
-   "newStart": "09:53",
-   "newEnd": "10:53",
+   "newStart": "09:43",
+   "newEnd": "10:43",
    "newDurMin": 60,
    "durBasis": "TripAdvisor reviewers report lingering 'an hour or two' over tea and the complimentary quail-egg/sweet snacks while watching the pond; 45min feels rushed for a set tea service.",
    "durConf": "med",
@@ -4773,7 +4773,7 @@
    "origDay": 4,
    "origStart": "12:21",
    "origDurMin": 60,
-   "action": "RETIME 12:21 → 09:53; ORDER 40 → 30"
+   "action": "RETIME 12:21 → 09:43; ORDER 40 → 30"
   },
   {
    "city": "Shanghai",
@@ -4782,32 +4782,10 @@
    "order": 40,
    "activity": "Yuyuan Bazaar",
    "kind": "Sight",
-   "newStart": "11:07",
-   "newEnd": "12:07",
+   "newStart": "10:57",
+   "newEnd": "11:57",
    "newDurMin": 60,
    "durBasis": "Guides say you can 'easily spend an hour or two' in the bazaar alone (4h if you do garden, bazaar and dumpling houses together); 60min covers snacks and a souvenir sweep.",
-   "durConf": "med",
-   "toNext": "Lunch",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 4,
-   "origStart": "10:52",
-   "origDurMin": 60,
-   "action": "RETIME 10:52 → 11:07; ORDER 30 → 40"
-  },
-  {
-   "city": "Shanghai",
-   "day": 4,
-   "date": "2026-09-05",
-   "order": 50,
-   "activity": "Lunch",
-   "kind": "Food",
-   "newStart": "12:15",
-   "newEnd": "13:15",
-   "newDurMin": 60,
-   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
    "toNext": "City God Temple",
    "travelMode": "walk",
@@ -4815,21 +4793,43 @@
    "travelKm": 0.26,
    "travelSource": "estimated (fitted model)",
    "origDay": 4,
-   "origStart": "15:27",
+   "origStart": "10:52",
    "origDurMin": 60,
-   "action": "RETIME 15:27 → 12:15; ORDER 60 → 50"
+   "action": "RETIME 10:52 → 10:57; ORDER 30 → 40"
+  },
+  {
+   "city": "Shanghai",
+   "day": 4,
+   "date": "2026-09-05",
+   "order": 50,
+   "activity": "City God Temple",
+   "kind": "Sight",
+   "newStart": "12:15",
+   "newEnd": "13:00",
+   "newDurMin": 45,
+   "durBasis": "Guides quote 1-2h but that usually bundles the surrounding market; the walled temple itself (CNY10, 09:00-17:00) is compact and reads in ~45min.",
+   "durConf": "med",
+   "toNext": "Lunch",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 4,
+   "origStart": "13:31",
+   "origDurMin": 45,
+   "action": "RETIME 13:31 → 12:15"
   },
   {
    "city": "Shanghai",
    "day": 4,
    "date": "2026-09-05",
    "order": 60,
-   "activity": "City God Temple",
-   "kind": "Sight",
-   "newStart": "13:33",
-   "newEnd": "14:18",
-   "newDurMin": 45,
-   "durBasis": "Guides quote 1-2h but that usually bundles the surrounding market; the walled temple itself (CNY10, 09:00-17:00) is compact and reads in ~45min.",
+   "activity": "Lunch",
+   "kind": "Food",
+   "newStart": "13:08",
+   "newEnd": "14:08",
+   "newDurMin": 60,
+   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
    "toNext": "People’s Square",
    "travelMode": "didi",
@@ -4837,9 +4837,9 @@
    "travelKm": 1.83,
    "travelSource": "estimated (fitted model)",
    "origDay": 4,
-   "origStart": "13:31",
-   "origDurMin": 45,
-   "action": "RETIME 13:31 → 13:33; ORDER 50 → 60"
+   "origStart": "15:27",
+   "origDurMin": 60,
+   "action": "RETIME 15:27 → 13:08"
   },
   {
    "city": "Shanghai",
@@ -4848,8 +4848,8 @@
    "order": 70,
    "activity": "People’s Square",
    "kind": "Sight",
-   "newStart": "14:35",
-   "newEnd": "15:20",
+   "newStart": "14:25",
+   "newEnd": "15:10",
    "newDurMin": 45,
    "durBasis": "TripAdvisor reviews split between '10 minutes is plenty' for the plaza and 2-4h if you linger in People's Park; 45min suits its role here as a stroll-and-rest buffer.",
    "durConf": "med",
@@ -4861,7 +4861,7 @@
    "origDay": 4,
    "origStart": "16:39",
    "origDurMin": 45,
-   "action": "RETIME 16:39 → 14:35"
+   "action": "RETIME 16:39 → 14:25"
   },
   {
    "city": "Shanghai",
@@ -4870,8 +4870,8 @@
    "order": 80,
    "activity": "Huangpu night cruise",
    "kind": "Sight",
-   "newStart": "15:38",
-   "newEnd": "16:53",
+   "newStart": "15:28",
+   "newEnd": "16:43",
    "newDurMin": 75,
    "durBasis": "Operators list the standard Shiliupu night cruise at 45-50min afloat; ticket redemption, security and boarding queues at the wharf add ~25min.",
    "durConf": "high",
@@ -4883,7 +4883,7 @@
    "origDay": 4,
    "origStart": "22:52",
    "origDurMin": 75,
-   "action": "RETIME 22:52 → 15:38; ORDER 100 → 80"
+   "action": "RETIME 22:52 → 15:28; ORDER 100 → 80"
   },
   {
    "city": "Shanghai",
@@ -4921,8 +4921,8 @@
    "durConf": "med",
    "toNext": "TANK Shanghai",
    "travelMode": "didi",
-   "travelMin": 17,
-   "travelKm": 7.16,
+   "travelMin": 19,
+   "travelKm": 8.6,
    "travelSource": "estimated (fitted model)",
    "origDay": 5,
    "origStart": "07:30",
@@ -4936,8 +4936,8 @@
    "order": 20,
    "activity": "TANK Shanghai",
    "kind": "Sight",
-   "newStart": "08:00",
-   "newEnd": "09:15",
+   "newStart": "08:02",
+   "newEnd": "09:17",
    "newDurMin": 75,
    "durBasis": "Some visitors suggest half a day, but TripAdvisor reviews repeatedly call the exhibits limited for the ticket price; the tanks plus the wrapping park read in about 75min.",
    "durConf": "med",
@@ -4949,7 +4949,7 @@
    "origDay": 5,
    "origStart": "17:02",
    "origDurMin": 75,
-   "action": "RETIME 17:02 → 08:00; ORDER 50 → 20"
+   "action": "RETIME 17:02 → 08:02; ORDER 50 → 20"
   },
   {
    "city": "Shanghai",
@@ -4958,8 +4958,8 @@
    "order": 30,
    "activity": "West Bund Museum",
    "kind": "Sight",
-   "newStart": "09:40",
-   "newEnd": "11:10",
+   "newStart": "09:42",
+   "newEnd": "11:12",
    "newDurMin": 90,
    "durBasis": "Museum lists 11:00-18:00 with last entry 17:00 across a modest number of galleries; guides recommend several hours only for major shows, so a highlights-plus visit is ~90min.",
    "durConf": "med",
@@ -4971,7 +4971,7 @@
    "origDay": 5,
    "origStart": "11:13",
    "origDurMin": 90,
-   "action": "RETIME 11:13 → 09:40"
+   "action": "RETIME 11:13 → 09:42"
   },
   {
    "city": "Shanghai",
@@ -4980,8 +4980,8 @@
    "order": 40,
    "activity": "West Bund riverside",
    "kind": "Sight",
-   "newStart": "11:33",
-   "newEnd": "12:18",
+   "newStart": "11:35",
+   "newEnd": "12:20",
    "newDurMin": 45,
    "durBasis": "No dedicated dwell figure found; the Xuhui riverside corridor linking the museums is a 10-15min walk each way, so ~45min allows an unhurried stroll with stops between venues.",
    "durConf": "low",
@@ -4993,7 +4993,7 @@
    "origDay": 5,
    "origStart": "08:50",
    "origDurMin": 45,
-   "action": "RETIME 08:50 → 11:33; ORDER 20 → 40"
+   "action": "RETIME 08:50 → 11:35; ORDER 20 → 40"
   },
   {
    "city": "Shanghai",
@@ -5002,8 +5002,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:26",
-   "newEnd": "13:26",
+   "newStart": "12:28",
+   "newEnd": "13:28",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -5015,7 +5015,7 @@
    "origDay": 5,
    "origStart": "19:48",
    "origDurMin": 60,
-   "action": "RETIME 19:48 → 12:26; ORDER 60 → 50"
+   "action": "RETIME 19:48 → 12:28; ORDER 60 → 50"
   },
   {
    "city": "Shanghai",
@@ -5024,8 +5024,8 @@
    "order": 60,
    "activity": "Long Museum West Bund",
    "kind": "Sight",
-   "newStart": "13:51",
-   "newEnd": "15:21",
+   "newStart": "13:53",
+   "newEnd": "15:23",
    "newDurMin": 90,
    "durBasis": "TripAdvisor reviewers say 'about an hour to see it', some 'squeeze in two hours', and guides suggest 3-4h only for a blockbuster temporary show; 90min is the unhurried middle.",
    "durConf": "med",
@@ -5037,7 +5037,7 @@
    "origDay": 5,
    "origStart": "14:06",
    "origDurMin": 90,
-   "action": "RETIME 14:06 → 13:51; ORDER 40 → 60"
+   "action": "RETIME 14:06 → 13:53; ORDER 40 → 60"
   },
   {
    "city": "Shanghai",
@@ -5450,10 +5450,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Tiananmen Square",
-   "travelMode": "metro",
-   "travelMin": 19,
-   "travelKm": 3.5,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 10,
+   "travelKm": 2.17,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -5466,8 +5466,8 @@
    "order": 20,
    "activity": "Tiananmen Square",
    "kind": "Sight",
-   "newStart": "07:32",
-   "newEnd": "08:47",
+   "newStart": "07:23",
+   "newEnd": "08:38",
    "newDurMin": 75,
    "durBasis": "Guides say allocate ~2h including queuing, but note non-holiday weekday security waits are under 30 min and before 09:00 is the quietest slot - so ~30 min entry plus 45 min on the square.",
    "durConf": "med",
@@ -5479,7 +5479,7 @@
    "origDay": 2,
    "origStart": "08:42",
    "origDurMin": 75,
-   "action": "RETIME 08:42 → 07:32"
+   "action": "RETIME 08:42 → 07:23"
   },
   {
    "city": "Beijing",
@@ -5488,8 +5488,8 @@
    "order": 30,
    "activity": "Forbidden City",
    "kind": "Sight",
-   "newStart": "09:11",
-   "newEnd": "12:41",
+   "newStart": "09:02",
+   "newEnd": "12:32",
    "newDurMin": 210,
    "durBasis": "Guides put the central axis at 2-3h and 4-5h if you add the Treasure and Clock galleries; Meridian Gate security is a further 15-20 min off-peak, so 3.5h is the unhurried first-timer figure.",
    "durConf": "high",
@@ -5501,7 +5501,7 @@
    "origDay": 2,
    "origStart": "10:36",
    "origDurMin": 210,
-   "action": "RETIME 10:36 → 09:11"
+   "action": "RETIME 10:36 → 09:02"
   },
   {
    "city": "Beijing",
@@ -5510,8 +5510,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:49",
-   "newEnd": "13:49",
+   "newStart": "12:40",
+   "newEnd": "13:40",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -5523,7 +5523,7 @@
    "origDay": 2,
    "origStart": "12:26",
    "origDurMin": 60,
-   "action": "RETIME 12:26 → 12:49"
+   "action": "RETIME 12:26 → 12:40"
   },
   {
    "city": "Beijing",
@@ -5532,54 +5532,54 @@
    "order": 50,
    "activity": "National Museum",
    "kind": "Sight",
-   "newStart": "14:06",
-   "newEnd": "17:00",
-   "newDurMin": 174,
-   "durBasis": "CUT SHORT BY CLOSING TIME: closes 17:00, last entry 16:00; 6 min less than the 180 min advice. TripAdvisor reviewers and museum guides say most people spend 2-3h and enthusiasts 4-6h, with the Ancient China galleries alone quoted at 2-3h; add the passport/security check on entry.",
+   "newStart": "13:57",
+   "newEnd": "16:57",
+   "newDurMin": 180,
+   "durBasis": "TripAdvisor reviewers and museum guides say most people spend 2-3h and enthusiasts 4-6h, with the Ancient China galleries alone quoted at 2-3h; add the passport/security check on entry.",
    "durConf": "high",
-   "toNext": "Dinner",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 2,
-   "origStart": "15:08",
-   "origDurMin": 180,
-   "action": "RETIME 15:08 → 14:06; DURATION 180m → 174m; ORDER 60 → 50"
-  },
-  {
-   "city": "Beijing",
-   "day": 2,
-   "date": "2026-08-12",
-   "order": 60,
-   "activity": "Dinner",
-   "kind": "Food",
-   "newStart": "17:08",
-   "newEnd": "18:38",
-   "newDurMin": 90,
-   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
-   "durConf": "med",
    "toNext": "Jingshan Park",
    "travelMode": "metro",
    "travelMin": 20,
    "travelKm": 4.1,
    "travelSource": "routed (real leg)",
    "origDay": 2,
-   "origStart": "18:04",
-   "origDurMin": 90,
-   "action": "RETIME 18:04 → 17:08; ORDER 70 → 60"
+   "origStart": "15:08",
+   "origDurMin": 180,
+   "action": "RETIME 15:08 → 13:57; ORDER 60 → 50"
+  },
+  {
+   "city": "Beijing",
+   "day": 2,
+   "date": "2026-08-12",
+   "order": 60,
+   "activity": "Jingshan Park",
+   "kind": "Sight",
+   "newStart": "17:25",
+   "newEnd": "18:10",
+   "newDurMin": 45,
+   "durBasis": "Trip.com and TripAdvisor reports give a 5-15 min climb each way (about 150 steps) and an average visit around 30 min, stretching to 2h only for dedicated photographers.",
+   "durConf": "med",
+   "toNext": "Dinner",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 2,
+   "origStart": "13:40",
+   "origDurMin": 45,
+   "action": "RETIME 13:40 → 17:25; ORDER 50 → 60"
   },
   {
    "city": "Beijing",
    "day": 2,
    "date": "2026-08-12",
    "order": 70,
-   "activity": "Jingshan Park",
-   "kind": "Sight",
-   "newStart": "19:06",
-   "newEnd": "19:51",
-   "newDurMin": 45,
-   "durBasis": "Trip.com and TripAdvisor reports give a 5-15 min climb each way (about 150 steps) and an average visit around 30 min, stretching to 2h only for dedicated photographers.",
+   "activity": "Dinner",
+   "kind": "Food",
+   "newStart": "18:18",
+   "newEnd": "19:48",
+   "newDurMin": 90,
+   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Hotel (home)",
    "travelMode": "didi",
@@ -5587,9 +5587,9 @@
    "travelKm": 2.1,
    "travelSource": "estimated (fitted model)",
    "origDay": 2,
-   "origStart": "13:40",
-   "origDurMin": 45,
-   "action": "RETIME 13:40 → 19:06; ORDER 50 → 70"
+   "origStart": "18:04",
+   "origDurMin": 90,
+   "action": "RETIME 18:04 → 18:18"
   },
   {
    "city": "Beijing",
@@ -5605,9 +5605,9 @@
    "durConf": "med",
    "toNext": "Mutianyu Great Wall",
    "travelMode": "didi",
-   "travelMin": 82,
-   "travelKm": 74.9,
-   "travelSource": "routed (real leg)",
+   "travelMin": 95,
+   "travelKm": 58.69,
+   "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -5620,54 +5620,54 @@
    "order": 20,
    "activity": "Mutianyu Great Wall",
    "kind": "Sight",
-   "newStart": "09:05",
-   "newEnd": "11:50",
+   "newStart": "09:18",
+   "newEnd": "12:03",
    "newDurMin": 165,
    "durBasis": "TripAdvisor Q&A and China guides say most visitors spend 2-3h at Mutianyu including the cable car and several watchtowers (3-4h for a thorough hike); the toboggan is counted separately here.",
    "durConf": "high",
-   "toNext": "Toboggan down",
-   "travelMode": "none",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "routed (real leg)",
-   "origDay": 3,
-   "origStart": "09:45",
-   "origDurMin": 165,
-   "action": "RETIME 09:45 → 09:05"
-  },
-  {
-   "city": "Beijing",
-   "day": 3,
-   "date": "2026-08-13",
-   "order": 30,
-   "activity": "Toboggan down",
-   "kind": "Sight",
-   "newStart": "11:58",
-   "newEnd": "12:18",
-   "newDurMin": 20,
-   "durBasis": "Rider reports and operator guides put the descent itself at 5-10 min depending on braking; the rest is the walk to the launch platform, the safety briefing and the summer queue.",
-   "durConf": "med",
    "toNext": "Lunch",
    "travelMode": "none (same place)",
    "travelMin": 0,
    "travelKm": 0,
    "travelSource": "co-located",
    "origDay": 3,
-   "origStart": "14:16",
-   "origDurMin": 20,
-   "action": "RETIME 14:16 → 11:58; ORDER 40 → 30"
+   "origStart": "09:45",
+   "origDurMin": 165,
+   "action": "RETIME 09:45 → 09:18"
+  },
+  {
+   "city": "Beijing",
+   "day": 3,
+   "date": "2026-08-13",
+   "order": 30,
+   "activity": "Lunch",
+   "kind": "Food",
+   "newStart": "12:11",
+   "newEnd": "13:11",
+   "newDurMin": 60,
+   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
+   "durConf": "med",
+   "toNext": "Toboggan down",
+   "travelMode": "none",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "routed (real leg)",
+   "origDay": 3,
+   "origStart": "12:41",
+   "origDurMin": 60,
+   "action": "RETIME 12:41 → 12:11"
   },
   {
    "city": "Beijing",
    "day": 3,
    "date": "2026-08-13",
    "order": 40,
-   "activity": "Lunch",
-   "kind": "Food",
-   "newStart": "12:26",
-   "newEnd": "13:26",
-   "newDurMin": 60,
-   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
+   "activity": "Toboggan down",
+   "kind": "Sight",
+   "newStart": "13:19",
+   "newEnd": "13:39",
+   "newDurMin": 20,
+   "durBasis": "Rider reports and operator guides put the descent itself at 5-10 min depending on braking; the rest is the walk to the launch platform, the safety briefing and the summer queue.",
    "durConf": "med",
    "toNext": "Sanlitun Taikoo Li",
    "travelMode": "didi",
@@ -5675,9 +5675,9 @@
    "travelKm": 55.94,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
-   "origStart": "12:41",
-   "origDurMin": 60,
-   "action": "RETIME 12:41 → 12:26; ORDER 30 → 40"
+   "origStart": "14:16",
+   "origDurMin": 20,
+   "action": "RETIME 14:16 → 13:19"
   },
   {
    "city": "Beijing",
@@ -5686,8 +5686,8 @@
    "order": 50,
    "activity": "Sanlitun Taikoo Li",
    "kind": "Sight",
-   "newStart": "15:05",
-   "newEnd": "17:35",
+   "newStart": "15:18",
+   "newEnd": "17:48",
    "newDurMin": 150,
    "durBasis": "Beijing guides suggest 3-5h to explore both Taikoo Li zones leisurely and 1-2h for a quick pass; with dinner folded in, 2.5h is a realistic evening.",
    "durConf": "med",
@@ -5699,7 +5699,7 @@
    "origDay": 3,
    "origStart": "16:51",
    "origDurMin": 150,
-   "action": "RETIME 16:51 → 15:05"
+   "action": "RETIME 16:51 → 15:18"
   },
   {
    "city": "Beijing",
@@ -5708,8 +5708,8 @@
    "order": 60,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "17:43",
-   "newEnd": "19:13",
+   "newStart": "17:56",
+   "newEnd": "19:26",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -5721,7 +5721,7 @@
    "origDay": 3,
    "origStart": "18:50",
    "origDurMin": 90,
-   "action": "RETIME 18:50 → 17:43"
+   "action": "RETIME 18:50 → 17:56"
   },
   {
    "city": "Beijing",
@@ -5730,8 +5730,8 @@
    "order": 70,
    "activity": "CCTV 'Big Pants'",
    "kind": "Sight",
-   "newStart": "19:31",
-   "newEnd": "20:31",
+   "newStart": "19:44",
+   "newEnd": "20:44",
    "newDurMin": 60,
    "durBasis": "Guides note interior access is staff-only and visitors typically spend 20-60 min photographing from the open plaza or the free China World Mall viewing terrace. Set to the TOP of that documented range (was 30): this is the stop whose entire value is the tower after dark, it is now scheduled post-sunset, and an hour lets you shoot the plaza and ride up to the mall terrace rather than just stop for one photo.",
    "durConf": "med",
@@ -5743,7 +5743,7 @@
    "origDay": 3,
    "origStart": "20:33",
    "origDurMin": 60,
-   "action": "RETIME 20:33 → 19:31"
+   "action": "RETIME 20:33 → 19:44"
   },
   {
    "city": "Beijing",
@@ -5759,9 +5759,9 @@
    "durConf": "med",
    "toNext": "Summer Palace",
    "travelMode": "didi",
-   "travelMin": 38,
-   "travelKm": 23.6,
-   "travelSource": "routed (real leg)",
+   "travelMin": 30,
+   "travelKm": 15.32,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -5774,8 +5774,8 @@
    "order": 20,
    "activity": "Summer Palace",
    "kind": "Sight",
-   "newStart": "08:21",
-   "newEnd": "11:51",
+   "newStart": "08:13",
+   "newEnd": "11:43",
    "newDurMin": 210,
    "durBasis": "Multiple guides state 3-4h is the minimum for a visit that feels worthwhile and that 2h is only a skim of this very spread-out site; the North Palace Gate to Longevity Hill to ferry route fits 3.5h.",
    "durConf": "high",
@@ -5787,7 +5787,7 @@
    "origDay": 4,
    "origStart": "09:01",
    "origDurMin": 210,
-   "action": "RETIME 09:01 → 08:21"
+   "action": "RETIME 09:01 → 08:13"
   },
   {
    "city": "Beijing",
@@ -5796,8 +5796,8 @@
    "order": 30,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "11:59",
-   "newEnd": "12:59",
+   "newStart": "11:51",
+   "newEnd": "12:51",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -5809,7 +5809,7 @@
    "origDay": 4,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 11:59"
+   "action": "RETIME 12:00 → 11:51"
   },
   {
    "city": "Beijing",
@@ -5818,8 +5818,8 @@
    "order": 40,
    "activity": "798 Art District",
    "kind": "Sight",
-   "newStart": "13:43",
-   "newEnd": "16:13",
+   "newStart": "13:35",
+   "newEnd": "16:05",
    "newDurMin": 150,
    "durBasis": "TripAdvisor and district guides give 2h for a highlights loop and 2-4h for a typical visit (4-5h for art devotees); 2.5h covers the outdoor art and smaller galleries with UCCA timed separately.",
    "durConf": "med",
@@ -5831,7 +5831,7 @@
    "origDay": 4,
    "origStart": "13:09",
    "origDurMin": 150,
-   "action": "RETIME 13:09 → 13:43"
+   "action": "RETIME 13:09 → 13:35"
   },
   {
    "city": "Beijing",
@@ -5840,8 +5840,8 @@
    "order": 50,
    "activity": "UCCA",
    "kind": "Sight",
-   "newStart": "16:29",
-   "newEnd": "17:44",
+   "newStart": "16:21",
+   "newEnd": "17:36",
    "newDurMin": 75,
    "durBasis": "Visitor write-ups say the UCCA halls are compact enough to walk through in about an hour; the extra 15 min covers ticketing and the UCCA Store.",
    "durConf": "med",
@@ -5853,7 +5853,7 @@
    "origDay": 4,
    "origStart": "15:25",
    "origDurMin": 75,
-   "action": "RETIME 15:25 → 16:29"
+   "action": "RETIME 15:25 → 16:21"
   },
   {
    "city": "Beijing",
@@ -6045,9 +6045,9 @@
    "durConf": "med",
    "toNext": "Baisha Village",
    "travelMode": "didi",
-   "travelMin": 27,
-   "travelKm": 11.9,
-   "travelSource": "routed (real leg)",
+   "travelMin": 20,
+   "travelKm": 9.17,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -6060,8 +6060,8 @@
    "order": 20,
    "activity": "Baisha Village",
    "kind": "Sight",
-   "newStart": "09:10",
-   "newEnd": "10:25",
+   "newStart": "09:03",
+   "newEnd": "10:18",
    "newDurMin": 75,
    "durBasis": "Guides give Baisha 2-3 h in total; with the murals and embroidery institute counted separately, 75 min covers the main street, farm lanes and mountain views.",
    "durConf": "med",
@@ -6073,7 +6073,7 @@
    "origDay": 4,
    "origStart": "08:50",
    "origDurMin": 75,
-   "action": "MOVE day 4 → 2; RETIME 08:50 → 09:10"
+   "action": "MOVE day 4 → 2; RETIME 08:50 → 09:03"
   },
   {
    "city": "Lijiang",
@@ -6082,8 +6082,8 @@
    "order": 30,
    "activity": "Baisha Murals",
    "kind": "Sight",
-   "newStart": "10:37",
-   "newEnd": "11:17",
+   "newStart": "10:30",
+   "newEnd": "11:10",
    "newDurMin": 40,
    "durBasis": "The 55 surviving Ming-Qing panels sit in a handful of small halls (CNY 30); TripAdvisor reviewers describe a compact 30-45 min visit, longer only with a guide.",
    "durConf": "med",
@@ -6095,7 +6095,7 @@
    "origDay": 4,
    "origStart": "10:17",
    "origDurMin": 40,
-   "action": "MOVE day 4 → 2; RETIME 10:17 → 10:37"
+   "action": "MOVE day 4 → 2; RETIME 10:17 → 10:30"
   },
   {
    "city": "Lijiang",
@@ -6104,8 +6104,8 @@
    "order": 40,
    "activity": "Baisha embroidery",
    "kind": "Sight",
-   "newStart": "11:26",
-   "newEnd": "11:56",
+   "newStart": "11:19",
+   "newEnd": "11:49",
    "newDurMin": 30,
    "durBasis": "TripAdvisor reviewers call it worth 10-20 min to see the pieces and artists at work; listings quote up to an hour, so 30 min covers a genuine look plus a browse.",
    "durConf": "med",
@@ -6117,7 +6117,7 @@
    "origDay": 4,
    "origStart": "12:26",
    "origDurMin": 30,
-   "action": "MOVE day 4 → 2; RETIME 12:26 → 11:26"
+   "action": "MOVE day 4 → 2; RETIME 12:26 → 11:19"
   },
   {
    "city": "Lijiang",
@@ -6126,8 +6126,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:04",
-   "newEnd": "13:04",
+   "newStart": "11:57",
+   "newEnd": "12:57",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -6139,7 +6139,7 @@
    "origDay": 2,
    "origStart": "14:31",
    "origDurMin": 60,
-   "action": "RETIME 14:31 → 12:04"
+   "action": "RETIME 14:31 → 11:57"
   },
   {
    "city": "Lijiang",
@@ -6148,8 +6148,8 @@
    "order": 60,
    "activity": "Shuhe Old Town",
    "kind": "Sight",
-   "newStart": "13:25",
-   "newEnd": "15:25",
+   "newStart": "13:18",
+   "newEnd": "15:18",
    "newDurMin": 120,
    "durBasis": "Guides recommend 3-4 h for a full Shuhe visit, but for travellers who have already walked Dayan, 2 h covers the core lanes, canals and Qinglong Bridge; museum and lunch are separate stops.",
    "durConf": "med",
@@ -6161,7 +6161,7 @@
    "origDay": 4,
    "origStart": "14:47",
    "origDurMin": 120,
-   "action": "MOVE day 4 → 2; RETIME 14:47 → 13:25; ORDER 50 → 60"
+   "action": "MOVE day 4 → 2; RETIME 14:47 → 13:18; ORDER 50 → 60"
   },
   {
    "city": "Lijiang",
@@ -6170,8 +6170,8 @@
    "order": 70,
    "activity": "Tea Horse Road Museum",
    "kind": "Sight",
-   "newStart": "15:46",
-   "newEnd": "16:26",
+   "newStart": "15:39",
+   "newEnd": "16:19",
    "newDurMin": 40,
    "durBasis": "Listings give a recommended 0.5-1 h; reviewers note it is small with mostly Chinese-only captions, so 40 min covers the halls and the Ming murals at Dajue Palace.",
    "durConf": "high",
@@ -6183,7 +6183,7 @@
    "origDay": 4,
    "origStart": "17:26",
    "origDurMin": 40,
-   "action": "MOVE day 4 → 2; RETIME 17:26 → 15:46"
+   "action": "MOVE day 4 → 2; RETIME 17:26 → 15:39"
   },
   {
    "city": "Lijiang",
@@ -6244,7 +6244,7 @@
    "toNext": "Glacier Park cable car",
    "travelMode": "didi",
    "travelMin": 46,
-   "travelKm": 26.06,
+   "travelKm": 26.28,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
@@ -6396,10 +6396,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Depart for the gorge",
-   "travelMode": "didi",
-   "travelMin": 17,
-   "travelKm": 4.2,
-   "travelSource": "routed (real leg)",
+   "travelMode": "walk",
+   "travelMin": 22,
+   "travelKm": 0.93,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -6412,8 +6412,8 @@
    "order": 20,
    "activity": "Depart for the gorge",
    "kind": "Sight",
-   "newStart": "08:00",
-   "newEnd": "08:30",
+   "newStart": "08:05",
+   "newEnd": "08:35",
    "newDurMin": 30,
    "durBasis": "Chinese long-distance bus stations require ID check plus bag security and advise arriving ~30 min before departure; a private driver would cut this to ~10 min.",
    "durConf": "med",
@@ -6425,7 +6425,7 @@
    "origDay": 2,
    "origStart": "08:40",
    "origDurMin": 30,
-   "action": "MOVE day 2 → 4; RETIME 08:40 → 08:00"
+   "action": "MOVE day 2 → 4; RETIME 08:40 → 08:05"
   },
   {
    "city": "Lijiang",
@@ -6434,8 +6434,8 @@
    "order": 30,
    "activity": "Qiaotou gateway",
    "kind": "Sight",
-   "newStart": "10:03",
-   "newEnd": "10:33",
+   "newStart": "10:08",
+   "newEnd": "10:38",
    "newDurMin": 30,
    "durBasis": "Qiaotou (Hutiaoxia town) is where the gorge entrance fee is paid and onward vans are arranged; trip reports describe 20-40 min of formalities and waiting.",
    "durConf": "med",
@@ -6447,7 +6447,7 @@
    "origDay": 2,
    "origStart": "10:58",
    "origDurMin": 30,
-   "action": "MOVE day 2 → 4; RETIME 10:58 → 10:03"
+   "action": "MOVE day 2 → 4; RETIME 10:58 → 10:08"
   },
   {
    "city": "Lijiang",
@@ -6456,8 +6456,8 @@
    "order": 40,
    "activity": "Tiger Leaping Gorge",
    "kind": "Sight",
-   "newStart": "10:49",
-   "newEnd": "12:49",
+   "newStart": "10:54",
+   "newEnd": "12:54",
    "newDurMin": 120,
    "durBasis": "China Highlights and other guides put the Upper Gorge scenic spot at 1-2 hours on the paved plank path down to the tiger statue and back up the stairs.",
    "durConf": "high",
@@ -6469,7 +6469,7 @@
    "origDay": 2,
    "origStart": "11:59",
    "origDurMin": 120,
-   "action": "MOVE day 2 → 4; RETIME 11:59 → 10:49"
+   "action": "MOVE day 2 → 4; RETIME 11:59 → 10:54"
   },
   {
    "city": "Lijiang",
@@ -6478,8 +6478,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:57",
-   "newEnd": "13:57",
+   "newStart": "13:02",
+   "newEnd": "14:02",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -6491,7 +6491,7 @@
    "origDay": 4,
    "origStart": "16:17",
    "origDurMin": 60,
-   "action": "RETIME 16:17 → 12:57; ORDER 60 → 50"
+   "action": "RETIME 16:17 → 13:02; ORDER 60 → 50"
   },
   {
    "city": "Lijiang",
@@ -6500,8 +6500,8 @@
    "order": 60,
    "activity": "Middle Gorge descent",
    "kind": "Sight",
-   "newStart": "14:36",
-   "newEnd": "17:36",
+   "newStart": "14:41",
+   "newEnd": "17:41",
    "newDurMin": 180,
    "durBasis": "Trip reports consistently give 2-3 h for the descent from Tina's to the river and the steep climb back via Teacher Zhang's trail or the 168-step Sky Ladder.",
    "durConf": "high",
@@ -6513,7 +6513,7 @@
    "origDay": 2,
    "origStart": "15:48",
    "origDurMin": 180,
-   "action": "MOVE day 2 → 4; RETIME 15:48 → 14:36"
+   "action": "MOVE day 2 → 4; RETIME 15:48 → 14:41"
   },
   {
    "city": "Lijiang",
@@ -6727,9 +6727,9 @@
    "durConf": "med",
    "toNext": "Chengdu Panda Base",
    "travelMode": "didi",
-   "travelMin": 39,
-   "travelKm": 27.8,
-   "travelSource": "routed (real leg)",
+   "travelMin": 23,
+   "travelKm": 10.85,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -6742,8 +6742,8 @@
    "order": 20,
    "activity": "Chengdu Panda Base",
    "kind": "Sight",
-   "newStart": "08:22",
-   "newEnd": "11:52",
+   "newStart": "08:06",
+   "newEnd": "11:36",
    "newDurMin": 210,
    "durBasis": "Guides advise at least 3–4 h because the base is large; walking the whole park is about 3 h, and 2.5 h is described on TripAdvisor as the rushed minimum.",
    "durConf": "high",
@@ -6755,7 +6755,7 @@
    "origDay": 2,
    "origStart": "09:02",
    "origDurMin": 210,
-   "action": "RETIME 09:02 → 08:22"
+   "action": "RETIME 09:02 → 08:06"
   },
   {
    "city": "Chengdu",
@@ -6764,8 +6764,8 @@
    "order": 30,
    "activity": "People’s Park",
    "kind": "Sight",
-   "newStart": "12:24",
-   "newEnd": "13:09",
+   "newStart": "12:08",
+   "newEnd": "12:53",
    "newDurMin": 45,
    "durBasis": "Guides bundle park plus teahouse into 1–2 h; with Heming timed separately, the lake loop and marriage-market corner take about 45 min.",
    "durConf": "med",
@@ -6777,7 +6777,7 @@
    "origDay": 2,
    "origStart": "15:53",
    "origDurMin": 45,
-   "action": "RETIME 15:53 → 12:24; ORDER 50 → 30"
+   "action": "RETIME 15:53 → 12:08; ORDER 50 → 30"
   },
   {
    "city": "Chengdu",
@@ -6786,8 +6786,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "13:17",
-   "newEnd": "14:17",
+   "newStart": "13:01",
+   "newEnd": "14:01",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -6799,7 +6799,7 @@
    "origDay": 2,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 13:17; ORDER 30 → 40"
+   "action": "RETIME 12:00 → 13:01; ORDER 30 → 40"
   },
   {
    "city": "Chengdu",
@@ -6808,8 +6808,8 @@
    "order": 50,
    "activity": "Heming Teahouse",
    "kind": "Sight",
-   "newStart": "14:30",
-   "newEnd": "16:00",
+   "newStart": "14:14",
+   "newEnd": "15:44",
    "newDurMin": 90,
    "durBasis": "Teahouse sources put the average Heming visit at 1–2 h with no table time limit, and caier ear cleaning adds roughly 20–30 min.",
    "durConf": "med",
@@ -6821,7 +6821,7 @@
    "origDay": 2,
    "origStart": "18:06",
    "origDurMin": 90,
-   "action": "RETIME 18:06 → 14:30; ORDER 60 → 50"
+   "action": "RETIME 18:06 → 14:14; ORDER 60 → 50"
   },
   {
    "city": "Chengdu",
@@ -6830,8 +6830,8 @@
    "order": 60,
    "activity": "Kuanzhai Alleys",
    "kind": "Sight",
-   "newStart": "16:23",
-   "newEnd": "18:23",
+   "newStart": "16:07",
+   "newEnd": "18:07",
    "newDurMin": 120,
    "durBasis": "TripAdvisor and Chinese guides recommend 2–3 h for the wide, narrow and well lanes, best from about 17:00 once the lights come on.",
    "durConf": "med",
@@ -6843,7 +6843,7 @@
    "origDay": 2,
    "origStart": "19:29",
    "origDurMin": 120,
-   "action": "RETIME 19:29 → 16:23; ORDER 70 → 60"
+   "action": "RETIME 19:29 → 16:07; ORDER 70 → 60"
   },
   {
    "city": "Chengdu",
@@ -6903,8 +6903,8 @@
    "durConf": "med",
    "toNext": "Sanxingdui Museum",
    "travelMode": "didi",
-   "travelMin": 80,
-   "travelKm": 48.94,
+   "travelMin": 67,
+   "travelKm": 40.16,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
@@ -6918,8 +6918,8 @@
    "order": 20,
    "activity": "Sanxingdui Museum",
    "kind": "Sight",
-   "newStart": "09:03",
-   "newEnd": "12:33",
+   "newStart": "08:50",
+   "newEnd": "12:20",
    "newDurMin": 210,
    "durBasis": "Official and tour guidance since the 2023 new building recommends 3–4 h (some say 3–5 h) for the new halls plus the old bronze hall; it is genuinely a half-day.",
    "durConf": "high",
@@ -6931,7 +6931,7 @@
    "origDay": 3,
    "origStart": "12:30",
    "origDurMin": 210,
-   "action": "RETIME 12:30 → 09:03; ORDER 40 → 20"
+   "action": "RETIME 12:30 → 08:50; ORDER 40 → 20"
   },
   {
    "city": "Chengdu",
@@ -6940,8 +6940,8 @@
    "order": 30,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:41",
-   "newEnd": "13:41",
+   "newStart": "12:28",
+   "newEnd": "13:28",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -6953,7 +6953,7 @@
    "origDay": 3,
    "origStart": "16:23",
    "origDurMin": 60,
-   "action": "RETIME 16:23 → 12:41; ORDER 50 → 30"
+   "action": "RETIME 16:23 → 12:28; ORDER 50 → 30"
   },
   {
    "city": "Chengdu",
@@ -6962,8 +6962,8 @@
    "order": 40,
    "activity": "Wuhou Shrine",
    "kind": "Sight",
-   "newStart": "14:58",
-   "newEnd": "16:58",
+   "newStart": "14:45",
+   "newEnd": "16:45",
    "newDurMin": 120,
    "durBasis": "Chengdu guides state the main sights take about two hours, three if you linger in the gardens or the Three Kingdoms history.",
    "durConf": "high",
@@ -6975,7 +6975,7 @@
    "origDay": 3,
    "origStart": "19:48",
    "origDurMin": 120,
-   "action": "RETIME 19:48 → 14:58; ORDER 70 → 40"
+   "action": "RETIME 19:48 → 14:45; ORDER 70 → 40"
   },
   {
    "city": "Chengdu",
@@ -6984,8 +6984,8 @@
    "order": 50,
    "activity": "Jinli Old Street",
    "kind": "Sight",
-   "newStart": "17:19",
-   "newEnd": "18:49",
+   "newStart": "17:06",
+   "newEnd": "18:36",
    "newDurMin": 90,
    "durBasis": "Guides suggest 2–3 h for Jinli at sunset; 1.5 h fits a walk plus snacks when Wuhou Shrine next door is visited the same evening.",
    "durConf": "med",
@@ -6997,7 +6997,7 @@
    "origDay": 3,
    "origStart": "21:39",
    "origDurMin": 90,
-   "action": "RETIME 21:39 → 17:19; ORDER 80 → 50"
+   "action": "RETIME 21:39 → 17:06; ORDER 80 → 50"
   },
   {
    "city": "Chengdu",
@@ -7006,8 +7006,8 @@
    "order": 60,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "18:57",
-   "newEnd": "20:27",
+   "newStart": "18:44",
+   "newEnd": "20:14",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -7019,7 +7019,7 @@
    "origDay": 3,
    "origStart": "23:53",
    "origDurMin": 90,
-   "action": "RETIME 23:53 → 18:57; ORDER 90 → 60"
+   "action": "RETIME 23:53 → 18:44; ORDER 90 → 60"
   },
   {
    "city": "Chengdu",
@@ -7028,8 +7028,8 @@
    "order": 70,
    "activity": "Taikoo Li",
    "kind": "Sight",
-   "newStart": "20:46",
-   "newEnd": "22:16",
+   "newStart": "20:33",
+   "newEnd": "22:03",
    "newDurMin": 90,
    "durBasis": "Chengdu guides put a relaxed walk through Taikoo Li at 1–2 hours, longer only if you stop to dine.",
    "durConf": "med",
@@ -7041,7 +7041,7 @@
    "origDay": 1,
    "origStart": "00:17",
    "origDurMin": 90,
-   "action": "MOVE day 1 → 3; RETIME 00:17 → 20:46; ORDER 40 → 70"
+   "action": "MOVE day 1 → 3; RETIME 00:17 → 20:33; ORDER 40 → 70"
   },
   {
    "city": "Chengdu",
@@ -7254,10 +7254,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Liziba monorail",
-   "travelMode": "metro",
-   "travelMin": 20,
-   "travelKm": 4.3,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 13,
+   "travelKm": 4.14,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -7270,8 +7270,8 @@
    "order": 20,
    "activity": "Liziba monorail",
    "kind": "Sight",
-   "newStart": "09:03",
-   "newEnd": "09:33",
+   "newStart": "08:56",
+   "newEnd": "09:26",
    "newDurMin": 30,
    "durBasis": "Chongqing city guides give a suggested stay of 30min at the purpose-built viewing platform, with trains passing every 2-4 minutes so waits are short.",
    "durConf": "high",
@@ -7283,7 +7283,7 @@
    "origDay": 2,
    "origStart": "08:43",
    "origDurMin": 30,
-   "action": "RETIME 08:43 → 09:03"
+   "action": "RETIME 08:43 → 08:56"
   },
   {
    "city": "Chongqing",
@@ -7292,8 +7292,8 @@
    "order": 30,
    "activity": "Eling Park",
    "kind": "Sight",
-   "newStart": "09:51",
-   "newEnd": "11:06",
+   "newStart": "09:44",
+   "newEnd": "10:59",
    "newDurMin": 75,
    "durBasis": "Trip.com suggests 1-2h; the park is small but the Liangjiang Pavilion is a seven-to-nine storey climb worth lingering at for the panorama.",
    "durConf": "med",
@@ -7305,7 +7305,7 @@
    "origDay": 2,
    "origStart": "10:01",
    "origDurMin": 75,
-   "action": "RETIME 10:01 → 09:51"
+   "action": "RETIME 10:01 → 09:44"
   },
   {
    "city": "Chongqing",
@@ -7314,8 +7314,8 @@
    "order": 40,
    "activity": "Testbed 2",
    "kind": "Sight",
-   "newStart": "11:28",
-   "newEnd": "12:58",
+   "newStart": "11:21",
+   "newEnd": "12:51",
    "newDurMin": 90,
    "durBasis": "Trip.com's suggested sightseeing time is 1-3h for the shops, galleries and rooftop of the old printing works; 90min covers a proper wander without a meal.",
    "durConf": "med",
@@ -7327,7 +7327,7 @@
    "origDay": 2,
    "origStart": "11:23",
    "origDurMin": 90,
-   "action": "RETIME 11:23 → 11:28"
+   "action": "RETIME 11:23 → 11:21"
   },
   {
    "city": "Chongqing",
@@ -7336,8 +7336,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "13:06",
-   "newEnd": "14:06",
+   "newStart": "12:59",
+   "newEnd": "13:59",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -7349,7 +7349,7 @@
    "origDay": 2,
    "origStart": "14:10",
    "origDurMin": 60,
-   "action": "RETIME 14:10 → 13:06"
+   "action": "RETIME 14:10 → 12:59"
   },
   {
    "city": "Chongqing",
@@ -7358,8 +7358,8 @@
    "order": 60,
    "activity": "Baixiang Ju",
    "kind": "Sight",
-   "newStart": "14:27",
-   "newEnd": "15:12",
+   "newStart": "14:20",
+   "newEnd": "15:05",
    "newDurMin": 45,
    "durBasis": "Guides report most visitors spend 40min to 1.5h, with the main corridors and the three street-level exits coverable in about 20min.",
    "durConf": "med",
@@ -7371,7 +7371,7 @@
    "origDay": 2,
    "origStart": "15:20",
    "origDurMin": 45,
-   "action": "RETIME 15:20 → 14:27"
+   "action": "RETIME 15:20 → 14:20"
   },
   {
    "city": "Chongqing",
@@ -7380,8 +7380,8 @@
    "order": 70,
    "activity": "Yangtze Cableway",
    "kind": "Sight",
-   "newStart": "15:39",
-   "newEnd": "16:39",
+   "newStart": "15:32",
+   "newEnd": "16:32",
    "newDurMin": 60,
    "durBasis": "Ride is only 3.6-5min but queues run 40-60min at peak windows (1-2h on holidays); late August is peak season even with WeChat queue numbers.",
    "durConf": "med",
@@ -7393,7 +7393,7 @@
    "origDay": 2,
    "origStart": "17:17",
    "origDurMin": 60,
-   "action": "RETIME 17:17 → 15:39"
+   "action": "RETIME 17:17 → 15:32"
   },
   {
    "city": "Chongqing",
@@ -7402,8 +7402,8 @@
    "order": 80,
    "activity": "Longmenhao Old Street",
    "kind": "Sight",
-   "newStart": "16:58",
-   "newEnd": "18:13",
+   "newStart": "16:51",
+   "newEnd": "18:06",
    "newDurMin": 75,
    "durBasis": "Trip.com suggests 1-3h for the six-tier hillside precinct and reviewers warn of a lot of stairs; 75min covers the main lanes and viewpoints.",
    "durConf": "med",
@@ -7415,7 +7415,7 @@
    "origDay": 2,
    "origStart": "18:21",
    "origDurMin": 75,
-   "action": "RETIME 18:21 → 16:58"
+   "action": "RETIME 18:21 → 16:51"
   },
   {
    "city": "Chongqing",
@@ -7424,8 +7424,8 @@
    "order": 90,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "18:21",
-   "newEnd": "19:51",
+   "newStart": "18:14",
+   "newEnd": "19:44",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -7437,7 +7437,7 @@
    "origDay": 2,
    "origStart": "20:03",
    "origDurMin": 90,
-   "action": "RETIME 20:03 → 18:21"
+   "action": "RETIME 20:03 → 18:14"
   },
   {
    "city": "Chongqing",
@@ -7446,8 +7446,8 @@
    "order": 100,
    "activity": "Two Rivers night cruise",
    "kind": "Sight",
-   "newStart": "20:07",
-   "newEnd": "21:22",
+   "newStart": "20:00",
+   "newEnd": "21:15",
    "newDurMin": 75,
    "durBasis": "Operators state a fixed 45-50min sailing over the 16-20km loop, and Chinese booking guides advise arriving 30min before departure for ticket check and seating.",
    "durConf": "high",
@@ -7459,7 +7459,7 @@
    "origDay": 2,
    "origStart": "21:49",
    "origDurMin": 75,
-   "action": "RETIME 21:49 → 20:07"
+   "action": "RETIME 21:49 → 20:00"
   },
   {
    "city": "Chongqing",
@@ -7579,9 +7579,9 @@
    "activity": "Golden Whip Stream",
    "kind": "Sight",
    "newStart": "16:57",
-   "newEnd": "19:42",
-   "newDurMin": 165,
-   "durBasis": "Trail guides and trip reports put the full 7.5 km flat walk at 2.5-3 h at a relaxed pace with photo stops (some quote 3-4 h).",
+   "newEnd": "19:00",
+   "newDurMin": 123,
+   "durBasis": "CUT SHORT BY CLOSING TIME: closes 19:00, last entry 17:30; 42 min less than the 165 min advice. Trail guides and trip reports put the full 7.5 km flat walk at 2.5-3 h at a relaxed pace with photo stops (some quote 3-4 h).",
    "durConf": "high",
    "toNext": "Dinner",
    "travelMode": "none (same place)",
@@ -7591,7 +7591,7 @@
    "origDay": 1,
    "origStart": "18:00",
    "origDurMin": 165,
-   "action": "RETIME 18:00 → 16:57"
+   "action": "RETIME 18:00 → 16:57; DURATION 165m → 123m"
   },
   {
    "city": "Zhangjiajie",
@@ -7600,8 +7600,8 @@
    "order": 60,
    "activity": "Dinner",
    "kind": "Food",
-   "newStart": "19:50",
-   "newEnd": "21:20",
+   "newStart": "19:08",
+   "newEnd": "20:38",
    "newDurMin": 90,
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
@@ -7613,7 +7613,7 @@
    "origDay": 1,
    "origStart": "20:21",
    "origDurMin": 90,
-   "action": "RETIME 20:21 → 19:50"
+   "action": "RETIME 20:21 → 19:08"
   },
   {
    "city": "Zhangjiajie",
@@ -7622,20 +7622,20 @@
    "order": 10,
    "activity": "Breakfast",
    "kind": "Food",
-   "newStart": "07:00",
-   "newEnd": "07:35",
+   "newStart": "06:30",
+   "newEnd": "07:05",
    "newDurMin": 35,
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Bailong Elevator",
    "travelMode": "didi",
-   "travelMin": 54,
-   "travelKm": 38.8,
-   "travelSource": "routed (real leg)",
+   "travelMin": 18,
+   "travelKm": 7.45,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
-   "action": "RETIME 07:30 → 07:00"
+   "action": "RETIME 07:30 → 06:30"
   },
   {
    "city": "Zhangjiajie",
@@ -7644,20 +7644,20 @@
    "order": 20,
    "activity": "Bailong Elevator",
    "kind": "Sight",
-   "newStart": "08:37",
-   "newEnd": "09:37",
+   "newStart": "07:31",
+   "newEnd": "08:31",
    "newDurMin": 60,
    "durBasis": "Ride is only 92 seconds but peak-season (May-Oct) queues run 1-2 h and worse on summer mornings; arriving at the 07:00 opening is the one way to hold it near 30-45 min.",
    "durConf": "high",
    "toNext": "Yuanjiajie (Avatar)",
-   "travelMode": "walk",
-   "travelMin": 2,
-   "travelKm": 0.1,
-   "travelSource": "routed (real leg)",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
    "origDay": 2,
    "origStart": "09:17",
    "origDurMin": 60,
-   "action": "RETIME 09:17 → 08:37"
+   "action": "RETIME 09:17 → 07:31"
   },
   {
    "city": "Zhangjiajie",
@@ -7666,8 +7666,8 @@
    "order": 30,
    "activity": "Yuanjiajie (Avatar)",
    "kind": "Sight",
-   "newStart": "09:47",
-   "newEnd": "12:47",
+   "newStart": "08:39",
+   "newEnd": "11:39",
    "newDurMin": 180,
    "durBasis": "Guides put Yuanjiajie at 2-3 h (photographers 3-4 h); the loop trail is 1-2 h walking but viewing platforms are shoulder-to-shoulder after 09:00 and inter-stop shuttles queue 20 min+.",
    "durConf": "high",
@@ -7679,7 +7679,7 @@
    "origDay": 2,
    "origStart": "10:12",
    "origDurMin": 180,
-   "action": "RETIME 10:12 → 09:47"
+   "action": "RETIME 10:12 → 08:39"
   },
   {
    "city": "Zhangjiajie",
@@ -7688,8 +7688,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:55",
-   "newEnd": "13:55",
+   "newStart": "11:47",
+   "newEnd": "12:47",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -7701,7 +7701,7 @@
    "origDay": 2,
    "origStart": "12:58",
    "origDurMin": 60,
-   "action": "RETIME 12:58 → 12:55"
+   "action": "RETIME 12:58 → 11:47"
   },
   {
    "city": "Zhangjiajie",
@@ -7710,8 +7710,8 @@
    "order": 50,
    "activity": "Tianzi Mountain",
    "kind": "Sight",
-   "newStart": "14:16",
-   "newEnd": "16:46",
+   "newStart": "13:08",
+   "newEnd": "15:38",
    "newDurMin": 150,
    "durBasis": "He Long Park alone is recommended at 1-1.5 h and the classic Tianzi route at 2-3 h; add free-shuttle waits of 20 min or more between Imperial Brush Peaks and Fairy Scattering Flowers.",
    "durConf": "med",
@@ -7723,7 +7723,7 @@
    "origDay": 2,
    "origStart": "14:08",
    "origDurMin": 150,
-   "action": "RETIME 14:08 → 14:16"
+   "action": "RETIME 14:08 → 13:08"
   },
   {
    "city": "Zhangjiajie",
@@ -7732,32 +7732,10 @@
    "order": 60,
    "activity": "Tianzi cableway down",
    "kind": "Sight",
-   "newStart": "17:11",
-   "newEnd": "18:11",
+   "newStart": "16:03",
+   "newEnd": "17:03",
    "newDurMin": 60,
    "durBasis": "Ride is 6 min 26 s, but peak-summer queues at the Tianzi cableway reach 2 h and only drop under 15 min after 16:00 — an afternoon descent realistically costs about an hour.",
-   "durConf": "med",
-   "toNext": "Dinner",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 2,
-   "origStart": "16:33",
-   "origDurMin": 60,
-   "action": "RETIME 16:33 → 17:11"
-  },
-  {
-   "city": "Zhangjiajie",
-   "day": 2,
-   "date": "2026-08-25",
-   "order": 70,
-   "activity": "Dinner",
-   "kind": "Food",
-   "newStart": "18:19",
-   "newEnd": "19:49",
-   "newDurMin": 90,
-   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Ten-Mile Gallery",
    "travelMode": "didi",
@@ -7765,21 +7743,43 @@
    "travelKm": 11.1,
    "travelSource": "routed (real leg)",
    "origDay": 2,
-   "origStart": "19:57",
+   "origStart": "16:33",
+   "origDurMin": 60,
+   "action": "RETIME 16:33 → 16:03"
+  },
+  {
+   "city": "Zhangjiajie",
+   "day": 2,
+   "date": "2026-08-25",
+   "order": 70,
+   "activity": "Ten-Mile Gallery",
+   "kind": "Sight",
+   "newStart": "17:33",
+   "newEnd": "19:03",
+   "newDurMin": 90,
+   "durBasis": "Official guidance is ~1 h for the 2 km gallery; tram is 10-15 min each way and the walk-out ~40 min, so tram queue plus walk lands near 1.5 h in August.",
+   "durConf": "med",
+   "toNext": "Dinner",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 2,
+   "origStart": "17:48",
    "origDurMin": 90,
-   "action": "RETIME 19:57 → 18:19; ORDER 80 → 70"
+   "action": "RETIME 17:48 → 17:33"
   },
   {
    "city": "Zhangjiajie",
    "day": 2,
    "date": "2026-08-25",
    "order": 80,
-   "activity": "Ten-Mile Gallery",
-   "kind": "Sight",
-   "newStart": "20:19",
-   "newEnd": "21:49",
+   "activity": "Dinner",
+   "kind": "Food",
+   "newStart": "19:11",
+   "newEnd": "20:41",
    "newDurMin": 90,
-   "durBasis": "Official guidance is ~1 h for the 2 km gallery; tram is 10-15 min each way and the walk-out ~40 min, so tram queue plus walk lands near 1.5 h in August.",
+   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Hotel (home)",
    "travelMode": "didi",
@@ -7787,9 +7787,9 @@
    "travelKm": 6.14,
    "travelSource": "estimated (fitted model)",
    "origDay": 2,
-   "origStart": "17:48",
+   "origStart": "19:57",
    "origDurMin": 90,
-   "action": "RETIME 17:48 → 20:19; ORDER 70 → 80"
+   "action": "RETIME 19:57 → 19:11"
   },
   {
    "city": "Zhangjiajie",
@@ -7804,9 +7804,9 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Bus to Zhangjiajie city",
-   "travelMode": "walk",
-   "travelMin": 22,
-   "travelKm": 0.93,
+   "travelMode": "didi",
+   "travelMin": 48,
+   "travelKm": 27.77,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
@@ -7820,8 +7820,8 @@
    "order": 20,
    "activity": "Bus to Zhangjiajie city",
    "kind": "Sight",
-   "newStart": "08:05",
-   "newEnd": "08:35",
+   "newStart": "08:31",
+   "newEnd": "09:01",
    "newDurMin": 30,
    "durBasis": "Wulingyuan bus station departures to the city run every ~20-30 min; ticketing, bag handling and boarding wait total about half an hour before the ~1 h ride.",
    "durConf": "med",
@@ -7833,7 +7833,7 @@
    "origDay": 3,
    "origStart": "14:47",
    "origDurMin": 30,
-   "action": "RETIME 14:47 → 08:05; ORDER 50 → 20"
+   "action": "RETIME 14:47 → 08:31; ORDER 50 → 20"
   },
   {
    "city": "Zhangjiajie",
@@ -7842,20 +7842,20 @@
    "order": 30,
    "activity": "Tianmen cableway",
    "kind": "Sight",
-   "newStart": "08:55",
-   "newEnd": "10:10",
+   "newStart": "09:21",
+   "newEnd": "10:36",
    "newDurMin": 75,
    "durBasis": "Line C is a 20-min shuttle to the mountain gate then a 7-min express cableway to Tianmen Cave, with reported express-cableway queues of 30-45 min in peak season.",
    "durConf": "med",
    "toNext": "Tianmen Mountain",
-   "travelMode": "didi",
-   "travelMin": 51,
-   "travelKm": 27.2,
-   "travelSource": "routed (real leg)",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
    "origDay": 3,
    "origStart": "15:52",
    "origDurMin": 75,
-   "action": "RETIME 15:52 → 08:55; ORDER 60 → 30"
+   "action": "RETIME 15:52 → 09:21; ORDER 60 → 30"
   },
   {
    "city": "Zhangjiajie",
@@ -7864,8 +7864,8 @@
    "order": 40,
    "activity": "Tianmen Mountain",
    "kind": "Sight",
-   "newStart": "11:09",
-   "newEnd": "15:24",
+   "newStart": "10:44",
+   "newEnd": "14:59",
    "newDurMin": 255,
    "durBasis": "Trip reports put a full Tianmen visit at 5-7 h including waits (Line C 4.5-5.5 h): summit 2-3 h, West Line cliff walkway ~2 h, 999 steps 20-30 min, each glass skywalk 5-10 min, plus escalator and descent-bus queues — with the cableway stop this is ~5.5 h, most of the day.",
    "durConf": "high",
@@ -7877,7 +7877,7 @@
    "origDay": 3,
    "origStart": "17:36",
    "origDurMin": 255,
-   "action": "RETIME 17:36 → 11:09; ORDER 70 → 40"
+   "action": "RETIME 17:36 → 10:44; ORDER 70 → 40"
   },
   {
    "city": "Zhangjiajie",
@@ -7886,8 +7886,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "15:32",
-   "newEnd": "16:32",
+   "newStart": "15:07",
+   "newEnd": "16:07",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -7899,7 +7899,7 @@
    "origDay": 3,
    "origStart": "13:35",
    "origDurMin": 60,
-   "action": "RETIME 13:35 → 15:32; ORDER 40 → 50"
+   "action": "RETIME 13:35 → 15:07; ORDER 40 → 50"
   },
   {
    "city": "Zhangjiajie",
@@ -8839,9 +8839,9 @@
    "durConf": "med",
    "toNext": "Yulong bamboo rafting",
    "travelMode": "didi",
-   "travelMin": 22,
-   "travelKm": 12.1,
-   "travelSource": "routed (real leg)",
+   "travelMin": 16,
+   "travelKm": 6.53,
+   "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -8854,8 +8854,8 @@
    "order": 20,
    "activity": "Yulong bamboo rafting",
    "kind": "Sight",
-   "newStart": "08:05",
-   "newEnd": "09:35",
+   "newStart": "07:59",
+   "newEnd": "09:29",
    "newDurMin": 90,
    "durBasis": "Route tables for Yulong rafting list Jinlong Bridge to Jiuxian as 6 km / 90 min, the longest and most popular section with its nine small weirs.",
    "durConf": "high",
@@ -8867,7 +8867,7 @@
    "origDay": 2,
    "origStart": "08:55",
    "origDurMin": 90,
-   "action": "MOVE day 2 → 3; RETIME 08:55 → 08:05; ORDER 30 → 20"
+   "action": "MOVE day 2 → 3; RETIME 08:55 → 07:59; ORDER 30 → 20"
   },
   {
    "city": "Yangshuo",
@@ -8876,8 +8876,8 @@
    "order": 30,
    "activity": "Yulong valley cycling",
    "kind": "Sight",
-   "newStart": "09:59",
-   "newEnd": "12:29",
+   "newStart": "09:53",
+   "newEnd": "12:23",
    "newDurMin": 150,
    "durBasis": "The West Street round-trip loop through the Shili Gallery / Jiuxian-Chaoyang Weir section is 19 km and quoted at 2-3 hrs by cycling guides, including photo and drink stops.",
    "durConf": "high",
@@ -8889,7 +8889,7 @@
    "origDay": 2,
    "origStart": "13:28",
    "origDurMin": 150,
-   "action": "MOVE day 2 → 3; RETIME 13:28 → 09:59; ORDER 50 → 30"
+   "action": "MOVE day 2 → 3; RETIME 13:28 → 09:53; ORDER 50 → 30"
   },
   {
    "city": "Yangshuo",
@@ -8898,8 +8898,8 @@
    "order": 40,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:37",
-   "newEnd": "13:37",
+   "newStart": "12:31",
+   "newEnd": "13:31",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -8911,7 +8911,7 @@
    "origDay": 3,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 12:37"
+   "action": "RETIME 12:00 → 12:31"
   },
   {
    "city": "Yangshuo",
@@ -8920,8 +8920,8 @@
    "order": 50,
    "activity": "Moon Hill",
    "kind": "Sight",
-   "newStart": "14:10",
-   "newEnd": "15:40",
+   "newStart": "14:04",
+   "newEnd": "15:34",
    "newDurMin": 90,
    "durBasis": "800+ stone steps; guides quote ~30-40 min to the arch (China Highlights says ~1 hr to the top), plus time at the arch and the descent, and August heat slows everyone down.",
    "durConf": "med",
@@ -8933,7 +8933,7 @@
    "origDay": 2,
    "origStart": "16:01",
    "origDurMin": 90,
-   "action": "MOVE day 2 → 3; RETIME 16:01 → 14:10; ORDER 60 → 50"
+   "action": "MOVE day 2 → 3; RETIME 16:01 → 14:04; ORDER 60 → 50"
   },
   {
    "city": "Yangshuo",
@@ -9168,10 +9168,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Recovery massage / spa",
-   "travelMode": "none",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 11,
+   "travelKm": 2.67,
+   "travelSource": "estimated (fitted model)",
    "origDay": 2,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -9184,8 +9184,8 @@
    "order": 20,
    "activity": "Recovery massage / spa",
    "kind": "Sight",
-   "newStart": "07:43",
-   "newEnd": "09:13",
+   "newStart": "07:54",
+   "newEnd": "09:24",
    "newDurMin": 90,
    "durBasis": "Shanghai spa listings (Time Out, SmartShanghai, Culture Trip) show 60-80min foot/body packages as the standard tourist option; add foot bath, changing and tea for ~90min door to door.",
    "durConf": "med",
@@ -9197,7 +9197,7 @@
    "origDay": 2,
    "origStart": "13:28",
    "origDurMin": 90,
-   "action": "RETIME 13:28 → 07:43; ORDER 30 → 20"
+   "action": "RETIME 13:28 → 07:54; ORDER 30 → 20"
   },
   {
    "city": "Shanghai",
@@ -9206,8 +9206,8 @@
    "order": 30,
    "activity": "M50 Creative Park",
    "kind": "Sight",
-   "newStart": "09:33",
-   "newEnd": "11:33",
+   "newStart": "09:44",
+   "newEnd": "11:44",
    "newDurMin": 120,
    "durBasis": "Travel guides budget 2-4h (about 3h recommended) for 140+ studios and galleries plus the graffiti wall; 2h is a highlights-plus pass through the better galleries.",
    "durConf": "med",
@@ -9219,7 +9219,7 @@
    "origDay": 4,
    "origStart": "18:37",
    "origDurMin": 120,
-   "action": "MOVE day 4 → 2; RETIME 18:37 → 09:33; ORDER 80 → 30"
+   "action": "MOVE day 4 → 2; RETIME 18:37 → 09:44; ORDER 80 → 30"
   },
   {
    "city": "Shanghai",
@@ -9228,8 +9228,8 @@
    "order": 40,
    "activity": "Jing’an Temple",
    "kind": "Sight",
-   "newStart": "11:52",
-   "newEnd": "12:52",
+   "newStart": "12:03",
+   "newEnd": "13:03",
    "newDurMin": 60,
    "durBasis": "Multiple guides recommend about 1 hour for the compact walled complex (90min quoted as a generous middle ground); 45min is tight once you include ticketing and the Mahavira Hall.",
    "durConf": "high",
@@ -9241,7 +9241,7 @@
    "origDay": 2,
    "origStart": "15:55",
    "origDurMin": 60,
-   "action": "RETIME 15:55 → 11:52"
+   "action": "RETIME 15:55 → 12:03"
   },
   {
    "city": "Shanghai",
@@ -9250,8 +9250,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "13:00",
-   "newEnd": "14:00",
+   "newStart": "13:11",
+   "newEnd": "14:11",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -9263,7 +9263,7 @@
    "origDay": 2,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 13:00; ORDER 20 → 50"
+   "action": "RETIME 12:00 → 13:11; ORDER 20 → 50"
   },
   {
    "city": "Shanghai",
@@ -9272,8 +9272,8 @@
    "order": 60,
    "activity": "Nanjing Road West",
    "kind": "Sight",
-   "newStart": "14:31",
-   "newEnd": "15:46",
+   "newStart": "14:42",
+   "newEnd": "15:57",
    "newDurMin": 75,
    "durBasis": "Shopping guides: most visitors spend 1-2h on West Nanjing Road, 2-3h if working through Plaza 66 / HKRI Taikoo Hui; 75min covers the strip plus one mall.",
    "durConf": "med",
@@ -9285,7 +9285,7 @@
    "origDay": 2,
    "origStart": "19:32",
    "origDurMin": 75,
-   "action": "RETIME 19:32 → 14:31"
+   "action": "RETIME 19:32 → 14:42"
   },
   {
    "city": "Shanghai",
@@ -9294,8 +9294,8 @@
    "order": 70,
    "activity": "Zhangyuan",
    "kind": "Sight",
-   "newStart": "16:01",
-   "newEnd": "17:01",
+   "newStart": "16:12",
+   "newEnd": "17:12",
    "newDurMin": 60,
    "durBasis": "Reviews describe a restored shikumen retail precinct 'similar to Xintiandi but much quieter'; an unhurried wander of the lanes with a pop-up or two runs about an hour.",
    "durConf": "med",
@@ -9307,7 +9307,7 @@
    "origDay": 2,
    "origStart": "17:47",
    "origDurMin": 60,
-   "action": "RETIME 17:47 → 16:01; ORDER 50 → 70"
+   "action": "RETIME 17:47 → 16:12; ORDER 50 → 70"
   },
   {
    "city": "Shanghai",
@@ -9344,10 +9344,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Wukang Building",
-   "travelMode": "metro",
-   "travelMin": 25,
-   "travelKm": 6.5,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 17,
+   "travelKm": 7.18,
+   "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "09:00",
    "origDurMin": 35,
@@ -9360,8 +9360,8 @@
    "order": 20,
    "activity": "Wukang Building",
    "kind": "Sight",
-   "newStart": "08:08",
-   "newEnd": "08:28",
+   "newStart": "08:00",
+   "newEnd": "08:20",
    "newDurMin": 20,
    "durBasis": "Walking guides treat Wukang Mansion as a photo landmark on the corner (best 16:00-17:30); it is exterior-only, so 15-25min including crowd jostling.",
    "durConf": "med",
@@ -9373,7 +9373,7 @@
    "origDay": 3,
    "origStart": "10:18",
    "origDurMin": 20,
-   "action": "RETIME 10:18 → 08:08"
+   "action": "RETIME 10:18 → 08:00"
   },
   {
    "city": "Shanghai",
@@ -9382,8 +9382,8 @@
    "order": 30,
    "activity": "Wukang Road",
    "kind": "Sight",
-   "newStart": "08:46",
-   "newEnd": "09:46",
+   "newStart": "08:38",
+   "newEnd": "09:38",
    "newDurMin": 60,
    "durBasis": "Guides quote 2-3h for Wukang Road with photos and coffee, but that bundles Ferguson Lane and cafes which are separate stops here; the 1.17km street alone walks in about an hour.",
    "durConf": "med",
@@ -9395,7 +9395,7 @@
    "origDay": 3,
    "origStart": "12:06",
    "origDurMin": 60,
-   "action": "RETIME 12:06 → 08:46"
+   "action": "RETIME 12:06 → 08:38"
   },
   {
    "city": "Shanghai",
@@ -9404,8 +9404,8 @@
    "order": 40,
    "activity": "Ferguson Lane",
    "kind": "Sight",
-   "newStart": "09:58",
-   "newEnd": "10:43",
+   "newStart": "09:50",
+   "newEnd": "10:35",
    "newDurMin": 45,
    "durBasis": "Ferguson Lane (376 Wukang Rd) is described as a small tucked-away courtyard of galleries and bistros — 15min to look, 45min if you actually sit for the coffee it exists for.",
    "durConf": "low",
@@ -9417,7 +9417,7 @@
    "origDay": 3,
    "origStart": "13:33",
    "origDurMin": 45,
-   "action": "RETIME 13:33 → 09:58"
+   "action": "RETIME 13:33 → 09:50"
   },
   {
    "city": "Shanghai",
@@ -9426,8 +9426,8 @@
    "order": 50,
    "activity": "Anfu Road",
    "kind": "Sight",
-   "newStart": "11:05",
-   "newEnd": "11:50",
+   "newStart": "10:57",
+   "newEnd": "11:42",
    "newDurMin": 45,
    "durBasis": "Wukang+Anfu combined walking routes are quoted at 3-4h over 2.5km; Anfu Road's own share, browsing a couple of shops, is roughly 45min.",
    "durConf": "med",
@@ -9439,7 +9439,7 @@
    "origDay": 3,
    "origStart": "15:25",
    "origDurMin": 45,
-   "action": "RETIME 15:25 → 11:05"
+   "action": "RETIME 15:25 → 10:57"
   },
   {
    "city": "Shanghai",
@@ -9448,8 +9448,8 @@
    "order": 60,
    "activity": "Wulumuqi Road",
    "kind": "Sight",
-   "newStart": "12:12",
-   "newEnd": "12:42",
+   "newStart": "12:04",
+   "newEnd": "12:34",
    "newDurMin": 30,
    "durBasis": "Guides frame Wulumuqi Middle Road as a short local-life detour (markets, Art Deco corner at Fuxing West Rd) rather than a destination; ~30min walk-through.",
    "durConf": "low",
@@ -9461,7 +9461,7 @@
    "origDay": 3,
    "origStart": "17:02",
    "origDurMin": 30,
-   "action": "RETIME 17:02 → 12:12"
+   "action": "RETIME 17:02 → 12:04"
   },
   {
    "city": "Shanghai",
@@ -9470,8 +9470,8 @@
    "order": 70,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:50",
-   "newEnd": "13:50",
+   "newStart": "12:42",
+   "newEnd": "13:42",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -9483,7 +9483,7 @@
    "origDay": 3,
    "origStart": "18:46",
    "origDurMin": 60,
-   "action": "RETIME 18:46 → 12:50"
+   "action": "RETIME 18:46 → 12:42"
   },
   {
    "city": "Shanghai",
@@ -9492,8 +9492,8 @@
    "order": 80,
    "activity": "Fuxing Park",
    "kind": "Sight",
-   "newStart": "14:08",
-   "newEnd": "14:53",
+   "newStart": "14:00",
+   "newEnd": "14:45",
    "newDurMin": 45,
    "durBasis": "Guides say Fuxing Park is 'worth a 30-60 minute walk'; 45min lets you watch the dancing and chess without circling twice.",
    "durConf": "med",
@@ -9505,7 +9505,7 @@
    "origDay": 3,
    "origStart": "21:42",
    "origDurMin": 45,
-   "action": "RETIME 21:42 → 14:08; ORDER 90 → 80"
+   "action": "RETIME 21:42 → 14:00; ORDER 90 → 80"
   },
   {
    "city": "Shanghai",
@@ -9514,8 +9514,8 @@
    "order": 90,
    "activity": "Sinan Mansions",
    "kind": "Sight",
-   "newStart": "15:06",
-   "newEnd": "16:06",
+   "newStart": "14:58",
+   "newEnd": "15:58",
    "newDurMin": 60,
    "durBasis": "Travel guides advise 1-2h to walk the estate, admire the facades and browse boutiques/side galleries; 60min is the lower, unhurried-but-not-lingering end.",
    "durConf": "med",
@@ -9527,7 +9527,7 @@
    "origDay": 3,
    "origStart": "19:59",
    "origDurMin": 60,
-   "action": "RETIME 19:59 → 15:06; ORDER 80 → 90"
+   "action": "RETIME 19:59 → 14:58; ORDER 80 → 90"
   },
   {
    "city": "Shanghai",
@@ -9564,10 +9564,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Yu Garden",
-   "travelMode": "metro",
-   "travelMin": 18,
-   "travelKm": 3.1,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 8,
+   "travelKm": 1.27,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -9580,8 +9580,8 @@
    "order": 20,
    "activity": "Yu Garden",
    "kind": "Sight",
-   "newStart": "08:01",
-   "newEnd": "09:31",
+   "newStart": "07:51",
+   "newEnd": "09:21",
    "newDurMin": 90,
    "durBasis": "TripAdvisor/guide consensus is ~2h for a complete visit and 45-60min for a fast loop; at opening with fewer crowds, a highlights-plus circuit of the rockeries and pavilions is ~90min.",
    "durConf": "high",
@@ -9593,7 +9593,7 @@
    "origDay": 4,
    "origStart": "08:41",
    "origDurMin": 90,
-   "action": "RETIME 08:41 → 08:01"
+   "action": "RETIME 08:41 → 07:51"
   },
   {
    "city": "Shanghai",
@@ -9602,8 +9602,8 @@
    "order": 30,
    "activity": "Mid-Lake Teahouse",
    "kind": "Sight",
-   "newStart": "09:53",
-   "newEnd": "10:53",
+   "newStart": "09:43",
+   "newEnd": "10:43",
    "newDurMin": 60,
    "durBasis": "TripAdvisor reviewers report lingering 'an hour or two' over tea and the complimentary quail-egg/sweet snacks while watching the pond; 45min feels rushed for a set tea service.",
    "durConf": "med",
@@ -9615,7 +9615,7 @@
    "origDay": 4,
    "origStart": "12:21",
    "origDurMin": 60,
-   "action": "RETIME 12:21 → 09:53; ORDER 40 → 30"
+   "action": "RETIME 12:21 → 09:43; ORDER 40 → 30"
   },
   {
    "city": "Shanghai",
@@ -9624,32 +9624,10 @@
    "order": 40,
    "activity": "Yuyuan Bazaar",
    "kind": "Sight",
-   "newStart": "11:07",
-   "newEnd": "12:07",
+   "newStart": "10:57",
+   "newEnd": "11:57",
    "newDurMin": 60,
    "durBasis": "Guides say you can 'easily spend an hour or two' in the bazaar alone (4h if you do garden, bazaar and dumpling houses together); 60min covers snacks and a souvenir sweep.",
-   "durConf": "med",
-   "toNext": "Lunch",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 4,
-   "origStart": "10:52",
-   "origDurMin": 60,
-   "action": "RETIME 10:52 → 11:07; ORDER 30 → 40"
-  },
-  {
-   "city": "Shanghai",
-   "day": 4,
-   "date": "2026-09-05",
-   "order": 50,
-   "activity": "Lunch",
-   "kind": "Food",
-   "newStart": "12:15",
-   "newEnd": "13:15",
-   "newDurMin": 60,
-   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
    "toNext": "City God Temple",
    "travelMode": "walk",
@@ -9657,21 +9635,43 @@
    "travelKm": 0.26,
    "travelSource": "estimated (fitted model)",
    "origDay": 4,
-   "origStart": "15:27",
+   "origStart": "10:52",
    "origDurMin": 60,
-   "action": "RETIME 15:27 → 12:15; ORDER 60 → 50"
+   "action": "RETIME 10:52 → 10:57; ORDER 30 → 40"
+  },
+  {
+   "city": "Shanghai",
+   "day": 4,
+   "date": "2026-09-05",
+   "order": 50,
+   "activity": "City God Temple",
+   "kind": "Sight",
+   "newStart": "12:15",
+   "newEnd": "13:00",
+   "newDurMin": 45,
+   "durBasis": "Guides quote 1-2h but that usually bundles the surrounding market; the walled temple itself (CNY10, 09:00-17:00) is compact and reads in ~45min.",
+   "durConf": "med",
+   "toNext": "Lunch",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 4,
+   "origStart": "13:31",
+   "origDurMin": 45,
+   "action": "RETIME 13:31 → 12:15"
   },
   {
    "city": "Shanghai",
    "day": 4,
    "date": "2026-09-05",
    "order": 60,
-   "activity": "City God Temple",
-   "kind": "Sight",
-   "newStart": "13:33",
-   "newEnd": "14:18",
-   "newDurMin": 45,
-   "durBasis": "Guides quote 1-2h but that usually bundles the surrounding market; the walled temple itself (CNY10, 09:00-17:00) is compact and reads in ~45min.",
+   "activity": "Lunch",
+   "kind": "Food",
+   "newStart": "13:08",
+   "newEnd": "14:08",
+   "newDurMin": 60,
+   "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
    "toNext": "People’s Square",
    "travelMode": "didi",
@@ -9679,9 +9679,9 @@
    "travelKm": 1.83,
    "travelSource": "estimated (fitted model)",
    "origDay": 4,
-   "origStart": "13:31",
-   "origDurMin": 45,
-   "action": "RETIME 13:31 → 13:33; ORDER 50 → 60"
+   "origStart": "15:27",
+   "origDurMin": 60,
+   "action": "RETIME 15:27 → 13:08"
   },
   {
    "city": "Shanghai",
@@ -9690,8 +9690,8 @@
    "order": 70,
    "activity": "People’s Square",
    "kind": "Sight",
-   "newStart": "14:35",
-   "newEnd": "15:20",
+   "newStart": "14:25",
+   "newEnd": "15:10",
    "newDurMin": 45,
    "durBasis": "TripAdvisor reviews split between '10 minutes is plenty' for the plaza and 2-4h if you linger in People's Park; 45min suits its role here as a stroll-and-rest buffer.",
    "durConf": "med",
@@ -9703,7 +9703,7 @@
    "origDay": 4,
    "origStart": "16:39",
    "origDurMin": 45,
-   "action": "RETIME 16:39 → 14:35"
+   "action": "RETIME 16:39 → 14:25"
   },
   {
    "city": "Shanghai",
@@ -9712,8 +9712,8 @@
    "order": 80,
    "activity": "Huangpu night cruise",
    "kind": "Sight",
-   "newStart": "15:38",
-   "newEnd": "16:53",
+   "newStart": "15:28",
+   "newEnd": "16:43",
    "newDurMin": 75,
    "durBasis": "Operators list the standard Shiliupu night cruise at 45-50min afloat; ticket redemption, security and boarding queues at the wharf add ~25min.",
    "durConf": "high",
@@ -9725,7 +9725,7 @@
    "origDay": 4,
    "origStart": "22:52",
    "origDurMin": 75,
-   "action": "RETIME 22:52 → 15:38; ORDER 100 → 80"
+   "action": "RETIME 22:52 → 15:28; ORDER 100 → 80"
   },
   {
    "city": "Shanghai",
@@ -9763,8 +9763,8 @@
    "durConf": "med",
    "toNext": "TANK Shanghai",
    "travelMode": "didi",
-   "travelMin": 17,
-   "travelKm": 7.16,
+   "travelMin": 19,
+   "travelKm": 8.6,
    "travelSource": "estimated (fitted model)",
    "origDay": 5,
    "origStart": "07:30",
@@ -9778,8 +9778,8 @@
    "order": 20,
    "activity": "TANK Shanghai",
    "kind": "Sight",
-   "newStart": "08:00",
-   "newEnd": "09:15",
+   "newStart": "08:02",
+   "newEnd": "09:17",
    "newDurMin": 75,
    "durBasis": "Some visitors suggest half a day, but TripAdvisor reviews repeatedly call the exhibits limited for the ticket price; the tanks plus the wrapping park read in about 75min.",
    "durConf": "med",
@@ -9791,7 +9791,7 @@
    "origDay": 5,
    "origStart": "17:02",
    "origDurMin": 75,
-   "action": "RETIME 17:02 → 08:00; ORDER 50 → 20"
+   "action": "RETIME 17:02 → 08:02; ORDER 50 → 20"
   },
   {
    "city": "Shanghai",
@@ -9800,8 +9800,8 @@
    "order": 30,
    "activity": "West Bund Museum",
    "kind": "Sight",
-   "newStart": "09:40",
-   "newEnd": "11:10",
+   "newStart": "09:42",
+   "newEnd": "11:12",
    "newDurMin": 90,
    "durBasis": "Museum lists 11:00-18:00 with last entry 17:00 across a modest number of galleries; guides recommend several hours only for major shows, so a highlights-plus visit is ~90min.",
    "durConf": "med",
@@ -9813,7 +9813,7 @@
    "origDay": 5,
    "origStart": "11:13",
    "origDurMin": 90,
-   "action": "RETIME 11:13 → 09:40"
+   "action": "RETIME 11:13 → 09:42"
   },
   {
    "city": "Shanghai",
@@ -9822,8 +9822,8 @@
    "order": 40,
    "activity": "West Bund riverside",
    "kind": "Sight",
-   "newStart": "11:33",
-   "newEnd": "12:18",
+   "newStart": "11:35",
+   "newEnd": "12:20",
    "newDurMin": 45,
    "durBasis": "No dedicated dwell figure found; the Xuhui riverside corridor linking the museums is a 10-15min walk each way, so ~45min allows an unhurried stroll with stops between venues.",
    "durConf": "low",
@@ -9835,7 +9835,7 @@
    "origDay": 5,
    "origStart": "08:50",
    "origDurMin": 45,
-   "action": "RETIME 08:50 → 11:33; ORDER 20 → 40"
+   "action": "RETIME 08:50 → 11:35; ORDER 20 → 40"
   },
   {
    "city": "Shanghai",
@@ -9844,8 +9844,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:26",
-   "newEnd": "13:26",
+   "newStart": "12:28",
+   "newEnd": "13:28",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -9857,7 +9857,7 @@
    "origDay": 5,
    "origStart": "19:48",
    "origDurMin": 60,
-   "action": "RETIME 19:48 → 12:26; ORDER 60 → 50"
+   "action": "RETIME 19:48 → 12:28; ORDER 60 → 50"
   },
   {
    "city": "Shanghai",
@@ -9866,8 +9866,8 @@
    "order": 60,
    "activity": "Long Museum West Bund",
    "kind": "Sight",
-   "newStart": "13:51",
-   "newEnd": "15:21",
+   "newStart": "13:53",
+   "newEnd": "15:23",
    "newDurMin": 90,
    "durBasis": "TripAdvisor reviewers say 'about an hour to see it', some 'squeeze in two hours', and guides suggest 3-4h only for a blockbuster temporary show; 90min is the unhurried middle.",
    "durConf": "med",
@@ -9879,7 +9879,7 @@
    "origDay": 5,
    "origStart": "14:06",
    "origDurMin": 90,
-   "action": "RETIME 14:06 → 13:51; ORDER 40 → 60"
+   "action": "RETIME 14:06 → 13:53; ORDER 40 → 60"
   },
   {
    "city": "Shanghai",
@@ -10561,10 +10561,10 @@
    "date": "2026-08-12",
    "from": "Breakfast",
    "to": "Tiananmen Square",
-   "mode": "metro",
-   "minutes": 19,
-   "km": 3.5,
-   "source": "routed (real leg)"
+   "mode": "didi",
+   "minutes": 10,
+   "km": 2.17,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Beijing",
@@ -10592,7 +10592,7 @@
    "city": "Beijing",
    "day": 2,
    "date": "2026-08-12",
-   "from": "Dinner",
+   "from": "National Museum",
    "to": "Jingshan Park",
    "mode": "metro",
    "minutes": 20,
@@ -10603,7 +10603,7 @@
    "city": "Beijing",
    "day": 2,
    "date": "2026-08-12",
-   "from": "Jingshan Park",
+   "from": "Dinner",
    "to": "Hotel (home)",
    "mode": "didi",
    "minutes": 10,
@@ -10617,15 +10617,15 @@
    "from": "Breakfast",
    "to": "Mutianyu Great Wall",
    "mode": "didi",
-   "minutes": 82,
-   "km": 74.9,
-   "source": "routed (real leg)"
+   "minutes": 95,
+   "km": 58.69,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Beijing",
    "day": 3,
    "date": "2026-08-13",
-   "from": "Lunch",
+   "from": "Toboggan down",
    "to": "Sanlitun Taikoo Li",
    "mode": "didi",
    "minutes": 91,
@@ -10661,9 +10661,9 @@
    "from": "Breakfast",
    "to": "Summer Palace",
    "mode": "didi",
-   "minutes": 38,
-   "km": 23.6,
-   "source": "routed (real leg)"
+   "minutes": 30,
+   "km": 15.32,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Beijing",
@@ -10771,9 +10771,9 @@
    "from": "Breakfast",
    "to": "Baisha Village",
    "mode": "didi",
-   "minutes": 27,
-   "km": 11.9,
-   "source": "routed (real leg)"
+   "minutes": 20,
+   "km": 9.17,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Lijiang",
@@ -10849,7 +10849,7 @@
    "to": "Glacier Park cable car",
    "mode": "didi",
    "minutes": 46,
-   "km": 26.06,
+   "km": 26.28,
    "source": "estimated (fitted model)"
   },
   {
@@ -10891,10 +10891,10 @@
    "date": "2026-08-18",
    "from": "Breakfast",
    "to": "Depart for the gorge",
-   "mode": "didi",
-   "minutes": 17,
-   "km": 4.2,
-   "source": "routed (real leg)"
+   "mode": "walk",
+   "minutes": 22,
+   "km": 0.93,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Lijiang",
@@ -10991,9 +10991,9 @@
    "from": "Breakfast",
    "to": "Chengdu Panda Base",
    "mode": "didi",
-   "minutes": 39,
-   "km": 27.8,
-   "source": "routed (real leg)"
+   "minutes": 23,
+   "km": 10.85,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Chengdu",
@@ -11057,8 +11057,8 @@
    "from": "Breakfast",
    "to": "Sanxingdui Museum",
    "mode": "didi",
-   "minutes": 80,
-   "km": 48.94,
+   "minutes": 67,
+   "km": 40.16,
    "source": "estimated (fitted model)"
   },
   {
@@ -11199,10 +11199,10 @@
    "date": "2026-08-23",
    "from": "Breakfast",
    "to": "Liziba monorail",
-   "mode": "metro",
-   "minutes": 20,
-   "km": 4.3,
-   "source": "routed (real leg)"
+   "mode": "didi",
+   "minutes": 13,
+   "km": 4.14,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Chongqing",
@@ -11343,20 +11343,9 @@
    "from": "Breakfast",
    "to": "Bailong Elevator",
    "mode": "didi",
-   "minutes": 54,
-   "km": 38.8,
-   "source": "routed (real leg)"
-  },
-  {
-   "city": "Zhangjiajie",
-   "day": 2,
-   "date": "2026-08-25",
-   "from": "Bailong Elevator",
-   "to": "Yuanjiajie (Avatar)",
-   "mode": "walk",
-   "minutes": 2,
-   "km": 0.1,
-   "source": "routed (real leg)"
+   "minutes": 18,
+   "km": 7.45,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Zhangjiajie",
@@ -11384,7 +11373,7 @@
    "city": "Zhangjiajie",
    "day": 2,
    "date": "2026-08-25",
-   "from": "Dinner",
+   "from": "Tianzi cableway down",
    "to": "Ten-Mile Gallery",
    "mode": "didi",
    "minutes": 22,
@@ -11395,7 +11384,7 @@
    "city": "Zhangjiajie",
    "day": 2,
    "date": "2026-08-25",
-   "from": "Ten-Mile Gallery",
+   "from": "Dinner",
    "to": "Hotel (home)",
    "mode": "didi",
    "minutes": 16,
@@ -11408,9 +11397,9 @@
    "date": "2026-08-26",
    "from": "Breakfast",
    "to": "Bus to Zhangjiajie city",
-   "mode": "walk",
-   "minutes": 22,
-   "km": 0.93,
+   "mode": "didi",
+   "minutes": 48,
+   "km": 27.77,
    "source": "estimated (fitted model)"
   },
   {
@@ -11422,17 +11411,6 @@
    "mode": "walk",
    "minutes": 12,
    "km": 0.8,
-   "source": "routed (real leg)"
-  },
-  {
-   "city": "Zhangjiajie",
-   "day": 3,
-   "date": "2026-08-26",
-   "from": "Tianmen cableway",
-   "to": "Tianmen Mountain",
-   "mode": "didi",
-   "minutes": 51,
-   "km": 27.2,
    "source": "routed (real leg)"
   },
   {
@@ -11772,9 +11750,9 @@
    "from": "Breakfast",
    "to": "Yulong bamboo rafting",
    "mode": "didi",
-   "minutes": 22,
-   "km": 12.1,
-   "source": "routed (real leg)"
+   "minutes": 16,
+   "km": 6.53,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Yangshuo",
@@ -11890,6 +11868,17 @@
    "city": "Shanghai",
    "day": 2,
    "date": "2026-09-03",
+   "from": "Breakfast",
+   "to": "Recovery massage / spa",
+   "mode": "didi",
+   "minutes": 11,
+   "km": 2.67,
+   "source": "estimated (fitted model)"
+  },
+  {
+   "city": "Shanghai",
+   "day": 2,
+   "date": "2026-09-03",
    "from": "Recovery massage / spa",
    "to": "M50 Creative Park",
    "mode": "didi",
@@ -11947,10 +11936,10 @@
    "date": "2026-09-04",
    "from": "Breakfast",
    "to": "Wukang Building",
-   "mode": "metro",
-   "minutes": 25,
-   "km": 6.5,
-   "source": "routed (real leg)"
+   "mode": "didi",
+   "minutes": 17,
+   "km": 7.18,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Shanghai",
@@ -12035,10 +12024,10 @@
    "date": "2026-09-05",
    "from": "Breakfast",
    "to": "Yu Garden",
-   "mode": "metro",
-   "minutes": 18,
-   "km": 3.1,
-   "source": "routed (real leg)"
+   "mode": "didi",
+   "minutes": 8,
+   "km": 1.27,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Shanghai",
@@ -12066,7 +12055,7 @@
    "city": "Shanghai",
    "day": 4,
    "date": "2026-09-05",
-   "from": "Lunch",
+   "from": "Yuyuan Bazaar",
    "to": "City God Temple",
    "mode": "walk",
    "minutes": 10,
@@ -12077,7 +12066,7 @@
    "city": "Shanghai",
    "day": 4,
    "date": "2026-09-05",
-   "from": "City God Temple",
+   "from": "Lunch",
    "to": "People’s Square",
    "mode": "didi",
    "minutes": 9,
@@ -12113,8 +12102,8 @@
    "from": "Breakfast",
    "to": "TANK Shanghai",
    "mode": "didi",
-   "minutes": 17,
-   "km": 7.16,
+   "minutes": 19,
+   "km": 8.6,
    "source": "estimated (fitted model)"
   },
   {
