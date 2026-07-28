@@ -11,8 +11,16 @@ import { changeList, matchStop, nk } from './lib-plan.mjs';
 const fmtDur = m => { const x = Math.round(m); return x < 60 ? x + 'm' : (Math.floor(x / 60) + 'h' + (x % 60 ? String(x % 60).padStart(2, '0') : '')); };
 // Google Maps key: env first, else the local gitignored file. NOTE: it is embedded in the
 // generated HTML, so it becomes public once this repo is pushed — restrict it by HTTP referrer.
+// PUBLISH=1 builds for the PUBLIC GitHub Pages repo and deliberately omits the Maps key.
+// The key is currently unrestricted — it answers requests with no referrer at all — so committing
+// it to a public repo publishes a working credential to anyone who reads the HTML. Everything else
+// on the page (37 days, tables, ideas, rationale, travel legs) renders identically; only the
+// per-day map is withheld. Once the key has an HTTP-referrer restriction (lexiz.github.io/* and
+// localhost:*) on Google Cloud project 451021051046, drop PUBLISH and the maps come back.
+const PUBLISH = process.env.PUBLISH === '1';
 let GKEY = process.env.GOOGLE_MAPS_API_KEY || '';
 try { if (!GKEY) GKEY = readFileSync(new URL('./gmaps-key.txt', import.meta.url), 'utf8').trim(); } catch { GKEY = ''; }
+if (PUBLISH) GKEY = '';
 // The reworked plan is now the committed schedule; the Proposed side is deliberately left empty
 // so the next review pass has somewhere to write.
 let REBUILT = { days: {}, ideas: {}, notes: {} };
@@ -517,7 +525,12 @@ body.only-bad .wrap .day.ok-day{display:none;}
 </style>`;
 
 const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
-<script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&callback=gmapsReady" async><\/script>
+${GKEY
+  ? `<script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&callback=gmapsReady" async><\/script>`
+  : `<script>window.addEventListener("DOMContentLoaded",function(){
+       document.querySelectorAll(".map").forEach(function(el){
+         el.innerHTML='<div class="mapempty">Route map hidden on the published build \\u2014 the Google Maps key is not committed to this public repo. Run the canvas locally to see maps.<\\/div>';
+       });});<\/script>`}
 <div class="wrap" style="--labelw:128px;--sanea:8.7%;--saneb:71.74%;">
   <header class="top">
     <div class="eyebrow">China · 11 Aug – 7 Sep 2026 · schedule audit</div>

@@ -2937,33 +2937,15 @@
      "hub": null
     },
     {
-     "name": "Liu Xiaoqing rice tofu",
-     "s": 762,
-     "d": 30,
-     "kind": "meal",
-     "meal": "lunch",
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 1,
-      "km": 0.1,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 30,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Wuli Stone Street",
-     "s": 801,
+     "s": 761,
      "d": 60,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "walk",
-      "minutes": 1,
-      "km": 0.1,
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
       "est": false,
       "coloc": false
      },
@@ -2974,7 +2956,7 @@
     },
     {
      "name": "Tuwang Palace",
-     "s": 870,
+     "s": 830,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -2992,7 +2974,7 @@
     },
     {
      "name": "Furong waterfall",
-     "s": 908,
+     "s": 868,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -3010,7 +2992,7 @@
     },
     {
      "name": "Youshui River cruise",
-     "s": 977,
+     "s": 937,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -3027,8 +3009,26 @@
      "hub": null
     },
     {
+     "name": "Liu Xiaoqing rice tofu",
+     "s": 990,
+     "d": 30,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0.09993839083537745,
+      "est": false,
+      "coloc": false
+     },
+     "advice": 30,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "Dinner",
-     "s": 1015,
+     "s": 1028,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -3053,7 +3053,7 @@
      "travelIn": {
       "mode": "none",
       "minutes": 0,
-      "km": 0,
+      "km": 0.09993839083537745,
       "est": false,
       "coloc": false
      },
@@ -3696,7 +3696,7 @@
    "date": "2026-08-30",
    "theme": "Cruise in, land softly on the riverfront",
    "why": "The morning is not yours: 07:00 at Zhujiang Wharf, ~09:20 sailing, ~4h15 of karst, dock Yangshuo 13:30 and clear by 13:45. That leaves one usable half-day, and it has to be spent within walking distance of the hotel. West Street (90 min) plus the lit waterfront after dinner (45 min) is exactly that — both sit on the same riverfront block, so the afternoon and the after-dark versions of the same walk cost nothing in transfers. Critically, this evening is kept SHORT and ends by ~20:30: the dawn run to Xianggong is tomorrow at 04:15, and day 1 already began at ~05:30 in Guilin. The Impression Liu Sanjie show was deliberately moved off day 1 for that reason — a 21:00 curtain followed by a 04:15 alarm is the one combination that wrecks both. NOTE: the first half of this day happens in GUILIN — you wake there and the 07:00 Zhujiang Wharf call is the Guilin end of the ferry. It renders under Yangshuo because Notion dates 30 August to Yangshuo. Dinner had been missing entirely from this day: the chain treated the departure hub as the thing that closes a day, which is true everywhere except a transit day, where the hub sits at 07:00 — so every meal after it was discarded and you docked at 13:30 into an evening with no dinner. Fixed; dinner now 18:46. Still open: there is no Breakfast stop in the source data for this date, against a 07:00 wharf call — either add one in Notion or plan on the boat, and check whether your cruise ticket already includes the lunch, since the 13:53 lunch here may double up with it. The Li River night walk was scheduled 17:53, in daylight against a ~19:00 sunset, on a stop that exists only for the illuminated riverfront. Dinner is held to 17:00 so it lands straight off West Street and the walk falls after dark at 19:31. Dinner has to open BEFORE West Street ends at 17:27 or it fires after the walk instead and pushes the day to 21:38.",
-   "endMin": 1216,
+   "endMin": 1494,
    "homeTravel": {
     "mode": "none",
     "minutes": 0,
@@ -3704,9 +3704,7 @@
     "estimated": false
    },
    "missed": null,
-   "absorbed": [
-    "Li River cruise"
-   ],
+   "absorbed": null,
    "stops": [
     {
      "name": "Dock at Yangshuo",
@@ -3776,26 +3774,26 @@
      "hub": null
     },
     {
-     "name": "West Street",
-     "s": 957,
-     "d": 90,
+     "name": "Li River cruise",
+     "s": 954,
+     "d": 255,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "didi",
-      "minutes": 3,
-      "km": 0.8,
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
       "est": false,
       "coloc": false
      },
-     "advice": 90,
+     "advice": 255,
      "cap": null,
      "lateFor": null,
      "hub": null
     },
     {
      "name": "Dinner",
-     "s": 1055,
+     "s": 1217,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -3812,8 +3810,26 @@
      "hub": null
     },
     {
+     "name": "West Street",
+     "s": 1333,
+     "d": 90,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "walk",
+      "minutes": 18,
+      "km": 0.68,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "Li River night walk",
-     "s": 1171,
+     "s": 1449,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -5402,54 +5418,50 @@
   ]
  },
  "ideasByDay": {
-  "Beijing|3": [
+  "Beijing|1": [
    {
     "name": "Mutianyu night tour",
     "why": "It is an either/or with the daytime wall, not an add-on: doing both means either dead-waiting 8 hours on site or a second 140 km round trip, and it would cost you the whole Sanlitun/CBD evening.",
     "status": "parked",
-    "from": 3
+    "from": null
    }
   ],
   "Chengdu|1": [
    {
+    "name": "Chengdu Museum",
+    "why": "The hardest cut and the closest call. Free, air-conditioned, genuinely good — but 2.5 h indoors was the most expendable block on day 2, and Sanxingdui tells the ancient-Shu bronze story far better on day 3, so the overlap made it the one to lose. Confirmed Tue–Sun and open to 20:30 in summer (May–Oct), closed Mondays, free but needs online booking 1–3 days ahead. If you want it back: it is on Tianfu Square, five minutes from People’s Park, and the 20:30 closing means it is the natural swap for either the teahouse or Kuanzhai on day 2 — or a rain/heat refuge if the weather turns.",
+    "status": "parked",
+    "from": null
+   },
+   {
     "name": "Daci Temple",
     "why": "Data-bug casualty. It was tagged Evening, but it is a ticket-checked site that closes 17:30 with last entry 17:00 (the Zen tea area runs to 19:30, the halls do not), and it needs ID / QR registration at the gate. With both full days committed in daylight there is no daytime hour left for it. It sits inside the Taikoo Li block by the hotel, so if a morning frees up it is a 45-min drop-in — but never after dark.",
     "status": "parked",
-    "from": 1
+    "from": null
    },
    {
     "name": "IFS rooftop panda",
     "why": "A 30-minute photo queue for one sculpture, in the same block as Taikoo Li and the hotel. Pure opportunistic add-on — not worth a planned slot when you only have two real days.",
     "status": "parked",
-    "from": 1
+    "from": null
+   },
+   {
+    "name": "SKP Chengdu",
+    "why": "Dropped outright. A luxury mall ~14 km south of the hotel, well off every other cluster, and the only argument for it is architecture and air conditioning — both of which Chengdu Museum gives you for free and centrally. The round-trip transit alone would cost most of a Kuanzhai.",
+    "status": "parked",
+    "from": null
    },
    {
     "name": "Hotpot alt · Shu Daxia",
     "why": "This is a dinner, and you insert meals yourself. Kept as the recommendation for arrival night: it is in the Chunxi Road / Taikoo Li block near the hotel, so it fits the one slot day 1 actually has.",
     "status": "parked",
-    "from": 1
-   }
-  ],
-  "Chengdu|2": [
-   {
-    "name": "Chengdu Museum",
-    "why": "The hardest cut and the closest call. Free, air-conditioned, genuinely good — but 2.5 h indoors was the most expendable block on day 2, and Sanxingdui tells the ancient-Shu bronze story far better on day 3, so the overlap made it the one to lose. Confirmed Tue–Sun and open to 20:30 in summer (May–Oct), closed Mondays, free but needs online booking 1–3 days ahead. If you want it back: it is on Tianfu Square, five minutes from People’s Park, and the 20:30 closing means it is the natural swap for either the teahouse or Kuanzhai on day 2 — or a rain/heat refuge if the weather turns.",
-    "status": "parked",
-    "from": 2
-   }
-  ],
-  "Chengdu|3": [
-   {
-    "name": "SKP Chengdu",
-    "why": "Dropped outright. A luxury mall ~14 km south of the hotel, well off every other cluster, and the only argument for it is architecture and air conditioning — both of which Chengdu Museum gives you for free and centrally. The round-trip transit alone would cost most of a Kuanzhai.",
-    "status": "parked",
-    "from": 3
+    "from": null
    },
    {
     "name": "Hotpot alt · Lao Matou",
     "why": "Also a dinner, not a stop. Worth holding as the day-2 or day-3 dinner if you want a shorter queue than Shu Daxia — but check the address before booking, the coordinate in the source data is wrong (see notes).",
     "status": "parked",
-    "from": 3
+    "from": null
    }
   ],
   "Chongqing|1": [
@@ -5457,53 +5469,51 @@
     "name": "Jiangbei riverbank",
     "why": "Cut purely to avoid four night viewpoints in one evening. It is the wide across-the-river panorama of Hongya Cave with reflections — genuinely lovely, but it is the same subject as Qiansimen Bridge from a whisker away, and Qiansimen wins because it is on the direct walking line between dinner and Hongya Cave with zero detour. Pick this up instead of the bridge if you want reflections over the head-on framing, or add it after Hongya Cave on day 1 if you still have legs at 22:45.",
     "status": "parked",
-    "from": 1
+    "from": null
    }
   ],
   "Fenghuang|1": [
    {
-    "name": "Jumping stones",
-    "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears.",
-    "status": "parked",
-    "from": 1
-   },
-   {
-    "name": "Wanming Pagoda",
-    "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight.",
-    "status": "parked",
-    "from": 1
-   },
-   {
-    "name": "Bar street",
-    "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise.",
-    "status": "parked",
-    "from": 1
-   }
-  ],
-  "Fenghuang|2": [
-   {
     "name": "Nanhua Bridge",
     "why": "The best elevated sweep of the stilted houses and the classic dawn frame, but it is ~1 km upriver from the hotel — 12 min each way. A 25-minute pre-departure window cannot reach it and get back. It is the first thing a second night buys you.",
     "status": "parked",
-    "from": 2
+    "from": null
    },
    {
     "name": "Shen Congwen Residence",
     "why": "Fenghuang's one real cultural stop, and it is simply not open while you are here: doors ~08:00, your train leaves at 07:45. Not a scheduling choice — a consequence of the one-night stay.",
     "status": "parked",
-    "from": 2
+    "from": null
    },
    {
     "name": "Miao batik & silver lanes",
     "why": "Shops open ~09:00. The only free window is day 1's evening, and that window is spent on the lit river, which is the entire reason to come. Browse whatever is still open as you walk home past Hong Bridge instead of scheduling it.",
     "status": "parked",
-    "from": 2
+    "from": null
    },
    {
     "name": "Ginger candy stalls",
     "why": "Daytime stalls with the hand-pulling demonstration. Some shops stay open late — pick up a bag in passing on the day 1 walk for the train, but do not give it a slot.",
     "status": "parked",
-    "from": 2
+    "from": null
+   },
+   {
+    "name": "Bar street",
+    "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise.",
+    "status": "parked",
+    "from": null
+   },
+   {
+    "name": "Jumping stones",
+    "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears.",
+    "status": "parked",
+    "from": null
+   },
+   {
+    "name": "Wanming Pagoda",
+    "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight.",
+    "status": "parked",
+    "from": null
    }
   ],
   "Guilin|1": [
@@ -5511,15 +5521,15 @@
     "name": "Reed Flute Cave",
     "why": "Does not fit and should not be forced. It closes at 18:00 (Apr 1–Oct 31 07:30–18:00) with last guided entry ~30 min before, and it is out of town to the northwest. Even the optimistic line — clear the station 14:50, straight there without checking in, 75 min inside — lands you back downtown around 17:00 having dragged luggage to a cave, and it only works at all from Guilin North (~3.5 km away). If the arrival is actually Guilin West, it is ~20 km further and the maths collapses entirely. The sight's own note already says to skip it in favour of the stronger Silver Cave later in the trip — take that advice. Keep it as a wet-weather substitute only if a later Guilin morning materialises.",
     "status": "parked",
-    "from": 1
+    "from": null
    }
   ],
-  "Lijiang|4": [
+  "Lijiang|1": [
    {
     "name": "Lashi Lake wetland",
     "why": "The only genuine cut. It is a third separate cluster (25–30 min west, the opposite direction from Baisha and Shuhe) and 2.5 h of horse ride plus boat — adding it to day 2 pushes that day past 10 h right before the 06:30 mountain start, and it is the weakest nature stop on a list that already has a 4,680 m glacier and one of the deepest gorges on earth. The horse guides are also the most consistently complained-about hard sell in Lijiang. Swap it in only if the mountain is rained out and day 3 or 4 collapses — it makes a decent gentle half-day paired with the massage.",
     "status": "parked",
-    "from": 4
+    "from": null
    }
   ],
   "Shanghai|1": [
@@ -5536,361 +5546,24 @@
     "from": null
    }
   ],
-  "Yangshuo|2": [
+  "Yangshuo|1": [
    {
     "name": "Sunrise balloon flight",
     "why": "The best thing here that does not fit. It is a second dawn (04:00-06:00 pickup) in a stay with room for exactly one, and it collides head-on with Xianggong — same hour, same light, same karst. At ~USD 260-300 pp it is flagged as a big-budget swap, so treat it that way: fly it INSTEAD of Xianggong on day 2 morning if the spend appeals and the forecast is clear, rather than as an addition. Note the current plan had it at 21:20, which is not a thing — balloons only fly at dawn. Weather-dependent either way, and a scrub with no backup dawn left is the real risk.",
     "status": "parked",
-    "from": 2
+    "from": null
    }
   ],
-  "Zhangjiajie|3": [
+  "Zhangjiajie|1": [
    {
     "name": "Yangjiajie",
     "why": "Genuinely excellent and much quieter than Yuanjiajie — Natural Great Wall and One Step to Heaven — but it sits at the far western end of the plateau. Reaching it costs its own cable car plus roughly an hour of extra shuttle each way, about 4 h of marginal cost against Ten-Mile Gallery's 90 min for zero extra transfer. With one afternoon and two full days it is the correct thing to lose. If you would rather have it than Tianmen, swap the whole of day 3 for it — do not try to squeeze it into day 2.",
     "status": "parked",
-    "from": 3
+    "from": null
    }
   ]
  },
- "movesByDay": {
-  "Beijing|2": [
-   {
-    "name": "Wangfujing",
-    "status": "moved",
-    "from": 2,
-    "to": 1
-   }
-  ],
-  "Beijing|1": [
-   {
-    "name": "Wangfujing",
-    "status": "gained",
-    "from": 2,
-    "to": 1
-   }
-  ],
-  "Chengdu|1": [
-   {
-    "name": "Taikoo Li",
-    "status": "moved",
-    "from": 1,
-    "to": 3
-   }
-  ],
-  "Chengdu|3": [
-   {
-    "name": "Taikoo Li",
-    "status": "gained",
-    "from": 1,
-    "to": 3
-   }
-  ],
-  "Furong (Hibiscus)|1": [
-   {
-    "name": "Xizhou Bronze Pillar",
-    "status": "moved",
-    "from": 1,
-    "to": 2
-   }
-  ],
-  "Furong (Hibiscus)|2": [
-   {
-    "name": "Xizhou Bronze Pillar",
-    "status": "gained",
-    "from": 1,
-    "to": 2
-   }
-  ],
-  "Lijiang|2": [
-   {
-    "name": "Tiger Leaping Gorge",
-    "status": "moved",
-    "from": 2,
-    "to": 4
-   },
-   {
-    "name": "Middle Gorge descent",
-    "status": "moved",
-    "from": 2,
-    "to": 4
-   },
-   {
-    "name": "Baisha Village",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Baisha Murals",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Baisha embroidery",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Shuhe Old Town",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Tea Horse Road Museum",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Lion Hill sunset",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   }
-  ],
-  "Lijiang|4": [
-   {
-    "name": "Tiger Leaping Gorge",
-    "status": "gained",
-    "from": 2,
-    "to": 4
-   },
-   {
-    "name": "Middle Gorge descent",
-    "status": "gained",
-    "from": 2,
-    "to": 4
-   },
-   {
-    "name": "Baisha Village",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Baisha Murals",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Baisha embroidery",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Shuhe Old Town",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Tea Horse Road Museum",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   },
-   {
-    "name": "Black Dragon Pool",
-    "status": "moved",
-    "from": 4,
-    "to": 5
-   },
-   {
-    "name": "Lion Hill sunset",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   }
-  ],
-  "Lijiang|3": [
-   {
-    "name": "Old Town massage",
-    "status": "moved",
-    "from": 3,
-    "to": 5
-   }
-  ],
-  "Lijiang|5": [
-   {
-    "name": "Old Town massage",
-    "status": "gained",
-    "from": 3,
-    "to": 5
-   },
-   {
-    "name": "Black Dragon Pool",
-    "status": "gained",
-    "from": 4,
-    "to": 5
-   }
-  ],
-  "Shanghai|3": [
-   {
-    "name": "Old Jazz Bar",
-    "status": "moved",
-    "from": 3,
-    "to": 4
-   }
-  ],
-  "Shanghai|4": [
-   {
-    "name": "Old Jazz Bar",
-    "status": "gained",
-    "from": 3,
-    "to": 4
-   },
-   {
-    "name": "M50 Creative Park",
-    "status": "moved",
-    "from": 4,
-    "to": 2
-   }
-  ],
-  "Shanghai|2": [
-   {
-    "name": "M50 Creative Park",
-    "status": "gained",
-    "from": 4,
-    "to": 2
-   }
-  ],
-  "Shanghai|5": [
-   {
-    "name": "Shanghai Tower base",
-    "status": "moved",
-    "from": 5,
-    "to": 6
-   },
-   {
-    "name": "Jin Mao Tower",
-    "status": "moved",
-    "from": 5,
-    "to": 6
-   },
-   {
-    "name": "World Financial Center",
-    "status": "moved",
-    "from": 5,
-    "to": 6
-   }
-  ],
-  "Shanghai|6": [
-   {
-    "name": "Shanghai Tower base",
-    "status": "gained",
-    "from": 5,
-    "to": 6
-   },
-   {
-    "name": "Jin Mao Tower",
-    "status": "gained",
-    "from": 5,
-    "to": 6
-   },
-   {
-    "name": "World Financial Center",
-    "status": "gained",
-    "from": 5,
-    "to": 6
-   }
-  ],
-  "Yangshuo|1": [
-   {
-    "name": "Impression Liu Sanjie",
-    "status": "moved",
-    "from": 1,
-    "to": 2
-   },
-   {
-    "name": "Li River night walk",
-    "status": "gained",
-    "from": 2,
-    "to": 1
-   }
-  ],
-  "Yangshuo|2": [
-   {
-    "name": "Impression Liu Sanjie",
-    "status": "gained",
-    "from": 1,
-    "to": 2
-   },
-   {
-    "name": "Yulong bamboo rafting",
-    "status": "moved",
-    "from": 2,
-    "to": 3
-   },
-   {
-    "name": "Yulong valley cycling",
-    "status": "moved",
-    "from": 2,
-    "to": 3
-   },
-   {
-    "name": "Moon Hill",
-    "status": "moved",
-    "from": 2,
-    "to": 3
-   },
-   {
-    "name": "Li River night walk",
-    "status": "moved",
-    "from": 2,
-    "to": 1
-   },
-   {
-    "name": "Xingping Ancient Town",
-    "status": "gained",
-    "from": 3,
-    "to": 2
-   },
-   {
-    "name": "20-RMB viewpoint",
-    "status": "gained",
-    "from": 3,
-    "to": 2
-   }
-  ],
-  "Yangshuo|3": [
-   {
-    "name": "Yulong bamboo rafting",
-    "status": "gained",
-    "from": 2,
-    "to": 3
-   },
-   {
-    "name": "Yulong valley cycling",
-    "status": "gained",
-    "from": 2,
-    "to": 3
-   },
-   {
-    "name": "Moon Hill",
-    "status": "gained",
-    "from": 2,
-    "to": 3
-   },
-   {
-    "name": "Xingping Ancient Town",
-    "status": "moved",
-    "from": 3,
-    "to": 2
-   },
-   {
-    "name": "20-RMB viewpoint",
-    "status": "moved",
-    "from": 3,
-    "to": 2
-   }
-  ]
- },
+ "movesByDay": {},
  "notes": {
   "Beijing": [
    "Aug 11–15 2026 is Tue–Sat, so no Monday closures bite: the Forbidden City, National Museum, UCCA and the Planning Hall are all open on the days they are scheduled.",
