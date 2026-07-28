@@ -48,6 +48,34 @@
   "source": "Notion Hours: 'Gates 06:00, sights 08:00'. Grounds open early and close late; the ticketed buildings are the binding constraint. Not currently binding — the visit ends before noon.",
   "closedDays": []
  },
+ "Wuhou Shrine": {
+  "closes": "18:00",
+  "lastEntry": "17:00",
+  "conf": "high",
+  "source": "Verified in the Chengdu notes: 09:00-18:00, ticket sales stop 17:00. Called out there as 'the single fragile point in the whole plan' — if the run back from Guanghan slips, this is the casualty. The Western Garden zone stays open 07:00-22:00 if you arrive too late for the main halls.",
+  "closedDays": []
+ },
+ "Sanxingdui Museum": {
+  "closes": "20:00",
+  "lastEntry": "18:00",
+  "conf": "high",
+  "source": "Notion Hours: 'Jul-Aug 08:30-20:00 (last entry 18:00); closed Mondays'. 21 Aug 2026 is a Friday. The late summer hours are insurance against a morning slip, not licence to start late — a late start kills Wuhou and Jinli.",
+  "closedDays": ["Monday"]
+ },
+ "Daci Temple": {
+  "closes": "17:30",
+  "lastEntry": "17:00",
+  "conf": "high",
+  "source": "Halls close 17:30, ticket check ends 17:00 (the Zen tea area runs to 19:30, the halls do not); needs ID/QR registration at the gate. It was mis-tagged Evening in the source data, which is why it ended up parked — there is no daylight hour left for it.",
+  "closedDays": []
+ },
+ "Chengdu Panda Base": {
+  "closes": "18:00",
+  "lastEntry": "17:00",
+  "conf": "med",
+  "source": "Notion Hours: 'Opens 07:30; pandas most active 07:30-09:30'. Closing not stated in the source; 18:00 is the standard summer close. Not binding — the visit is deliberately front-loaded and ends before noon.",
+  "closedDays": []
+ },
  "Temple of Heaven": {
   "closes": "17:00",
   "lastEntry": "16:00",

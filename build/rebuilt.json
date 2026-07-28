@@ -1457,7 +1457,7 @@
    "day": 1,
    "date": "2026-08-19",
    "theme": "Land 20:15, check in, late dinner only",
-   "why": "TV9812 touches down 20:15 and needs 40 min to clear, so you are not out of Shuangliu before ~21:00 and not at the Minyoun Dongda much before 21:45. Nothing ticketed is still open. Deliberately empty: the only thing that belongs here is a late hotpot near the hotel. If anyone still has energy, Taikoo Li / IFS rooftop panda are a 10-minute walk away and the lanes stay lit and open-air late — kept in ideas as an unplanned stroll rather than a scheduled stop.",
+   "why": "TV9812 touches down 20:15 and needs 40 min to clear, so you are not out of Shuangliu before ~21:00 and not at the Minyoun Dongda much before 21:45. Nothing ticketed is still open. Deliberately empty: the only thing that belongs here is a late hotpot near the hotel. If anyone still has energy, Taikoo Li / IFS rooftop panda are a 10-minute walk away and the lanes stay lit and open-air late — kept in ideas as an unplanned stroll rather than a scheduled stop. Dinner is held to 22:00 so the order is right: the chain otherwise fired it the moment the day opened, which meant eating at CTU and then checking in at 23:22. You land 20:15, clear 20:55, and the Minyoun Dongda is a 41-minute run — so it is check in first, then hotpot in the Chunxi Road / Taikoo Li block by the hotel. 23:52 is late and unavoidable on a 20:15 landing; nothing is scheduled that you could drop to fix it.",
    "endMin": 1432,
    "homeTravel": {
     "mode": "none",
@@ -1500,26 +1500,8 @@
      }
     },
     {
-     "name": "Dinner",
-     "s": 1263,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Check in at Minyoun Dongda",
-     "s": 1402,
+     "s": 1304,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -1534,6 +1516,24 @@
      "cap": null,
      "lateFor": null,
      "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1342,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
     }
    ]
   },
@@ -1542,8 +1542,8 @@
    "day": 2,
    "date": "2026-08-20",
    "theme": "Pandas at opening, teahouse afternoon, opera at night",
-   "why": "One anchor at each end of the day and a tight central cluster in between. Panda Base first because it is genuinely a morning-only activity: gates open 07:30, the animals are active 07:30–09:30 and are asleep in the heat by late morning, so leave the hotel ~06:50 and take the South Gate (pandas are out there at 07:30; the West Gate not until 09:00). 3.5 h on site puts you back downtown for lunch ~11:45. The afternoon is all walkable and all within 1 km: People’s Park (45 min) flows straight into Heming Teahouse inside it (90 min — gaiwan tea and the ear-cleaning ritual, and the one properly restful block of the day), then Kuanzhai Alleys 10 min north for the dusk snack hour (120 min). Sichuan opera closes it: Shufeng Yayun sits in Chengdu Culture Park barely 1 km west of Kuanzhai, show 20:00–21:30, arrive 19:30 — so the fixed evening start costs you no extra transit at all. Stop time ~9.75 h, but two of those hours are seated (teahouse, theatre), so the real walking load is moderate. Chengdu Museum was the cut here — see ideas.",
-   "endMin": 1362,
+   "why": "One anchor at each end of the day and a tight central cluster in between. Panda Base first because it is genuinely a morning-only activity: gates open 07:30, the animals are active 07:30–09:30 and are asleep in the heat by late morning, so leave the hotel ~06:50 and take the South Gate (pandas are out there at 07:30; the West Gate not until 09:00). 3.5 h on site puts you back downtown for lunch ~11:45. The afternoon is all walkable and all within 1 km: People’s Park (45 min) flows straight into Heming Teahouse inside it (90 min — gaiwan tea and the ear-cleaning ritual, and the one properly restful block of the day), then Kuanzhai Alleys 10 min north for the dusk snack hour (120 min). Sichuan opera closes it: Shufeng Yayun sits in Chengdu Culture Park barely 1 km west of Kuanzhai, show 20:00–21:30, arrive 19:30 — so the fixed evening start costs you no extra transit at all. Stop time ~9.75 h, but two of those hours are seated (teahouse, theatre), so the real walking load is moderate. Chengdu Museum was the cut here — see ideas. The opera is a fixed 20:00 curtain with a 19:30 recommended arrival, so it is PINNED to 19:30 — the chain otherwise reached the theatre at 20:29, half an hour after the show started. A 90-minute dinner does not fit between Kuanzhai (ends 18:23) and that curtain, so dinner moves after the show to 21:38. That is a normal hour to eat in Chengdu and it is the only arrangement that does not either miss the opera or squeeze a researched duration.",
+   "endMin": 1401,
    "homeTravel": {
     "mode": "didi",
     "minutes": 13,
@@ -1662,26 +1662,8 @@
      "hub": null
     },
     {
-     "name": "Dinner",
-     "s": 1111,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Sichuan opera",
-     "s": 1229,
+     "s": 1170,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -1696,6 +1678,24 @@
      "cap": null,
      "lateFor": null,
      "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1298,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
     }
    ]
   },
@@ -1704,12 +1704,12 @@
    "day": 3,
    "date": "2026-08-21",
    "theme": "Sanxingdui half-day out, Three Kingdoms at dusk",
-   "why": "Sanxingdui eats the whole morning and cannot share a day with another major sight: ~40 km north, so Chengdu East → Guanghan North (18 min on the high-speed train, plus station security) then a 15–20 min taxi, roughly 1.5 h each way on top of 3.5 h on site. Leave the hotel ~07:45, on site ~09:30–13:00, back at Chengdu East ~14:45. Confirmed summer hours 08:30–20:00 (last entry 18:00) 1 Jul–31 Aug, closed Mondays — 21 Aug is a Friday, fine. The afternoon then runs to a single southwest cluster: Wuhou Shrine and Jinli share a wall, so it is one taxi for both. Wuhou 15:15–17:30, Jinli next door from 17:45 into the lantern hour with dinner at the snack stalls. Stop time ~7 h plus ~3 h of travel — a full but not brutal day.",
-   "endMin": 1240,
+   "why": "Sanxingdui eats the whole morning and cannot share a day with another major sight: ~40 km north, so Chengdu East → Guanghan North (18 min on the high-speed train, plus station security) then a 15–20 min taxi, roughly 1.5 h each way on top of 3.5 h on site. Leave the hotel ~07:45, on site ~09:30–13:00, back at Chengdu East ~14:45. Confirmed summer hours 08:30–20:00 (last entry 18:00) 1 Jul–31 Aug, closed Mondays — 21 Aug is a Friday, fine. The afternoon then runs to a single southwest cluster: Wuhou Shrine and Jinli share a wall, so it is one taxi for both. Wuhou 15:15–17:30, Jinli next door from 17:45 into the lantern hour with dinner at the snack stalls. Stop time ~7 h plus ~3 h of travel — a full but not brutal day. Taikoo Li comes back off the ideas bench and closes the day. It was parked as the thing that works with no plan at all, but this is the one Chengdu day with genuine headroom left, and it is open-air, free, alive late and a ten-minute walk from the hotel — so scheduling it costs nothing and uses the evening properly. Wuhou still enters 14:58, inside its 17:00 last-ticket, which remains the fragile point of the day.",
+   "endMin": 1344,
    "homeTravel": {
     "mode": "didi",
-    "minutes": 13,
-    "km": 3.94,
+    "minutes": 8,
+    "km": 1.07,
     "estimated": true
    },
    "missed": null,
@@ -1822,6 +1822,24 @@
      "cap": null,
      "lateFor": null,
      "hub": null
+    },
+    {
+     "name": "Taikoo Li",
+     "s": 1246,
+     "d": 90,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 11,
+      "km": 3.2,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
     }
    ]
   },
@@ -1830,7 +1848,7 @@
    "day": 4,
    "date": "2026-08-22",
    "theme": "08:30 train from Chengdu East — day is gone",
-   "why": "High-speed departure from Chengdu East at 08:30 with a 60-min buffer means leaving the hotel around 07:00 for breakfast-and-go. Nothing in Chengdu is open, and nothing is worth risking the train for. Legitimately empty.",
+   "why": "High-speed departure from Chengdu East at 08:30 with a 60-min buffer means leaving the hotel around 07:00 for breakfast-and-go. Nothing in Chengdu is open, and nothing is worth risking the train for. Legitimately empty. Breakfast is pulled to 06:30: the metro to Chengdu East is 43 minutes and the be-there-by is 08:30, which on the default 07:00 start left four minutes of margin against a train. It now arrives about 07:56, with half an hour in hand. The train time is still provisional — HSR tickets go on sale ~15 days ahead — so do not plan tightly against it.",
    "endMin": 570,
    "homeTravel": null,
    "missed": null,
@@ -1838,7 +1856,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 390,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -5308,12 +5326,6 @@
   ],
   "Chengdu|1": [
    {
-    "name": "Taikoo Li",
-    "why": "Cut as a scheduled stop, not as an experience. It is a 10-minute walk from the Minyoun Dongda, open-air, free and alive late — so it is the one thing that works with no plan at all, including on arrival night if anyone is still standing after check-in. Blocking 90 min for it would have cost a real sight.",
-    "status": "parked",
-    "from": 1
-   },
-   {
     "name": "Daci Temple",
     "why": "Data-bug casualty. It was tagged Evening, but it is a ticket-checked site that closes 17:30 with last entry 17:00 (the Zen tea area runs to 19:30, the halls do not), and it needs ID / QR registration at the gate. With both full days committed in daylight there is no daytime hour left for it. It sits inside the Taikoo Li block by the hotel, so if a morning frees up it is a 45-min drop-in — but never after dark.",
     "status": "parked",
@@ -5342,18 +5354,6 @@
   ],
   "Chengdu|3": [
    {
-    "name": "Chengdu East → Guanghan",
-    "why": null,
-    "status": "parked",
-    "from": 3
-   },
-   {
-    "name": "Guanghan North",
-    "why": null,
-    "status": "parked",
-    "from": 3
-   },
-   {
     "name": "SKP Chengdu",
     "why": "Dropped outright. A luxury mall ~14 km south of the hotel, well off every other cluster, and the only argument for it is architecture and air conditioning — both of which Chengdu Museum gives you for free and centrally. The round-trip transit alone would cost most of a Kuanzhai.",
     "status": "parked",
@@ -5374,24 +5374,10 @@
     "from": 1
    }
   ],
-  "Chongqing|3": [
-   {
-    "name": "Chongqing West (alt station)",
-    "why": "Not a sight — it is the contingency departure station, 40–60 min from Jiefangbei in morning traffic versus roughly 30 for Chongqing North. Only relevant if the day-3 ticket turns out to leave from West rather than North, in which case the 06:45 hotel departure has to become 06:00. Confirm which station the ticket is for before booking anything else on day 3.",
-    "status": "parked",
-    "from": 3
-   }
-  ],
   "Fenghuang|1": [
    {
     "name": "Bar street",
     "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise.",
-    "status": "parked",
-    "from": 1
-   },
-   {
-    "name": "Station shuttle / taxi",
-    "why": "Logistics, not a sight — the station transfer is inserted automatically. Listed here because it is the hidden cost that guts this stop: ~25 min each way, which is what turns day 2 into a 25-minute dawn and nothing else.",
     "status": "parked",
     "from": 1
    }
@@ -5440,12 +5426,6 @@
   ],
   "Shanghai|1": [
    {
-    "name": "Check in — J Hotel (Tower)",
-    "why": "Hotel admin — the day 5 evening move from Puxi to Lujiazui, roughly 17:00–18:00.",
-    "status": "parked",
-    "from": null
-   },
-   {
     "name": "Dinner alt · Donghu Rd",
     "why": "Flagged as a dinner alternate, not a stop — use it for day 3's Concession dinner.",
     "status": "parked",
@@ -5467,12 +5447,6 @@
    }
   ],
   "Zhangjiajie|3": [
-   {
-    "name": "Yangjiajie cableway",
-    "why": "The lift that makes Yangjiajie reachable — cut with the area it serves. Only worth restoring if you add a fifth day or trade away the entire Tianzi/Ten-Mile half of day 2.",
-    "status": "parked",
-    "from": 3
-   },
    {
     "name": "Yangjiajie",
     "why": "Genuinely excellent and much quieter than Yuanjiajie — Natural Great Wall and One Step to Heaven — but it sits at the far western end of the plateau. Reaching it costs its own cable car plus roughly an hour of extra shuttle each way, about 4 h of marginal cost against Ten-Mile Gallery's 90 min for zero extra transfer. With one afternoon and two full days it is the correct thing to lose. If you would rather have it than Tianmen, swap the whole of day 3 for it — do not try to squeeze it into day 2.",
@@ -5498,6 +5472,22 @@
     "to": 1
    }
   ],
+  "Chengdu|1": [
+   {
+    "name": "Taikoo Li",
+    "status": "moved",
+    "from": 1,
+    "to": 3
+   }
+  ],
+  "Chengdu|3": [
+   {
+    "name": "Taikoo Li",
+    "status": "gained",
+    "from": 1,
+    "to": 3
+   }
+  ],
   "Furong (Hibiscus)|1": [
    {
     "name": "Xizhou Bronze Pillar",
@@ -5515,18 +5505,6 @@
    }
   ],
   "Lijiang|2": [
-   {
-    "name": "Depart for the gorge",
-    "status": "moved",
-    "from": 2,
-    "to": 4
-   },
-   {
-    "name": "Qiaotou gateway",
-    "status": "moved",
-    "from": 2,
-    "to": 4
-   },
    {
     "name": "Tiger Leaping Gorge",
     "status": "moved",
@@ -5577,18 +5555,6 @@
    }
   ],
   "Lijiang|4": [
-   {
-    "name": "Depart for the gorge",
-    "status": "gained",
-    "from": 2,
-    "to": 4
-   },
-   {
-    "name": "Qiaotou gateway",
-    "status": "gained",
-    "from": 2,
-    "to": 4
-   },
    {
     "name": "Tiger Leaping Gorge",
     "status": "gained",

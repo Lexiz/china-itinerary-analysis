@@ -287,9 +287,12 @@ const ideasByDay = {};
 const movesByDay = {};
 for (const city of Object.keys(plans)) {
   const origDay = new Map();               // name → original Notion day
+  // Ideas are SIGHTS you chose not to do. Meals, hotels and transport legs are structure — a
+  // "Chengdu East → Guanghan" in the Ideas table reads as a sight you cut, when it is just the way
+  // you get to Sanxingdui and is already implied by that stop.
   for (const d of V.filter(x => x.city === city))
     for (const st of d.stops)
-      if (!SKIP.test(st.name) && !st.hub && st.ptype !== 'Hotel' && !origDay.has(st.name)) origDay.set(st.name, d.day);
+      if (!SKIP.test(st.name) && !st.hub && st.ptype !== 'Hotel' && st.ptype !== 'Transport' && !origDay.has(st.name)) origDay.set(st.name, d.day);
 
   // Read the day from what was ACTUALLY chained, not from the curator's stop list — the builder
   // also inserts stops of its own (the hotel check-in). Reading the list alone reported a stop as
@@ -313,8 +316,10 @@ for (const city of Object.keys(plans)) {
   }
   // An idea written by hand that was never in the original schedule at all still needs a home:
   // attribute it to the city's first day so it stays visible rather than vanishing.
+  const ptypeOf = n => { for (const d of V) { const s = d.stops.find(x => x.name === n); if (s) return s.ptype; } return null; };
   for (const i of (plans[city].ideas || [])) {
     if (origDay.has(i.name) || newDay.has(i.name)) continue;   // scheduled after all → not an idea
+    if (['Transport', 'Hotel'].includes(ptypeOf(i.name))) continue;   // structure, not a sight you cut
     const firstDay = (plans[city].days || [])[0]?.day ?? 1;
     (ideasByDay[`${city}|${firstDay}`] ||= []).push({ ...i, status: 'parked', from: null });
   }
