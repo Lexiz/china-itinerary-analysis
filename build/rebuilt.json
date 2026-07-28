@@ -2885,7 +2885,9 @@
     "estimated": false
    },
    "missed": null,
-   "absorbed": null,
+   "absorbed": [
+    "Youshui River cruise"
+   ],
    "stops": [
     {
      "name": "Arrive Furongzhen",
@@ -2986,24 +2988,6 @@
       "coloc": false
      },
      "advice": 60,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Youshui River cruise",
-     "s": 937,
-     "d": 30,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 1,
-      "km": 0,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 30,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -3696,7 +3680,7 @@
    "date": "2026-08-30",
    "theme": "Cruise in, land softly on the riverfront",
    "why": "The morning is not yours: 07:00 at Zhujiang Wharf, ~09:20 sailing, ~4h15 of karst, dock Yangshuo 13:30 and clear by 13:45. That leaves one usable half-day, and it has to be spent within walking distance of the hotel. West Street (90 min) plus the lit waterfront after dinner (45 min) is exactly that — both sit on the same riverfront block, so the afternoon and the after-dark versions of the same walk cost nothing in transfers. Critically, this evening is kept SHORT and ends by ~20:30: the dawn run to Xianggong is tomorrow at 04:15, and day 1 already began at ~05:30 in Guilin. The Impression Liu Sanjie show was deliberately moved off day 1 for that reason — a 21:00 curtain followed by a 04:15 alarm is the one combination that wrecks both. NOTE: the first half of this day happens in GUILIN — you wake there and the 07:00 Zhujiang Wharf call is the Guilin end of the ferry. It renders under Yangshuo because Notion dates 30 August to Yangshuo. Dinner had been missing entirely from this day: the chain treated the departure hub as the thing that closes a day, which is true everywhere except a transit day, where the hub sits at 07:00 — so every meal after it was discarded and you docked at 13:30 into an evening with no dinner. Fixed; dinner now 18:46. Still open: there is no Breakfast stop in the source data for this date, against a 07:00 wharf call — either add one in Notion or plan on the boat, and check whether your cruise ticket already includes the lunch, since the 13:53 lunch here may double up with it. The Li River night walk was scheduled 17:53, in daylight against a ~19:00 sunset, on a stop that exists only for the illuminated riverfront. Dinner is held to 17:00 so it lands straight off West Street and the walk falls after dark at 19:31. Dinner has to open BEFORE West Street ends at 17:27 or it fires after the walk instead and pushes the day to 21:38.",
-   "endMin": 1494,
+   "endMin": 1216,
    "homeTravel": {
     "mode": "none",
     "minutes": 0,
@@ -3704,7 +3688,9 @@
     "estimated": false
    },
    "missed": null,
-   "absorbed": null,
+   "absorbed": [
+    "Li River cruise"
+   ],
    "stops": [
     {
      "name": "Dock at Yangshuo",
@@ -3774,26 +3760,26 @@
      "hub": null
     },
     {
-     "name": "Li River cruise",
-     "s": 954,
-     "d": 255,
+     "name": "West Street",
+     "s": 957,
+     "d": 90,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
+      "mode": "didi",
+      "minutes": 3,
+      "km": 0.8,
       "est": false,
       "coloc": false
      },
-     "advice": 255,
+     "advice": 90,
      "cap": null,
      "lateFor": null,
      "hub": null
     },
     {
      "name": "Dinner",
-     "s": 1217,
+     "s": 1055,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -3810,26 +3796,8 @@
      "hub": null
     },
     {
-     "name": "West Street",
-     "s": 1333,
-     "d": 90,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 18,
-      "km": 0.68,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Li River night walk",
-     "s": 1449,
+     "s": 1171,
      "d": 45,
      "kind": "sight",
      "meal": null,

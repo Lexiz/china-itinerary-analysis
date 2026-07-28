@@ -170,7 +170,13 @@ for (const day of V) {
   // hub, so the plain `transit` test stopped firing and the Li River cruise reappeared as a 255-min
   // sight that ran the day to 24:54.
   const splitDay = !!(day.splitOrigin || day.splitDest);
-  const journeyDup = n => (transit || splitDay) && /\b(cruise|ferry|train|flight)\b/i.test(n);
+  // A journey that has its own hub is ALWAYS the gap between hubs, never a separate sight.
+  // This used to key off `transit` (both hubs on one day) and later also the split flag — but
+  // once the Guilin/Yangshuo ferry was re-dated in Notion the day split naturally, neither
+  // condition held, and the Li River cruise came back as a 255-minute stop that ran the day to
+  // 24:54. An arrival hub is sufficient: the cruise IS how you arrived.
+  const journeyDup = n => (transit || splitDay || !!arriveHub || !!departHub)
+    && /\b(cruise|ferry|train|flight)\b/i.test(n);
   const absorbed = [];
   for (const n of (dayPlan.stops || [])) {
     if (journeyDup(n)) { absorbed.push(n); continue; }   // the sailing IS the gap between the hubs
