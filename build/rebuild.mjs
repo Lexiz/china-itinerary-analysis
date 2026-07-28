@@ -209,7 +209,7 @@ for (const day of V) {
           const m = pending[0];
           const win = MW[m.meal] + (hasDeadline ? shift : 0);
           const t = legTo(rows, m.name);
-          const start = Math.max(clock + t.minutes + SLACK, win);
+          const start = rows.length ? Math.max(clock + t.minutes + SLACK, win) : win;
           const dur = mealDur(m);
           if (start + dur + SLACK > anchor) break;      // genuinely no room before check-in
           emit(pending.shift(), start, dur, t);
@@ -319,6 +319,9 @@ for (const [city, p] of Object.entries(plans)) if (p.ideas?.length) ideas[city] 
 //   · parked → in the original schedule, in no new day
 //   · moved  → in the new plan, but on a different day than it started on
 const SKIP = /^(breakfast|lunch|dinner|back to the hotel)\b/i;
+// A journey absorbed into the gap between its two hubs is not a sight you cut — the Li River cruise
+// IS day 1, and listing it under "not scheduled" reads as though you skipped the boat you are on.
+const ABSORBED = new Set(Object.values(out).flatMap(d => d.absorbed || []));
 const whyOf = (city, name) => (plans[city]?.ideas || []).find(i => i.name === name)?.why || null;
 const ideasByDay = {};
 const movesByDay = {};
@@ -329,7 +332,8 @@ for (const city of Object.keys(plans)) {
   // you get to Sanxingdui and is already implied by that stop.
   for (const d of V.filter(x => x.city === city))
     for (const st of d.stops)
-      if (!SKIP.test(st.name) && !st.hub && st.ptype !== 'Hotel' && st.ptype !== 'Transport' && !origDay.has(st.name)) origDay.set(st.name, d.day);
+      if (!SKIP.test(st.name) && !st.hub && st.ptype !== 'Hotel' && st.ptype !== 'Transport'
+          && !ABSORBED.has(st.name) && !origDay.has(st.name)) origDay.set(st.name, d.day);
 
   // Read the day from what was ACTUALLY chained, not from the curator's stop list — the builder
   // also inserts stops of its own (the hotel check-in). Reading the list alone reported a stop as

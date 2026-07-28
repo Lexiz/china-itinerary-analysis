@@ -9,7 +9,15 @@
     "West Street",
     "Li River night walk"
    ],
-   "why": "The morning is not yours: 07:00 at Zhujiang Wharf, ~09:20 sailing, ~4h15 of karst, dock Yangshuo 13:30 and clear by 13:45. That leaves one usable half-day, and it has to be spent within walking distance of the hotel. West Street (90 min) plus the lit waterfront after dinner (45 min) is exactly that — both sit on the same riverfront block, so the afternoon and the after-dark versions of the same walk cost nothing in transfers. Critically, this evening is kept SHORT and ends by ~20:30: the dawn run to Xianggong is tomorrow at 04:15, and day 1 already began at ~05:30 in Guilin. The Impression Liu Sanjie show was deliberately moved off day 1 for that reason — a 21:00 curtain followed by a 04:15 alarm is the one combination that wrecks both. NOTE: the first half of this day happens in GUILIN — you wake there and the 07:00 Zhujiang Wharf call is the Guilin end of the ferry. It renders under Yangshuo because Notion dates 30 August to Yangshuo. Dinner had been missing entirely from this day: the chain treated the departure hub as the thing that closes a day, which is true everywhere except a transit day, where the hub sits at 07:00 — so every meal after it was discarded and you docked at 13:30 into an evening with no dinner. Fixed; dinner now 18:46. Still open: there is no Breakfast stop in the source data for this date, against a 07:00 wharf call — either add one in Notion or plan on the boat, and check whether your cruise ticket already includes the lunch, since the 13:53 lunch here may double up with it."
+   "why": "The morning is not yours: 07:00 at Zhujiang Wharf, ~09:20 sailing, ~4h15 of karst, dock Yangshuo 13:30 and clear by 13:45. That leaves one usable half-day, and it has to be spent within walking distance of the hotel. West Street (90 min) plus the lit waterfront after dinner (45 min) is exactly that — both sit on the same riverfront block, so the afternoon and the after-dark versions of the same walk cost nothing in transfers. Critically, this evening is kept SHORT and ends by ~20:30: the dawn run to Xianggong is tomorrow at 04:15, and day 1 already began at ~05:30 in Guilin. The Impression Liu Sanjie show was deliberately moved off day 1 for that reason — a 21:00 curtain followed by a 04:15 alarm is the one combination that wrecks both. NOTE: the first half of this day happens in GUILIN — you wake there and the 07:00 Zhujiang Wharf call is the Guilin end of the ferry. It renders under Yangshuo because Notion dates 30 August to Yangshuo. Dinner had been missing entirely from this day: the chain treated the departure hub as the thing that closes a day, which is true everywhere except a transit day, where the hub sits at 07:00 — so every meal after it was discarded and you docked at 13:30 into an evening with no dinner. Fixed; dinner now 18:46. Still open: there is no Breakfast stop in the source data for this date, against a 07:00 wharf call — either add one in Notion or plan on the boat, and check whether your cruise ticket already includes the lunch, since the 13:53 lunch here may double up with it. The Li River night walk was scheduled 17:53, in daylight against a ~19:00 sunset, on a stop that exists only for the illuminated riverfront. Dinner is held to 17:00 so it lands straight off West Street and the walk falls after dark at 19:31. Dinner has to open BEFORE West Street ends at 17:27 or it fires after the walk instead and pushes the day to 21:38.",
+   "mealWindows": {
+    "dinner": "17:00"
+   },
+   "stopTimes": {
+    "Li River night walk": {
+     "notBefore": "19:15"
+    }
+   }
   },
   {
    "day": 2,
@@ -17,10 +25,9 @@
    "stops": [
     "Xianggong sunrise",
     "Xingping Ancient Town",
-    "20-RMB viewpoint",
-    "Impression Liu Sanjie"
+    "20-RMB viewpoint"
    ],
-   "why": "One dawn, and this is it. Gates at Xianggong open 05:00 (May-Oct), the climb is a steep ~20 min, and you want the summit by ~05:30 to get a rail spot — sunrise is ~06:20 in early September. Car leaves the homestay ~04:30 for the ~50 min drive. That places you already deep in Xingping country at 07:00, so the rest of the morning is free geography: Xianggong, Xingping town and Yellow Cloth Shoal are all inside 3 km of each other and ~40 min from Yangshuo, so they must travel as one block or the transfer gets paid twice. Order is town first, then the riverside path out to the 20-RMB viewpoint, because the path starts from town and the light there is still clean at 08:30. Home by ~11:30. The afternoon is intentionally empty — a 04:15 wake buys a nap, not another sight (~4.5 h of stop time all day). That recovered afternoon is what makes the 19:45 Impression Liu Sanjie viable: ~70 min, ends ~21:00, 10 min back from West Street."
+   "why": "One dawn, and this is it. Gates at Xianggong open 05:00 (May-Oct), the climb is a steep ~20 min, and you want the summit by ~05:30 to get a rail spot — sunrise is ~06:20 in early September. Car leaves the homestay ~04:30 for the ~50 min drive. That places you already deep in Xingping country at 07:00, so the rest of the morning is free geography: Xianggong, Xingping town and Yellow Cloth Shoal are all inside 3 km of each other and ~40 min from Yangshuo, so they must travel as one block or the transfer gets paid twice. Order is town first, then the riverside path out to the 20-RMB viewpoint, because the path starts from town and the light there is still clean at 08:30. Home by ~11:30. The afternoon is intentionally empty — a 04:15 wake buys a nap, not another sight (~4.5 h of stop time all day). That recovered afternoon is what makes the 19:45 Impression Liu Sanjie viable: ~70 min, ends ~21:00, 10 min back from West Street. Impression Liu Sanjie comes OFF this day. The show is a fixed 19:45 curtain, and this day begins with a 04:15 car call for the Xianggong gates — carrying both makes a seventeen-hour day. The afternoon is deliberately empty: it is what the dawn costs, and the notes budget for it. Xianggong stays first because the dawn is the one thing that cannot move later."
   },
   {
    "day": 3,
@@ -28,15 +35,31 @@
    "stops": [
     "Yulong bamboo rafting",
     "Yulong valley cycling",
-    "Moon Hill"
+    "Moon Hill",
+    "Impression Liu Sanjie"
    ],
-   "why": "The single full unbroken day goes to the one cluster that needs a full unbroken day. Rafts run Jinlong Bridge to Jiuxian and pause midday, so this starts ~09:30 (60-90 min, 9 small weirs) — impossible on day 2, which is spoken for by dawn. You step off the raft at Jiuxian already inside the cycling loop, so the bikes (150 min through Jiuxian and Chaolong, break at Gongnong Bridge) pick up exactly where the water leaves you, and Moon Hill's ~40 min climb sits on the Ten-Mile Gallery road on the way back to town. ~5.5 h of stop time but ~9 h out with the transfers, lunch and heat. Rafting and cycling are both weather-dependent and both here, which is the point: one rained-out day only costs you one theme, and the evening is deliberately left clear for packing and an early night."
+   "why": "The single full unbroken day goes to the one cluster that needs a full unbroken day. Rafts run Jinlong Bridge to Jiuxian and pause midday, so this starts ~09:30 (60-90 min, 9 small weirs) — impossible on day 2, which is spoken for by dawn. You step off the raft at Jiuxian already inside the cycling loop, so the bikes (150 min through Jiuxian and Chaolong, break at Gongnong Bridge) pick up exactly where the water leaves you, and Moon Hill's ~40 min climb sits on the Ten-Mile Gallery road on the way back to town. ~5.5 h of stop time but ~9 h out with the transfers, lunch and heat. Rafting and cycling are both weather-dependent and both here, which is the point: one rained-out day only costs you one theme, and the evening is deliberately left clear for packing and an early night. The show moves here and this is the correction that mattered most in Yangshuo: Impression Liu Sanjie was scheduled 10:35-12:05, and there is no morning performance — it runs 19:45 (plus 21:20 only when demand is high), ~70 min. Pinned to 19:45. This day can carry it because it starts at a normal hour rather than before dawn. Breakfast moves to 08:00 and rafting is held to 09:30 per the operator hint, which closes what would otherwise be a two-hour hole before the water; dinner is held to 16:30 so it lands after Moon Hill and clears the curtain. Home 21:24.",
+   "mealWindows": {
+    "breakfast": "08:00",
+    "dinner": "16:30"
+   },
+   "stopTimes": {
+    "Yulong bamboo rafting": {
+     "notBefore": "09:30"
+    },
+    "Impression Liu Sanjie": {
+     "at": "19:45"
+    }
+   }
   },
   {
    "day": 4,
    "theme": "Departure — airport run only",
    "stops": [],
-   "why": "HO1148 needs you AT Guilin Liangjiang by 08:20 and KWL is 65-80 min from Yangshuo, so the car leaves ~06:40 and the alarm is ~05:45. There is time for breakfast and nothing else. Nothing was placed here, and day 3's evening was kept free precisely so this morning is only tired, not brutal."
+   "why": "HO1148 needs you AT Guilin Liangjiang by 08:20 and KWL is 65-80 min from Yangshuo, so the car leaves ~06:40 and the alarm is ~05:45. There is time for breakfast and nothing else. Nothing was placed here, and day 3's evening was kept free precisely so this morning is only tired, not brutal. Breakfast to 05:30. HO1148 is BOOKED and it is the leg that connects to Shanghai, so the 08:20 call is not negotiable; the run to KWL is modelled at 107 min for 67 km, which is conservative. That leaves about 20 min of margin on top of the 120-minute buffer already inside the call time.",
+   "mealWindows": {
+    "breakfast": "05:30"
+   }
   }
  ],
  "ideas": [
