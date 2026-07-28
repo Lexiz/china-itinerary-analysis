@@ -120,5 +120,12 @@
   "conf": "med",
   "source": "Notion Hours: night sailings ~18:00-23:00. The city note narrows it: do not board before ~20:00 (it must be genuinely dark and the illumination comes up 19:30-20:00), and sailings stop about 23:00. Ride is ~30 min round trip from the North Gate wharf past the lit Wanming Tower. Booking required.",
   "closedDays": []
+ },
+ "Two Rivers & Four Lakes": {
+  "closes": "23:00",
+  "lastEntry": "21:30",
+  "conf": "med",
+  "source": "City note: runs 19:00-21:30 normally, EXTENDED to 18:00-23:00 June-October, departures every 10-30 min, ~1.5 h for the full two-rivers loop. 29 Aug falls inside the extended season. The lights and the lit pagodas are the entire point, so the real constraint is the earliest useful departure (~19:45, after the ~19:05 sunset), not the last one.",
+  "closedDays": []
  }
 }

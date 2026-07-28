@@ -3494,7 +3494,7 @@
    "day": 1,
    "date": "2026-08-29",
    "theme": "Half-day arrival — the river hill before dinner, the lit lakes after it",
-   "why": "Work backwards from the boat, which is the only thing here with a real clock on it. Train clears ~14:50, transfer downtown is the stated ~45 min, so you are at the hotel ~15:40 and out again by ~16:15 with bags gone. Elephant Trunk Hill takes the 16:45–17:30 slot: it is 200 m from the hotel, it is the city's signature karst shape, and it is free from the riverside promenade / Love Island viewpoint — no ticket queue, no commitment. That leaves the gap before sunset (~19:05) for dinner and an unhurried wander of the Zhengyang pedestrian streets, which are right there and cost nothing to add. Then Two Rivers & Four Lakes as the night event, boarding ~20:00 for the 90-minute illuminated loop past the Sun & Moon Twin Pagodas on Shanhu Lake — the run operates 19:00–21:30 (extended 18:00–23:00 June–October, so late August is comfortable) with boats every 10–30 minutes, meaning a missed connection earlier in the day costs you nothing. Two stops is the honest answer for this afternoon: both are central, neither is rushed, and there is real slack absorbing a late train.",
+   "why": "Work backwards from the boat, which is the only thing here with a real clock on it. Train clears ~14:50, transfer downtown is the stated ~45 min, so you are at the hotel ~15:40 and out again by ~16:15 with bags gone. Elephant Trunk Hill takes the 16:45–17:30 slot: it is 200 m from the hotel, it is the city's signature karst shape, and it is free from the riverside promenade / Love Island viewpoint — no ticket queue, no commitment. That leaves the gap before sunset (~19:05) for dinner and an unhurried wander of the Zhengyang pedestrian streets, which are right there and cost nothing to add. Then Two Rivers & Four Lakes as the night event, boarding ~20:00 for the 90-minute illuminated loop past the Sun & Moon Twin Pagodas on Shanhu Lake — the run operates 19:00–21:30 (extended 18:00–23:00 June–October, so late August is comfortable) with boats every 10–30 minutes, meaning a missed connection earlier in the day costs you nothing. Two stops is the honest answer for this afternoon: both are central, neither is rushed, and there is real slack absorbing a late train. Two corrections to the evening. The boat was sailing at 18:22, before the ~19:05 sunset — on a cruise whose entire point is the illuminated bridges and pagodas, and against a city note that says explicitly not to take a departure before ~19:45. It is now held to 19:45 and sails 20:00, inside the June-October extended 18:00-23:00 season. Dinner is pulled to 17:30 so it fills the gap between Elephant Trunk Hill and the boat rather than landing after it: you eat 18:04-19:34 as the light goes, then board. Elephant Trunk Hill stays before dinner because it is the one stop here that is worth seeing in daylight.",
    "endMin": 1304,
    "homeTravel": {
     "mode": "walk",
@@ -3591,26 +3591,8 @@
      "hub": null
     },
     {
-     "name": "Two Rivers & Four Lakes",
-     "s": 1102,
-     "d": 90,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 18,
-      "km": 0.68,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Dinner",
-     "s": 1200,
+     "s": 1084,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -3620,6 +3602,24 @@
       "km": 0,
       "est": false,
       "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Two Rivers & Four Lakes",
+     "s": 1200,
+     "d": 90,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "walk",
+      "minutes": 18,
+      "km": 0.68,
+      "est": true,
+      "coloc": false
      },
      "advice": 90,
      "cap": null,
