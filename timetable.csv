@@ -207,15 +207,14 @@ Day,Date,City,Status,#,Activity,Start,End,Min,Travel to next (min),Change,Now st
 1,2026-08-29,Guilin,proposed,6,Dinner,19:40,21:10,90,7,,21:20,98,90,
 1,2026-08-29,Guilin,proposed,7,Two Rivers & Four Lakes,21:17,22:47,90,,,23:05,60,90,
 1,2026-08-29,Guilin,proposed,8,Back to the hotel,22:52,,,,endpoint,00:10 +1,,,was 00:10 — now 22:52
-1,2026-08-30,Yangshuo,proposed,1,Zhujiang Wharf transfer,07:00,07:45,45,345,,07:00,45,45,
-1,2026-08-30,Yangshuo,proposed,2,Dock at Yangshuo,13:30,13:45,15,20,,13:30,43,,
-1,2026-08-30,Yangshuo,proposed,3,Li River cruise,14:05,18:20,255,3,,14:13,128,255,
-1,2026-08-30,Yangshuo,proposed,4,Lunch,18:23,19:23,60,4,,16:24,68,60,
-1,2026-08-30,Yangshuo,proposed,5,Fengqi Homestay,19:27,19:57,30,3,,17:36,38,30,
-1,2026-08-30,Yangshuo,proposed,6,West Street,20:00,21:30,90,14,,18:17,98,90,
-1,2026-08-30,Yangshuo,proposed,7,Dinner,21:44,23:14,90,1,,20:09,98,90,
-1,2026-08-30,Yangshuo,proposed,8,Impression Liu Sanjie,23:15,00:45,90,,,21:48,120,90,
-1,2026-08-30,Yangshuo,proposed,9,Back to the hotel,00:54 +1,,,,endpoint,23:57,,,was 23:57 — now 00:54 +1
+1,2026-08-30,Yangshuo,proposed,1,Dock at Yangshuo,13:30,13:45,15,20,,13:30,43,,
+1,2026-08-30,Yangshuo,proposed,2,Li River cruise,14:05,18:20,255,3,,14:13,128,255,
+1,2026-08-30,Yangshuo,proposed,3,Lunch,18:23,19:23,60,4,,16:24,68,60,
+1,2026-08-30,Yangshuo,proposed,4,Fengqi Homestay,19:27,19:57,30,3,,17:36,38,30,
+1,2026-08-30,Yangshuo,proposed,5,West Street,20:00,21:30,90,14,,18:17,98,90,
+1,2026-08-30,Yangshuo,proposed,6,Dinner,21:44,23:14,90,1,,20:09,98,90,
+1,2026-08-30,Yangshuo,proposed,7,Impression Liu Sanjie,23:15,00:45,90,,,21:48,120,90,
+1,2026-08-30,Yangshuo,proposed,8,Back to the hotel,00:54 +1,,,,endpoint,23:57,,,was 23:57 — now 00:54 +1
 2,2026-08-31,Yangshuo,proposed,1,Xianggong sunrise,05:45,07:15,90,47,,05:45,68,90,
 2,2026-08-31,Yangshuo,proposed,2,Breakfast,08:02,08:37,35,22,,07:40,53,35,
 2,2026-08-31,Yangshuo,proposed,3,Yulong bamboo rafting,08:59,10:29,90,91,,08:55,158,90,

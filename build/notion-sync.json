@@ -675,9 +675,9 @@
    "durConf": "med",
    "toNext": "Fly from PKX",
    "travelMode": "didi",
-   "travelMin": 68,
-   "travelKm": 55,
-   "travelSource": "routed (real leg)",
+   "travelMin": 74,
+   "travelKm": 45.05,
+   "travelSource": "estimated (fitted model)",
    "origDay": 5,
    "origStart": "05:39",
    "origDurMin": 35,
@@ -1379,8 +1379,8 @@
    "durConf": "med",
    "toNext": "Black Dragon Pool",
    "travelMode": "didi",
-   "travelMin": 9,
-   "travelKm": 1.79,
+   "travelMin": 10,
+   "travelKm": 1.98,
    "travelSource": "estimated (fitted model)",
    "origDay": 5,
    "origStart": "07:30",
@@ -1394,8 +1394,8 @@
    "order": 20,
    "activity": "Black Dragon Pool",
    "kind": "Sight",
-   "newStart": "07:52",
-   "newEnd": "09:22",
+   "newStart": "07:53",
+   "newEnd": "09:23",
    "newDurMin": 90,
    "durBasis": "Guides and visitors put the park at 1-2 h to circle the water, cross the marble bridge and shoot the Jade Dragon reflection; some reviewers say 2 h still felt short.",
    "durConf": "high",
@@ -1407,7 +1407,7 @@
    "origDay": 4,
    "origStart": "23:02",
    "origDurMin": 90,
-   "action": "MOVE day 4 → 5; RETIME 23:02 → 07:52; ORDER 90 → 20"
+   "action": "MOVE day 4 → 5; RETIME 23:02 → 07:53; ORDER 90 → 20"
   },
   {
    "city": "Lijiang",
@@ -1416,8 +1416,8 @@
    "order": 30,
    "activity": "Last Dayan loop",
    "kind": "Sight",
-   "newStart": "09:39",
-   "newEnd": "10:39",
+   "newStart": "09:40",
+   "newEnd": "10:40",
    "newDurMin": 60,
    "durBasis": "Reviewers note Sifangjie is empty around 07:30 and you can wander freely for about 45 min before tour groups arrive at 10:00; an hour covers a relaxed farewell loop.",
    "durConf": "med",
@@ -1429,7 +1429,7 @@
    "origDay": 5,
    "origStart": "08:24",
    "origDurMin": 60,
-   "action": "RETIME 08:24 → 09:39; ORDER 20 → 30"
+   "action": "RETIME 08:24 → 09:40; ORDER 20 → 30"
   },
   {
    "city": "Lijiang",
@@ -1438,8 +1438,8 @@
    "order": 40,
    "activity": "Old Town massage",
    "kind": "Sight",
-   "newStart": "10:47",
-   "newEnd": "12:02",
+   "newStart": "10:48",
+   "newEnd": "12:03",
    "newDurMin": 75,
    "durBasis": "Old Town parlours sell 60- and 90-min sessions; a 60-min treatment plus changing, tea and paying lands at about 75 min.",
    "durConf": "med",
@@ -1451,7 +1451,7 @@
    "origDay": 3,
    "origStart": "20:58",
    "origDurMin": 75,
-   "action": "MOVE day 3 → 5; RETIME 20:58 → 10:47; ORDER 80 → 40"
+   "action": "MOVE day 3 → 5; RETIME 20:58 → 10:48; ORDER 80 → 40"
   },
   {
    "city": "Lijiang",
@@ -1460,8 +1460,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:10",
-   "newEnd": "13:10",
+   "newStart": "12:11",
+   "newEnd": "13:11",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -1473,7 +1473,7 @@
    "origDay": 5,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 12:10; ORDER 30 → 50"
+   "action": "RETIME 12:00 → 12:11; ORDER 30 → 50"
   },
   {
    "city": "Lijiang",
@@ -1906,10 +1906,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Train from Chengdu East",
-   "travelMode": "metro",
-   "travelMin": 43,
-   "travelKm": 14.7,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 14,
+   "travelKm": 4.91,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "06:54",
    "origDurMin": 35,
@@ -2392,7 +2392,7 @@
    "toNext": "Chongqing North station",
    "travelMode": "didi",
    "travelMin": 15,
-   "travelKm": 5.39,
+   "travelKm": 5.81,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "05:30",
@@ -2875,9 +2875,9 @@
    "durConf": "med",
    "toNext": "Head to the station",
    "travelMode": "didi",
-   "travelMin": 5,
-   "travelKm": 1.9,
-   "travelSource": "routed (real leg)",
+   "travelMin": 48,
+   "travelKm": 27.83,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -3654,10 +3654,32 @@
    "action": "RETIME 23:05 → 20:00; ORDER 70 → 60"
   },
   {
-   "city": "Yangshuo",
-   "day": 1,
+   "city": "Guilin",
+   "day": 2,
    "date": "2026-08-30",
    "order": 10,
+   "activity": "Breakfast",
+   "kind": "Food",
+   "newStart": "05:39",
+   "newEnd": "06:14",
+   "newDurMin": 35,
+   "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
+   "durConf": "med",
+   "toNext": "Zhujiang Wharf transfer",
+   "travelMode": "didi",
+   "travelMin": 38,
+   "travelKm": 20.79,
+   "travelSource": "estimated (fitted model)",
+   "origDay": 2,
+   "origStart": "",
+   "origDurMin": 35,
+   "action": "RETIME  → 05:39; ORDER 5 → 10"
+  },
+  {
+   "city": "Guilin",
+   "day": 2,
+   "date": "2026-08-30",
+   "order": 20,
    "activity": "Zhujiang Wharf transfer",
    "kind": "Transport",
    "newStart": "07:00",
@@ -3665,21 +3687,21 @@
    "newDurMin": 45,
    "durBasis": "Li River operators require arrival 30-45 min before sailing: passport checked twice (ticket machine, then boarding hall), with boarding opening 30 min pre-departure.",
    "durConf": "high",
-   "toNext": "Dock at Yangshuo",
-   "travelMode": "none",
-   "travelMin": 0,
+   "toNext": "Hotel (home)",
+   "travelMode": "",
+   "travelMin": "",
    "travelKm": "",
-   "travelSource": "routed (real leg)",
-   "origDay": 1,
+   "travelSource": "",
+   "origDay": 2,
    "origStart": "07:00",
    "origDurMin": 45,
-   "action": "no change"
+   "action": "ORDER 10 → 20"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 20,
+   "order": 10,
    "activity": "Dock at Yangshuo",
    "kind": "Transport",
    "newStart": "13:30",
@@ -3695,13 +3717,13 @@
    "origDay": 1,
    "origStart": "13:30",
    "origDurMin": 15,
-   "action": "no change"
+   "action": "ORDER 20 → 10"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 30,
+   "order": 20,
    "activity": "Lunch",
    "kind": "Food",
    "newStart": "13:53",
@@ -3717,13 +3739,13 @@
    "origDay": 1,
    "origStart": "16:24",
    "origDurMin": 60,
-   "action": "RETIME 16:24 → 13:53; ORDER 40 → 30"
+   "action": "RETIME 16:24 → 13:53; ORDER 40 → 20"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 40,
+   "order": 30,
    "activity": "Fengqi Homestay",
    "kind": "Sight",
    "newStart": "15:16",
@@ -3739,13 +3761,13 @@
    "origDay": 1,
    "origStart": "17:36",
    "origDurMin": 30,
-   "action": "RETIME 17:36 → 15:16; ORDER 50 → 40"
+   "action": "RETIME 17:36 → 15:16; ORDER 50 → 30"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 50,
+   "order": 40,
    "activity": "West Street",
    "kind": "Sight",
    "newStart": "15:57",
@@ -3761,13 +3783,13 @@
    "origDay": 1,
    "origStart": "18:17",
    "origDurMin": 90,
-   "action": "RETIME 18:17 → 15:57; ORDER 60 → 50"
+   "action": "RETIME 18:17 → 15:57; ORDER 60 → 40"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 60,
+   "order": 50,
    "activity": "Li River night walk",
    "kind": "Sight",
    "newStart": "17:53",
@@ -3783,13 +3805,13 @@
    "origDay": 2,
    "origStart": "19:58",
    "origDurMin": 45,
-   "action": "MOVE day 2 → 1; RETIME 19:58 → 17:53; ORDER 80 → 60"
+   "action": "MOVE day 2 → 1; RETIME 19:58 → 17:53; ORDER 80 → 50"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 70,
+   "order": 60,
    "activity": "Dinner",
    "kind": "Food",
    "newStart": "18:46",
@@ -3798,14 +3820,14 @@
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Hotel (home)",
-   "travelMode": "",
-   "travelMin": "",
-   "travelKm": "",
-   "travelSource": "",
+   "travelMode": "none",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "routed (real leg)",
    "origDay": 1,
    "origStart": "20:09",
    "origDurMin": 90,
-   "action": "RETIME 20:09 → 18:46"
+   "action": "RETIME 20:09 → 18:46; ORDER 70 → 60"
   },
   {
    "city": "Yangshuo",
@@ -4100,20 +4122,20 @@
    "order": 10,
    "activity": "Breakfast",
    "kind": "Food",
-   "newStart": "06:19",
-   "newEnd": "06:54",
+   "newStart": "05:50",
+   "newEnd": "06:25",
    "newDurMin": 35,
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Fly from KWL",
    "travelMode": "didi",
-   "travelMin": 78,
-   "travelKm": 89.8,
-   "travelSource": "routed (real leg)",
+   "travelMin": 107,
+   "travelKm": 67.09,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "06:09",
    "origDurMin": 35,
-   "action": "RETIME 06:09 → 06:19"
+   "action": "RETIME 06:09 → 05:50"
   },
   {
    "city": "Yangshuo",
@@ -5075,8 +5097,8 @@
    "durConf": "med",
    "toNext": "Shanghai Museum East",
    "travelMode": "didi",
-   "travelMin": 16,
-   "travelKm": 5.97,
+   "travelMin": 17,
+   "travelKm": 6.62,
    "travelSource": "estimated (fitted model)",
    "origDay": 6,
    "origStart": "07:30",
@@ -5090,8 +5112,8 @@
    "order": 20,
    "activity": "Shanghai Museum East",
    "kind": "Sight",
-   "newStart": "07:59",
-   "newEnd": "10:59",
+   "newStart": "08:00",
+   "newEnd": "11:00",
    "newDurMin": 180,
    "durBasis": "Guides advise at least 2-3h and recommend 3-4h (3-5h thorough) for 20 halls; 3 focused hours covers the headline galleries plus one temporary show.",
    "durConf": "high",
@@ -5103,7 +5125,7 @@
    "origDay": 6,
    "origStart": "13:21",
    "origDurMin": 180,
-   "action": "RETIME 13:21 → 07:59; ORDER 30 → 20"
+   "action": "RETIME 13:21 → 08:00; ORDER 30 → 20"
   },
   {
    "city": "Shanghai",
@@ -5112,8 +5134,8 @@
    "order": 30,
    "activity": "Shanghai Tower base",
    "kind": "Sight",
-   "newStart": "11:19",
-   "newEnd": "11:49",
+   "newStart": "11:20",
+   "newEnd": "11:50",
    "newDurMin": 30,
    "durBasis": "No published dwell time; the ground plaza and Exit 9A photo spot are the documented ground-level draws, and a walk around the base with photos is ~30min.",
    "durConf": "low",
@@ -5125,7 +5147,7 @@
    "origDay": 5,
    "origStart": "21:36",
    "origDurMin": 30,
-   "action": "MOVE day 5 → 6; RETIME 21:36 → 11:19; ORDER 80 → 30"
+   "action": "MOVE day 5 → 6; RETIME 21:36 → 11:20; ORDER 80 → 30"
   },
   {
    "city": "Shanghai",
@@ -5134,8 +5156,8 @@
    "order": 40,
    "activity": "World Financial Center",
    "kind": "Sight",
-   "newStart": "12:05",
-   "newEnd": "12:35",
+   "newStart": "12:06",
+   "newEnd": "12:36",
    "newDurMin": 30,
    "durBasis": "Exterior stop per the note; the 94/97/100F observatory would instead need 1-2h (30min on 94F, 20min on 97F, 1-1.5h on 100F) plus ticket and lift queues.",
    "durConf": "med",
@@ -5147,7 +5169,7 @@
    "origDay": 5,
    "origStart": "01:05",
    "origDurMin": 30,
-   "action": "MOVE day 5 → 6; RETIME 01:05 → 12:05; ORDER 100 → 40"
+   "action": "MOVE day 5 → 6; RETIME 01:05 → 12:06; ORDER 100 → 40"
   },
   {
    "city": "Shanghai",
@@ -5156,8 +5178,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:43",
-   "newEnd": "13:43",
+   "newStart": "12:44",
+   "newEnd": "13:44",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -5169,7 +5191,7 @@
    "origDay": 6,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 12:43; ORDER 20 → 50"
+   "action": "RETIME 12:00 → 12:44; ORDER 20 → 50"
   },
   {
    "city": "Shanghai",
@@ -5178,8 +5200,8 @@
    "order": 60,
    "activity": "Jin Mao Tower",
    "kind": "Sight",
-   "newStart": "13:59",
-   "newEnd": "14:29",
+   "newStart": "14:00",
+   "newEnd": "14:30",
    "newDurMin": 30,
    "durBasis": "Treated per the note as an exterior stop; going up would be different — the 88F deck is quoted at 2-3h and the Skywalk session alone is 45min plus 30min security check-in.",
    "durConf": "med",
@@ -5191,7 +5213,7 @@
    "origDay": 5,
    "origStart": "23:19",
    "origDurMin": 30,
-   "action": "MOVE day 5 → 6; RETIME 23:19 → 13:59; ORDER 90 → 60"
+   "action": "MOVE day 5 → 6; RETIME 23:19 → 14:00; ORDER 90 → 60"
   },
   {
    "city": "Shanghai",
@@ -5200,8 +5222,8 @@
    "order": 70,
    "activity": "Oriental Pearl Tower",
    "kind": "Sight",
-   "newStart": "14:56",
-   "newEnd": "15:26",
+   "newStart": "14:57",
+   "newEnd": "15:27",
    "newDurMin": 30,
    "durBasis": "Exterior-only per the note, so a photo stop at the base; ascending instead runs 1-2h on the decks and 2-3h with the museum, plus 15-60min ticket and 10-60min lift queues.",
    "durConf": "med",
@@ -5213,7 +5235,7 @@
    "origDay": 6,
    "origStart": "17:30",
    "origDurMin": 30,
-   "action": "RETIME 17:30 → 14:56; ORDER 50 → 70"
+   "action": "RETIME 17:30 → 14:57; ORDER 50 → 70"
   },
   {
    "city": "Shanghai",
@@ -5222,8 +5244,8 @@
    "order": 80,
    "activity": "Pudong promenade",
    "kind": "Sight",
-   "newStart": "15:35",
-   "newEnd": "16:20",
+   "newStart": "15:36",
+   "newEnd": "16:21",
    "newDurMin": 45,
    "durBasis": "Binjiang Avenue full route logs are 7.7km/2h, but the Lujiazui section fronting the towers is a fraction of that; TripAdvisor describes it as a short skyline stroll of ~45min.",
    "durConf": "med",
@@ -5235,7 +5257,7 @@
    "origDay": 6,
    "origStart": "16:21",
    "origDurMin": 45,
-   "action": "RETIME 16:21 → 15:35; ORDER 40 → 80"
+   "action": "RETIME 16:21 → 15:36; ORDER 40 → 80"
   },
   {
    "city": "Shanghai",
@@ -5891,9 +5913,9 @@
    "durConf": "med",
    "toNext": "Fly from PKX",
    "travelMode": "didi",
-   "travelMin": 68,
-   "travelKm": 55,
-   "travelSource": "routed (real leg)",
+   "travelMin": 74,
+   "travelKm": 45.05,
+   "travelSource": "estimated (fitted model)",
    "origDay": 5,
    "origStart": "05:39",
    "origDurMin": 35,
@@ -6573,8 +6595,8 @@
    "durConf": "med",
    "toNext": "Black Dragon Pool",
    "travelMode": "didi",
-   "travelMin": 9,
-   "travelKm": 1.79,
+   "travelMin": 10,
+   "travelKm": 1.98,
    "travelSource": "estimated (fitted model)",
    "origDay": 5,
    "origStart": "07:30",
@@ -6588,8 +6610,8 @@
    "order": 20,
    "activity": "Black Dragon Pool",
    "kind": "Sight",
-   "newStart": "07:52",
-   "newEnd": "09:22",
+   "newStart": "07:53",
+   "newEnd": "09:23",
    "newDurMin": 90,
    "durBasis": "Guides and visitors put the park at 1-2 h to circle the water, cross the marble bridge and shoot the Jade Dragon reflection; some reviewers say 2 h still felt short.",
    "durConf": "high",
@@ -6601,7 +6623,7 @@
    "origDay": 4,
    "origStart": "23:02",
    "origDurMin": 90,
-   "action": "MOVE day 4 → 5; RETIME 23:02 → 07:52; ORDER 90 → 20"
+   "action": "MOVE day 4 → 5; RETIME 23:02 → 07:53; ORDER 90 → 20"
   },
   {
    "city": "Lijiang",
@@ -6610,8 +6632,8 @@
    "order": 30,
    "activity": "Last Dayan loop",
    "kind": "Sight",
-   "newStart": "09:39",
-   "newEnd": "10:39",
+   "newStart": "09:40",
+   "newEnd": "10:40",
    "newDurMin": 60,
    "durBasis": "Reviewers note Sifangjie is empty around 07:30 and you can wander freely for about 45 min before tour groups arrive at 10:00; an hour covers a relaxed farewell loop.",
    "durConf": "med",
@@ -6623,7 +6645,7 @@
    "origDay": 5,
    "origStart": "08:24",
    "origDurMin": 60,
-   "action": "RETIME 08:24 → 09:39; ORDER 20 → 30"
+   "action": "RETIME 08:24 → 09:40; ORDER 20 → 30"
   },
   {
    "city": "Lijiang",
@@ -6632,8 +6654,8 @@
    "order": 40,
    "activity": "Old Town massage",
    "kind": "Sight",
-   "newStart": "10:47",
-   "newEnd": "12:02",
+   "newStart": "10:48",
+   "newEnd": "12:03",
    "newDurMin": 75,
    "durBasis": "Old Town parlours sell 60- and 90-min sessions; a 60-min treatment plus changing, tea and paying lands at about 75 min.",
    "durConf": "med",
@@ -6645,7 +6667,7 @@
    "origDay": 3,
    "origStart": "20:58",
    "origDurMin": 75,
-   "action": "MOVE day 3 → 5; RETIME 20:58 → 10:47; ORDER 80 → 40"
+   "action": "MOVE day 3 → 5; RETIME 20:58 → 10:48; ORDER 80 → 40"
   },
   {
    "city": "Lijiang",
@@ -6654,8 +6676,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:10",
-   "newEnd": "13:10",
+   "newStart": "12:11",
+   "newEnd": "13:11",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -6667,7 +6689,7 @@
    "origDay": 5,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 12:10; ORDER 30 → 50"
+   "action": "RETIME 12:00 → 12:11; ORDER 30 → 50"
   },
   {
    "city": "Lijiang",
@@ -7078,10 +7100,10 @@
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Train from Chengdu East",
-   "travelMode": "metro",
-   "travelMin": 43,
-   "travelKm": 14.7,
-   "travelSource": "routed (real leg)",
+   "travelMode": "didi",
+   "travelMin": 14,
+   "travelKm": 4.91,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "06:54",
    "origDurMin": 35,
@@ -7498,7 +7520,7 @@
    "toNext": "Chongqing North station",
    "travelMode": "didi",
    "travelMin": 15,
-   "travelKm": 5.39,
+   "travelKm": 5.81,
    "travelSource": "estimated (fitted model)",
    "origDay": 3,
    "origStart": "05:30",
@@ -7959,9 +7981,9 @@
    "durConf": "med",
    "toNext": "Head to the station",
    "travelMode": "didi",
-   "travelMin": 5,
-   "travelKm": 1.9,
-   "travelSource": "routed (real leg)",
+   "travelMin": 48,
+   "travelKm": 27.83,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "07:30",
    "origDurMin": 35,
@@ -8628,10 +8650,76 @@
    "action": "RETIME 23:05 → 20:00; ORDER 70 → 60"
   },
   {
+   "city": "Guilin",
+   "day": 2,
+   "date": "2026-08-30",
+   "order": 10,
+   "activity": "Breakfast",
+   "kind": "Food",
+   "newStart": "05:39",
+   "newEnd": "06:14",
+   "newDurMin": 35,
+   "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
+   "durConf": "med",
+   "toNext": "Zhujiang Wharf transfer",
+   "travelMode": "didi",
+   "travelMin": 38,
+   "travelKm": 20.79,
+   "travelSource": "estimated (fitted model)",
+   "origDay": 2,
+   "origStart": "",
+   "origDurMin": 35,
+   "action": "RETIME  → 05:39; ORDER 5 → 10"
+  },
+  {
+   "city": "Guilin",
+   "day": 2,
+   "date": "2026-08-30",
+   "order": 20,
+   "activity": "Zhujiang Wharf transfer",
+   "kind": "Transport",
+   "newStart": "07:00",
+   "newEnd": "07:45",
+   "newDurMin": 45,
+   "durBasis": "Li River operators require arrival 30-45 min before sailing: passport checked twice (ticket machine, then boarding hall), with boarding opening 30 min pre-departure.",
+   "durConf": "high",
+   "toNext": "Hotel (home)",
+   "travelMode": "",
+   "travelMin": "",
+   "travelKm": "",
+   "travelSource": "",
+   "origDay": 2,
+   "origStart": "07:00",
+   "origDurMin": 45,
+   "action": "ORDER 10 → 20"
+  },
+  {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 30,
+   "order": 10,
+   "activity": "Dock at Yangshuo",
+   "kind": "Transport",
+   "newStart": "13:30",
+   "newEnd": "13:45",
+   "newDurMin": 15,
+   "durBasis": "Locked hub buffer",
+   "durConf": "",
+   "toNext": "Lunch",
+   "travelMode": "none (same place)",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "co-located",
+   "origDay": 1,
+   "origStart": "13:30",
+   "origDurMin": 15,
+   "action": "ORDER 20 → 10"
+  },
+  {
+   "city": "Yangshuo",
+   "day": 1,
+   "date": "2026-08-30",
+   "order": 20,
    "activity": "Lunch",
    "kind": "Food",
    "newStart": "13:53",
@@ -8647,13 +8735,13 @@
    "origDay": 1,
    "origStart": "16:24",
    "origDurMin": 60,
-   "action": "RETIME 16:24 → 13:53; ORDER 40 → 30"
+   "action": "RETIME 16:24 → 13:53; ORDER 40 → 20"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 40,
+   "order": 30,
    "activity": "Fengqi Homestay",
    "kind": "Sight",
    "newStart": "15:16",
@@ -8669,13 +8757,13 @@
    "origDay": 1,
    "origStart": "17:36",
    "origDurMin": 30,
-   "action": "RETIME 17:36 → 15:16; ORDER 50 → 40"
+   "action": "RETIME 17:36 → 15:16; ORDER 50 → 30"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 50,
+   "order": 40,
    "activity": "West Street",
    "kind": "Sight",
    "newStart": "15:57",
@@ -8691,13 +8779,13 @@
    "origDay": 1,
    "origStart": "18:17",
    "origDurMin": 90,
-   "action": "RETIME 18:17 → 15:57; ORDER 60 → 50"
+   "action": "RETIME 18:17 → 15:57; ORDER 60 → 40"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 60,
+   "order": 50,
    "activity": "Li River night walk",
    "kind": "Sight",
    "newStart": "17:53",
@@ -8713,13 +8801,13 @@
    "origDay": 2,
    "origStart": "19:58",
    "origDurMin": 45,
-   "action": "MOVE day 2 → 1; RETIME 19:58 → 17:53; ORDER 80 → 60"
+   "action": "MOVE day 2 → 1; RETIME 19:58 → 17:53; ORDER 80 → 50"
   },
   {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
-   "order": 70,
+   "order": 60,
    "activity": "Dinner",
    "kind": "Food",
    "newStart": "18:46",
@@ -8728,14 +8816,14 @@
    "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
    "durConf": "med",
    "toNext": "Hotel (home)",
-   "travelMode": "",
-   "travelMin": "",
-   "travelKm": "",
-   "travelSource": "",
+   "travelMode": "none",
+   "travelMin": 0,
+   "travelKm": 0,
+   "travelSource": "routed (real leg)",
    "origDay": 1,
    "origStart": "20:09",
    "origDurMin": 90,
-   "action": "RETIME 20:09 → 18:46"
+   "action": "RETIME 20:09 → 18:46; ORDER 70 → 60"
   },
   {
    "city": "Yangshuo",
@@ -9008,20 +9096,20 @@
    "order": 10,
    "activity": "Breakfast",
    "kind": "Food",
-   "newStart": "06:19",
-   "newEnd": "06:54",
+   "newStart": "05:50",
+   "newEnd": "06:25",
    "newDurMin": 35,
    "durBasis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
    "durConf": "med",
    "toNext": "Fly from KWL",
    "travelMode": "didi",
-   "travelMin": 78,
-   "travelKm": 89.8,
-   "travelSource": "routed (real leg)",
+   "travelMin": 107,
+   "travelKm": 67.09,
+   "travelSource": "estimated (fitted model)",
    "origDay": 4,
    "origStart": "06:09",
    "origDurMin": 35,
-   "action": "RETIME 06:09 → 06:19"
+   "action": "RETIME 06:09 → 05:50"
   },
   {
    "city": "Shanghai",
@@ -9961,8 +10049,8 @@
    "durConf": "med",
    "toNext": "Shanghai Museum East",
    "travelMode": "didi",
-   "travelMin": 16,
-   "travelKm": 5.97,
+   "travelMin": 17,
+   "travelKm": 6.62,
    "travelSource": "estimated (fitted model)",
    "origDay": 6,
    "origStart": "07:30",
@@ -9976,8 +10064,8 @@
    "order": 20,
    "activity": "Shanghai Museum East",
    "kind": "Sight",
-   "newStart": "07:59",
-   "newEnd": "10:59",
+   "newStart": "08:00",
+   "newEnd": "11:00",
    "newDurMin": 180,
    "durBasis": "Guides advise at least 2-3h and recommend 3-4h (3-5h thorough) for 20 halls; 3 focused hours covers the headline galleries plus one temporary show.",
    "durConf": "high",
@@ -9989,7 +10077,7 @@
    "origDay": 6,
    "origStart": "13:21",
    "origDurMin": 180,
-   "action": "RETIME 13:21 → 07:59; ORDER 30 → 20"
+   "action": "RETIME 13:21 → 08:00; ORDER 30 → 20"
   },
   {
    "city": "Shanghai",
@@ -9998,8 +10086,8 @@
    "order": 30,
    "activity": "Shanghai Tower base",
    "kind": "Sight",
-   "newStart": "11:19",
-   "newEnd": "11:49",
+   "newStart": "11:20",
+   "newEnd": "11:50",
    "newDurMin": 30,
    "durBasis": "No published dwell time; the ground plaza and Exit 9A photo spot are the documented ground-level draws, and a walk around the base with photos is ~30min.",
    "durConf": "low",
@@ -10011,7 +10099,7 @@
    "origDay": 5,
    "origStart": "21:36",
    "origDurMin": 30,
-   "action": "MOVE day 5 → 6; RETIME 21:36 → 11:19; ORDER 80 → 30"
+   "action": "MOVE day 5 → 6; RETIME 21:36 → 11:20; ORDER 80 → 30"
   },
   {
    "city": "Shanghai",
@@ -10020,8 +10108,8 @@
    "order": 40,
    "activity": "World Financial Center",
    "kind": "Sight",
-   "newStart": "12:05",
-   "newEnd": "12:35",
+   "newStart": "12:06",
+   "newEnd": "12:36",
    "newDurMin": 30,
    "durBasis": "Exterior stop per the note; the 94/97/100F observatory would instead need 1-2h (30min on 94F, 20min on 97F, 1-1.5h on 100F) plus ticket and lift queues.",
    "durConf": "med",
@@ -10033,7 +10121,7 @@
    "origDay": 5,
    "origStart": "01:05",
    "origDurMin": 30,
-   "action": "MOVE day 5 → 6; RETIME 01:05 → 12:05; ORDER 100 → 40"
+   "action": "MOVE day 5 → 6; RETIME 01:05 → 12:06; ORDER 100 → 40"
   },
   {
    "city": "Shanghai",
@@ -10042,8 +10130,8 @@
    "order": 50,
    "activity": "Lunch",
    "kind": "Food",
-   "newStart": "12:43",
-   "newEnd": "13:43",
+   "newStart": "12:44",
+   "newEnd": "13:44",
    "newDurMin": 60,
    "durBasis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
    "durConf": "med",
@@ -10055,7 +10143,7 @@
    "origDay": 6,
    "origStart": "12:00",
    "origDurMin": 60,
-   "action": "RETIME 12:00 → 12:43; ORDER 20 → 50"
+   "action": "RETIME 12:00 → 12:44; ORDER 20 → 50"
   },
   {
    "city": "Shanghai",
@@ -10064,8 +10152,8 @@
    "order": 60,
    "activity": "Jin Mao Tower",
    "kind": "Sight",
-   "newStart": "13:59",
-   "newEnd": "14:29",
+   "newStart": "14:00",
+   "newEnd": "14:30",
    "newDurMin": 30,
    "durBasis": "Treated per the note as an exterior stop; going up would be different — the 88F deck is quoted at 2-3h and the Skywalk session alone is 45min plus 30min security check-in.",
    "durConf": "med",
@@ -10077,7 +10165,7 @@
    "origDay": 5,
    "origStart": "23:19",
    "origDurMin": 30,
-   "action": "MOVE day 5 → 6; RETIME 23:19 → 13:59; ORDER 90 → 60"
+   "action": "MOVE day 5 → 6; RETIME 23:19 → 14:00; ORDER 90 → 60"
   },
   {
    "city": "Shanghai",
@@ -10086,8 +10174,8 @@
    "order": 70,
    "activity": "Oriental Pearl Tower",
    "kind": "Sight",
-   "newStart": "14:56",
-   "newEnd": "15:26",
+   "newStart": "14:57",
+   "newEnd": "15:27",
    "newDurMin": 30,
    "durBasis": "Exterior-only per the note, so a photo stop at the base; ascending instead runs 1-2h on the decks and 2-3h with the museum, plus 15-60min ticket and 10-60min lift queues.",
    "durConf": "med",
@@ -10099,7 +10187,7 @@
    "origDay": 6,
    "origStart": "17:30",
    "origDurMin": 30,
-   "action": "RETIME 17:30 → 14:56; ORDER 50 → 70"
+   "action": "RETIME 17:30 → 14:57; ORDER 50 → 70"
   },
   {
    "city": "Shanghai",
@@ -10108,8 +10196,8 @@
    "order": 80,
    "activity": "Pudong promenade",
    "kind": "Sight",
-   "newStart": "15:35",
-   "newEnd": "16:20",
+   "newStart": "15:36",
+   "newEnd": "16:21",
    "newDurMin": 45,
    "durBasis": "Binjiang Avenue full route logs are 7.7km/2h, but the Lujiazui section fronting the towers is a fraction of that; TripAdvisor describes it as a short skyline stroll of ~45min.",
    "durConf": "med",
@@ -10121,7 +10209,7 @@
    "origDay": 6,
    "origStart": "16:21",
    "origDurMin": 45,
-   "action": "RETIME 16:21 → 15:35; ORDER 40 → 80"
+   "action": "RETIME 16:21 → 15:36; ORDER 40 → 80"
   },
   {
    "city": "Shanghai",
@@ -10789,9 +10877,9 @@
    "from": "Breakfast",
    "to": "Fly from PKX",
    "mode": "didi",
-   "minutes": 68,
-   "km": 55,
-   "source": "routed (real leg)"
+   "minutes": 74,
+   "km": 45.05,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Lijiang",
@@ -11031,8 +11119,8 @@
    "from": "Breakfast",
    "to": "Black Dragon Pool",
    "mode": "didi",
-   "minutes": 9,
-   "km": 1.79,
+   "minutes": 10,
+   "km": 1.98,
    "source": "estimated (fitted model)"
   },
   {
@@ -11195,10 +11283,10 @@
    "date": "2026-08-22",
    "from": "Breakfast",
    "to": "Train from Chengdu East",
-   "mode": "metro",
-   "minutes": 43,
-   "km": 14.7,
-   "source": "routed (real leg)"
+   "mode": "didi",
+   "minutes": 14,
+   "km": 4.91,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Chongqing",
@@ -11373,7 +11461,7 @@
    "to": "Chongqing North station",
    "mode": "didi",
    "minutes": 15,
-   "km": 5.39,
+   "km": 5.81,
    "source": "estimated (fitted model)"
   },
   {
@@ -11515,9 +11603,9 @@
    "from": "Breakfast",
    "to": "Head to the station",
    "mode": "didi",
-   "minutes": 5,
-   "km": 1.9,
-   "source": "routed (real leg)"
+   "minutes": 48,
+   "km": 27.83,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Furong (Hibiscus)",
@@ -11729,6 +11817,17 @@
    "source": "estimated (fitted model)"
   },
   {
+   "city": "Guilin",
+   "day": 2,
+   "date": "2026-08-30",
+   "from": "Breakfast",
+   "to": "Zhujiang Wharf transfer",
+   "mode": "didi",
+   "minutes": 38,
+   "km": 20.79,
+   "source": "estimated (fitted model)"
+  },
+  {
    "city": "Yangshuo",
    "day": 1,
    "date": "2026-08-30",
@@ -11856,9 +11955,9 @@
    "from": "Breakfast",
    "to": "Fly from KWL",
    "mode": "didi",
-   "minutes": 78,
-   "km": 89.8,
-   "source": "routed (real leg)"
+   "minutes": 107,
+   "km": 67.09,
+   "source": "estimated (fitted model)"
   },
   {
    "city": "Shanghai",
@@ -12219,8 +12318,8 @@
    "from": "Breakfast",
    "to": "Shanghai Museum East",
    "mode": "didi",
-   "minutes": 16,
-   "km": 5.97,
+   "minutes": 17,
+   "km": 6.62,
    "source": "estimated (fitted model)"
   },
   {

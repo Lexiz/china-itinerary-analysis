@@ -79,7 +79,12 @@ for (const day of V) {
   const hubs = day.stops.filter(s => s.hub);
   const arriveHub = hubs.find(s => s.hub.role === 'arrive');
   const departHub = hubs.find(s => s.hub.role === 'depart');
-  const hotelStop = day.stops.find(s => s.ptype === 'Hotel');
+  // A split-origin day (you check out and travel) carries no hotel stop of its own, but you still
+  // slept in that city's hotel and every distance on the day is measured from it. Fall back to the
+  // city's hotel wherever it appears — without this the anchor collapsed to a coordless placeholder
+  // and the departure chain shifted by hours.
+  const hotelStop = day.stops.find(s => s.ptype === 'Hotel')
+    || V.filter(x => x.city === day.city).flatMap(x => x.stops).find(s => s.ptype === 'Hotel');
   const mealStops = day.stops.filter(s => s.meal);
   const GENERIC_MEAL = /^(breakfast|lunch|dinner)\b/i;
   // A generic "Breakfast/Lunch/Dinner" has no real location of its own — its Notion coords are
@@ -160,7 +165,12 @@ for (const day of V) {
   else if (arriveHub) seq.push({ kind: 'hub', name: arriveHub.name, st: arriveHub });
   if (arriveHub && hotelStop && !(dayPlan.stops || []).includes(hotelStop.name))
     seq.push({ kind: 'sight', name: hotelStop.name, st: hotelStop });
-  const journeyDup = n => transit && /\b(cruise|ferry|train|flight)\b/i.test(n);
+  // The journey IS the gap between its two hubs, never a separate stop. That holds just as much when
+  // the transit day has been split across two cities — the destination half keeps only the arrival
+  // hub, so the plain `transit` test stopped firing and the Li River cruise reappeared as a 255-min
+  // sight that ran the day to 24:54.
+  const splitDay = !!(day.splitOrigin || day.splitDest);
+  const journeyDup = n => (transit || splitDay) && /\b(cruise|ferry|train|flight)\b/i.test(n);
   const absorbed = [];
   for (const n of (dayPlan.stops || [])) {
     if (journeyDup(n)) { absorbed.push(n); continue; }   // the sailing IS the gap between the hubs

@@ -1414,12 +1414,6 @@
   "newEndMin": 1494,
   "new": [
    {
-    "s": 420,
-    "d": 45,
-    "label": "Zhujiang Wharf transfer",
-    "kind": "log"
-   },
-   {
     "s": 810,
     "d": 15,
     "label": "Dock at Yangshuo",

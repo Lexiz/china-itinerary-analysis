@@ -7,6 +7,7 @@ const placeById = new Map(s.places.map(p => [p.id, p]));
 const normn = x => String(x || '').replace(/&amp;/g, '&').trim();
 const tk = t => { const m = (t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
 const cityById = new Map(s.cities.map(c => [c.id, c]));
+const cityByName = new Map(s.cities.map(c => [c.name, c]));
 const addDays = (iso, n) => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 const FIX = {
  'Beijing|1': 'Drop Beijing city model (150m) — too much for a 05:00-arrival day.',
@@ -117,6 +118,35 @@ for (const d of s.days) {
     isArrival: !!d.isArrival, isDeparture: !!d.isDeparture,
     fix: FIX[`${c.name}|${d.cityDay}`] || '', stops });
 }
+// --- split transit days across the two cities they actually belong to ---------------------------
+// See split-days.json. Notion files a whole date under the destination city, so the morning you
+// spend waking, checking out and travelling in the ORIGIN city disappears from the canvas.
+const SPLITS = JSON.parse(readFileSync(new URL('./split-days.json', import.meta.url))).splits;
+for (const sp of SPLITS) {
+  const src = out.find(d => d.date === sp.date && d.stops.some(s => s.hub?.role === 'depart'));
+  if (!src) { console.warn('split-days: no departure-hub day found for', sp.date); continue; }
+  const depIx = src.stops.findIndex(s => s.hub?.role === 'depart');
+  const originStops = src.stops.slice(0, depIx + 1);          // the departure hub closes the origin day
+  const destStops = src.stops.slice(depIx + 1);               // arrival hub onward stays with the destination
+  if (!destStops.some(s => s.hub?.role === 'arrive')) {
+    console.warn('split-days:', sp.date, 'has no arrival hub after the departure — not splitting'); continue;
+  }
+  // Notion has no Breakfast on these dates; you are still in a hotel you slept in.
+  for (const meal of (sp.meals || [])) {
+    if (originStops.some(s => s.meal === meal)) continue;
+    const tmpl = out.flatMap(d => d.stops).find(s => s.meal === meal);
+    originStops.unshift({ ...(tmpl || {}), name: meal[0].toUpperCase() + meal.slice(1), meal,
+      t: null, end: null, abs: null, order: 5, hub: null, home: false, lat: null, lng: null });
+  }
+  const originCity = (cityByName.get(sp.originCity) || {});
+  out.push({ ...src, city: sp.originCity, accent: originCity.accent || src.accent,
+    order: originCity.order ?? (src.order - 0.5), day: sp.originDay, isArrival: false, isDeparture: true,
+    nStops: originStops.filter(s => !s.home).length, stops: originStops, splitOrigin: true, splitWhy: sp.why });
+  src.stops = destStops;                                       // destination keeps only its own half
+  src.nStops = destStops.filter(s => !s.home).length;
+  src.splitDest = true;
+}
+
 out.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.order - b.order);
 writeFileSync(new URL('./viz-data.json', import.meta.url), JSON.stringify(out));
 const max = Math.max(...out.map(d => d.endMin));
