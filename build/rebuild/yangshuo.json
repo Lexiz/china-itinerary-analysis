@@ -25,9 +25,19 @@
    "stops": [
     "Xianggong sunrise",
     "Xingping Ancient Town",
-    "20-RMB viewpoint"
+    "20-RMB viewpoint",
+    "Impression Liu Sanjie"
    ],
-   "why": "One dawn, and this is it. Gates at Xianggong open 05:00 (May-Oct), the climb is a steep ~20 min, and you want the summit by ~05:30 to get a rail spot — sunrise is ~06:20 in early September. Car leaves the homestay ~04:30 for the ~50 min drive. That places you already deep in Xingping country at 07:00, so the rest of the morning is free geography: Xianggong, Xingping town and Yellow Cloth Shoal are all inside 3 km of each other and ~40 min from Yangshuo, so they must travel as one block or the transfer gets paid twice. Order is town first, then the riverside path out to the 20-RMB viewpoint, because the path starts from town and the light there is still clean at 08:30. Home by ~11:30. The afternoon is intentionally empty — a 04:15 wake buys a nap, not another sight (~4.5 h of stop time all day). That recovered afternoon is what makes the 19:45 Impression Liu Sanjie viable: ~70 min, ends ~21:00, 10 min back from West Street. Impression Liu Sanjie comes OFF this day. The show is a fixed 19:45 curtain, and this day begins with a 04:15 car call for the Xianggong gates — carrying both makes a seventeen-hour day. The afternoon is deliberately empty: it is what the dawn costs, and the notes budget for it. Xianggong stays first because the dawn is the one thing that cannot move later."
+   "why": "Dawn at Xianggong, the Xingping bend, then the show — the classic hot-climate shape: up at 04:15 for the 05:00 gates, the whole northern cluster done by 09:54, back in town about 10:25, lunch at 12:15, then a genuine siesta through the worst heat, out again for the 19:45 curtain. The afternoon is empty because the Xingping cluster contains exactly three things and every other Yangshuo sight is already scheduled — but it is now rest WITH a purpose at the end of it rather than an unexplained void. Impression Liu Sanjie belongs on this day and not day 3: it is a town evening activity, so it crosses no cluster, and putting it here is what stops day 3 running to 21:24 after a full day on the water and the bike.",
+   "mealWindows": {
+    "lunch": "12:15",
+    "dinner": "17:30"
+   },
+   "stopTimes": {
+    "Impression Liu Sanjie": {
+     "at": "19:45"
+    }
+   }
   },
   {
    "day": 3,
@@ -35,20 +45,15 @@
    "stops": [
     "Yulong bamboo rafting",
     "Yulong valley cycling",
-    "Moon Hill",
-    "Impression Liu Sanjie"
+    "Moon Hill"
    ],
-   "why": "The single full unbroken day goes to the one cluster that needs a full unbroken day. Rafts run Jinlong Bridge to Jiuxian and pause midday, so this starts ~09:30 (60-90 min, 9 small weirs) — impossible on day 2, which is spoken for by dawn. You step off the raft at Jiuxian already inside the cycling loop, so the bikes (150 min through Jiuxian and Chaolong, break at Gongnong Bridge) pick up exactly where the water leaves you, and Moon Hill's ~40 min climb sits on the Ten-Mile Gallery road on the way back to town. ~5.5 h of stop time but ~9 h out with the transfers, lunch and heat. Rafting and cycling are both weather-dependent and both here, which is the point: one rained-out day only costs you one theme, and the evening is deliberately left clear for packing and an early night. The show moves here and this is the correction that mattered most in Yangshuo: Impression Liu Sanjie was scheduled 10:35-12:05, and there is no morning performance — it runs 19:45 (plus 21:20 only when demand is high), ~70 min. Pinned to 19:45. This day can carry it because it starts at a normal hour rather than before dawn. Breakfast moves to 08:00 and rafting is held to 09:30 per the operator hint, which closes what would otherwise be a two-hour hole before the water; dinner is held to 16:30 so it lands after Moon Hill and clears the curtain. Home 21:24.",
+   "why": "Yulong valley, whole and uninterrupted: raft the Jinlong-to-Jiuxian section from 09:30 (the operator hint, which is also what closes the two-hour hole an 08:00 raft would leave), cycle the Shili Gallery loop, lunch off the bike, then Moon Hill in the late afternoon when the 800 steps are out of the worst sun. Breakfast at 08:00 rather than 07:00 because nothing opens before the rafts do. No show on this day and no evening commitment — home 19:46, which is what makes a five-and-a-half-hour outdoor day survivable in early September heat.",
    "mealWindows": {
-    "breakfast": "08:00",
-    "dinner": "16:30"
+    "breakfast": "08:00"
    },
    "stopTimes": {
     "Yulong bamboo rafting": {
      "notBefore": "09:30"
-    },
-    "Impression Liu Sanjie": {
-     "at": "19:45"
     }
    }
   },

@@ -203,15 +203,23 @@ for (const day of V) {
       // not be skipped. The normal rule below only fires a meal that is already due, so a morning
       // that ran out of sights before noon dropped lunch entirely — Furong d2 sat idle 08:42→13:15
       // with no lunch at all, and the departure day simply never ate.
-      if (it.kind === 'hub' && it.st.hub?.role === 'depart' && clock != null) {
-        const anchor = hubAnchor(it.st);
+      // The next thing has a fixed time it cannot start before — a train call, a sunset, a curtain.
+      // A meal whose window has not opened yet must be allowed to WAIT for it rather than be shoved
+      // past. Without this a 19:45 show with no sight before it pushed dinner to 21:23, and a
+      // morning that ran out of sights before noon lost lunch entirely.
+      const itFloor = it.kind === 'hub'
+        ? (it.st.hub?.role === 'depart' ? hubAnchor(it.st) : null)
+        : stopFloor(it.name);
+      if (itFloor != null && clock != null) {
         while (pending.length) {
           const m = pending[0];
           const win = MW[m.meal] + (hasDeadline ? shift : 0);
           const t = legTo(rows, m.name);
           const start = rows.length ? Math.max(clock + t.minutes + SLACK, win) : win;
           const dur = mealDur(m);
-          if (start + dur + SLACK > anchor) break;      // genuinely no room before check-in
+          // must still clear the fixed time, including getting from the meal to it
+          const onward = it.kind === 'hub' ? 0 : hop(anchorOf(rows, m.name), it.name).minutes;
+          if (start + dur + SLACK + onward > itFloor) break;
           emit(pending.shift(), start, dur, t);
           clock = start + dur;
         }
