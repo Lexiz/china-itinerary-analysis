@@ -253,8 +253,12 @@ for (const day of V) {
     for (const m of pending) {
       const t = legTo(rows, m.name);
       const start = Math.max((clock ?? MW[m.meal]) + t.minutes + SLACK, MW[m.meal] + (hasDeadline ? shift : 0));
-      // never schedule a meal after the day has already flown out
-      if (departHub && start > (departHub.abs ?? Infinity)) continue;
+      // Never schedule a meal after the day has already flown out — but only when the departure
+      // actually CLOSES the day. On a transit day the depart hub sits at the START (you leave in the
+      // morning and arrive by lunchtime), so testing against it discarded every later meal: the
+      // Guilin→Yangshuo ferry day docked at 13:30 and then had no dinner at all.
+      const closingHub = transit ? null : departHub;
+      if (closingHub && start > (closingHub.abs ?? Infinity)) continue;
       const md = mealDur(m);
       emit(m, start, md, t);
       clock = start + md;

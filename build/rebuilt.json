@@ -3494,7 +3494,7 @@
    "day": 1,
    "date": "2026-08-29",
    "theme": "Half-day arrival — the river hill before dinner, the lit lakes after it",
-   "why": "Work backwards from the boat, which is the only thing here with a real clock on it. Train clears ~14:50, transfer downtown is the stated ~45 min, so you are at the hotel ~15:40 and out again by ~16:15 with bags gone. Elephant Trunk Hill takes the 16:45–17:30 slot: it is 200 m from the hotel, it is the city's signature karst shape, and it is free from the riverside promenade / Love Island viewpoint — no ticket queue, no commitment. That leaves the gap before sunset (~19:05) for dinner and an unhurried wander of the Zhengyang pedestrian streets, which are right there and cost nothing to add. Then Two Rivers & Four Lakes as the night event, boarding ~20:00 for the 90-minute illuminated loop past the Sun & Moon Twin Pagodas on Shanhu Lake — the run operates 19:00–21:30 (extended 18:00–23:00 June–October, so late August is comfortable) with boats every 10–30 minutes, meaning a missed connection earlier in the day costs you nothing. Two stops is the honest answer for this afternoon: both are central, neither is rushed, and there is real slack absorbing a late train. Two corrections to the evening. The boat was sailing at 18:22, before the ~19:05 sunset — on a cruise whose entire point is the illuminated bridges and pagodas, and against a city note that says explicitly not to take a departure before ~19:45. It is now held to 19:45 and sails 20:00, inside the June-October extended 18:00-23:00 season. Dinner is pulled to 17:30 so it fills the gap between Elephant Trunk Hill and the boat rather than landing after it: you eat 18:04-19:34 as the light goes, then board. Elephant Trunk Hill stays before dinner because it is the one stop here that is worth seeing in daylight.",
+   "why": "Work backwards from the boat, which is the only thing here with a real clock on it. Train clears ~14:50, transfer downtown is the stated ~45 min, so you are at the hotel ~15:40 and out again by ~16:15 with bags gone. Elephant Trunk Hill takes the 16:45–17:30 slot: it is 200 m from the hotel, it is the city's signature karst shape, and it is free from the riverside promenade / Love Island viewpoint — no ticket queue, no commitment. That leaves the gap before sunset (~19:05) for dinner and an unhurried wander of the Zhengyang pedestrian streets, which are right there and cost nothing to add. Then Two Rivers & Four Lakes as the night event, boarding ~20:00 for the 90-minute illuminated loop past the Sun & Moon Twin Pagodas on Shanhu Lake — the run operates 19:00–21:30 (extended 18:00–23:00 June–October, so late August is comfortable) with boats every 10–30 minutes, meaning a missed connection earlier in the day costs you nothing. Two stops is the honest answer for this afternoon: both are central, neither is rushed, and there is real slack absorbing a late train. Two corrections to the evening. The boat was sailing at 18:22, before the ~19:05 sunset — on a cruise whose entire point is the illuminated bridges and pagodas, and against a city note that says explicitly not to take a departure before ~19:45. It is now held to 19:45 and sails 20:00, inside the June-October extended 18:00-23:00 season. Dinner is pulled to 17:30 so it fills the gap between Elephant Trunk Hill and the boat rather than landing after it: you eat 18:04-19:34 as the light goes, then board. Elephant Trunk Hill stays before dinner because it is the one stop here that is worth seeing in daylight. NOTE ON WHERE GUILIN ENDS: there is no Guilin day 2 on this canvas, and that is a Notion data question rather than a missing day. You sleep in Guilin on the night of 29-30 Aug and leave from the Zhujiang Wharf at a 07:00 call — but Notion assigns 30 August to Yangshuo, so that Guilin morning renders as the first half of Yangshuo day 1. The ferry itself is modelled correctly there: Zhujiang Wharf is the departure hub, Dock at Yangshuo the arrival hub at 13:30, and the Li River cruise is absorbed as the gap between them rather than double-counted as a sight. If you would rather see it as Guilin d2, that means re-dating the stop in Notion.",
    "endMin": 1304,
    "homeTravel": {
     "mode": "walk",
@@ -3633,8 +3633,8 @@
    "day": 1,
    "date": "2026-08-30",
    "theme": "Cruise in, land softly on the riverfront",
-   "why": "The morning is not yours: 07:00 at Zhujiang Wharf, ~09:20 sailing, ~4h15 of karst, dock Yangshuo 13:30 and clear by 13:45. That leaves one usable half-day, and it has to be spent within walking distance of the hotel. West Street (90 min) plus the lit waterfront after dinner (45 min) is exactly that — both sit on the same riverfront block, so the afternoon and the after-dark versions of the same walk cost nothing in transfers. Critically, this evening is kept SHORT and ends by ~20:30: the dawn run to Xianggong is tomorrow at 04:15, and day 1 already began at ~05:30 in Guilin. The Impression Liu Sanjie show was deliberately moved off day 1 for that reason — a 21:00 curtain followed by a 04:15 alarm is the one combination that wrecks both.",
-   "endMin": 1118,
+   "why": "The morning is not yours: 07:00 at Zhujiang Wharf, ~09:20 sailing, ~4h15 of karst, dock Yangshuo 13:30 and clear by 13:45. That leaves one usable half-day, and it has to be spent within walking distance of the hotel. West Street (90 min) plus the lit waterfront after dinner (45 min) is exactly that — both sit on the same riverfront block, so the afternoon and the after-dark versions of the same walk cost nothing in transfers. Critically, this evening is kept SHORT and ends by ~20:30: the dawn run to Xianggong is tomorrow at 04:15, and day 1 already began at ~05:30 in Guilin. The Impression Liu Sanjie show was deliberately moved off day 1 for that reason — a 21:00 curtain followed by a 04:15 alarm is the one combination that wrecks both. NOTE: the first half of this day happens in GUILIN — you wake there and the 07:00 Zhujiang Wharf call is the Guilin end of the ferry. It renders under Yangshuo because Notion dates 30 August to Yangshuo. Dinner had been missing entirely from this day: the chain treated the departure hub as the thing that closes a day, which is true everywhere except a transit day, where the hub sits at 07:00 — so every meal after it was discarded and you docked at 13:30 into an evening with no dinner. Fixed; dinner now 18:46. Still open: there is no Breakfast stop in the source data for this date, against a 07:00 wharf call — either add one in Notion or plan on the boat, and check whether your cruise ticket already includes the lunch, since the 13:53 lunch here may double up with it.",
+   "endMin": 1216,
    "homeTravel": null,
    "missed": null,
    "absorbed": [
@@ -3771,6 +3771,24 @@
       "coloc": false
      },
      "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1126,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
      "cap": null,
      "lateFor": null,
      "hub": null
