@@ -127,5 +127,73 @@
   "conf": "med",
   "source": "City note: runs 19:00-21:30 normally, EXTENDED to 18:00-23:00 June-October, departures every 10-30 min, ~1.5 h for the full two-rivers loop. 29 Aug falls inside the extended season. The lights and the lit pagodas are the entire point, so the real constraint is the earliest useful departure (~19:45, after the ~19:05 sunset), not the last one.",
   "closedDays": []
+ },
+ "Shanghai Museum East": {
+  "closes": "18:00",
+  "lastEntry": "17:00",
+  "conf": "high",
+  "source": "Wed-Mon 10:00-18:00, last entry 17:00, closed TUESDAY. 7 Sep 2026 is a Monday, so it is open — but it does not open until 10:00, and the chain had it starting at 08:00.",
+  "closedDays": [
+   "Tuesday"
+  ]
+ },
+ "Yu Garden": {
+  "closes": "21:50",
+  "lastEntry": "21:00",
+  "conf": "med",
+  "source": "Closed Mondays; 5 Sep 2026 is a Saturday. Until 31 Oct 2026 it runs 09:00-21:50 on Saturdays, so the 16:30 in the source data no longer applies — but it still does not OPEN before 09:00.",
+  "closedDays": [
+   "Monday"
+  ]
+ },
+ "City God Temple": {
+  "closes": "16:30",
+  "lastEntry": "16:00",
+  "conf": "high",
+  "source": "08:30-16:30, no entry after 16:00 — keep it in the morning block with Yu Garden.",
+  "closedDays": []
+ },
+ "West Bund Museum": {
+  "closes": "17:00",
+  "lastEntry": "16:00",
+  "conf": "high",
+  "source": "Closes 17:00, last admission 16:00, CLOSED MONDAYS. Day 5 (Sunday 6 Sep) is the only workable slot in the trip.",
+  "closedDays": [
+   "Monday"
+  ]
+ },
+ "Long Museum West Bund": {
+  "closes": "21:00",
+  "lastEntry": "20:00",
+  "conf": "med",
+  "source": "10:00-21:00 Fri-Sun, closed Mondays. The latest-closing West Bund venue, so it is the safe last stop of that mile.",
+  "closedDays": [
+   "Monday"
+  ]
+ },
+ "TANK Shanghai": {
+  "closes": "18:00",
+  "lastEntry": "17:30",
+  "conf": "med",
+  "source": "10:00-18:00 at weekends, admission ends 17:30. Does not open at 08:00, which is where the chain had it.",
+  "closedDays": [
+   "Monday"
+  ]
+ },
+ "Jing’an Temple": {
+  "closes": "17:00",
+  "lastEntry": "16:30",
+  "conf": "high",
+  "source": "Notion Hours: ~07:30-17:00. Day 2 must reach it by ~15:45.",
+  "closedDays": []
+ },
+ "M50 Creative Park": {
+  "closes": "18:00",
+  "lastEntry": "17:30",
+  "conf": "med",
+  "source": "Galleries 10:00-18:00 and most are closed Mondays; day 2 is a Thursday. Opens at 10:00, not 09:44.",
+  "closedDays": [
+   "Monday"
+  ]
  }
 }

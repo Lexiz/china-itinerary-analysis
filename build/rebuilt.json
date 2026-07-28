@@ -4168,12 +4168,12 @@
    "day": 1,
    "date": "2026-09-02",
    "theme": "Arrival — Maglev in, Nanjing Rd East to the Bund",
-   "why": "Landing 13:00 leaves only an afternoon, so everything sits inside one 1 km strip that starts at the hotel door and ends at the Fairmont Peace Hotel, where the jazz bar is literally the building at the corner of Nanjing Rd East and the Bund.",
-   "endMin": 1432,
+   "why": "Land 13:00, and the Maglev is the TRANSFER, not a sight to come back for — the old order drove you 34 km into Puxi, checked you in, then sent you back out to Pudong to ride a train into town. It now runs straight off the aircraft, with the ride itself as the 25-min stop and the leg out of it measured from Longyang Road. Dinner is held to 17:30 so The Bund lands at 19:34 fully lit rather than 18:15 catching only the tail of the lights coming on. Old Jazz Bar moves to day 4: you have been up since 05:30 in Yangshuo and the notes already say it slides cleanly to the Bund night, which is exactly where it now sits. Home 20:45 instead of 23:52.",
+   "endMin": 1263,
    "homeTravel": {
     "mode": "didi",
-    "minutes": 9,
-    "km": 1.72,
+    "minutes": 10,
+    "km": 2.04,
     "estimated": true
    },
    "missed": null,
@@ -4229,27 +4229,27 @@
      "hub": null
     },
     {
-     "name": "Check in at Marriott",
-     "s": 958,
-     "d": 30,
+     "name": "Shanghai Maglev",
+     "s": 901,
+     "d": 25,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "didi",
-      "minutes": 57,
-      "km": 33.89,
-      "est": true,
-      "coloc": false
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
      },
-     "advice": 30,
+     "advice": 25,
      "cap": null,
      "lateFor": null,
      "hub": null
     },
     {
-     "name": "Shanghai Maglev",
-     "s": 1016,
-     "d": 25,
+     "name": "Check in at Marriott",
+     "s": 954,
+     "d": 30,
      "kind": "sight",
      "meal": null,
      "travelIn": {
@@ -4259,22 +4259,22 @@
       "est": true,
       "coloc": false
      },
-     "advice": 25,
+     "advice": 30,
      "cap": null,
      "lateFor": null,
      "hub": null
     },
     {
      "name": "Nanjing Road East",
-     "s": 1068,
+     "s": 1008,
      "d": 60,
      "kind": "sight",
      "meal": null,
      "travelIn": {
-      "mode": "didi",
-      "minutes": 19,
-      "km": 8.45,
-      "est": true,
+      "mode": "walk",
+      "minutes": 16,
+      "km": 0.9,
+      "est": false,
       "coloc": false
      },
      "advice": 60,
@@ -4284,7 +4284,7 @@
     },
     {
      "name": "Dinner",
-     "s": 1136,
+     "s": 1076,
      "d": 90,
      "kind": "meal",
      "meal": "dinner",
@@ -4302,7 +4302,7 @@
     },
     {
      "name": "The Bund",
-     "s": 1253,
+     "s": 1193,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4317,24 +4317,6 @@
      "cap": null,
      "lateFor": null,
      "hub": null
-    },
-    {
-     "name": "Old Jazz Bar",
-     "s": 1333,
-     "d": 90,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 12,
-      "km": 0.34,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
     }
    ]
   },
@@ -4343,7 +4325,7 @@
    "day": 2,
    "date": "2026-09-03",
    "theme": "Recovery + Jing'an and Suzhou Creek",
-   "why": "Late start with the massage, then a single monotonic west-to-east line back toward the hotel — M50 belongs here on the Suzhou Creek side of Jing'an, not tacked onto the old-city day as it was.",
+   "why": "Late start with the massage, then a single monotonic west-to-east line back toward the hotel — M50 belongs here on the Suzhou Creek side of Jing'an, not tacked onto the old-city day as it was. M50 is held to 10:00 — the galleries do not open before then and the chain had you there at 09:44. Jing’an Temple at 13:27 is comfortably inside its ~17:00 close.",
    "endMin": 1183,
    "homeTravel": {
     "mode": "didi",
@@ -4392,7 +4374,7 @@
     },
     {
      "name": "M50 Creative Park",
-     "s": 584,
+     "s": 600,
      "d": 120,
      "kind": "sight",
      "meal": null,
@@ -4409,26 +4391,8 @@
      "hub": null
     },
     {
-     "name": "Jing’an Temple",
-     "s": 723,
-     "d": 60,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 11,
-      "km": 2.83,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 60,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Lunch",
-     "s": 791,
+     "s": 728,
      "d": 60,
      "kind": "meal",
      "meal": "lunch",
@@ -4445,8 +4409,26 @@
      "hub": null
     },
     {
+     "name": "Jing’an Temple",
+     "s": 807,
+     "d": 60,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 11,
+      "km": 2.83,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 60,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "Nanjing Road West",
-     "s": 882,
+     "s": 898,
      "d": 75,
      "kind": "sight",
      "meal": null,
@@ -4464,7 +4446,7 @@
     },
     {
      "name": "Zhangyuan",
-     "s": 972,
+     "s": 988,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4703,12 +4685,12 @@
    "day": 4,
    "date": "2026-09-05",
    "theme": "Old city, then the Huangpu by night",
-   "why": "Yu Garden at 09:00 opening beats the Saturday crush, the whole old-city block sits within 400 m, and People's Square is the mid-afternoon breather next to the hotel before heading back out to Shiliupu Wharf for the cruise.",
-   "endMin": 1189,
+   "why": "Yu Garden at 09:00 opening beats the Saturday crush, the whole old-city block sits within 400 m, and People's Square is the mid-afternoon breather next to the hotel before heading back out to Shiliupu Wharf for the cruise. Two fixes. Yu Garden does not open until 09:00 and was scheduled 07:51, so breakfast moves to 08:00 and the garden is held to opening — worth being there at 09:00 anyway for the crowds, and on a Saturday it now runs to 21:50 so the old 16:30 close in the source data is obsolete. And the Huangpu NIGHT cruise was sailing at 15:28, in daylight; it is pinned to the ~19:30 Shiliupu departure. Dinner at 17:30 clears the boat, and Old Jazz Bar takes the slot after it — the bar and the wharf are both on the Bund, the band plays from ~19:00, and this is the night that was built for it. Home 22:41.",
+   "endMin": 1361,
    "homeTravel": {
-    "mode": "walk",
-    "minutes": 19,
-    "km": 0.77,
+    "mode": "didi",
+    "minutes": 9,
+    "km": 1.47,
     "estimated": true
    },
    "missed": null,
@@ -4716,7 +4698,7 @@
    "stops": [
     {
      "name": "Breakfast",
-     "s": 420,
+     "s": 480,
      "d": 35,
      "kind": "meal",
      "meal": "breakfast",
@@ -4734,7 +4716,7 @@
     },
     {
      "name": "Yu Garden",
-     "s": 471,
+     "s": 540,
      "d": 90,
      "kind": "sight",
      "meal": null,
@@ -4752,7 +4734,7 @@
     },
     {
      "name": "Mid-Lake Teahouse",
-     "s": 583,
+     "s": 652,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4770,7 +4752,7 @@
     },
     {
      "name": "Yuyuan Bazaar",
-     "s": 657,
+     "s": 726,
      "d": 60,
      "kind": "sight",
      "meal": null,
@@ -4787,8 +4769,26 @@
      "hub": null
     },
     {
+     "name": "Lunch",
+     "s": 794,
+     "d": 60,
+     "kind": "meal",
+     "meal": "lunch",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 60,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
      "name": "City God Temple",
-     "s": 735,
+     "s": 872,
      "d": 45,
      "kind": "sight",
      "meal": null,
@@ -4800,6 +4800,289 @@
       "coloc": false
      },
      "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "People’s Square",
+     "s": 934,
+     "d": 45,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 9,
+      "km": 1.83,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1050,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Huangpu night cruise",
+     "s": 1170,
+     "d": 75,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 10,
+      "km": 2.45,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 75,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Old Jazz Bar",
+     "s": 1262,
+     "d": 90,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 9,
+      "km": 1.3,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    }
+   ]
+  },
+  "Shanghai|5": {
+   "city": "Shanghai",
+   "day": 5,
+   "date": "2026-09-06",
+   "theme": "West Bund art mile, then move to Pudong",
+   "why": "All three West Bund museums are closed Mondays, so Sunday is the only possible slot; running south-to-north ends the day at the Long Museum (open to 21:00 on Sundays) pointing straight at the hotel move to Lujiazui. Every West Bund venue opens at 10:00 and all three are closed Mondays, so this Sunday is the only slot the trip has for them — the chain had TANK starting at 08:02 and the museum at 09:42, both shut. Breakfast moves to 09:00 and TANK is held to opening. West Bund Museum is entered 11:42, well inside its 16:00 last admission; Long Museum runs to 21:00 so it is safe as the last of the mile. The move to Pudong closes the day: check in at J Hotel 17:48, dinner in Lujiazui, and every remaining sight is then within walking distance of where you sleep.",
+   "endMin": 1211,
+   "homeTravel": {
+    "mode": "none",
+    "minutes": 0,
+    "km": 0,
+    "estimated": false
+   },
+   "missed": null,
+   "absorbed": null,
+   "stops": [
+    {
+     "name": "Breakfast",
+     "s": 540,
+     "d": 35,
+     "kind": "meal",
+     "meal": "breakfast",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 35,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "TANK Shanghai",
+     "s": 602,
+     "d": 75,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 19,
+      "km": 8.6,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 75,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "West Bund Museum",
+     "s": 702,
+     "d": 90,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "walk",
+      "minutes": 17,
+      "km": 0.64,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Lunch",
+     "s": 800,
+     "d": 60,
+     "kind": "meal",
+     "meal": "lunch",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 60,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "West Bund riverside",
+     "s": 883,
+     "d": 45,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "metro",
+      "minutes": 15,
+      "km": 1.8,
+      "est": false,
+      "coloc": false
+     },
+     "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Long Museum West Bund",
+     "s": 953,
+     "d": 90,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "walk",
+      "minutes": 17,
+      "km": 0.66,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Check in — J Hotel (Tower)",
+     "s": 1068,
+     "d": 45,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 17,
+      "km": 6.75,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 45,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Dinner",
+     "s": 1121,
+     "d": 90,
+     "kind": "meal",
+     "meal": "dinner",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    }
+   ]
+  },
+  "Shanghai|6": {
+   "city": "Shanghai",
+   "day": 6,
+   "date": "2026-09-07",
+   "theme": "Pudong finale — museum, Lujiazui trio, riverfront at dusk",
+   "why": "Pudong finale, and the only day of the trip with NO hotel at the end of it. You wake at J Hotel, leave the bags there, and the day runs to a late airport call: HU7921 departs PVG at 02:10 on 8 Sep, check-in 23:10 on the three-hour international buffer. Shanghai Museum East does not open until 10:00 and was scheduled at 08:00 — it is now pinned to opening, which still leaves the full researched three hours before the Lujiazui towers. Monday is safe here: the museum closes TUESDAYS. The towers run back-to-back on foot because they are all within the same three blocks. The Pudong promenade is held to 20:15 so the last thing you do in China is the lit skyline from the river wall, a few minutes from the bags. Collect them at J Hotel after it and drive — the run to PVG is 54 min, so leaving Lujiazui about 22:10 puts you at the terminal an hour before check-in opens.",
+   "endMin": 1570,
+   "homeTravel": null,
+   "missed": null,
+   "absorbed": null,
+   "stops": [
+    {
+     "name": "Breakfast",
+     "s": 540,
+     "d": 35,
+     "kind": "meal",
+     "meal": "breakfast",
+     "travelIn": {
+      "mode": "none",
+      "minutes": 0,
+      "km": 0,
+      "est": false,
+      "coloc": true
+     },
+     "advice": 35,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Shanghai Museum East",
+     "s": 600,
+     "d": 180,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "didi",
+      "minutes": 17,
+      "km": 6.62,
+      "est": true,
+      "coloc": false
+     },
+     "advice": 180,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -4823,255 +5106,8 @@
      "hub": null
     },
     {
-     "name": "People’s Square",
-     "s": 865,
-     "d": 45,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 9,
-      "km": 1.83,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 45,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Huangpu night cruise",
-     "s": 928,
-     "d": 75,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 10,
-      "km": 2.45,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 75,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Dinner",
-     "s": 1080,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    }
-   ]
-  },
-  "Shanghai|5": {
-   "city": "Shanghai",
-   "day": 5,
-   "date": "2026-09-06",
-   "theme": "West Bund art mile, then move to Pudong",
-   "why": "All three West Bund museums are closed Mondays, so Sunday is the only possible slot; running south-to-north ends the day at the Long Museum (open to 21:00 on Sundays) pointing straight at the hotel move to Lujiazui.",
-   "endMin": 1187,
-   "homeTravel": {
-    "mode": "didi",
-    "minutes": 17,
-    "km": 6.75,
-    "estimated": true
-   },
-   "missed": null,
-   "absorbed": null,
-   "stops": [
-    {
-     "name": "Breakfast",
-     "s": 420,
-     "d": 35,
-     "kind": "meal",
-     "meal": "breakfast",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 35,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "TANK Shanghai",
-     "s": 482,
-     "d": 75,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 19,
-      "km": 8.6,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 75,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "West Bund Museum",
-     "s": 582,
-     "d": 90,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 17,
-      "km": 0.64,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "West Bund riverside",
-     "s": 695,
-     "d": 45,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "metro",
-      "minutes": 15,
-      "km": 1.8,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 45,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Lunch",
-     "s": 748,
-     "d": 60,
-     "kind": "meal",
-     "meal": "lunch",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 60,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Long Museum West Bund",
-     "s": 833,
-     "d": 90,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 17,
-      "km": 0.66,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Dinner",
-     "s": 1080,
-     "d": 90,
-     "kind": "meal",
-     "meal": "dinner",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 90,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    }
-   ]
-  },
-  "Shanghai|6": {
-   "city": "Shanghai",
-   "day": 6,
-   "date": "2026-09-07",
-   "theme": "Pudong finale — museum, Lujiazui trio, riverfront at dusk",
-   "why": "Sleeping in Shanghai Tower makes the whole last day car-free on the Pudong side: museum at opening, bags stored at the hotel, the supertall circuit on foot, then the Bund-facing promenade at dusk before leaving for PVG around 20:10.",
-   "endMin": 1570,
-   "homeTravel": null,
-   "missed": null,
-   "absorbed": null,
-   "stops": [
-    {
-     "name": "Breakfast",
-     "s": 420,
-     "d": 35,
-     "kind": "meal",
-     "meal": "breakfast",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 35,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Shanghai Museum East",
-     "s": 480,
-     "d": 180,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "didi",
-      "minutes": 17,
-      "km": 6.62,
-      "est": true,
-      "coloc": false
-     },
-     "advice": 180,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Shanghai Tower base",
-     "s": 680,
+     "s": 868,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -5089,7 +5125,7 @@
     },
     {
      "name": "World Financial Center",
-     "s": 726,
+     "s": 914,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -5106,26 +5142,8 @@
      "hub": null
     },
     {
-     "name": "Lunch",
-     "s": 764,
-     "d": 60,
-     "kind": "meal",
-     "meal": "lunch",
-     "travelIn": {
-      "mode": "none",
-      "minutes": 0,
-      "km": 0,
-      "est": false,
-      "coloc": true
-     },
-     "advice": 60,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
      "name": "Jin Mao Tower",
-     "s": 840,
+     "s": 960,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -5143,7 +5161,7 @@
     },
     {
      "name": "Oriental Pearl Tower",
-     "s": 897,
+     "s": 1017,
      "d": 30,
      "kind": "sight",
      "meal": null,
@@ -5155,24 +5173,6 @@
       "coloc": false
      },
      "advice": 30,
-     "cap": null,
-     "lateFor": null,
-     "hub": null
-    },
-    {
-     "name": "Pudong promenade",
-     "s": 936,
-     "d": 45,
-     "kind": "sight",
-     "meal": null,
-     "travelIn": {
-      "mode": "walk",
-      "minutes": 1,
-      "km": 0,
-      "est": false,
-      "coloc": false
-     },
-     "advice": 45,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -5191,6 +5191,24 @@
       "coloc": true
      },
      "advice": 90,
+     "cap": null,
+     "lateFor": null,
+     "hub": null
+    },
+    {
+     "name": "Pudong promenade",
+     "s": 1215,
+     "d": 45,
+     "kind": "sight",
+     "meal": null,
+     "travelIn": {
+      "mode": "walk",
+      "minutes": 1,
+      "km": 0,
+      "est": false,
+      "coloc": false
+     },
+     "advice": 45,
      "cap": null,
      "lateFor": null,
      "hub": null
@@ -5717,18 +5735,16 @@
     "name": "Old Jazz Bar",
     "status": "moved",
     "from": 3,
-    "to": 1
+    "to": 4
    }
   ],
-  "Shanghai|1": [
+  "Shanghai|4": [
    {
     "name": "Old Jazz Bar",
     "status": "gained",
     "from": 3,
-    "to": 1
-   }
-  ],
-  "Shanghai|4": [
+    "to": 4
+   },
    {
     "name": "M50 Creative Park",
     "status": "moved",

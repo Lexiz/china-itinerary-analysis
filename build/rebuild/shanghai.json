@@ -6,11 +6,14 @@
    "theme": "Arrival — Maglev in, Nanjing Rd East to the Bund",
    "stops": [
     "Shanghai Maglev",
+    "Check in at Marriott",
     "Nanjing Road East",
-    "The Bund",
-    "Old Jazz Bar"
+    "The Bund"
    ],
-   "why": "Landing 13:00 leaves only an afternoon, so everything sits inside one 1 km strip that starts at the hotel door and ends at the Fairmont Peace Hotel, where the jazz bar is literally the building at the corner of Nanjing Rd East and the Bund."
+   "why": "Land 13:00, and the Maglev is the TRANSFER, not a sight to come back for — the old order drove you 34 km into Puxi, checked you in, then sent you back out to Pudong to ride a train into town. It now runs straight off the aircraft, with the ride itself as the 25-min stop and the leg out of it measured from Longyang Road. Dinner is held to 17:30 so The Bund lands at 19:34 fully lit rather than 18:15 catching only the tail of the lights coming on. Old Jazz Bar moves to day 4: you have been up since 05:30 in Yangshuo and the notes already say it slides cleanly to the Bund night, which is exactly where it now sits. Home 20:45 instead of 23:52.",
+   "mealWindows": {
+    "dinner": "17:30"
+   }
   },
   {
    "day": 2,
@@ -22,7 +25,12 @@
     "Nanjing Road West",
     "Zhangyuan"
    ],
-   "why": "Late start with the massage, then a single monotonic west-to-east line back toward the hotel — M50 belongs here on the Suzhou Creek side of Jing'an, not tacked onto the old-city day as it was."
+   "why": "Late start with the massage, then a single monotonic west-to-east line back toward the hotel — M50 belongs here on the Suzhou Creek side of Jing'an, not tacked onto the old-city day as it was. M50 is held to 10:00 — the galleries do not open before then and the chain had you there at 09:44. Jing’an Temple at 13:27 is comfortably inside its ~17:00 close.",
+   "stopTimes": {
+    "M50 Creative Park": {
+     "notBefore": "10:00"
+    }
+   }
   },
   {
    "day": 3,
@@ -47,9 +55,22 @@
     "Yuyuan Bazaar",
     "City God Temple",
     "People’s Square",
-    "Huangpu night cruise"
+    "Huangpu night cruise",
+    "Old Jazz Bar"
    ],
-   "why": "Yu Garden at 09:00 opening beats the Saturday crush, the whole old-city block sits within 400 m, and People's Square is the mid-afternoon breather next to the hotel before heading back out to Shiliupu Wharf for the cruise."
+   "why": "Yu Garden at 09:00 opening beats the Saturday crush, the whole old-city block sits within 400 m, and People's Square is the mid-afternoon breather next to the hotel before heading back out to Shiliupu Wharf for the cruise. Two fixes. Yu Garden does not open until 09:00 and was scheduled 07:51, so breakfast moves to 08:00 and the garden is held to opening — worth being there at 09:00 anyway for the crowds, and on a Saturday it now runs to 21:50 so the old 16:30 close in the source data is obsolete. And the Huangpu NIGHT cruise was sailing at 15:28, in daylight; it is pinned to the ~19:30 Shiliupu departure. Dinner at 17:30 clears the boat, and Old Jazz Bar takes the slot after it — the bar and the wharf are both on the Bund, the band plays from ~19:00, and this is the night that was built for it. Home 22:41.",
+   "mealWindows": {
+    "breakfast": "08:00",
+    "dinner": "17:30"
+   },
+   "stopTimes": {
+    "Yu Garden": {
+     "notBefore": "09:00"
+    },
+    "Huangpu night cruise": {
+     "at": "19:30"
+    }
+   }
   },
   {
    "day": 5,
@@ -58,9 +79,18 @@
     "TANK Shanghai",
     "West Bund Museum",
     "West Bund riverside",
-    "Long Museum West Bund"
+    "Long Museum West Bund",
+    "Check in — J Hotel (Tower)"
    ],
-   "why": "All three West Bund museums are closed Mondays, so Sunday is the only possible slot; running south-to-north ends the day at the Long Museum (open to 21:00 on Sundays) pointing straight at the hotel move to Lujiazui."
+   "why": "All three West Bund museums are closed Mondays, so Sunday is the only possible slot; running south-to-north ends the day at the Long Museum (open to 21:00 on Sundays) pointing straight at the hotel move to Lujiazui. Every West Bund venue opens at 10:00 and all three are closed Mondays, so this Sunday is the only slot the trip has for them — the chain had TANK starting at 08:02 and the museum at 09:42, both shut. Breakfast moves to 09:00 and TANK is held to opening. West Bund Museum is entered 11:42, well inside its 16:00 last admission; Long Museum runs to 21:00 so it is safe as the last of the mile. The move to Pudong closes the day: check in at J Hotel 17:48, dinner in Lujiazui, and every remaining sight is then within walking distance of where you sleep.",
+   "mealWindows": {
+    "breakfast": "09:00"
+   },
+   "stopTimes": {
+    "TANK Shanghai": {
+     "notBefore": "10:00"
+    }
+   }
   },
   {
    "day": 6,
@@ -73,7 +103,19 @@
     "Oriental Pearl Tower",
     "Pudong promenade"
    ],
-   "why": "Sleeping in Shanghai Tower makes the whole last day car-free on the Pudong side: museum at opening, bags stored at the hotel, the supertall circuit on foot, then the Bund-facing promenade at dusk before leaving for PVG around 20:10."
+   "why": "Pudong finale, and the only day of the trip with NO hotel at the end of it. You wake at J Hotel, leave the bags there, and the day runs to a late airport call: HU7921 departs PVG at 02:10 on 8 Sep, check-in 23:10 on the three-hour international buffer. Shanghai Museum East does not open until 10:00 and was scheduled at 08:00 — it is now pinned to opening, which still leaves the full researched three hours before the Lujiazui towers. Monday is safe here: the museum closes TUESDAYS. The towers run back-to-back on foot because they are all within the same three blocks. The Pudong promenade is held to 20:15 so the last thing you do in China is the lit skyline from the river wall, a few minutes from the bags. Collect them at J Hotel after it and drive — the run to PVG is 54 min, so leaving Lujiazui about 22:10 puts you at the terminal an hour before check-in opens.",
+   "mealWindows": {
+    "breakfast": "09:00",
+    "dinner": "18:00"
+   },
+   "stopTimes": {
+    "Shanghai Museum East": {
+     "at": "10:00"
+    },
+    "Pudong promenade": {
+     "notBefore": "20:15"
+    }
+   }
   }
  ],
  "ideas": [

@@ -17,6 +17,11 @@
    "from": "Bailong Elevator",
    "to": "Yuanjiajie (Avatar)",
    "why": "The lift is the ascent to the Yuanjiajie plateau; its 60-min dwell is queue plus ride. Already effectively zero (2 min walk) but pinned so a future re-route cannot reintroduce a drive."
+  },
+  {
+   "from": "Land at PVG",
+   "to": "Shanghai Maglev",
+   "why": "The Maglev coordinate is Longyang Road, the CITY end of the line, so the router charged a 37-min road trip from PVG to a train that departs from PVG. The 25-min dwell IS the ride. Travel out of it, to the Puxi hotel, is correctly measured from Longyang Road."
   }
  ]
 }
