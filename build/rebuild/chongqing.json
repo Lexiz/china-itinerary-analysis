@@ -16,6 +16,11 @@
    "load_note": "360 min stop time (6.0 h) across a ~11:20–23:00 window — correct for an arrival day with two meals and a check-in in it.",
    "mealWindows": {
     "dinner": "17:45"
+   },
+   "stopTimes": {
+    "Kuixinglou Plaza": {
+     "notBefore": "19:40"
+    }
    }
   },
   {

@@ -13,6 +13,11 @@
    "why": "Land 13:00, and the Maglev is the TRANSFER, not a sight to come back for — the old order drove you 34 km into Puxi, checked you in, then sent you back out to Pudong to ride a train into town. It now runs straight off the aircraft, with the ride itself as the 25-min stop and the leg out of it measured from Longyang Road. Dinner is held to 17:30 so The Bund lands at 19:34 fully lit rather than 18:15 catching only the tail of the lights coming on. Old Jazz Bar moves to day 4: you have been up since 05:30 in Yangshuo and the notes already say it slides cleanly to the Bund night, which is exactly where it now sits. Home 20:45 instead of 23:52.",
    "mealWindows": {
     "dinner": "17:30"
+   },
+   "stopTimes": {
+    "The Bund": {
+     "notBefore": "19:00"
+    }
    }
   },
   {

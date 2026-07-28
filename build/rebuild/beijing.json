@@ -27,7 +27,12 @@
     "breakfast": "06:30",
     "dinner": "17:00"
    },
-   "why": "Everything sits inside one 3 km square and the order is dictated by timed entry. The two meals are deliberately off-convention and they are what make the day work: a 06:30 breakfast buys the National Museum its afternoon back (the museum shuts at 17:00, and on a 07:00 start the chain only reached it at 14:54 — barely 2 h of a 3 h visit), and a 17:00 dinner, eaten as the museum closes, is what puts you on Jingshan at 19:06 with sunset at 19:22. Order: square from 07:42, Forbidden City on the 08:30 morning slot, museum through the worst of the heat in air conditioning, then dinner, then the climb for the golden-roof panorama."
+   "why": "Everything sits inside one 3 km square and the order is dictated by timed entry. The two meals are deliberately off-convention and they are what make the day work: a 06:30 breakfast buys the National Museum its afternoon back (the museum shuts at 17:00, and on a 07:00 start the chain only reached it at 14:54 — barely 2 h of a 3 h visit), and a 17:00 dinner, eaten as the museum closes, is what puts you on Jingshan at 19:06 with sunset at 19:22. Order: square from 07:42, Forbidden City on the 08:30 morning slot, museum through the worst of the heat in air conditioning, then dinner, then the climb for the golden-roof panorama.",
+   "stopTimes": {
+    "Jingshan Park": {
+     "notBefore": "19:05"
+    }
+   }
   },
   {
    "day": 3,
@@ -41,7 +46,12 @@
    "mealWindows": {
     "dinner": "17:30"
    },
-   "why": "Walk the wall before the heat and luge straight down it (the toboggan is the descent, not a separate trip — it shuts at 17:00), eat at Mutianyu, then let the 90-minute drive back down the north-east corridor deliver you into Sanlitun. Dinner is pulled to 17:30 so it lands as Taikoo Li closes out and CCTV moves to 19:31 — past the 19:19 sunset, which is the only time that stop is worth making. CCTV now takes the full hour its research allows rather than the 30-minute minimum: it is the lit tower, plus the free China World Mall terrace."
+   "why": "Walk the wall before the heat and luge straight down it (the toboggan is the descent, not a separate trip — it shuts at 17:00), eat at Mutianyu, then let the 90-minute drive back down the north-east corridor deliver you into Sanlitun. Dinner is pulled to 17:30 so it lands as Taikoo Li closes out and CCTV moves to 19:31 — past the 19:19 sunset, which is the only time that stop is worth making. CCTV now takes the full hour its research allows rather than the 30-minute minimum: it is the lit tower, plus the free China World Mall terrace.",
+   "stopTimes": {
+    "CCTV 'Big Pants'": {
+     "notBefore": "19:19"
+    }
+   }
   },
   {
    "day": 4,
