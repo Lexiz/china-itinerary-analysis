@@ -1,0 +1,157 @@
+{
+ "city": "Fenghuang",
+ "venues": {
+  "Fenghuang HSR station": {
+   "current_advice_min": 35,
+   "type": "Transport",
+   "meal": null,
+   "zh": "凤凰古城站",
+   "hours": null,
+   "notes": "Arrive ~16:00; ~10 km to the old town."
+  },
+  "Check in at Jinshuian": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "凤凰金水岸江景酒店",
+   "hours": null,
+   "notes": "Check in on the Huilongge / lower-river stretch."
+  },
+  "Fenghuang Ancient Town": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "凤凰古城",
+   "hours": null,
+   "notes": "The stilted-house riverside old town."
+  },
+  "East Gate Tower": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "东门城楼",
+   "hours": null,
+   "notes": "Start the daylight orientation walk here."
+  },
+  "Hong Bridge": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "虹桥",
+   "hours": null,
+   "notes": "Along the river to the covered Hongqiao bridge."
+  },
+  "Jumping stones": {
+   "current_advice_min": 20,
+   "type": "Sight",
+   "meal": null,
+   "zh": "跳岩",
+   "hours": null,
+   "notes": "Cross near North Gate early, before crowds and harsh midday light."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Sight",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Bar street": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Loud riverside bar street by Hong Bridge — skip or embrace."
+  },
+  "Station shuttle / taxi": {
+   "current_advice_min": 35,
+   "type": "Transport",
+   "meal": null,
+   "zh": "旅游专线巴士",
+   "hours": null,
+   "notes": "Into-town transfer options from the HSR station."
+  },
+  "Tuojiang night boat": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "沱江夜游",
+   "hours": "Night sailings ~18:00–23:00 (daytime ~08:00–18:00)",
+   "notes": "Lantern reflections from water level."
+  },
+  "Wanming Pagoda": {
+   "current_advice_min": 15,
+   "type": "Sight",
+   "meal": null,
+   "zh": "万名塔",
+   "hours": null,
+   "notes": "Illuminated riverside pagoda — night photos from the north-bank lanes."
+  },
+  "Snow Bridge (Xueqiao)": {
+   "current_advice_min": 15,
+   "type": "Sight",
+   "meal": null,
+   "zh": "雪桥",
+   "hours": null,
+   "notes": "The best elevated night viewpoint, near the North Gate."
+  },
+  "Sunrise / mist session": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Sunrise ~06:20 — the key payoff of the one-night stay."
+  },
+  "Nanhua Bridge": {
+   "current_advice_min": 15,
+   "type": "Sight",
+   "meal": null,
+   "zh": "南华门",
+   "hours": null,
+   "notes": "Dawn panoramic stilted-house sweep — the town is empty before 9–10am."
+  },
+  "Shen Congwen Residence": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "沈从文故居",
+   "hours": null,
+   "notes": "The author’s former home and Fenghuang’s key cultural stop; enter early."
+  },
+  "Miao batik & silver lanes": {
+   "current_advice_min": 45,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "蜡染 / 银饰",
+   "hours": null,
+   "notes": "Batik (larǎn) and silverwork — a quick look if time allows."
+  },
+  "Ginger candy stalls": {
+   "current_advice_min": 20,
+   "type": "Food",
+   "meal": null,
+   "zh": "姜糖",
+   "hours": null,
+   "notes": "Watch it hand-pulled fresh — buy for the train."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Head to the station": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Leave with a buffer for the ~08:30 train (station ~10 km / 20 min out)."
+  }
+ }
+}

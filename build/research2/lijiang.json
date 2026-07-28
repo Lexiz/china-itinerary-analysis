@@ -1,0 +1,164 @@
+{
+  "Land at LJG": {
+    "m": 40,
+    "n": "Deplane, walk, collect bags",
+    "basis": "LJG is a small single-terminal domestic airport; deplane to curbside with checked bags runs 30-45 min including bus-to-terminal on remote stands.",
+    "conf": "med"
+  },
+  "Lunch": {
+    "m": 60,
+    "n": "Standard sit-down Chinese lunch",
+    "basis": "China norm for an ordered-and-served restaurant lunch is about an hour; enough to eat properly without a long lingering meal.",
+    "conf": "med"
+  },
+  "Check in at Anyin": {
+    "m": 60,
+    "n": "Check in plus altitude rest",
+    "basis": "Guesthouse check-in is 15-20 min, but Lijiang sits at 2,400 m and altitude guidance (and the plan's own note) is to rest an hour before walking.",
+    "conf": "med"
+  },
+  "Dayan Old Town": {
+    "m": 90,
+    "n": "Canal lanes north of Sifang",
+    "basis": "Guides give the old town half a day to a full day overall; 90 min covers a focused wander of the quieter northern canal lanes as one of several old-town stops.",
+    "conf": "med"
+  },
+  "Sifang Square": {
+    "m": 30,
+    "n": "Central square people-watching",
+    "basis": "Reviews treat Sifangjie as a short stop - the liveliest spot for people-watching, but it is one plaza with four streets radiating off it.",
+    "conf": "high"
+  },
+  "Mu Mansion": {
+    "m": 45,
+    "n": "Exterior only; inside needs longer",
+    "basis": "Guides recommend 1-2 h for the full interior (CNY 40, 08:30-17:30), but the plan admires it from outside - facade, gate and forecourt is 30-45 min; add 60-90 if you go in.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 90,
+    "n": "Relaxed Naxi courtyard dinner",
+    "basis": "A proper multi-dish Chinese dinner with drinks runs 75-105 min; 90 is the standard allowance for an unhurried evening meal.",
+    "conf": "med"
+  },
+  "Breakfast": {
+    "m": 45,
+    "n": "Hotel breakfast, unhurried",
+    "basis": "Guesthouse breakfast in Lijiang is a served or small-buffet affair; 40-50 min is realistic without rushing the first coffee at altitude.",
+    "conf": "med"
+  },
+  "Depart for the gorge": {
+    "m": 30,
+    "n": "Bus station ticket and boarding",
+    "basis": "Chinese long-distance bus stations require ID check plus bag security and advise arriving ~30 min before departure; a private driver would cut this to ~10 min.",
+    "conf": "med"
+  },
+  "Qiaotou gateway": {
+    "m": 30,
+    "n": "Gorge ticket office and transfer",
+    "basis": "Qiaotou (Hutiaoxia town) is where the gorge entrance fee is paid and onward vans are arranged; trip reports describe 20-40 min of formalities and waiting.",
+    "conf": "med"
+  },
+  "Tiger Leaping Gorge": {
+    "m": 120,
+    "n": "Upper gorge plank path",
+    "basis": "China Highlights and other guides put the Upper Gorge scenic spot at 1-2 hours on the paved plank path down to the tiger statue and back up the stairs.",
+    "conf": "high"
+  },
+  "Middle Gorge descent": {
+    "m": 180,
+    "n": "Cliff path down and back",
+    "basis": "Trip reports consistently give 2-3 h for the descent from Tina's to the river and the steep climb back via Teacher Zhang's trail or the 168-step Sky Ladder.",
+    "conf": "high"
+  },
+  "Glacier Park cable car": {
+    "m": 120,
+    "n": "Shuttle, queue, 20-min ascent",
+    "basis": "Chinese guides report 1-2 h queuing at the Ganhaizi transfer station and big-cableway boarding area as normal in July-August (20,000+ visitors/day), plus the ~20 min ride; English sources warn of up to 3 h in peak summer - an early timed slot is essential.",
+    "conf": "high"
+  },
+  "Jade Dragon summit": {
+    "m": 90,
+    "n": "Boardwalk to 4,680 m platform",
+    "basis": "From the 4,506 m terminal the plank boardwalk climbs to 4,680 m; guides describe roughly a 1.5 h leisurely walk, and at this altitude everyone moves slowly and stops often - includes starting the descent queue.",
+    "conf": "high"
+  },
+  "Impression Lijiang": {
+    "m": 105,
+    "n": "Early seating plus 60-min show",
+    "basis": "The show itself is exactly 60 min, but standard tickets are unreserved first-come seating and operators advise arriving up to an hour early; 30-35 min pre-show plus exiting the amphitheatre is realistic.",
+    "conf": "high"
+  },
+  "Blue Moon Valley": {
+    "m": 90,
+    "n": "Full 3 km lakeside walk",
+    "basis": "The boardwalk from Upper Lake to Lower Lake is about 3 km; guides say 1-1.5 h is enough for both walking and photography if you skip the shuttle.",
+    "conf": "high"
+  },
+  "Old Town massage": {
+    "m": 75,
+    "n": "60-min session plus overhead",
+    "basis": "Old Town parlours sell 60- and 90-min sessions; a 60-min treatment plus changing, tea and paying lands at about 75 min.",
+    "conf": "med"
+  },
+  "Baisha Village": {
+    "m": 75,
+    "n": "Naxi lanes and market square",
+    "basis": "Guides give Baisha 2-3 h in total; with the murals and embroidery institute counted separately, 75 min covers the main street, farm lanes and mountain views.",
+    "conf": "med"
+  },
+  "Baisha Murals": {
+    "m": 40,
+    "n": "Dabaoji Palace mural halls",
+    "basis": "The 55 surviving Ming-Qing panels sit in a handful of small halls (CNY 30); TripAdvisor reviewers describe a compact 30-45 min visit, longer only with a guide.",
+    "conf": "med"
+  },
+  "Baisha embroidery": {
+    "m": 30,
+    "n": "Workshop demo and gallery",
+    "basis": "TripAdvisor reviewers call it worth 10-20 min to see the pieces and artists at work; listings quote up to an hour, so 30 min covers a genuine look plus a browse.",
+    "conf": "med"
+  },
+  "Shuhe Old Town": {
+    "m": 120,
+    "n": "Core cobbled lanes and canals",
+    "basis": "Guides recommend 3-4 h for a full Shuhe visit, but for travellers who have already walked Dayan, 2 h covers the core lanes, canals and Qinglong Bridge; museum and lunch are separate stops.",
+    "conf": "med"
+  },
+  "Tea Horse Road Museum": {
+    "m": 40,
+    "n": "Small museum, Ming murals",
+    "basis": "Listings give a recommended 0.5-1 h; reviewers note it is small with mostly Chinese-only captions, so 40 min covers the halls and the Ming murals at Dajue Palace.",
+    "conf": "high"
+  },
+  "Lashi Lake wetland": {
+    "m": 150,
+    "n": "Horse ride plus boat trip",
+    "basis": "Standard packages are ~1 h on horseback along the Tea Horse Road plus a ~45 min boat trip; with saddling up, changing boats and payment, on-site time is about 2.5 h.",
+    "conf": "high"
+  },
+  "Black Dragon Pool": {
+    "m": 90,
+    "n": "Pool loop and Deyue Pavilion",
+    "basis": "Guides and visitors put the park at 1-2 h to circle the water, cross the marble bridge and shoot the Jade Dragon reflection; some reviewers say 2 h still felt short.",
+    "conf": "high"
+  },
+  "Lion Hill sunset": {
+    "m": 75,
+    "n": "Steps up, tower, sunset wait",
+    "basis": "The climb from the old town is 15-20 min of steps, Wangu Tower is CNY 35 with five floors, and photographers advise arriving an hour before sunset for the golden light on the roofs.",
+    "conf": "med"
+  },
+  "Last Dayan loop": {
+    "m": 60,
+    "n": "Quiet final old-town circuit",
+    "basis": "Reviewers note Sifangjie is empty around 07:30 and you can wander freely for about 45 min before tour groups arrive at 10:00; an hour covers a relaxed farewell loop.",
+    "conf": "med"
+  },
+  "Fly from LJG": {
+    "m": 120,
+    "n": "Recommended two-hour check-in",
+    "basis": "Chinese domestic guidance is to arrive 2 h before departure; LJG counters close 45-60 min out, matching the plan's own 16:20 arrival for an 18:20 flight.",
+    "conf": "high"
+  }
+}

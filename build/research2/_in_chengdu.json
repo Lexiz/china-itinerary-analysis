@@ -1,0 +1,189 @@
+{
+ "city": "Chengdu",
+ "venues": {
+  "Hotpot alt · Shu Daxia": {
+   "current_advice_min": 90,
+   "type": "Food",
+   "meal": null,
+   "zh": "蜀大侠",
+   "hours": null,
+   "notes": "Theatrical Chengdu hotpot chain with bold spice and martial-arts décor."
+  },
+  "Land at CTU": {
+   "current_advice_min": null,
+   "type": "Transport",
+   "meal": null,
+   "zh": "成都双流国际机场T2",
+   "hours": null,
+   "notes": "Land 20:15 · TV9812 from Lijiang. ~50 min to the centre."
+  },
+  "Check in at Minyoun Dongda": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "成都东大明宇豪雅饭店（春熙路太古里店）",
+   "hours": "Check-in after 14:00; check-out before 12:00; front desk 24/7",
+   "notes": "Booked near Dongmen Bridge and Chunxi Road; 19–22 Aug."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Taikoo Li": {
+   "current_advice_min": 75,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "太古里",
+   "hours": null,
+   "notes": "Lantern-lit lanes around Daci Temple."
+  },
+  "Daci Temple": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": "大慈寺",
+   "hours": null,
+   "notes": "Incense-scented calm hidden between Taikoo Li’s designer stores."
+  },
+  "IFS rooftop panda": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "成都国际金融中心",
+   "hours": null,
+   "notes": "The giant climbing-panda sculpture on the IFS rooftop."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Chengdu Panda Base": {
+   "current_advice_min": 180,
+   "type": "Sight",
+   "meal": null,
+   "zh": "成都大熊猫繁育研究基地",
+   "hours": "Opens 07:30; pandas most active 07:30–09:30",
+   "notes": "Arrive for 07:30 opening — pandas most active 07:30–09:30."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Chengdu Museum": {
+   "current_advice_min": 150,
+   "type": "Sight",
+   "meal": null,
+   "zh": "成都博物馆",
+   "hours": "Tue–Sun; Fri/Sat open late to 20:30",
+   "notes": "Free, air-conditioned — city history and shadow-puppet collections."
+  },
+  "People’s Park": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "人民公园",
+   "hours": null,
+   "notes": "Leafy park and the teahouse ritual — mahjong and matchmaking-corner life."
+  },
+  "Heming Teahouse": {
+   "current_advice_min": 75,
+   "type": "Food",
+   "meal": null,
+   "zh": "鹤鸣茶社",
+   "hours": null,
+   "notes": "Gaiwan tea (est. 1923); try a traditional ear cleaning (caier)."
+  },
+  "Kuanzhai Alleys": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "宽窄巷子",
+   "hours": null,
+   "notes": "Restored Qing-era lanes — snacks and browsing at dusk."
+  },
+  "Sichuan opera": {
+   "current_advice_min": 90,
+   "type": "Show",
+   "meal": null,
+   "zh": "蜀风雅韵",
+   "hours": "Nightly 20:00, ~80 min; arrive by 19:30",
+   "notes": "Face-changing, fire-spitting, hand shadows."
+  },
+  "Chengdu East → Guanghan": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "成都东站",
+   "hours": null,
+   "notes": "High-speed train Chengdu East → Guanghan North (~18 min)."
+  },
+  "Hotpot alt · Lao Matou": {
+   "current_advice_min": 90,
+   "type": "Food",
+   "meal": null,
+   "zh": "老码头",
+   "hours": null,
+   "notes": "Alternative Yulin hotpot on Yulin Middle Road."
+  },
+  "Guanghan North": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "广汉北站",
+   "hours": null,
+   "notes": "Then taxi or shuttle 15–20 min to the museum."
+  },
+  "Sanxingdui Museum": {
+   "current_advice_min": 180,
+   "type": "Sight",
+   "meal": null,
+   "zh": "三星堆博物馆",
+   "hours": "Jul–Aug 08:30–20:00 (last entry 18:00); closed Mondays",
+   "notes": "Bronze masks, the 4 m sacred tree and gold of the 3,000-year-old Shu kingdom."
+  },
+  "SKP Chengdu": {
+   "current_advice_min": 60,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "成都SKP",
+   "hours": null,
+   "notes": "Sunken luxury mall — striking architecture and arctic AC to escape the heat."
+  },
+  "Wuhou Shrine": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "武侯祠",
+   "hours": null,
+   "notes": "Three Kingdoms shrine adjacent to Jinli."
+  },
+  "Jinli Old Street": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "锦里",
+   "hours": null,
+   "notes": "Red lanterns and snack stalls after dark — thins out after 21:00."
+  },
+  "Head to Chengdu East": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "~45–60 min door-to-door plus 30–40 min inside the station for the ~09:30."
+  }
+ }
+}

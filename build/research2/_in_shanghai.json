@@ -1,0 +1,333 @@
+{
+ "city": "Shanghai",
+ "venues": {
+  "Land at PVG": {
+   "current_advice_min": null,
+   "type": "Transport",
+   "meal": null,
+   "zh": "上海浦东国际机场T2",
+   "hours": null,
+   "notes": "Land 13:00 · HO1148 from Guilin. Maglev from the terminal into town."
+  },
+  "Shanghai Maglev": {
+   "current_advice_min": 25,
+   "type": "Transport",
+   "meal": null,
+   "zh": "上海磁浮列车",
+   "hours": null,
+   "notes": "PVG → Longyang Road at up to 430 km/h — the arrival-day tech experience."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Check in at Marriott": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "上海雅居乐万豪侯爵酒店",
+   "hours": null,
+   "notes": "Four nights in central Puxi. Keep arrival light; leave ~17:30–18:00."
+  },
+  "Nanjing Road East": {
+   "current_advice_min": 75,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "南京东路",
+   "hours": null,
+   "notes": "Walk from the Marriott down the pedestrian shopping street toward the river."
+  },
+  "The Bund": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "外滩",
+   "hours": null,
+   "notes": "The first reveal of Pudong across the Huangpu."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Recovery massage / spa": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "The recovery-day centrepiece after the Guilin transfer."
+  },
+  "Jing’an Temple": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "静安寺",
+   "hours": "~07:30–17:00",
+   "notes": "Golden-roofed temple amid the skyscrapers of Nanjing Road West."
+  },
+  "Zhangyuan": {
+   "current_advice_min": 60,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "张园",
+   "hours": null,
+   "notes": "Restored shikumen lane-house quarter."
+  },
+  "Nanjing Road West": {
+   "current_advice_min": 60,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "南京西路",
+   "hours": null,
+   "notes": "Design, fashion and technology shops around Jing’an."
+  },
+  "Dinner alt · Donghu Rd": {
+   "current_advice_min": 75,
+   "type": "Food",
+   "meal": null,
+   "zh": "东湖路",
+   "hours": null,
+   "notes": "Alternative dinner strip in the Concession."
+  },
+  "Wukang Building": {
+   "current_advice_min": 20,
+   "type": "Sight",
+   "meal": null,
+   "zh": "武康大楼",
+   "hours": null,
+   "notes": "The flatiron 1924 apartment block — the icon of the French Concession."
+  },
+  "Wukang Road": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "武康路",
+   "hours": null,
+   "notes": "Plane-tree-lined villas — walk it unhurried with coffee stops."
+  },
+  "Ferguson Lane": {
+   "current_advice_min": 30,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "武康庭",
+   "hours": null,
+   "notes": "Leafy courtyard of cafes and boutiques off Wukang Road."
+  },
+  "Anfu Road": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": "安福路",
+   "hours": null,
+   "notes": "Buzzy cafe-and-boutique strip in the heart of the Concession."
+  },
+  "Wulumuqi Road": {
+   "current_advice_min": 35,
+   "type": "Sight",
+   "meal": null,
+   "zh": "乌鲁木齐路",
+   "hours": null,
+   "notes": "Wet-market-meets-hipster street life — very local."
+  },
+  "Sinan Mansions": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "思南公馆",
+   "hours": null,
+   "notes": "Restored garden villas — dining and boutiques."
+  },
+  "Fuxing Park": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": "复兴公园",
+   "hours": null,
+   "notes": "French-designed park — locals dancing, chess and tai chi."
+  },
+  "Old Jazz Bar": {
+   "current_advice_min": 90,
+   "type": "Show",
+   "meal": null,
+   "zh": "和平饭店老年爵士吧",
+   "hours": null,
+   "notes": "The Fairmont Peace Hotel’s veteran jazz band — an old-Shanghai nightcap."
+  },
+  "Dinner alt · Fumin Rd": {
+   "current_advice_min": 75,
+   "type": "Food",
+   "meal": null,
+   "zh": "富民路",
+   "hours": null,
+   "notes": "Alternative dinner strip in the Concession."
+  },
+  "Yu Garden": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "豫园",
+   "hours": "~09:00–16:30",
+   "notes": "Classical Ming garden at opening — rockeries, ponds and pavilions."
+  },
+  "Yuyuan Bazaar": {
+   "current_advice_min": 45,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "豫园商城",
+   "hours": null,
+   "notes": "The old-city bazaar around the garden — snacks and souvenirs."
+  },
+  "Mid-Lake Teahouse": {
+   "current_advice_min": 45,
+   "type": "Food",
+   "meal": null,
+   "zh": "湖心亭",
+   "hours": null,
+   "notes": "The zigzag-bridge teahouse on the lake — a Shanghai classic."
+  },
+  "City God Temple": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": "城隍庙",
+   "hours": null,
+   "notes": "Taoist temple at the heart of the old city."
+  },
+  "People’s Square": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "人民广场",
+   "hours": null,
+   "notes": "The civic heart — parks, museums and the metro hub. A heat-and-fatigue buffer."
+  },
+  "M50 Creative Park": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "莫干山路50号",
+   "hours": null,
+   "notes": "Converted industrial buildings — galleries, studios and creek-side street art."
+  },
+  "Huangpu night cruise": {
+   "current_advice_min": 75,
+   "type": "Show",
+   "meal": null,
+   "zh": "黄浦江夜游（十六铺码头）",
+   "hours": null,
+   "notes": "From Shiliupu Wharf ~19:30–20:30."
+  },
+  "West Bund riverside": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "西岸",
+   "hours": null,
+   "notes": "Riverside art district walk — museums, galleries and open space."
+  },
+  "West Bund Museum": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "西岸美术馆",
+   "hours": "Closed Mon",
+   "notes": "Riverside modern-art museum — the West Bund art anchor."
+  },
+  "Long Museum West Bund": {
+   "current_advice_min": 105,
+   "type": "Sight",
+   "meal": null,
+   "zh": "龙美术馆西岸馆",
+   "hours": "Closed Mon",
+   "notes": "Striking concrete “vaulted” museum — major private collection."
+  },
+  "TANK Shanghai": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "油罐艺术中心",
+   "hours": null,
+   "notes": "Former aviation-fuel tanks turned galleries with a wrapping park."
+  },
+  "Check in — J Hotel (Tower)": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "上海中心J酒店",
+   "hours": null,
+   "notes": "Final-night move into Shanghai Tower."
+  },
+  "Shanghai Tower base": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "上海中心大厦",
+   "hours": null,
+   "notes": "Ground-level walk around the 632 m tower."
+  },
+  "Jin Mao Tower": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "金茂大厦",
+   "hours": null,
+   "notes": "The pagoda-inspired supertall — outdoor Skywalk optional."
+  },
+  "World Financial Center": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "上海环球金融中心",
+   "hours": null,
+   "notes": "The “bottle-opener” — the third of the Lujiazui trio."
+  },
+  "Shanghai Museum East": {
+   "current_advice_min": 150,
+   "type": "Sight",
+   "meal": null,
+   "zh": "上海博物馆东馆",
+   "hours": "Closed Tue",
+   "notes": "~3 focused h — bronzes, ceramics, jade and the key temporary show."
+  },
+  "Pudong promenade": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": "滨江大道",
+   "hours": null,
+   "notes": "Binjiang Avenue riverside walk beneath the Lujiazui towers."
+  },
+  "Oriental Pearl Tower": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "东方明珠",
+   "hours": null,
+   "notes": "The 1994 space-age icon — exterior views from the promenade."
+  },
+  "Fly from PVG": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "上海浦东国际机场T2",
+   "hours": null,
+   "notes": "HU7921 departs 02:10 the next morning — be here by 23:10 (3h, international)."
+  }
+ }
+}

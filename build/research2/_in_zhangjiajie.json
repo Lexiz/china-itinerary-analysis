@@ -1,0 +1,149 @@
+{
+ "city": "Zhangjiajie",
+ "venues": {
+  "Arrive Zhangjiajie West": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "张家界西站",
+   "hours": null,
+   "notes": "Arrive ~12:30; direct bus to Wulingyuan from the Tourist Distributing Center."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Check in at Yuji Hotel": {
+   "current_advice_min": 20,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "张家界禹界Hotel（武陵源国家森林公园店）",
+   "hours": "Check-in after 14:00; check-out before 12:00; front desk open 24/7.",
+   "notes": "Booked at No. 200 Jundi Road in Wulingyuan, 290m from the bus station and 1.5 km from the park’s sign gate."
+  },
+  "Wulingyuan East Gate": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "武陵源标志门",
+   "hours": "From 07:00; book earliest slot",
+   "notes": "First park entry — your 4-day pass (¥240) starts today."
+  },
+  "Golden Whip Stream": {
+   "current_advice_min": 150,
+   "type": "Sight",
+   "meal": null,
+   "zh": "金鞭溪",
+   "hours": null,
+   "notes": "Flat, shaded streamside path under 300 m pillars."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Bailong Elevator": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "百龙天梯",
+   "hours": null,
+   "notes": "At the East Gate for 07:00 opening, then ride up (326 m in ~1 min)."
+  },
+  "Yuanjiajie (Avatar)": {
+   "current_advice_min": 165,
+   "type": "Sight",
+   "meal": null,
+   "zh": "袁家界（阿凡达哈利路亚山）",
+   "hours": null,
+   "notes": "First Bridge Under Heaven and the Avatar Hallelujah Mountain viewpoint."
+  },
+  "Tianzi Mountain": {
+   "current_advice_min": 150,
+   "type": "Sight",
+   "meal": null,
+   "zh": "天子山",
+   "hours": null,
+   "notes": "He Long Park, Imperial Brush Peaks, Fairy Scattering Flowers."
+  },
+  "Tianzi cableway down": {
+   "current_advice_min": 25,
+   "type": "Transport",
+   "meal": null,
+   "zh": "天子山索道",
+   "hours": null,
+   "notes": "Descend (~¥76) to the Shili Gallery valley."
+  },
+  "Ten-Mile Gallery": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "十里画廊",
+   "hours": null,
+   "notes": "Walk or ride the mini-tram past the Three Sisters Peaks."
+  },
+  "Yangjiajie cableway": {
+   "current_advice_min": 25,
+   "type": "Transport",
+   "meal": null,
+   "zh": "杨家界索道",
+   "hours": null,
+   "notes": "Cable car up (~¥76) for the quieter Yangjiajie."
+  },
+  "Yangjiajie": {
+   "current_advice_min": 120,
+   "type": "Sight",
+   "meal": null,
+   "zh": "杨家界",
+   "hours": null,
+   "notes": "Natural Great Wall / One Step to Heaven viewpoints."
+  },
+  "Bus to Zhangjiajie city": {
+   "current_advice_min": 20,
+   "type": "Transport",
+   "meal": null,
+   "zh": "张家界中心汽车站",
+   "hours": null,
+   "notes": "Check out, bus Wulingyuan → city central bus station (¥12–13, ~1 h)."
+  },
+  "Tianmen cableway": {
+   "current_advice_min": 40,
+   "type": "Transport",
+   "meal": null,
+   "zh": "天门山索道（市区下站）",
+   "hours": null,
+   "notes": "Line C (Tianmen Cave Fast Line) is the most reliable given the ongoing."
+  },
+  "Tianmen Mountain": {
+   "current_advice_min": 180,
+   "type": "Sight",
+   "meal": null,
+   "zh": "天门山",
+   "hours": "Timed entry; afternoon slots quieter; allow 4–5 hrs door to door",
+   "notes": "Glass skywalk, cliff-hanging West Line walkway."
+  },
+  "Head to the station": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Leave with a buffer for the ~08:30 train (station ~10 km / 20 min out)."
+  }
+ }
+}

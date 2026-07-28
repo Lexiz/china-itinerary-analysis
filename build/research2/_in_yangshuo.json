@@ -1,0 +1,141 @@
+{
+ "city": "Yangshuo",
+ "venues": {
+  "Zhujiang Wharf transfer": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "竹江码头",
+   "hours": "Cruise departs ~9:20",
+   "notes": "~7:45 transfer (40 min from downtown) for the ~9:20 cruise departure."
+  },
+  "Li River cruise": {
+   "current_advice_min": 240,
+   "type": "Sight",
+   "meal": null,
+   "zh": "漓江游船",
+   "hours": "Departs Zhujiang Wharf ~9:20 only (no afternoon departures); 4–4.5 hrs",
+   "notes": "4-star cruise (¥360–480 incl. lunch), 4–4.5 h / 83 km of classic karst."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Fengqi Homestay": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Arrive Yangshuo ~13:30; move to Fengqi Mountain Garden for 3 nights."
+  },
+  "West Street": {
+   "current_advice_min": 90,
+   "type": "Shopping",
+   "meal": null,
+   "zh": "西街",
+   "hours": null,
+   "notes": "Wander the pedestrian street and riverfront."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Impression Liu Sanjie": {
+   "current_advice_min": 80,
+   "type": "Show",
+   "meal": null,
+   "zh": "印象·刘三姐",
+   "hours": "Shows 19:45 (plus 21:20 when demand is high), ~70 min",
+   "notes": "Zhang Yimou’s open-air Li River show (~10 min from West Street)."
+  },
+  "Xianggong sunrise": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "相公山",
+   "hours": "Gates open 05:00 May–Oct; sunrise ~06:25 early Sep",
+   "notes": "Pre-dawn car (~50 min); gates 05:00."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Yulong bamboo rafting": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "遇龙河漂流",
+   "hours": "Go ~09:30 — rafts pause midday; 60–90 min",
+   "notes": "Jinlong Bridge → Old Town (Jiuxian): ~¥150–200/raft, 60–90 min, 9 small weir."
+  },
+  "Yulong valley cycling": {
+   "current_advice_min": 150,
+   "type": "Sight",
+   "meal": null,
+   "zh": "遇龙河谷骑行",
+   "hours": null,
+   "notes": "Cycle Jiuxian and Chaolong villages, with a break at Gongnong Bridge."
+  },
+  "Moon Hill": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "月亮山",
+   "hours": null,
+   "notes": "~40 min sweaty climb through the natural arch."
+  },
+  "Li River night walk": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Optional after-dinner stroll along the illuminated Li River waterfront."
+  },
+  "Sunrise balloon flight": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Big-budget swap (~USD 260–300 pp, 04:00–06:00 pickup, weather-dependent)."
+  },
+  "Xingping Ancient Town": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "兴坪古镇",
+   "hours": null,
+   "notes": "Bus/DiDi from Yangshuo (~40 min). Walk the compact old town (30–60 min)."
+  },
+  "20-RMB viewpoint": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "黄布滩",
+   "hours": null,
+   "notes": "Riverside path ~20 min north to Yellow Cloth Shoal — best light is morning."
+  },
+  "Fly from KWL": {
+   "current_advice_min": 75,
+   "type": "Transport",
+   "meal": null,
+   "zh": "桂林两江国际机场T2",
+   "hours": null,
+   "notes": "HO1148 departs 10:20 — be here by 08:20. ~65 km from Yangshuo, allow 80 min."
+  }
+ }
+}

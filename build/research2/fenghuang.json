@@ -1,0 +1,116 @@
+{
+  "Fenghuang HSR station": {
+    "m": 20,
+    "n": "Arrival, exit to transport",
+    "basis": "Fenghuanggucheng is a small line station ~10 km from town; arrival is deboarding, exiting and walking to the bus/taxi forecourt, not a visit.",
+    "conf": "med"
+  },
+  "Check in at Jinshuian": {
+    "m": 20,
+    "n": "Hotel check-in, drop bags",
+    "basis": "Standard Chinese hotel check-in with passport registration plus bag drop runs 15-25 min; no reviewer reports of long waits at this riverside property.",
+    "conf": "low"
+  },
+  "Fenghuang Ancient Town": {
+    "m": 75,
+    "n": "Riverside lanes orientation walk",
+    "basis": "Blogs put the core walking loop at '2-3 hours, flexible' including the bridges and stones listed separately here, so the general stroll itself is ~1-1.5h.",
+    "conf": "med"
+  },
+  "East Gate Tower": {
+    "m": 15,
+    "n": "Small gate tower, wall stub",
+    "basis": "Only 11 m high with a short preserved wall section and a CNY 5 ticket; foreigner guides estimate 15-20 min and note the exterior is free.",
+    "conf": "med"
+  },
+  "Hong Bridge": {
+    "m": 20,
+    "n": "Covered bridge, upper gallery",
+    "basis": "Two-storey bridge: shops downstairs, small calligraphy/painting gallery and river viewpoint upstairs; guides estimate 10-15 min, a bit more with the upper floor.",
+    "conf": "med"
+  },
+  "Jumping stones": {
+    "m": 15,
+    "n": "Stone-pier river crossing",
+    "basis": "The tiaoyan is ~100 m of 15 piers and guides say roughly 5 min to cross; early morning avoids the photo queues that slow it at midday.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 90,
+    "n": "Sit-down Miao/Hunan dinner",
+    "basis": "Local itineraries run dinner ~18:30 before a 20:00 boat; a proper sour-fish or blood-duck table meal at a riverside Miao restaurant is 1-1.5h.",
+    "conf": "med"
+  },
+  "Bar street": {
+    "m": 45,
+    "n": "Loud riverside bar strip",
+    "basis": "Reviewers describe KTV-style bars, very loud music and mostly empty rooms, so it is a walk-through plus one drink rather than a long night out.",
+    "conf": "med"
+  },
+  "Station shuttle / taxi": {
+    "m": 25,
+    "n": "Station-to-town transfer ride",
+    "basis": "Station is ~10 km out: the CNY 7 express bus takes about 20 min and a taxi 17-20 min, plus a few minutes to find/queue for it.",
+    "conf": "high"
+  },
+  "Tuojiang night boat": {
+    "m": 30,
+    "n": "Short lantern-lit river cruise",
+    "basis": "Operators and guides consistently give the round trip as ~20-25 min (North Gate wharf to Wanming Pagoda and back); allow the rest for boarding.",
+    "conf": "high"
+  },
+  "Wanming Pagoda": {
+    "m": 10,
+    "n": "Illuminated pagoda photo stop",
+    "basis": "A seven-storey Qing brick tower viewed from the riverside lanes, not entered; trip reports treat it purely as a night photo stop.",
+    "conf": "med"
+  },
+  "Snow Bridge (Xueqiao)": {
+    "m": 15,
+    "n": "Climb for night panorama",
+    "basis": "Two-tier Huang Yongyu pavilion bridge whose upper level is the viewpoint; blogs describe climbing it to watch the town light up, a short stop.",
+    "conf": "med"
+  },
+  "Sunrise / mist session": {
+    "m": 45,
+    "n": "Dawn mist on Tuojiang",
+    "basis": "Photo guides put the empty, misty window at roughly 06:00-07:00 before the town wakes, which is about a 45-min shooting session.",
+    "conf": "med"
+  },
+  "Nanhua Bridge": {
+    "m": 15,
+    "n": "Elevated stilt-house viewpoint",
+    "basis": "Guides list it as the premium elevated vantage you climb for the panorama; it is a viewpoint stop with nothing to tour.",
+    "conf": "med"
+  },
+  "Shen Congwen Residence": {
+    "m": 25,
+    "n": "Small courtyard house-museum",
+    "basis": "A ~600 sqm two-court siheyuan of 11 small rooms; Chinese reviews say there is little beyond furniture, manuscripts and photos, so visits are short.",
+    "conf": "med"
+  },
+  "Miao batik & silver lanes": {
+    "m": 30,
+    "n": "Batik and silver browsing",
+    "basis": "Shopping guides allow 1-2h for serious buying, but warn much street 'silver' is nickel alloy; a browsing pass of the lanes is ~30 min.",
+    "conf": "med"
+  },
+  "Ginger candy stalls": {
+    "m": 15,
+    "n": "Watch pulling, taste, buy",
+    "basis": "Guides describe free tasting and the hand-pulling demo as a 10-15 min stop, with bags at CNY 15-30.",
+    "conf": "med"
+  },
+  "Breakfast": {
+    "m": 35,
+    "n": "Hotel breakfast before train",
+    "basis": "Standard hotel buffet breakfast eaten unhurried before an early departure; no venue-specific reports.",
+    "conf": "low"
+  },
+  "Head to the station": {
+    "m": 30,
+    "n": "Ride out to HSR station",
+    "basis": "Station is ~10 km / 17-20 min by taxi or the ~20 min shuttle, plus a few minutes to get a car from the old-town edge.",
+    "conf": "med"
+  }
+}

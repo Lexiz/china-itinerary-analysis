@@ -1,12 +1,25 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 const DATA = JSON.parse(readFileSync(new URL('./viz-data.json', import.meta.url)));
 const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf8');
-// Editorial before/after proposals, keyed "City|day" — separate file so a snapshot rebuild never wipes them.
-let PROPOSALS = {};
-try { PROPOSALS = JSON.parse(readFileSync(new URL('./proposals.json', import.meta.url))); } catch { PROPOSALS = {}; }
+// Working plan, keyed "City|day": machine-replanned days, overridden by hand-agreed ones.
+import { changeList, matchStop, nk } from './lib-plan.mjs';
+// Durations read as clock time: 45m, 1h30, 2h
+const fmtDur = m => { const x = Math.round(m); return x < 60 ? x + 'm' : (Math.floor(x / 60) + 'h' + (x % 60 ? String(x % 60).padStart(2, '0') : '')); };
+// Google Maps key: env first, else the local gitignored file. NOTE: it is embedded in the
+// generated HTML, so it becomes public once this repo is pushed — restrict it by HTTP referrer.
+let GKEY = process.env.GOOGLE_MAPS_API_KEY || '';
+try { if (!GKEY) GKEY = readFileSync(new URL('./gmaps-key.txt', import.meta.url), 'utf8').trim(); } catch { GKEY = ''; }
+// The reworked plan is now the committed schedule; the Proposed side is deliberately left empty
+// so the next review pass has somewhere to write.
+let REBUILT = { days: {}, ideas: {}, notes: {} };
+try { REBUILT = JSON.parse(readFileSync(new URL('./rebuilt.json', import.meta.url))); } catch {}
+let GEN = {}, HAND = {};
+try { GEN = JSON.parse(readFileSync(new URL('./replanned.json', import.meta.url))); } catch { GEN = {}; }
+try { HAND = JSON.parse(readFileSync(new URL('./proposals.json', import.meta.url))); } catch { HAND = {}; }
+const PROPOSALS = { ...GEN, ...HAND };
 
-// axis: 06:00 -> 04:00 (some over-packed days now get you home after 02:00)
-const T0 = 360, T1 = 1680, SPAN = T1 - T0;
+// axis: 05:00 -> 04:00 (early arrivals start at 05:00; over-packed days get you home after 02:00)
+const T0 = 300, T1 = 1680, SPAN = T1 - T0;
 const P = m => Math.max(0, Math.min(100, (m - T0) / SPAN * 100));
 const hhmm = m => { const x = ((m % 1440) + 1440) % 1440; return String(Math.floor(x / 60)).padStart(2, '0') + ':' + String(x % 60).padStart(2, '0'); };
 const EL = m => m >= 1440 ? hhmm(m) + ' ⁺¹' : hhmm(m);
@@ -16,33 +29,53 @@ const dm = iso => { const d = new Date(iso + 'T00:00:00Z'); return d.getUTCDate(
 const sev = s => s === 'severe' ? 'var(--bad)' : s === 'moderate' ? 'var(--warn)' : 'var(--ok)';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// Render an editorial before/after proposal panel (shown inside a day's unfold when a proposal exists).
-function renderProposal(prop) {
-  const t0 = prop.axis?.t0 ?? 300, t1 = prop.axis?.t1 ?? 1410, span = t1 - t0;
-  const pp = m => Math.max(0, Math.min(100, (m - t0) / span * 100));
-  const seg = st => {
-    const l = pp(st.s), w = Math.max(0.6, pp(st.s + st.d) - l);
-    const inner = `<span class="pl">${esc(st.label)}</span>${st.sub ? `<span class="ps">${esc(st.sub)}</span>` : ''}`;
-    return `<div class="pseg k-${st.kind}" style="left:${l.toFixed(2)}%;width:${w.toFixed(2)}%" title="${esc(st.tip || st.label)}">${inner}</div>`;
-  };
-  const track = arr => (arr || []).map(seg).join('');
-  const ticks = [[360, '06'], [540, '09'], [720, '12'], [900, '15'], [1080, '18'], [1260, '21']]
-    .filter(([m]) => m >= t0 && m <= t1)
-    .map(([m, l]) => `<span class="ptk" style="left:${pp(m).toFixed(2)}%">${l}</span>`).join('');
-  const chips = (prop.changes || []).map(c => `<span class="pchip"><i>${esc(c.i)}</i>${esc(c.t)}</span>`).join('');
-  const note = prop.homeNewNote ? ` <span class="pdim">(${esc(prop.homeNewNote)})</span>` : '';
-  return `<div class="prop">` +
-    `<div class="phead">Proposed · <b>${esc(prop.title || 'revised day')}</b> — home <s>${esc(prop.homeNow)}</s> <span class="parr">→</span> <b class="pgood">${esc(prop.homeNew)}</b>${note}</div>` +
-    `<div class="prow"><span class="pcap">Now</span><div class="ptrack">${track(prop.now)}</div></div>` +
-    `<div class="prow"><span class="pcap new">New</span><div class="ptrack">${track(prop.new)}</div></div>` +
-    `<div class="prow"><span class="pcap"></span><div class="ptrack pax">${ticks}</div></div>` +
-    `<div class="pchips">${chips}</div>` +
-    `<div class="plegend"><span class="pit"><span class="psw k-bloat"></span>auto-timer bloat</span>` +
-    `<span class="pit"><span class="psw k-rest"></span>added rest</span>` +
-    `<span class="pit"><span class="psw k-sighthi"></span>right-sized</span>` +
-    `<span class="pit"><span class="psw k-move"></span>moved off day 1</span>` +
-    `<span class="pit"><span class="psw k-opt"></span>optional</span></div>` +
-    `</div>`;
+// --- segmented activity bar -------------------------------------------------
+const tkc = t => { const m = String(t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
+// Turn a day's stops into absolute-minute segments (handles a schedule that rolls past midnight).
+function absStops(stops) {
+  const out = [];
+  for (const st of (stops || [])) {
+    if (st.home) continue;                       // hotel return is the endpoint, not a block
+    const a = st.abs ?? tkc(st.t); if (a == null) continue;
+    // a hub's block IS its buffer — three hours at Pudong is three hours of the day gone
+    const d = st.hub ? (st.hub.dwell ?? st.act ?? 30) : (st.act ?? st.adv ?? 30);
+    out.push({ s: a, d, name: st.name, meal: !!st.meal, key: nk(st.name),
+      hub: st.hub || null, bonus: !!st.bonus });
+  }
+  return out;
+}
+// One activity block, positioned on the shared clock axis so it reads against the top ruler.
+// Colour = on-time (green) vs past-21:30 (red). The block shows the activity NAME (when wide) + its DURATION.
+function seg(st) {
+  const s = st.s, d = Math.max(5, st.d || 0), end = s + d;
+  const left = P(s), w = Math.max(0.5, P(end) - left);
+  const key = st.key != null ? st.key : nk(st.name);
+  let cls = st.opt ? 'seg opt' : s >= 1440 ? 'seg late pm' : end > 1290 ? 'seg late' : 'seg ok';
+  if (st.hub) cls = 'seg hub' + (st.hub.approx ? ' approx' : '');   // locked: a flight/train you cannot move
+  else if (st.bonus) cls += ' bonusseg';                            // on the timeline, but not committed clock
+  const m = st.meal ? ' mealseg' : '';                                   // NB: not "meal" — that clashes with the old meal-pip rule (translateX(-50%))
+  const named = w >= 11;                                                 // room for the activity name
+  const lock = st.hub ? `<span class="lk">${st.hub.approx ? '~' : '\u{1F512}'}</span>` : '';
+  const nm = named ? `<span class="sn">${lock}${esc(st.name)}</span>` : lock;
+  const dd = w >= 3 ? `<span class="sd">${d}m</span>` : '';              // duration where it fits
+  const tight = named ? '' : ' tight';                                   // narrow blocks drop padding so they never inflate past their slot
+  let tip = `${st.name} · ${hhmm(s)}–${hhmm(end)} · ${d}m${st.opt ? ' (optional)' : ''}`;
+  if (st.hub) {
+    const h = st.hub;
+    tip = h.role === 'depart'
+      ? `${h.number || h.mode} ${h.route || ''} departs ${h.departTime}\nBe at ${h.terminal ? h.terminal + ' ' : ''}the ${h.mode === 'Flight' ? 'airport' : 'station'} by ${h.beThereBy} — ${d}m check-in${h.approx ? '\n⚠ time is provisional (tickets not on sale yet)' : ''}`
+      : `${h.number || h.mode} ${h.route || ''} arrives ${h.arriveTime}\n${d}m to clear${h.terminal ? ' ' + h.terminal : ''} — out by ${h.clearBy}${h.approx ? '\n⚠ time is provisional' : ''}`;
+  } else if (st.bonus) tip += ' · bonus / swap — not part of the committed plan';
+  return `<div class="${cls}${m}${tight}" data-key="${esc(key)}" role="button" tabindex="0" style="left:${left.toFixed(2)}%;width:${w.toFixed(2)}%" title="${esc(tip)}">${nm}${dd}</div>`;
+}
+const renderTrack = segs => (segs || []).map(seg).join('');
+// The end of the day is a block like any other: it begins the moment you get home and is
+// sized to its own label. Anchored right when it would otherwise run off the end of the track.
+function homeSeg(endMin, label, kind, tip) {
+  const over = endMin > T1;                       // past the right edge of the clock entirely
+  const left = P(endMin);
+  const pos = (over || left > 86) ? 'right:2px' : `left:${left.toFixed(2)}%`;
+  return `<div class="seg homeseg ${kind}${over ? ' broken' : ''}" style="${pos}" title="${esc(tip)}">${over ? '⇥ ' : ''}${label}</div>`;
 }
 
 const flagged = DATA.filter(d => d.flagged), severe = DATA.filter(d => d.sev === 'severe'), moderate = DATA.filter(d => d.sev === 'moderate');
@@ -51,10 +84,14 @@ const statsHTML = [['bad', flagged.length, 'get home late'], ['bad', severe.leng
   ['warn', moderate.length, 'a bit late'], ['', worst ? `${worst.city} d${worst.day}` : '—', 'worst — home ' + (worst ? EL(worst.endMin) : '')]]
   .map(([c, n, k]) => `<div class="stat ${c}"><div class="n">${esc(n)}</div><div class="k">${k}</div></div>`).join('');
 
-const ticks = [[360,'06'],[540,'09'],[720,'12'],[900,'15'],[1080,'18'],[1290,'21:30',1],[1440,'00'],[1560,'02'],[1680,'04']];
-const axisHTML = ticks.map(([m, l, s]) => `<span class="tk${s ? ' s' : ''}" style="left:${P(m)}%">${l}</span>`).join('');
-
-const mealPip = (m, L) => m == null ? '' : `<div class="meal" style="left:${P(m)}%"><span class="pip" style="background:${(L === 'D' ? m > 1170 : m > 840) ? 'var(--bad)' : 'var(--ok)'}"></span><span class="ml">${L}</span></div>`;
+// top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
+const clock = [[300,'05'],[420,'07'],[540,'09'],[660,'11'],[780,'13'],[900,'15'],[1020,'17'],[1140,'19'],[1260,'21'],[1380,'23'],[1500,'01'],[1620,'03']];
+// a small grey clock strip sits directly above each day's bars, so the scale is always in view
+const miniAx = `<div class="miniax">` + clock.map(([m, l]) => `<span class="mtk" style="left:${P(m)}%">${l}</span>`).join('') + `</div>`;
+// the same fragment lines run down through every bar so each block reads against the clock
+const gridHTML = clock.map(([m]) => `<div class="gl" style="left:${P(m)}%"></div>`).join('');
+// the sane window (07:00 → 21:30) is shaded rather than labelled, so it costs no vertical space
+const BAND = `linear-gradient(90deg,var(--surface-2) 0 ${P(420).toFixed(3)}%,var(--band) ${P(420).toFixed(3)}% ${P(1290).toFixed(3)}%,var(--surface-2) ${P(1290).toFixed(3)}% 100%)`;
 let cur = null, out = '';
 for (const d of DATA) {
   if (d.city !== cur) {
@@ -66,39 +103,154 @@ for (const d of DATA) {
       `<span class="city-name">${esc(d.city)}</span>` +
       `<span class="city-meta">${cd.length} day${cd.length > 1 ? 's' : ''}${bad ? ` · <b>${bad} late</b>` : ' · all clear'}</span></div><div class="city-body">`;
   }
-  const L = P(d.startMin), R = P(d.endMin), fillR = Math.min(R, P(1290)), fw = ((fillR - L) / (R - L) * 100) || 0, ofc = sev(d.sev);
+  const R = P(d.endMin);
   const ec = d.endMin > 1350 ? 'var(--bad)' : d.endMin > 1290 ? 'var(--warn)' : 'var(--ink-2)';
-  const es = R > 80 ? `right:${100 - R}%;padding-right:6px;text-align:right` : `left:${R}%;padding-left:6px`;
-  const of = d.endMin > 1290 ? `<div class="overflow" style="left:${P(1290)}%;right:${100 - R}%;background:repeating-linear-gradient(45deg,${ofc} 0 3px,transparent 3px 7px);box-shadow:inset 0 0 0 1px ${ofc}"></div>` : '';
+  const es = R > 80 ? `right:${(100 - R).toFixed(2)}%;padding-right:6px;text-align:right` : `left:${R.toFixed(2)}%;padding-left:6px`;
   const homeTxt = d.home && d.homeMin != null ? ` · home ${d.homeMode} ${d.homeMin}m${d.homeKm != null ? '/' + d.homeKm + 'km' : ''}` : (d.home ? '' : ' · departs (no return)');
   const tip = esc(`${d.city} Day ${d.day} · ${wd(d.date)} ${dm(d.date)}\n${d.nStops} stops · ${d.lunchMin ? 'lunch ' + hhmm(d.lunchMin) : 'no lunch'} · ${d.dinnerMin ? 'dinner ' + hhmm(d.dinnerMin) : 'no dinner'}${homeTxt} · home ${EL(d.endMin)}`);
-  const mode = (icon, min, isRec) => `<span class="mo${isRec ? ' rec' : ''}">${icon}${min != null ? min : '—'}</span>`;
-  const rows = (d.stops || []).map(st => {
-    // Actual is judged against the RESEARCHED suggested time (fallback to our default)
-    const base = st.res ?? st.adv;
-    const ratio = base && st.act != null ? st.act / base : null;
-    const rc = ratio == null ? '' : ratio < 0.5 ? ' r' : ratio < 0.8 ? ' t' : '';
-    const tag = st.home ? ' <span class="tag">home</span>' : st.meal ? ' <span class="tag">meal</span>' : '';
-    const cls = [st.home ? 'rhome' : '', st.meal ? 'rmeal' : ''].filter(Boolean).join(' ');
-    const travel = st.home ? '' : `${mode('🚶', st.w, st.rec === 'walk')} ${mode('🚇', st.me, st.rec === 'metro')} ${mode('🚕', st.dd, st.rec === 'didi')}`;
-    return `<tr class="${cls}"><td class="an">${esc(st.name)}${tag}</td>` +
-      `<td class="tm">${st.t || '—'}</td><td class="tm end">${st.end || '—'}</td>` +
-      `<td class="tm def">${st.adv != null ? st.adv + 'm' : '—'}</td>` +
-      `<td class="tm res"${st.resnote ? ` title="${esc(st.resnote)}"` : ''}>${st.res != null ? st.res + 'm' : '—'}</td>` +
-      `<td class="tm act${rc}">${st.act != null ? st.act + 'm' : '—'}</td>` +
-      `<td class="tv">${travel}</td></tr>`;
+  const RB = REBUILT.days[`${d.city}|${d.day}`] || null;
+  const rbStops = RB ? RB.stops : [];
+  const advOf = n => { const st = (d.stops || []).find(x => x.name === n); return st || {}; };
+  const cell = (min, on, ttl) => `<td class="tm tv${on ? ' rec' : ''}"${ttl ? ` title="${ttl}"` : ''}>${min != null ? fmtDur(min) : '—'}</td>`;
+
+  // "Travel to next" means exactly that: row i carries the leg OUT of it, which is the travelIn of
+  // row i+1 — and the last row carries the leg home. Previously each row showed its own travelIn
+  // under a "to next" header, so every leg was displayed one row late and the trip home never
+  // appeared at all.
+  const legOut = i => (i + 1 < rbStops.length)
+    ? rbStops[i + 1].travelIn
+    : (RB && RB.homeTravel ? { ...RB.homeTravel, est: RB.homeTravel.estimated } : null);
+
+  const rows = rbStops.map((r, ri) => {
+    const a = advOf(r.name);
+    const isHub = !!r.hub, isMeal = !!r.meal;
+    const tag = isHub ? ' <span class="tag">' + (r.hub.role === 'depart' ? 'depart' : 'arrive') + '</span>'
+      : isMeal ? ' <span class="tag">meal</span>' : '';
+    const cls = [isMeal ? 'rmeal' : '', isHub ? 'rhub' : ''].filter(Boolean).join(' ');
+    const why = [a.resnote, a.resbasis].filter(Boolean).join(' — ');
+    // advOf only searches the ORIGINAL day's stops, so a stop moved in from another day had no
+    // Advice at all. Fall back to the researched value the rebuild already resolved for it.
+    const advMin = a.res ?? r.advice ?? null;
+    const adv = advMin != null
+      ? `<td class="tm sug${a.resconf === 'low' ? ' lowconf' : ''}"${why ? ` title="${esc(why)}"` : ''}>${fmtDur(advMin)}${a.resconf === 'low' ? '<span class="qm">?</span>' : ''}</td>`
+      : `<td class="tm sug">—</td>`;
+    const t = legOut(ri);
+    const isLast = ri === rbStops.length - 1;
+    const dest = isLast ? '🏠 hotel' : (rbStops[ri + 1] || {}).name;
+    const ttl = t
+      ? esc(`→ ${dest} · ${t.coloc ? 'same place, no travel'
+          : `${t.mode} ${t.minutes}m${t.km != null ? ` / ${t.km} km` : ''}${t.est ? ' (estimated)' : ' (routed)'}`}`)
+      : '';
+    // A co-located hop is a real, known zero — draw it as 0, not as the "—" that means "no data".
+    const trav = !t
+      ? '<td class="tm tv">—</td><td class="tm tv">—</td><td class="tm tv">—</td>'
+      : t.coloc
+        ? `<td class="tm tv coloc" colspan="3" title="${ttl}">· same place ·</td>`
+        : cell(t.mode === 'walk' ? t.minutes : null, t.mode === 'walk', ttl)
+          + cell(t.mode === 'metro' ? t.minutes : null, t.mode === 'metro', ttl)
+          + cell(t.mode === 'didi' ? t.minutes : null, t.mode === 'didi', ttl);
+    // A dwell cut short by a closing time must SAY so — otherwise a shorter Total silently reads as
+    // "this is all it needs" instead of "this is all the day could buy".
+    const capT = r.cap
+      ? esc(`Cut short: ${r.name} closes ${r.cap.closes}${r.cap.lastEntry ? ` (last entry ${r.cap.lastEntry})` : ''}. `
+          + `${r.cap.lost} min less than the ${fmtDur(r.advice ?? 0)} advice.${r.cap.tooLate ? ' ARRIVES AFTER LAST ENTRY.' : ''}`
+          + (r.cap.conf && r.cap.conf !== 'high' ? ` Closing time confidence: ${r.cap.conf}.` : ''))
+      : '';
+    const totCls = 'tm tot b1r' + (r.cap ? (r.cap.tooLate ? ' capbad' : ' capped') : '');
+    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"><td class="an">${esc(r.name)}${tag}</td>`
+      + `<td class="tm b1">${hhmm(r.s)}</td><td class="tm">${hhmm(r.s + r.d)}</td>`
+      + `<td class="${totCls}"${capT ? ` title="${capT}"` : ''}>${fmtDur(r.d)}${r.cap ? '<span class="qm">⏱</span>' : ''}</td>`
+      + `<td class="tm pc b2">—</td><td class="tm pc">—</td><td class="tm tot pc b2r">—</td>`
+      + adv + trav + `</tr>`;
   }).join('');
-  const prop = PROPOSALS[`${d.city}|${d.day}`];
-  const fixText = prop && prop.fix ? prop.fix : d.fix;
-  const detail = `<div class="detail">${prop ? renderProposal(prop) : ''}<table class="acts"><thead><tr><th>Activity</th><th>Start</th><th>End</th><th>Default</th><th class="hres">Suggested</th><th class="hact">Actual</th><th class="htv">Travel → next</th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  out += `<div class="day${d.flagged ? '' : ' ok-day'}${prop ? ' open has-prop' : ''}">` +
-    `<div class="row" role="button" tabindex="0" aria-expanded="${prop ? 'true' : 'false'}" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
-    `<div class="lbl"><div class="d"><span class="cv">›</span>Day ${d.day}</div><div class="dt">${wd(d.date)} ${dm(d.date)}</div><span class="stops">${d.nStops} stops</span>${prop ? '<span class="pflag">proposal</span>' : ''}</div>` +
-    `<div class="track" title="${tip}"><div class="gl" style="left:${P(540)}%"></div><div class="gl" style="left:${P(720)}%"></div>` +
-      `<div class="gl" style="left:${P(900)}%"></div><div class="gl" style="left:${P(1080)}%"></div><div class="gl mid" style="left:${P(1440)}%"></div><div class="gl tgt" style="left:${P(1290)}%"></div>` +
-      `<div class="bar ${d.sev}" style="left:${L}%;right:${100 - R}%"><div class="fill" style="width:${fw}%"></div></div>${of}${mealPip(d.lunchMin, 'L')}${mealPip(d.dinnerMin, 'D')}` +
-      `<div class="endlbl" style="${es};color:${ec}">${EL(d.endMin)}</div></div></div>` +
-    (fixText ? `<div class="fix${prop ? ' fix-prop' : ''}">${esc(fixText)}</div>` : '') + detail + '</div>';
+
+  // Ideas belong to the day they FELL OUT OF, not to the city at large — a parked stop is only
+  // meaningful next to the day whose budget rejected it. Moves are listed separately: a stop that
+  // simply changed day is still happening and must not be mistaken for a cut.
+  const dayKey = `${d.city}|${d.day}`;
+  const dayIdeas = (REBUILT.ideasByDay || {})[dayKey] || [];
+  const dayMoves = (REBUILT.movesByDay || {})[dayKey] || [];
+  const ideasHTML = (dayIdeas.length ? `<div class="ideas"><div class="chgh">Ideas — dropped from Day ${d.day} · not scheduled (${dayIdeas.length})</div>`
+    + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Why it is parked</th></tr></thead><tbody>`
+    + dayIdeas.map(i => { const a = advOf(i.name); return `<tr><td class="an">${esc(i.name)}</td>`
+        + `<td class="tm sug">${a.res != null ? fmtDur(a.res) : '—'}</td><td class="iw">${esc(i.why || '')}</td></tr>`; }).join('')
+    + `</tbody></table></div>` : '')
+    + (dayMoves.length ? `<div class="ideas"><div class="chgh">Moved · still happening (${dayMoves.length})</div>`
+    + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Where it went</th></tr></thead><tbody>`
+    + dayMoves.map(m => { const a = advOf(m.name); return `<tr><td class="an">${esc(m.name)}</td>`
+        + `<td class="tm sug">${a.res != null ? fmtDur(a.res) : '—'}</td><td class="iw">`
+        + (m.status === 'moved' ? `was on this day → now <b>Day ${m.to}</b>` : `moved here from <b>Day ${m.from}</b>`)
+        + `</td></tr>`; }).join('')
+    + `</tbody></table></div>` : '');
+
+  // Everything below describes the COMMITTED (rebuilt) day. It previously read from the old
+  // replan, which is why a bar ending 19:51 could sit above a note claiming 23:51.
+  const rbEnd = RB ? RB.endMin : d.endMin;
+  const fixText = RB ? [RB.theme, RB.why].filter(Boolean).join(' — ') : d.fix;
+  const chgHTML = '';                                   // nothing to diff: the Proposed side is empty by design
+  const sug = [];
+  if (RB && RB.missed) sug.push(`<b class="brk">MISSES A LOCKED DEPARTURE</b> — ${esc(RB.missed.name)}, be there ${esc(RB.missed.beThereBy)}. The flight/train will not wait.`);
+  if (rbEnd > 21 * 60 + 30) {
+    const over = rbEnd - (21 * 60 + 30);
+    sug.push(`Gets home <b>${EL(rbEnd)}</b> — ${Math.floor(over / 60)}h${String(over % 60).padStart(2, '0')} past 21:30. Fine if you want the stretch; otherwise the Ideas table below is where to trade.`);
+  }
+  const approxHubs = [...new Set((RB ? RB.stops : []).filter(x => x.hub && x.hub.approx).map(x => x.name))];
+  if (approxHubs.length) sug.push(`<b>${esc(approxHubs.join(', '))}</b> — train time is still provisional (HSR tickets go on sale ~15 days ahead), so don't plan tightly against it yet.`);
+  for (const n of (RB && RB.absorbed) || []) sug.push(`<b>${esc(n)}</b> is the journey itself — it is the gap between the two locked hubs, not a separate stop.`);
+  // The "N of this day's hops are estimated" note was dropped — it fired on nearly every day and said
+  // nothing actionable. Estimated-vs-routed is still per-leg in the travel column's tooltip, which is
+  // where you'd actually want it. Genuine hard warnings above (missed departure, provisional train)
+  // stay; when a day raises none, the whole "Your call" block simply doesn't render.
+  const sugHTML = sug.length ? `<div class="chg sug"><div class="chgh">Your call</div><ul>` + sug.map(t => `<li>${t}</li>`).join('') + `</ul></div>` : '';
+  // Per-day map: the stops in the sequence you actually walk them, numbered. Uses the proposed
+  // order when there is one, otherwise the current order. Coordless places are skipped.
+  const mapSeq = rbStops.map(r => { const st = (d.stops || []).find(x => x.name === r.name); return st || { name: r.name }; });
+  const pts = mapSeq.map((s, i) => (s && s.lat != null)
+    ? { n: i + 1, lat: s.lat, lng: s.lng, name: s.name || s.label, k: nk(s.name || s.label),
+        t: s.ptype === 'Hotel' ? 'hotel' : s.ptype === 'Food' ? 'food' : 'act' } : null).filter(Boolean);
+  const noCoord = mapSeq.length - pts.length;
+  const mapHTML = `<div class="mapwrap"><div class="chgh">Route map — ${esc(d.city)}, day ${d.day}` +
+    `` + ` <span class="apx">numbered in the committed order</span>` +
+    `${noCoord ? ` <span class="apx">· ${noCoord} stop${noCoord > 1 ? 's' : ''} without coordinates not shown</span>` : ''}</div>` +
+    `<div class="mlg"><span class="mit"><i class="msw mk-act"></i>activity</span>` +
+    `<span class="mit"><i class="msw mk-food"></i>food</span>` +
+    `<span class="mit"><i class="msw mk-hotel"></i>hotel</span></div>` +
+    `<div class="map" data-pts="${esc(JSON.stringify(pts))}"></div></div>`;
+
+  const detail = `<div class="detail">`
+    + `<table class="acts">`
+    + `<colgroup><col class="wA"><col class="wT"><col class="wT"><col class="wTot">`
+    + `<col class="wT"><col class="wT"><col class="wTotP"><col class="wSug">`
+    + `<col class="wTv"><col class="wTv"><col class="wTv"></colgroup><thead>`
+    + `<tr><th>Activity</th><th class="b1">Start</th><th>End</th><th class="b1r">Total</th>`
+    + `<th class="b2">Start</th><th>End</th><th class="b2r">Total</th>`
+    + `<th class="hsug">Advice</th>`
+    + `<th class="htv b3">Walk</th><th class="htv">Metro</th><th class="htv b3r">DiDi</th></tr></thead>`
+    + `<tbody>${rows}</tbody>`
+    + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Current</th>`
+    + `<th class="b2 b2r gh" colspan="3">Proposed</th><th></th>`
+    + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table>`
+    + (fixText ? `<div class="sumwrap"><div class="chgh">Summary</div>`
+      + `<div class="fix fix-prop${RB && RB.missed ? ' fix-warn' : ''}">${esc(fixText)}</div></div>` : '')
+    + ideasHTML + chgHTML + sugHTML + `</div>`;
+  // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
+  // The proposed bar is deliberately empty — this is where the next review pass will write.
+  const row2 = `<div class="row2"><div class="track2 empty" title="Proposed — nothing yet; this is where the next pass writes">${gridHTML}</div></div>`;
+  const badge = RB
+    ? (RB.missed ? '<span class="pflag warn2">misses a departure</span>'
+      : rbEnd > 22 * 60 + 30 ? '<span class="pflag warn2">late finish</span>'
+      : '<span class="pflag ok2">✓ fits</span>')
+    : '';
+  out += `<div class="day${d.flagged ? '' : ' ok-day'} has-prop">` +
+    `<div class="dhead" role="button" tabindex="0" aria-expanded="false" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
+      `<span class="cv">›</span><span class="dnum">Day ${d.day}</span>` +
+      `<span class="ddate">${wd(d.date)} ${dm(d.date)}</span>` +
+      `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>${badge}</div>` +
+    mapHTML + miniAx + `<div class="row"><div class="track" title="${tip}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null })))}` +
+      homeSeg(RB ? RB.endMin : d.endMin, `${d.home ? '🏠' : '✈'} ${EL(RB ? RB.endMin : d.endMin)}`,
+        (RB ? RB.endMin : d.endMin) > 1350 ? 'bad' : (RB ? RB.endMin : d.endMin) > 1290 ? 'warn' : 'ok2',
+        d.home ? `Back to the hotel — ${EL(RB ? RB.endMin : d.endMin)}` : `Departure day — fly out ${EL(RB ? RB.endMin : d.endMin)}`) + `</div></div>` +
+    row2 + detail + '</div>';
 }
 out += '</div></section>';
 
@@ -109,25 +261,106 @@ function setFilter(bad){document.body.classList.toggle("only-bad",bad);
   document.querySelectorAll(".city").forEach(c=>c.classList.toggle("empty",bad&&c.dataset.bad==="0"));}
 fAll.onclick=()=>setFilter(false);fBad.onclick=()=>setFilter(true);
 document.getElementById("tFix").onchange=e=>document.body.classList.toggle("hide-fix",!e.target.checked);
-function toggleRow(row){const day=row.closest(".day");if(!day)return;const open=day.classList.toggle("open");row.setAttribute("aria-expanded",open);}
-chart.addEventListener("click",e=>{const r=e.target.closest(".row");if(r)toggleRow(r);});
-chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const r=e.target.closest(".row");if(r){e.preventDefault();toggleRow(r);}});
+function toggleRow(row){const day=row.closest(".day");if(!day)return;const open=day.classList.toggle("open");row.setAttribute("aria-expanded",open);if(open)initMaps(day);}
+// Click a block in either bar → select it and highlight the matching row in the table.
+function selectSeg(el){
+  const day=el.closest(".day"); if(!day) return;
+  const key=el.dataset.key, was=el.classList.contains("sel");
+  day.querySelectorAll(".seg.sel").forEach(s=>s.classList.remove("sel"));
+  day.querySelectorAll("tr.rowsel").forEach(r=>r.classList.remove("rowsel"));
+  if(was){                                         // clicking the selected block clears it
+    const m0=day.querySelector(".map");
+    if(m0&&m0._marks&&window.google&&google.maps){
+      Object.keys(m0._marks).forEach(k=>{const m=m0._marks[k];m.setIcon(mkIcon(m.__col,false));m.setZIndex(1);});
+      if(m0._gmap&&m0._bounds){const g=m0._gmap,b=m0._bounds;
+        g.getCenter()?g.fitBounds(b,40):google.maps.event.addListenerOnce(g,"idle",()=>g.fitBounds(b,40));}
+    }
+    return;
+  }
+  day.querySelectorAll('.seg[data-key="'+CSS.escape(key)+'"]').forEach(s=>s.classList.add("sel"));
+  if(!day.classList.contains("open")){day.classList.add("open");const r=day.querySelector(".dhead");if(r)r.setAttribute("aria-expanded",true);initMaps(day);}
+  const tr=day.querySelector('tr[data-key="'+CSS.escape(key)+'"]');
+  if(tr){tr.classList.add("rowsel");tr.scrollIntoView({block:"nearest"});}
+  const mp=day.querySelector(".map");
+  if(mp&&mp._marks&&window.google&&google.maps){
+    Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key));m.setZIndex(k===key?999:1);});
+    const hit=mp._marks[key];
+    if(hit&&mp._gmap){
+      const g=mp._gmap,go=()=>{g.panTo(hit.getPosition());g.setZoom(16);};
+      g.getCenter()?go():google.maps.event.addListenerOnce(g,"idle",go);
+    }
+  }
+}
+chart.addEventListener("click",e=>{const s=e.target.closest(".seg");if(s&&s.dataset.key){e.stopPropagation();selectSeg(s);}},true);
+chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const s=e.target.closest(".seg");if(s&&s.dataset.key){e.preventDefault();e.stopPropagation();selectSeg(s);}},true);
+chart.addEventListener("click",e=>{const r=e.target.closest(".dhead");if(r)toggleRow(r);});
+chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const r=e.target.closest(".dhead");if(r){e.preventDefault();toggleRow(r);}});
 // expand-all / collapse-all
-const xa=document.getElementById("xAll");if(xa)xa.onclick=()=>{const any=!document.querySelector(".day.open");document.querySelectorAll(".day").forEach(d=>{d.classList.toggle("open",any);const r=d.querySelector(".row");if(r)r.setAttribute("aria-expanded",any);});xa.textContent=any?"Collapse all":"Expand all";};`;
+const xa=document.getElementById("xAll");if(xa)xa.onclick=()=>{const any=!document.querySelector(".day.open");document.querySelectorAll(".day").forEach(d=>{d.classList.toggle("open",any);const r=d.querySelector(".dhead");if(r)r.setAttribute("aria-expanded",any);});xa.textContent=any?"Collapse all":"Expand all";};
+// light / dark toggle — always starts light (the OS setting is deliberately
+// ignored; this canvas is read in light mode), then lets you override.
+const thm=document.getElementById("thm");if(thm){const root=document.documentElement;
+  let mode="light";
+  const apply=()=>{root.setAttribute("data-theme",mode);thm.setAttribute("aria-pressed",mode==="light");thm.textContent=mode==="dark"?"☀ Light":"☾ Dark";};
+  apply();thm.onclick=()=>{mode=mode==="dark"?"light":"dark";apply();};}
+// Per-day maps build lazily on first open — 36 Leaflet instances up front would be wasteful,
+// and a map sized inside a hidden container comes out wrong.
+window.__gmready=false;
+window.gmapsReady=function(){window.__gmready=true;document.querySelectorAll(".day.open").forEach(initMaps);};
+const MKCOL={act:"#2F6FB5",food:"#C77A16",hotel:"#2E7D57"};
+function mkIcon(col,on){return{path:google.maps.SymbolPath.CIRCLE,scale:on?15:11,fillColor:col,fillOpacity:1,
+  strokeColor:on?"#C1443C":"#ffffff",strokeWeight:on?4:2};}
+function initMaps(day){
+  if(!window.__gmready||!window.google||!google.maps)return;
+  day.querySelectorAll(".map").forEach(el=>{
+    if(el.dataset.init)return; el.dataset.init="1";
+    let pts=[];try{pts=JSON.parse(el.dataset.pts||"[]");}catch(e){}
+    if(!pts.length){el.innerHTML='<div class="mapempty">No coordinates for this day</div>';return;}
+    const map=new google.maps.Map(el,{mapTypeControl:false,streetViewControl:false,fullscreenControl:false,
+      gestureHandling:"cooperative",zoomControl:true});
+    const path=pts.map(p=>({lat:p.lat,lng:p.lng}));
+    new google.maps.Polyline({path,strokeOpacity:0,map,
+      icons:[{icon:{path:"M 0,-1 0,1",strokeOpacity:.75,strokeColor:"#8C5A2B",scale:3},offset:"0",repeat:"12px"}]});
+    const b=new google.maps.LatLngBounds(),marks={};
+    pts.forEach(p=>{
+      const col=MKCOL[p.t]||MKCOL.act;
+      const m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map,icon:mkIcon(col,false),
+        label:{text:String(p.n),color:"#ffffff",fontSize:"11px",fontWeight:"700"},title:p.n+". "+p.name});
+      m.__col=col;
+      const iw=new google.maps.InfoWindow({content:"<b>"+p.n+". "+p.name+"</b>"});
+      m.addListener("click",()=>iw.open({anchor:m,map}));
+      marks[p.k]=m; b.extend(m.getPosition());
+    });
+    el._marks=marks; el._gmap=map; el._bounds=b;
+    map.fitBounds(b,40);
+    if(pts.length===1)google.maps.event.addListenerOnce(map,"idle",()=>map.setZoom(15));
+  });
+}
+if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);`;
 
 const EXTRA = `<style>
-.wrap .day .row{cursor:pointer;border-radius:9px;}
-.wrap .day .row:focus-visible{outline:2px solid var(--target);outline-offset:-2px;}
+.wrap .dhead{display:flex;align-items:center;gap:9px;cursor:pointer;padding:7px 4px 5px;border-radius:8px;}
+.wrap .dhead:hover{background:var(--surface-2);}
+.wrap .dhead:focus-visible{outline:2px solid var(--target);outline-offset:-2px;}
+.wrap .dnum{font-size:13.5px;font-weight:800;letter-spacing:-.01em;}
+.wrap .ddate{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;}
+.wrap .day.ok-day .dnum{color:var(--ink-2);}
+.wrap .stops{margin-top:0;}
+.wrap .pflag{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--target);background:color-mix(in srgb,var(--target) 14%,transparent);border:1px solid color-mix(in srgb,var(--target) 34%,transparent);border-radius:5px;padding:1px 6px;}
+.wrap .pflag.ok2{color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent);border-color:color-mix(in srgb,var(--ok) 34%,transparent);}
+.wrap .pflag.warn2{color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent);border-color:color-mix(in srgb,var(--warn) 34%,transparent);}
+.wrap .row2{display:block;padding:0 0 6px;}
+.wrap .day{padding-bottom:6px;}
 .wrap .cv{display:inline-block;transition:transform .15s ease;color:var(--ink-3);font-weight:700;margin-right:5px;}
 .wrap .day.open .cv{transform:rotate(90deg);}
-.wrap .day .fix{padding-left:130px;}
-.wrap .detail{display:none;padding:2px 0 12px 130px;overflow-x:auto;}
+
+.wrap .detail{display:none;padding:16px 0 14px;overflow-x:auto;}
 .wrap .day.open .detail{display:block;}
-.wrap table.acts{border-collapse:collapse;font-size:12px;min-width:360px;}
+.wrap table.acts{border-collapse:collapse;font-size:11px;min-width:360px;}
 .wrap table.acts th{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line);}
 .wrap table.acts th,.wrap table.acts td{padding:7px 0 7px 60px;}
 .wrap table.acts th:first-child,.wrap table.acts td:first-child{padding-left:0;text-align:left;}
-.wrap table.acts th:not(:first-child),.wrap table.acts td:not(:first-child){text-align:right;}
+.wrap table.acts th:not(:first-child),.wrap table.acts td:not(:first-child){text-align:left;}
 .wrap table.acts td{border-bottom:1px solid var(--line);color:var(--ink-2);}
 .wrap table.acts td.an{color:var(--ink);white-space:nowrap;}
 .wrap table.acts td.tm{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;}
@@ -144,52 +377,138 @@ const EXTRA = `<style>
 .wrap table.acts .mo{margin-left:11px;color:var(--ink-3);font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:11px;}
 .wrap table.acts .mo:first-child{margin-left:0;}
 .wrap table.acts .mo.rec{color:var(--ink);font-weight:800;}
-.wrap table.acts{min-width:900px;}
+.wrap table.acts{min-width:800px;width:100%;}
+.wrap table.acts th,.wrap table.acts td{padding-left:10px;}
+.wrap table.acts{table-layout:fixed;}
+.wrap table.acts col.wA{width:23%;} .wrap table.acts col.wT{width:7.5%;}
+.wrap table.acts col.wTot{width:8.5%;} .wrap table.acts col.wTotP{width:12%;}
+.wrap table.acts col.wSug{width:9%;} .wrap table.acts col.wTv{width:7%;}
+.wrap table.acts td.an{overflow:hidden;text-overflow:ellipsis;}
+.wrap table.acts td.tm,.wrap table.acts thead th,.wrap table.acts tfoot th{text-align:left;white-space:nowrap;}
+.wrap table.acts th.htv,.wrap table.acts td.tv{padding-left:10px;text-align:left;}
+.wrap table.acts .b3{border-left:1px solid var(--line);}
+.wrap table.acts .b3r{border-right:1px solid var(--line);}
+.wrap table.acts td.sug,.wrap table.acts th.hsug,.wrap table.acts th.gs{color:var(--ink-3);}
+.wrap table.acts td.sug{cursor:help;}
+.wrap table.acts td.sug .qm{color:var(--warn);font-weight:800;margin-left:2px;}
+.wrap table.acts th.gs{text-align:left;font-weight:800;}
+.wrap table.acts .dl{font-weight:800;margin-left:3px;}
+.wrap table.acts .dl.up{color:var(--ok);}
+.wrap table.acts .dl.dn{color:var(--bad);}
+.wrap .miniax{position:relative;height:15px;background:var(--surface-2);border-radius:5px;margin:3px 0 3px;}
+.wrap .mtk{position:absolute;transform:translateX(-50%);top:2px;font-size:9px;font-family:var(--mono);color:var(--ink-3);}
+.wrap .mtk.tgt{color:var(--target);font-weight:700;}
+.wrap table.acts tr.grp th{font-size:9px;letter-spacing:.07em;padding-bottom:3px;border-bottom:0;}
+.wrap table.acts tfoot tr.gfoot th{padding-top:7px;padding-bottom:0;border-top:1px solid var(--line);}
+.wrap table.acts th.gh{text-align:left;color:var(--ink-2);}
+.wrap table.acts th.b2.gh{color:var(--target);}
+.wrap table.acts th.gt{text-align:left;color:var(--ink-3);}
+.wrap table.acts .b1{border-left:1px solid var(--line);}
+.wrap table.acts .b1r{border-right:1px solid var(--line);}
+.wrap table.acts .b2{border-left:1px solid var(--line);}
+.wrap table.acts .b2r{border-right:1px solid var(--line);}
+.wrap table.acts tbody td.pc{background:color-mix(in srgb,var(--target) 5%,transparent);color:var(--ink-3);}
+.wrap .track2.empty{background:repeating-linear-gradient(90deg,var(--surface-2) 0 6px,transparent 6px 12px);opacity:.5;}
+.wrap table.acts tr.rhub td{font-weight:700;}
+.wrap .ideas{margin:18px 0 4px;}
+.wrap table.acts.idt{min-width:0;width:100%;table-layout:auto;}
+.wrap table.acts.idt td.iw{color:var(--ink-2);white-space:normal;font-size:10.5px;}
+.wrap table.acts.idt td.an{color:var(--ink-2);}
+.wrap table.acts tbody tr.rowsel td,.wrap table.acts tbody tr.rowsel td.pc{background:color-mix(in srgb,var(--target) 13%,transparent);}
+.wrap table.acts tbody tr:hover td,.wrap table.acts tbody tr:hover td.pc{background:color-mix(in srgb,var(--target) 7%,transparent);}
+.wrap table.acts td.tot{font-weight:700;color:var(--ink);}
+.wrap table.acts tr.radd td.an{color:var(--ok);font-style:italic;}
 body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .xbtn{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:6px 12px;cursor:pointer;}
 .wrap .xbtn:hover{color:var(--ink);}
 .wrap .xbtn:focus-visible{outline:2px solid var(--target);outline-offset:2px;}
-.wrap .lbl .pflag{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--target);background:color-mix(in srgb,var(--target) 14%,transparent);border:1px solid color-mix(in srgb,var(--target) 34%,transparent);border-radius:5px;padding:1px 5px;margin-top:4px;}
 .wrap .fix.fix-prop{max-width:84ch;color:var(--ink-2);}
-.wrap .prop{margin:2px 0 16px;padding:14px 16px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;}
-.wrap .phead{font-size:12.5px;color:var(--ink-2);margin-bottom:12px;}
-.wrap .phead b{color:var(--ink);font-weight:800;}
-.wrap .phead s{color:var(--ink-3);}
-.wrap .phead .parr{color:var(--ink-3);margin:0 3px;}
-.wrap .phead .pgood{color:var(--ok);}
-.wrap .phead .pdim{color:var(--ink-3);}
-.wrap .prow{display:flex;align-items:center;gap:0;margin-bottom:7px;}
-.wrap .pcap{flex:none;width:40px;padding-right:10px;text-align:right;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
-.wrap .pcap.new{color:var(--ok);}
-.wrap .ptrack{position:relative;flex:1;height:36px;border-radius:7px;background:var(--band);}
-.wrap .ptrack.pax{height:15px;background:transparent;}
-.wrap .ptk{position:absolute;transform:translateX(-50%);top:0;font-size:9.5px;font-family:var(--mono);color:var(--ink-3);}
-.wrap .pseg{position:absolute;top:4px;height:28px;border-radius:6px;padding:0 5px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;line-height:1.15;}
-.wrap .pseg .pl{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.wrap .pseg .ps{font-size:9px;font-weight:600;opacity:.9;font-variant-numeric:tabular-nums;white-space:nowrap;}
-.wrap .pseg.k-log,.wrap .pseg.k-meal{background:var(--surface);border:1px solid var(--line);color:var(--ink-3);}
-.wrap .pseg.k-meal .pl{font-style:italic;}
-.wrap .pseg.k-bloat{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 55%,transparent);color:var(--bad);}
-.wrap .pseg.k-rest{background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 55%,transparent);color:var(--ok);}
-.wrap .pseg.k-sighthi{background:var(--surface);border:1.5px solid var(--ok);color:var(--ink);}
-.wrap .pseg.k-move{background:var(--surface);border:1px dashed color-mix(in srgb,var(--bad) 50%,var(--line));color:var(--ink-2);}
-.wrap .pseg.k-opt{background:var(--surface);border:1px dashed var(--ink-3);color:var(--ink-3);}
-.wrap .pchips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:12px;}
-.wrap .pchip{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:3px 9px;}
-.wrap .pchip i{font-style:normal;font-weight:800;color:var(--target);font-family:var(--mono);}
-.wrap .plegend{display:flex;flex-wrap:wrap;gap:8px 15px;margin-top:11px;font-size:10.5px;color:var(--ink-3);}
-.wrap .pit{display:inline-flex;align-items:center;gap:6px;}
-.wrap .psw{width:13px;height:13px;border-radius:4px;flex:none;}
-.wrap .psw.k-bloat{background:var(--bad-soft);box-shadow:inset 0 0 0 1px var(--bad);}
-.wrap .psw.k-rest{background:var(--ok-soft);box-shadow:inset 0 0 0 1px var(--ok);}
-.wrap .psw.k-sighthi{background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--ok);}
-.wrap .psw.k-move{background:var(--surface);border:1px dashed color-mix(in srgb,var(--bad) 55%,var(--line));}
-.wrap .psw.k-opt{background:var(--surface);border:1px dashed var(--ink-3);}
-@media (max-width:520px){.wrap .day .fix,.wrap .detail{padding-left:82px;}.wrap table.acts{min-width:300px;}.wrap .pseg .pl{font-size:9px;}}
+.wrap .fix.fix-warn{color:var(--warn);}
+.wrap .fix.fix-warn::before{color:var(--warn);}
+.wrap .axis{padding-left:15px;}
+.wrap .axis .track-head{height:28px;}
+.wrap .axis .tk{position:absolute;transform:translateX(-50%);bottom:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--mono);}
+.wrap .axis .tk .tkl{font-size:11px;font-weight:700;color:var(--ink-2);letter-spacing:.02em;}
+.wrap .axis .tk .tkm{width:1px;height:7px;background:var(--ink-3);}
+.wrap .axis .tk.tgt .tkl{color:var(--target);}
+.wrap .axis .tk.tgt .tkm{width:2px;height:10px;background:var(--target);}
+.wrap .day .gl{background:var(--band-line);}
+.wrap .d .stops{margin-top:0;margin-left:8px;vertical-align:middle;}
+.wrap .seg{position:absolute;top:6px;height:18px;border-radius:4px;display:flex;align-items:center;gap:4px;padding:0 4px;overflow:hidden;font-size:9.5px;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);}
+.wrap .seg .sn{font-weight:700;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.wrap .seg .sd{font-family:var(--mono);flex:none;opacity:.7;}
+.wrap .seg.tight{padding:0;gap:0;justify-content:center;}
+.wrap .seg.ok{background:var(--ok-soft);color:var(--ink);border:1px solid color-mix(in srgb,var(--ok) 42%,transparent);}
+.wrap .seg.late{background:var(--bad-soft);color:var(--bad);border:1px solid color-mix(in srgb,var(--bad) 48%,transparent);}
+.wrap .seg.pm{background:repeating-linear-gradient(45deg,var(--bad-soft) 0 4px,transparent 4px 8px);color:var(--bad);border:1px solid var(--bad);}
+.wrap .seg.mealseg{opacity:.92;}
+.wrap .seg.mealseg .sn{font-style:italic;font-weight:600;}
+.wrap .seg.opt{background:var(--surface);color:var(--ink-3);border:1px dashed var(--ink-3);}
+.wrap .day.has-prop .row{padding-bottom:0;}
+
+
+
+.wrap .chg{margin:0 0 14px;}
+.wrap .chgh{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
+.wrap .chgh .apx{text-transform:none;letter-spacing:0;font-weight:600;color:var(--warn);margin-left:6px;}
+.wrap .chg ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;}
+.wrap .chg li{font-size:12px;color:var(--ink-2);padding-left:14px;position:relative;max-width:82ch;line-height:1.45;}
+.wrap .chg li::before{content:"•";position:absolute;left:2px;color:var(--ink-3);}
+.wrap .chg li b{color:var(--ink);font-weight:700;}
+.wrap .chg li.c-dropped::before{content:"−";color:var(--bad);}
+.wrap .chg li.c-rest::before{content:"+";color:var(--ok);}
+.wrap .seg{cursor:pointer;}
+.wrap .seg.hub{background:var(--ink);color:var(--bg);border:1px solid var(--ink);font-weight:800;box-shadow:none;}
+.wrap .seg.hub .sn{font-weight:800;}
+.wrap .seg.hub .sd{opacity:.75;}
+.wrap .seg.hub.approx{background:transparent;color:var(--ink);border:1px dashed var(--ink-2);}
+.wrap .seg .lk{margin-right:3px;font-size:8px;vertical-align:1px;}
+.wrap .seg.bonusseg{opacity:.55;border-style:dashed;}
+.wrap .seg.homeseg.broken{background:var(--bad);color:#fff;border-color:var(--bad);}
+.wrap .seg.homeseg{width:auto;padding:0 7px;gap:4px;font-weight:800;cursor:default;font-family:var(--mono);
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-2);box-shadow:none;}
+.wrap .seg.homeseg.ok2{color:var(--ok);background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 45%,transparent);}
+.wrap .seg.homeseg.warn{color:var(--warn);background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 50%,transparent);}
+.wrap .seg.homeseg.bad{color:var(--bad);background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 50%,transparent);}
+.wrap .seg.sel{outline:2px solid var(--target);outline-offset:1px;box-shadow:0 0 0 3px color-mix(in srgb,var(--target) 24%,transparent);z-index:3;}
+
+.wrap table.acts tr.rowsel td.an{box-shadow:inset 3px 0 0 var(--target);font-weight:700;}
+.wrap table.acts td.cur,.wrap table.acts th.hcur{color:var(--ink);font-weight:700;}
+.wrap table.acts td.res .dl{font-weight:800;margin-left:4px;}
+.wrap table.acts td.res .dl.up{color:var(--ok);}
+.wrap table.acts td.res .dl.dn{color:var(--bad);}
+.wrap table.acts td.tv{color:var(--ink-3);}
+.wrap table.acts td.tv.rec{color:var(--ink);font-weight:800;}
+.wrap .mapwrap{display:none;margin:8px 0 10px;}
+.wrap .day.open .mapwrap{display:block;}
+.wrap .map{height:330px;border:1px solid var(--line);border-radius:12px;margin-top:7px;background:var(--surface-2);z-index:0;}
+.wrap .mapempty{display:flex;align-items:center;justify-content:center;height:100%;font-size:12px;color:var(--ink-3);}
+.wrap .nummk{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--target);color:#fff;font:700 11px/1 var(--sans);box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.35);}
+.wrap .nummk.mk-act{background:#2F6FB5;}
+.wrap .nummk.mk-food{background:#C77A16;}
+.wrap .nummk.mk-hotel{background:#2E7D57;}
+.wrap .mlg{display:flex;gap:14px;margin-top:6px;font-size:11px;color:var(--ink-3);}
+.wrap .mit{display:inline-flex;align-items:center;gap:5px;}
+.wrap .msw{width:11px;height:11px;border-radius:50%;display:inline-block;}
+.wrap .msw.mk-act{background:#2F6FB5;} .wrap .msw.mk-food{background:#C77A16;} .wrap .msw.mk-hotel{background:#2E7D57;}
+.wrap .sumwrap{margin:22px 0 20px;}
+.wrap .detail .fix{padding-left:0;max-width:none;margin:0;color:var(--ink-2);line-height:1.6;}
+.wrap .detail .fix::before{content:none;}
+.wrap .nummk.on{background:var(--bad);transform:scale(1.25);}
+.wrap .leaflet-container{font:inherit;border-radius:12px;}
+.wrap .chg.sug li::before{content:"?";color:var(--target);font-weight:800;}
+.wrap .chg.sug li b.brk{color:var(--bad);}
+.wrap .chg.sug li{color:var(--ink-2);}
+.wrap .chg.sug .chgh{color:var(--target);}
+.wrap .track{background:${BAND};}
+.wrap .track2{position:relative;height:30px;border-radius:7px;background:${BAND};}
+.wrap .endlbl2{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;font-family:var(--mono);color:var(--ok);white-space:nowrap;}
+@media (max-width:520px){.wrap table.acts{min-width:300px;}.wrap .seg .sn{display:none;}}
 </style>`;
 
 const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
-<div class="wrap" style="--labelw:128px;--sanea:4.5%;--saneb:70.5%;">
+<script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&callback=gmapsReady" async><\/script>
+<div class="wrap" style="--labelw:128px;--sanea:8.7%;--saneb:71.74%;">
   <header class="top">
     <div class="eyebrow">China · 11 Aug – 7 Sep 2026 · schedule audit</div>
     <h1>How late each day really ends</h1>
@@ -199,6 +518,7 @@ const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
   <div class="controls">
     <div class="seg" role="group" aria-label="Filter days"><button id="fAll" aria-pressed="true">All days</button><button id="fBad" aria-pressed="false">Home-late only</button></div>
     <button id="xAll" class="xbtn">Expand all</button>
+    <button id="thm" class="xbtn" aria-pressed="false">☾ Dark</button>
     <label class="chk"><input type="checkbox" id="tFix" checked> Show fixes</label>
     <div class="legend">
       <span class="it"><span class="sw" style="background:var(--ok)"></span>Home by 21:30</span>
@@ -207,7 +527,6 @@ const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
       <span class="it"><span class="pip" style="position:static;width:9px;height:9px;border-radius:50%;background:var(--bad);border:1.5px solid var(--bg);display:inline-block"></span>late meal</span>
     </div>
   </div>
-  <div class="axis" style="--labelw:128px;"><div></div><div class="track-head" id="axis">${axisHTML}</div></div>
   <main id="chart">${out}</main>
   <p class="foot">The day now ends when you <b>arrive back at the hotel</b> — recommended time at each stop, real walk/metro/DiDi legs, and the trip home. Over-packed evenings and long commutes (e.g. Wulingyuan's mountain roads, Tianmen downtown) both push the end past a sane hour. Fixes suggest how to pull each day back under ~21:30.</p>
 </div>

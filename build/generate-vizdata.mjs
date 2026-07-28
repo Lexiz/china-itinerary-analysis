@@ -1,6 +1,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 const s = JSON.parse(readFileSync('/Users/alexlisitzky/ClaudeCode/sandbox/China/app/data/snapshot.json', 'utf8'));
 const RES = JSON.parse(readFileSync(new URL('./researched.json', import.meta.url))); // researched visit durations
+const NIGHT = JSON.parse(readFileSync(new URL('./night.json', import.meta.url)));    // night/dusk/show/any per place
+const COORDS = JSON.parse(readFileSync(new URL('./coords.json', import.meta.url))); // corrected coords (see its _readme)
+const placeById = new Map(s.places.map(p => [p.id, p]));
 const normn = x => String(x || '').replace(/&amp;/g, '&').trim();
 const tk = t => { const m = (t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
 const cityById = new Map(s.cities.map(c => [c.id, c]));
@@ -35,23 +38,31 @@ const out = [];
 for (const d of s.days) {
   const c = cityById.get(d.cityId);
   const acts = (d.activities || []).filter(a => !a.away);
-  const real = acts.filter(a => !a.isHotelReturn && a.placeId && a.time);
+  const real = acts.filter(a => !a.isHotelReturn && a.placeId && a.time && !a.bonus);
   if (!real.length) continue;
   const home = acts.find(a => a.isHotelReturn);
   const legByFrom = new Map((d.legs || []).map(l => [l.fromPlaceId, l]));
   const lunch = real.find(a => a.meal === 'lunch'), dinner = real.find(a => a.meal === 'dinner');
   const jammed = real.filter(a => a.time === '~23:59').length;
+  // unwrap the day across midnight, in order, so post-midnight stops score 1440+
+  const absOf = new Map();
+  { let base = 0, prev = -1;
+    for (const a of acts) {
+      const cm = tk(a.time); if (cm == null) continue;
+      let v = base + cm; if (v < prev) { base += 1440; v += 1440; } prev = v;
+      absOf.set(a, v);
+    } }
   const last = real[real.length - 1];
-  const startMin = tk(real[0].time);
+  const startMin = absOf.get(real[0]) ?? tk(real[0].time);
   let endMin, homeMode = null, homeKm = null, homeMin = null;
   if (home) {
     const leg = last.placeId ? legByFrom.get(last.placeId) : null;
     const mode = leg?.recommended;
     homeMin = leg ? (leg[mode]?.minutes ?? leg.didi?.minutes ?? 0) : 0;
     homeMode = mode; homeKm = leg ? (leg[mode]?.km ?? null) : null;
-    endMin = tk(last.time) + (last.visitDuration ?? last.advisedDuration ?? 60) + homeMin; // arrive home
+    endMin = absOf.get(home) ?? ((absOf.get(last) ?? tk(last.time)) + (last.visitDuration ?? last.advisedDuration ?? 60) + homeMin); // arrive home
   } else {
-    endMin = tk(last.time) + (last.advisedDuration ?? 60); // departure day, no return
+    endMin = (absOf.get(last) ?? tk(last.time)) + (last.advisedDuration ?? 60); // departure day, no return
   }
   const flagged = (dinner && tk(dinner.time) > 19 * 60 + 30) || (lunch && tk(lunch.time) > 14 * 60) || jammed >= 1 || endMin > 21 * 60 + 30;
   const sev = flagged ? (jammed >= 1 || endMin >= 22 * 60 + 30 ? 'severe' : 'moderate') : 'ok';
@@ -62,14 +73,34 @@ for (const d of s.days) {
     const start = tk(a.time);
     const act = a.isHotelReturn ? null : (a.visitDuration ?? null);
     const leg = (!a.isHotelReturn && a.placeId) ? legBy.get(a.placeId) : null;
-    const rr = a.isHotelReturn ? null : RES[normn(a.shortTitle || a.title)];
+    const nm = normn(a.shortTitle || a.title);
+    const rr = a.isHotelReturn ? null : RES[nm];
+    const pl = placeById.get(a.placeId);
+    // night level drives replanning: only 'night'/'show' are locked after dark, 'any' is free to move to daytime
+    const night = a.isHotelReturn ? null : (NIGHT.places[normn(pl?.name)] || 'any');
+    const f = a.flight || null;
+    // a hub's dwell IS its buffer: 3h at Pudong is 3h of the day gone, not a gap
+    const hubDwell = f ? (f.role === 'depart' ? (f.bufferMin ?? null) : (f.clearMin ?? null)) : null;
     return {
+      night, ptype: pl?.type || null, slot: pl?.slot || null,
+      order: a.order ?? null, bonus: !!a.bonus, impossible: a.impossible || null, abs: absOf.get(a) ?? null,
+      hub: f ? {
+        role: f.role, mode: f.mode, number: f.number || null, approx: !!f.approx,
+        terminal: f.terminal || null, route: f.routeLabel || null, booked: !!f.booked,
+        departTime: f.departTime || null, arriveTime: f.arriveTime || null,
+        beThereBy: f.beThereBy || null, clearBy: f.clearBy || null, dwell: hubDwell,
+      } : null,
+      mustArriveBy: leg?.mustArriveBy || null, mustArriveLabel: leg?.mustArriveLabel || null,
+      // for the per-day map — a corrected coord wins, so the map can't draw a stop 60 km from where it is
+      lat: COORDS[nm]?.lat ?? pl?.coord?.lat ?? null, lng: COORDS[nm]?.lng ?? pl?.coord?.lng ?? null,
+      hours: pl?.hours || null,                                   // opening hours (free text, sparse)
+      booking: pl?.bookingRequired ? (pl?.booked ? 'booked' : 'to-book') : null,
       t: a.time ? a.time.replace('~', '') : '',
       end: (start != null && act != null) ? fmt(start + act) : null,
       name: (a.shortTitle || a.title || '').slice(0, 46),
       adv: a.isHotelReturn ? null : (a.advisedDuration ?? null),
       res: rr?.m ?? null,       // researched real-world suggested minutes
-      resnote: rr?.n || '',
+      resnote: rr?.n || '', resbasis: rr?.basis || '', resconf: rr?.conf || '',
       act,
       meal: a.meal || null,
       risk: a.risk || null,
@@ -83,6 +114,7 @@ for (const d of s.days) {
   out.push({ city: c.name, accent: c.accent, order: c.order, day: d.cityDay, date: addDays(c.dates.start, d.cityDay - 1),
     startMin, endMin, lunchMin: lunch ? tk(lunch.time) : null, dinnerMin: dinner ? tk(dinner.time) : null,
     nStops: real.length, jammed, home: !!home, homeMode, homeMin, homeKm, flagged, sev,
+    isArrival: !!d.isArrival, isDeparture: !!d.isDeparture,
     fix: FIX[`${c.name}|${d.cityDay}`] || '', stops });
 }
 out.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.order - b.order);

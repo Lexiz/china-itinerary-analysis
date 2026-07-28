@@ -1,0 +1,104 @@
+{
+  "Arrive Furongzhen": {
+    "m": 20,
+    "n": "Deboard, exit tiny station, taxi",
+    "basis": "Chinese guides call Furongzhen one of China's closest HSR stations to its scenic area (~5 km, 7-10 min by car, taxi under ¥20, shuttle minibuses waiting at the exit), so only deboarding and finding transport happens here.",
+    "conf": "med"
+  },
+  "Check in at Waterfall Bay": {
+    "m": 30,
+    "n": "Guesthouse check-in plus ticket",
+    "basis": "Small family-run 民宿 inside the scenic area; check-in plus buying the ~¥108 multi-day ticket that guides quote is a 20-30 min errand.",
+    "conf": "med"
+  },
+  "Liu Xiaoqing rice tofu": {
+    "m": 30,
+    "n": "Famous ¥5 rice-tofu bowl",
+    "basis": "Ctrip/Mafengwo reviews: ¥5 a bowl at No. 113 by the archway, shop is tiny and packed so people eat under the outdoor awning or walk with it — a snack stop, not a sit-down lunch.",
+    "conf": "med"
+  },
+  "Wuli Stone Street": {
+    "m": 60,
+    "n": "Flagstone spine of old town",
+    "basis": "The 5-li (2.5 km) street is the town's spine, but guides say the whole core loop is walkable in about an hour brisk / two hours relaxed, so an unhurried first pass with shops and photos is about 60 min.",
+    "conf": "med"
+  },
+  "Tuwang Palace": {
+    "m": 30,
+    "n": "Cliff-edge Tusi mansion viewpoint",
+    "basis": "Blogs treat 土司/土王行宫 as a compact clifftop wooden complex and 'another great photo spot' over the waterfall (part of it now a guesthouse) rather than a museum you work through.",
+    "conf": "med"
+  },
+  "Xizhou Bronze Pillar": {
+    "m": 20,
+    "n": "One 940 AD bronze column",
+    "basis": "It is a single 5-tonne column displayed in the small 铜柱园 / folk-customs hall on the standard walking loop; photo-spot listings give it one line, so 15-25 min covers the pillar and its panels.",
+    "conf": "med"
+  },
+  "Furong waterfall": {
+    "m": 60,
+    "n": "Falls plus behind-the-curtain walkway",
+    "basis": "Guides advise 20-30 min to walk the full waterfall walkways before shooting seriously, and the loop here also takes in the viewing platform, water-curtain cave behind the 60 m falls and the covered bridge below.",
+    "conf": "med"
+  },
+  "Youshui River cruise": {
+    "m": 30,
+    "n": "Short boat, town-and-falls panorama",
+    "basis": "Trip reports describe the Youshui boat as 'a very short ferry' (bundled at ¥68 with the shuttle, running ~09:00-18:00); no source gives a duration, so 30 min covers boarding, wait and the run past the falls.",
+    "conf": "low"
+  },
+  "Dinner": {
+    "m": 90,
+    "n": "Sit-down Tujia dinner",
+    "basis": "No venue chosen; a proper riverside Tujia meal (酉水鱼, 湘西腊肉, 牛头宴 are the local specialities) is a normal 1.5 h sit-down, and it doubles as the wait for the 19:30 light-up.",
+    "conf": "med"
+  },
+  "Far-bank platform": {
+    "m": 30,
+    "n": "Classic postcard angle",
+    "basis": "Photo-spot roundups list the opposite-bank/观景台 as a single fixed vantage where visitors gather for sunset and the illuminated falls; it is a stand-and-shoot stop, not a walk.",
+    "conf": "med"
+  },
+  "Shenpu Camp Square": {
+    "m": 20,
+    "n": "Night panorama square stop",
+    "basis": "Could not verify this square by name in any Chinese or English source; treated as one more open viewpoint on the night circuit, and squares here read as short stand-and-look stops.",
+    "conf": "low"
+  },
+  "Baishetang Square": {
+    "m": 30,
+    "n": "Free Tujia song-and-dance set",
+    "basis": "Scheduled free performances at 摆手堂 run at 10:30, 16:30 and 19:30 (plus a 20:30 theatre show, moved indoors if raining); a square set of Tujia songs, 摆手舞 and 茅古斯 runs roughly half an hour.",
+    "conf": "med"
+  },
+  "Dawn photo session": {
+    "m": 45,
+    "n": "Mist, empty street, soft light",
+    "basis": "Guides name 07:00-09:00 as one of the two good photography windows; walking out to a viewpoint, waiting for the mist to lift and shooting the empty flagstones is a 45 min outing.",
+    "conf": "low"
+  },
+  "Breakfast": {
+    "m": 30,
+    "n": "Guesthouse breakfast",
+    "basis": "Standard 民宿 breakfast in a small scenic-area guesthouse; no venue-specific evidence, 30 min is the normal unhurried allowance.",
+    "conf": "med"
+  },
+  "Old-town mop-up": {
+    "m": 60,
+    "n": "Second pass, morning light",
+    "basis": "Flex block; guides put the full sight-by-sight loop at 4-6 h versus 3-4 h for a selective visit, leaving about an hour of genuine second-pass material (behind-the-falls walkway, Tuwang Palace).",
+    "conf": "low"
+  },
+  "Lunch": {
+    "m": 60,
+    "n": "Last local meal before train",
+    "basis": "No venue chosen; a relaxed but train-bound sit-down lunch in a small old-town restaurant is an hour.",
+    "conf": "med"
+  },
+  "Head to the station": {
+    "m": 30,
+    "n": "Buffer at small HSR station",
+    "basis": "Furongzhen is a small two-platform station a ~10-20 min drive out; 30 min on site covers ID check, security and platform wait with a safety margin.",
+    "conf": "med"
+  }
+}

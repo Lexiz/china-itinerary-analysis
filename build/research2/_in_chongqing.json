@@ -1,0 +1,165 @@
+{
+ "city": "Chongqing",
+ "venues": {
+  "Check in at KS Kongshang": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "空尚高空江景酒店（重庆解放碑步行街洪崖洞店）",
+   "hours": "Check-in after 14:00; check-out before 12:00; front desk 24/7",
+   "notes": "Booked at Jiefangbei, on the 52nd floor of Xinhua International Building; 22–24 Aug."
+  },
+  "Jiefangbei": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "解放碑",
+   "hours": null,
+   "notes": "The Liberation Monument pedestrian hub."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Raffles Crystal deck": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "来福士探索舱·观景台",
+   "hours": "10:00–21:00",
+   "notes": "AC midday block, then up to the ~250 m Exploration Deck."
+  },
+  "Chaotianmen Docks": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "朝天门广场",
+   "hours": null,
+   "notes": "Stroll the two-river confluence piers; confirm tomorrow’s night-cruise pier."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Kuixinglou Plaza": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "魁星楼",
+   "hours": null,
+   "notes": "Enter at street level onto the 22nd-floor plaza."
+  },
+  "Qiansimen Bridge": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "千厮门大桥",
+   "hours": null,
+   "notes": "The classic head-on framed shot of Hongya Cave’s stilt-house layers."
+  },
+  "Jiangbei riverbank": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "江北嘴江滩公园",
+   "hours": null,
+   "notes": "Cross for the wide across-the-river panorama of Hongya Cave with reflections."
+  },
+  "Hongya Cave": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "洪崖洞",
+   "hours": "Lights ~19:00–23:00",
+   "notes": "Finish at Binjiang Road at the foot of the illuminated stilt-house complex."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Liziba monorail": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "李子坝站",
+   "hours": null,
+   "notes": "Watch from the platform across the road."
+  },
+  "Eling Park": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "鹅岭公园",
+   "hours": null,
+   "notes": "Liangjiang Pavilion for the two-rivers panorama."
+  },
+  "Testbed 2": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "鹅岭二厂",
+   "hours": "Open all day",
+   "notes": "Old printing factory turned creative park."
+  },
+  "Baixiang Ju": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "白象居",
+   "hours": null,
+   "notes": "The 1980s 24-storey block with no elevator — three street-level entrances."
+  },
+  "Yangtze Cableway": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "长江索道",
+   "hours": null,
+   "notes": "North→south over the river (¥30 one-way)."
+  },
+  "Longmenhao Old Street": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "龙门浩老街",
+   "hours": null,
+   "notes": "Restored south-bank quarter up the hillside."
+  },
+  "Two Rivers night cruise": {
+   "current_advice_min": 75,
+   "type": "Show",
+   "meal": null,
+   "zh": "两江夜游",
+   "hours": "Departures ~19:30–22:00; aim 20:00–20:30",
+   "notes": "Board at Chaotianmen ~20:00 for the full light show."
+  },
+  "Chongqing West (alt station)": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "重庆西站",
+   "hours": null,
+   "notes": "40–60 min from Jiefangbei in morning traffic — the further departure station."
+  },
+  "Chongqing North station": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "重庆北站",
+   "hours": null,
+   "notes": "~25–35 min from Jiefangbei. Check which station your train uses."
+  }
+ }
+}

@@ -1,0 +1,427 @@
+{
+ "city": "Beijing",
+ "hotel": {
+  "name": "Regent Beijing",
+  "coord": {
+   "lat": 39.914979,
+   "lng": 116.412502
+  }
+ },
+ "days": [
+  {
+   "day": 1,
+   "date": "2026-08-11",
+   "isArrival": true,
+   "isDeparture": false,
+   "hubs": [
+    {
+     "stop": "Land at PEK",
+     "role": "arrive",
+     "mode": "Flight",
+     "number": "HU492",
+     "time": "05:00",
+     "buffer": 90,
+     "approx": false,
+     "clearBy": "06:30"
+    }
+   ],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Drop bags at Regent Beijing",
+    "Temple of Heaven",
+    "Beijing city model",
+    "Qianmen & hutongs",
+    "Shichahai lakes"
+   ]
+  },
+  {
+   "day": 2,
+   "date": "2026-08-12",
+   "isArrival": false,
+   "isDeparture": false,
+   "hubs": [],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Tiananmen Square",
+    "Forbidden City",
+    "Jingshan Park",
+    "National Museum",
+    "Wangfujing"
+   ]
+  },
+  {
+   "day": 3,
+   "date": "2026-08-13",
+   "isArrival": false,
+   "isDeparture": false,
+   "hubs": [],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Mutianyu Great Wall",
+    "Toboggan down",
+    "Sanlitun Taikoo Li",
+    "CCTV 'Big Pants'",
+    "Mutianyu night tour"
+   ]
+  },
+  {
+   "day": 4,
+   "date": "2026-08-14",
+   "isArrival": false,
+   "isDeparture": false,
+   "hubs": [],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Summer Palace",
+    "798 Art District",
+    "UCCA"
+   ]
+  },
+  {
+   "day": 5,
+   "date": "2026-08-15",
+   "isArrival": false,
+   "isDeparture": true,
+   "hubs": [
+    {
+     "stop": "Fly from PKX",
+     "role": "depart",
+     "mode": "Flight",
+     "number": "JD5063",
+     "time": "07:40",
+     "buffer": 120,
+     "approx": false,
+     "clearBy": null
+    }
+   ],
+   "meals": [
+    "Breakfast"
+   ],
+   "currentStops": []
+  }
+ ],
+ "sights": {
+  "Drop bags at Regent Beijing": {
+   "advice_min": 20,
+   "advice_note": "Bell desk luggage drop",
+   "advice_conf": "low",
+   "type": "Hotel",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "Check-in after 15:00; check-out before 12:00; 24-hour front desk.",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.914979,
+    "lng": 116.412502
+   },
+   "notes": "Booked at No. 99 Jinbao Street, beside Dengshikou metro and a short walk from Wangfujing; drop luggage after the 05:00 arrival."
+  },
+  "Temple of Heaven": {
+   "advice_min": 120,
+   "advice_note": "Park walk plus main halls",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "Gates 06:00, halls 08:00",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.8822,
+    "lng": 116.4066
+   },
+   "notes": "Enter via the quieter North Gate; joint ticket ¥35, 2–2.5 h."
+  },
+  "Beijing city model": {
+   "advice_min": 90,
+   "advice_note": "City model plus history floors",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "09:00–17:00; last entry 16:00; closed Monday (reconfirm for Aug 2026)",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.89883,
+    "lng": 116.39489
+   },
+   "notes": "Indoor urban-planning museum beside Qianmen."
+  },
+  "Qianmen & hutongs": {
+   "advice_min": 90,
+   "advice_note": "Qianmen street and Dashilan",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.892099,
+    "lng": 116.39201
+   },
+   "notes": "Evening stroll down Qianmen pedestrian street and the Dashilan hutongs."
+  },
+  "Shichahai lakes": {
+   "advice_min": 90,
+   "advice_note": "Evening loop round the lakes",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "dusk",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.9403,
+    "lng": 116.383
+   },
+   "notes": "Willow-lined lakes at dusk — bar lights and locals swimming. Early night."
+  },
+  "Tiananmen Square": {
+   "advice_min": 75,
+   "advice_note": "Security queue plus the square",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": "Enter ~07:30",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.904088,
+    "lng": 116.391391
+   },
+   "notes": "Enter ~07:30; book its separate free reservation with the Forbidden City."
+  },
+  "Forbidden City": {
+   "advice_min": 210,
+   "advice_note": "Central axis plus a gallery",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": "From 08:30, closed Mondays",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.915402,
+    "lng": 116.39092
+   },
+   "notes": "From opening 08:30 via the Meridian Gate."
+  },
+  "Jingshan Park": {
+   "advice_min": 45,
+   "advice_note": "Climb, viewpoint, descent",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.923697,
+    "lng": 116.3906
+   },
+   "notes": "Climb 15 min for the classic panorama over the Forbidden City's golden roofs."
+  },
+  "National Museum": {
+   "advice_min": 180,
+   "advice_note": "Ancient China galleries",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": "To 17:30 in summer, last entry 16:30, closed Mondays",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.903692,
+    "lng": 116.395341
+   },
+   "notes": "Air-conditioned; the Ancient China galleries alone are 2–3 h."
+  },
+  "Wangfujing": {
+   "advice_min": 75,
+   "advice_note": "Pedestrian street and bookstores",
+   "advice_conf": "med",
+   "type": "Shopping",
+   "slot": "Evening",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.9146,
+    "lng": 116.4104
+   },
+   "notes": "Snack street and bookstores — atmosphere over cuisine."
+  },
+  "Mutianyu Great Wall": {
+   "advice_min": 165,
+   "advice_note": "Cable car up, watchtower walk",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": "Site + cable car from 07:30 in season",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 40.430765,
+    "lng": 116.564501
+   },
+   "notes": "Leave 06:30–07:00 by private driver (~1.5 h)."
+  },
+  "Toboggan down": {
+   "advice_min": 20,
+   "advice_note": "Queue plus luge descent",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.9042,
+    "lng": 116.4074
+   },
+   "notes": "Wheeled luge down from the wall (¥100 one-way)."
+  },
+  "Sanlitun Taikoo Li": {
+   "advice_min": 150,
+   "advice_note": "Dinner plus browsing both zones",
+   "advice_conf": "med",
+   "type": "Shopping",
+   "slot": "Evening",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.934529,
+    "lng": 116.449236
+   },
+   "notes": "Dinner plus flagship-store architecture and people-watching."
+  },
+  "CCTV 'Big Pants'": {
+   "advice_min": 30,
+   "advice_note": "Exterior photo stop in the CBD",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.913938,
+    "lng": 116.458076
+   },
+   "notes": "Night walk in the CBD — the CCTV HQ and CITIC Tower lit up. Outside-only icon."
+  },
+  "Mutianyu night tour": {
+   "advice_min": 150,
+   "advice_note": "Sunset plus illuminated wall",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Bonus",
+   "night": "night",
+   "bonus": true,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.9042,
+    "lng": 116.4074
+   },
+   "notes": "Optional swap: Mutianyu's illuminated evening wall visit (25 Jun–31 Aug)."
+  },
+  "Summer Palace": {
+   "advice_min": 210,
+   "advice_note": "Longevity Hill and lake ferry",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 4,
+   "hours": "Gates 06:00, sights 08:00",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 39.998755,
+    "lng": 116.269416
+   },
+   "notes": "At opening (gates 06:00). North Palace Gate → Longevity Hill → ferry across."
+  },
+  "798 Art District": {
+   "advice_min": 150,
+   "advice_note": "Galleries, shops, sculpture walk",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 4,
+   "hours": "Galleries ~10:00–18:00",
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.9843,
+    "lng": 116.4972
+   },
+   "notes": "Bauhaus factory turned art quarter — galleries, design shops, sculpture."
+  },
+  "UCCA": {
+   "advice_min": 75,
+   "advice_note": "Main exhibition plus store",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 4,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 39.982726,
+    "lng": 116.488778
+   },
+   "notes": "The anchor gallery inside 798 — contemporary art plus the UCCA Store."
+  }
+ }
+}

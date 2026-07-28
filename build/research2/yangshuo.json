@@ -1,0 +1,104 @@
+{
+  "Zhujiang Wharf transfer": {
+    "m": 45,
+    "n": "Ticket pickup and boarding",
+    "basis": "Li River operators require arrival 30-45 min before sailing: passport checked twice (ticket machine, then boarding hall), with boarding opening 30 min pre-departure.",
+    "conf": "high"
+  },
+  "Li River cruise": {
+    "m": 255,
+    "n": "4-star cruise to Yangshuo",
+    "basis": "4-star boats from Zhujiang Pier to Yangshuo Longtoushan Pier sail 4-4.5 hrs over 83 km (faster only when water is unusually high); 09:20 departure lands ~13:30.",
+    "conf": "high"
+  },
+  "Lunch": {
+    "m": 60,
+    "n": "Sit-down lunch",
+    "basis": "Venue TBD; a normal Chinese sit-down lunch runs 45-75 min (note the 4-star cruise fare already includes an onboard set lunch eaten while sailing).",
+    "conf": "med"
+  },
+  "Fengqi Homestay": {
+    "m": 30,
+    "n": "Homestay check-in",
+    "basis": "China guesthouse check-in needs passport scan and police registration; small homestays typically take 15-30 min including bag drop.",
+    "conf": "med"
+  },
+  "West Street": {
+    "m": 90,
+    "n": "Pedestrian street and riverfront",
+    "basis": "TripAdvisor and guides describe West Street as an evening hangout where a wander plus riverfront takes 1-1.5 hr before it becomes bar-hopping rather than sightseeing.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 75,
+    "n": "Beer fish sit-down dinner",
+    "basis": "Yangshuo beer fish is cooked in a clay pot at the table and reviewers describe a leisurely shared meal; allow 60-90 min including the wait for the pot to reduce.",
+    "conf": "med"
+  },
+  "Impression Liu Sanjie": {
+    "m": 90,
+    "n": "Open-air Li River show",
+    "basis": "Show runs ~70 min (operators quote 60-70); the venue advises arriving well before curtain and the 2,000+ seat amphitheatre empties slowly, so allow ~20 min of seating and exit.",
+    "conf": "high"
+  },
+  "Xianggong sunrise": {
+    "m": 90,
+    "n": "Sunrise climb and viewpoint",
+    "basis": "About 400 steps, 15-30 min up, then reviewers wait and shoot at the top through sunrise before descending; sunrise trip reports put on-hill time at 1-1.5 hr.",
+    "conf": "med"
+  },
+  "Breakfast": {
+    "m": 45,
+    "n": "Hotel breakfast",
+    "basis": "Standard buffet or set hotel breakfast; 30-45 min is normal before an early departure.",
+    "conf": "med"
+  },
+  "Yulong bamboo rafting": {
+    "m": 90,
+    "n": "Jinlong Bridge to Jiuxian raft",
+    "basis": "Route tables for Yulong rafting list Jinlong Bridge to Jiuxian as 6 km / 90 min, the longest and most popular section with its nine small weirs.",
+    "conf": "high"
+  },
+  "Yulong valley cycling": {
+    "m": 150,
+    "n": "Yulong valley loop ride",
+    "basis": "The West Street round-trip loop through the Shili Gallery / Jiuxian-Chaoyang Weir section is 19 km and quoted at 2-3 hrs by cycling guides, including photo and drink stops.",
+    "conf": "high"
+  },
+  "Moon Hill": {
+    "m": 90,
+    "n": "Climb to the arch",
+    "basis": "800+ stone steps; guides quote ~30-40 min to the arch (China Highlights says ~1 hr to the top), plus time at the arch and the descent, and August heat slows everyone down.",
+    "conf": "med"
+  },
+  "Li River night walk": {
+    "m": 45,
+    "n": "Lit waterfront stroll",
+    "basis": "Optional after-dinner stroll on the Yangshuo riverfront promenade; no fixed route, and 30-45 min covers the illuminated stretch near West Street.",
+    "conf": "low"
+  },
+  "Sunrise balloon flight": {
+    "m": 120,
+    "n": "Balloon inflation, flight, landing",
+    "basis": "Operators quote ~45-60 min airborne inside a 4-5 hr door-to-door experience; on-field time with inflation, briefing, landing and packing runs about 2 hrs.",
+    "conf": "med"
+  },
+  "Xingping Ancient Town": {
+    "m": 60,
+    "n": "Compact old town wander",
+    "basis": "Guides call the old town compact enough to walk in 10-15 min of pure walking, but visitors report 30-60 min with the old street, ferry pier and riverside stops.",
+    "conf": "med"
+  },
+  "20-RMB viewpoint": {
+    "m": 30,
+    "n": "Yellow Cloth Shoal photo stop",
+    "basis": "Once on site it is a photo stop; reviewers spend 20-30 min queuing for the exact banknote angle and shooting, with the ~15-20 min riverside walk counted as travel.",
+    "conf": "med"
+  },
+  "Fly from KWL": {
+    "m": 120,
+    "n": "KWL T2 check-in and security",
+    "basis": "Guilin Liangjiang guidance is to arrive 2 hrs before a domestic departure (counters close 40-60 min prior), matching the itinerary's 08:20 arrival for a 10:20 flight.",
+    "conf": "high"
+  }
+}

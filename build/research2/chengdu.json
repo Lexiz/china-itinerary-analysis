@@ -1,0 +1,140 @@
+{
+  "Hotpot alt · Shu Daxia": {
+    "m": 150,
+    "n": "Queue plus long hotpot dinner",
+    "basis": "TripAdvisor reviewers report 40 min to 2 h waits at Shu Daxia peak dinner (18:00–21:00) on top of a ~1.5–2 h table sitting.",
+    "conf": "med"
+  },
+  "Land at CTU": {
+    "m": 35,
+    "n": "Deplane and domestic bag claim",
+    "basis": "Chengdu Shuangliu arrival guides say domestic arrivals skip immigration and advise meeters to turn up ~30 min after touchdown.",
+    "conf": "med"
+  },
+  "Check in at Minyoun Dongda": {
+    "m": 30,
+    "n": "Front desk and room drop",
+    "basis": "Standard China 4–5 star check-in with passport registration plus getting bags to the room; 24/7 front desk so no wait for staff.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 90,
+    "n": "Sit-down Sichuan dinner",
+    "basis": "Ordinary (non-hotpot) Chinese sit-down dinner runs about 1.5 h once ordering, shared dishes and paying are included.",
+    "conf": "med"
+  },
+  "Taikoo Li": {
+    "m": 90,
+    "n": "Lantern lanes and browsing",
+    "basis": "Chengdu guides put a relaxed walk through Taikoo Li at 1–2 hours, longer only if you stop to dine.",
+    "conf": "med"
+  },
+  "Daci Temple": {
+    "m": 45,
+    "n": "Halls, incense, small museum",
+    "basis": "Trip.com itinerary allows about an hour for the halls; the compound is small and free, so 45 min covers halls plus the relic room without tea.",
+    "conf": "med"
+  },
+  "IFS rooftop panda": {
+    "m": 30,
+    "n": "Rooftop photo queue",
+    "basis": "Trip reports note a line forms for close-up photos with the climbing panda even at mall opening, but the terrace itself is one small garden.",
+    "conf": "med"
+  },
+  "Breakfast": {
+    "m": 45,
+    "n": "Hotel buffet breakfast",
+    "basis": "Standard unhurried hotel buffet breakfast in China before an early departure.",
+    "conf": "med"
+  },
+  "Chengdu Panda Base": {
+    "m": 210,
+    "n": "Full enclosure and nursery loop",
+    "basis": "Guides advise at least 3–4 h because the base is large; walking the whole park is about 3 h, and 2.5 h is described on TripAdvisor as the rushed minimum.",
+    "conf": "high"
+  },
+  "Lunch": {
+    "m": 60,
+    "n": "Casual sit-down lunch",
+    "basis": "Standard mid-trip Chinese restaurant lunch — order, eat, pay in about an hour.",
+    "conf": "med"
+  },
+  "Chengdu Museum": {
+    "m": 150,
+    "n": "Main history and puppet floors",
+    "basis": "Reviewers report 2 h for a leisurely pass and 3–4 h for the full building; 2.5 h covers the history floors plus the shadow-puppet gallery.",
+    "conf": "med"
+  },
+  "People’s Park": {
+    "m": 45,
+    "n": "Lake, mahjong, matchmaking corner",
+    "basis": "Guides bundle park plus teahouse into 1–2 h; with Heming timed separately, the lake loop and marriage-market corner take about 45 min.",
+    "conf": "med"
+  },
+  "Heming Teahouse": {
+    "m": 90,
+    "n": "Gaiwan tea plus ear cleaning",
+    "basis": "Teahouse sources put the average Heming visit at 1–2 h with no table time limit, and caier ear cleaning adds roughly 20–30 min.",
+    "conf": "med"
+  },
+  "Kuanzhai Alleys": {
+    "m": 120,
+    "n": "Three lanes, snacks at dusk",
+    "basis": "TripAdvisor and Chinese guides recommend 2–3 h for the wide, narrow and well lanes, best from about 17:00 once the lights come on.",
+    "conf": "med"
+  },
+  "Sichuan opera": {
+    "m": 120,
+    "n": "Pre-show plus 80-90 min show",
+    "basis": "Shufeng Yayun runs nightly from 20:00 for 80–90 min, with a 19:30 arrival for seating, tea and backstage face-painting.",
+    "conf": "high"
+  },
+  "Chengdu East → Guanghan": {
+    "m": 50,
+    "n": "Station security plus 18 min ride",
+    "basis": "Rail guides advise 30–40 min inside Chengdu East for security and ID checks before the ~18 min high-speed hop to Guanghan North.",
+    "conf": "med"
+  },
+  "Hotpot alt · Lao Matou": {
+    "m": 135,
+    "n": "Shorter queue, long hotpot dinner",
+    "basis": "TripAdvisor reviewer of Lao Matou Yulin waited 90 min then ate for an hour; a mid-evening arrival at this less touristy branch lands nearer 30–45 min queue plus ~1.5 h at table.",
+    "conf": "med"
+  },
+  "Guanghan North": {
+    "m": 20,
+    "n": "Exit station, find taxi",
+    "basis": "Small suburban station — walk out and join the taxi/shuttle rank; the 15–20 min ride to the museum is travel, not stop time.",
+    "conf": "low"
+  },
+  "Sanxingdui Museum": {
+    "m": 210,
+    "n": "New hall plus old bronze hall",
+    "basis": "Official and tour guidance since the 2023 new building recommends 3–4 h (some say 3–5 h) for the new halls plus the old bronze hall; it is genuinely a half-day.",
+    "conf": "high"
+  },
+  "SKP Chengdu": {
+    "m": 60,
+    "n": "Sunken atrium and rooftop park",
+    "basis": "Visitors describe SKP as a photo/architecture stop rather than a shopping trip — five sunken floors and the rooftop garden take about an hour to walk.",
+    "conf": "med"
+  },
+  "Wuhou Shrine": {
+    "m": 120,
+    "n": "Halls, steles and gardens",
+    "basis": "Chengdu guides state the main sights take about two hours, three if you linger in the gardens or the Three Kingdoms history.",
+    "conf": "high"
+  },
+  "Jinli Old Street": {
+    "m": 90,
+    "n": "Lantern lane and snack stalls",
+    "basis": "Guides suggest 2–3 h for Jinli at sunset; 1.5 h fits a walk plus snacks when Wuhou Shrine next door is visited the same evening.",
+    "conf": "med"
+  },
+  "Head to Chengdu East": {
+    "m": 45,
+    "n": "Station buffer before departure",
+    "basis": "Guidance for Chengdu East, the region's busiest station, is to arrive 30–60 min before departure for security, ID gates and finding the platform; the 45–60 min transfer is travel, not stop time.",
+    "conf": "med"
+  }
+}

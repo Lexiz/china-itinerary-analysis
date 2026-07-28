@@ -1,0 +1,221 @@
+{
+ "city": "Lijiang",
+ "venues": {
+  "Land at LJG": {
+   "current_advice_min": null,
+   "type": "Transport",
+   "meal": null,
+   "zh": "丽江三义国际机场",
+   "hours": null,
+   "notes": "Land 13:00 · JD5063 from Beijing Daxing."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Check in at Anyin": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Check in and rest an hour — you have just jumped to 2,400 m."
+  },
+  "Dayan Old Town": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "大研古城",
+   "hours": null,
+   "notes": "Easy flat wander through the quieter canal lanes north of Sifang Square."
+  },
+  "Sifang Square": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "四方街",
+   "hours": null,
+   "notes": "The old town’s central square — people-watching and lane-wandering."
+  },
+  "Mu Mansion": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "木府",
+   "hours": null,
+   "notes": "The Naxi chieftain’s residence — admired from outside today."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Depart for the gorge": {
+   "current_advice_min": 40,
+   "type": "Transport",
+   "meal": null,
+   "zh": "丽江客运站",
+   "hours": null,
+   "notes": "Bus (~2 h) or a private driver / small-group tour (~¥400–600) to combine."
+  },
+  "Qiaotou gateway": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "桥头（虎跳峡镇）",
+   "hours": null,
+   "notes": "The gorge gateway town, ~2 h from Lijiang."
+  },
+  "Tiger Leaping Gorge": {
+   "current_advice_min": 120,
+   "type": "Sight",
+   "meal": null,
+   "zh": "虎跳峡",
+   "hours": null,
+   "notes": "One of the world’s deepest gorges — violent rapids between towering peaks."
+  },
+  "Middle Gorge descent": {
+   "current_advice_min": 180,
+   "type": "Sight",
+   "meal": null,
+   "zh": "中虎跳",
+   "hours": null,
+   "notes": "Descend the cliff path (or the Sky Ladder) to the river."
+  },
+  "Glacier Park cable car": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": "冰川公园大索道",
+   "hours": null,
+   "notes": "Go straight here first for clear morning views."
+  },
+  "Jade Dragon summit": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "玉龙雪山",
+   "hours": "Scenic area opens ~07:00–07:30",
+   "notes": "4,680 m glacier platform — walk slowly; an oxygen canister is cheap insurance."
+  },
+  "Impression Lijiang": {
+   "current_advice_min": 70,
+   "type": "Show",
+   "meal": null,
+   "zh": "印象丽江",
+   "hours": "Summer showtimes 09:00 / 11:00 / 14:00 (1 h)",
+   "notes": "Zhang Yimou’s open-air show at 3,100 m with the mountain as backdrop."
+  },
+  "Blue Moon Valley": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "蓝月谷（白水河）",
+   "hours": null,
+   "notes": "Milky turquoise terraced pools — walk the full lakeside path (60–90 min)."
+  },
+  "Old Town massage": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Optional alternative to the courtyard dinner."
+  },
+  "Baisha Village": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "白沙古镇",
+   "hours": null,
+   "notes": "Original Naxi capital with farm lanes and Jade Dragon rising behind it."
+  },
+  "Baisha Murals": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "白沙壁画",
+   "hours": null,
+   "notes": "Ming-era murals blending Naxi, Tibetan and Han Buddhist styles."
+  },
+  "Baisha embroidery": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Naxi silk-thread embroidery institute in Baisha."
+  },
+  "Shuhe Old Town": {
+   "current_advice_min": 120,
+   "type": "Sight",
+   "meal": null,
+   "zh": "束河古镇",
+   "hours": null,
+   "notes": "Dayan’s calmer sibling — cobbled lanes and canals. Lunch here."
+  },
+  "Tea Horse Road Museum": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": "茶马古道博物馆",
+   "hours": null,
+   "notes": "Small museum on the caravan trade through Shuhe."
+  },
+  "Lashi Lake wetland": {
+   "current_advice_min": 150,
+   "type": "Sight",
+   "meal": null,
+   "zh": "拉市海",
+   "hours": null,
+   "notes": "Highland wetland — boat or horse ride."
+  },
+  "Black Dragon Pool": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "黑龙潭",
+   "hours": "Best light late afternoon; calmest water at opening",
+   "notes": "Classic pagoda-and-snow-mountain reflection — best light late afternoon."
+  },
+  "Lion Hill sunset": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "狮子山万古楼",
+   "hours": null,
+   "notes": "Climb for sunset rooftops-and-mountain views now that you are acclimatized."
+  },
+  "Last Dayan loop": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Choose Black Dragon Pool at opening or a quiet final Old Town loop."
+  },
+  "Fly from LJG": {
+   "current_advice_min": null,
+   "type": "Transport",
+   "meal": null,
+   "zh": "丽江三义国际机场",
+   "hours": null,
+   "notes": "TV9812 departs 18:20 — be here by 16:20. ~28 km south of the old town."
+  }
+ }
+}

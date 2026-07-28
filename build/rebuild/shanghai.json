@@ -1,0 +1,109 @@
+{
+ "city": "Shanghai",
+ "days": [
+  {
+   "day": 1,
+   "theme": "Arrival — Maglev in, Nanjing Rd East to the Bund",
+   "stops": [
+    "Shanghai Maglev",
+    "Nanjing Road East",
+    "The Bund",
+    "Old Jazz Bar"
+   ],
+   "why": "Landing 13:00 leaves only an afternoon, so everything sits inside one 1 km strip that starts at the hotel door and ends at the Fairmont Peace Hotel, where the jazz bar is literally the building at the corner of Nanjing Rd East and the Bund."
+  },
+  {
+   "day": 2,
+   "theme": "Recovery + Jing'an and Suzhou Creek",
+   "stops": [
+    "Recovery massage / spa",
+    "M50 Creative Park",
+    "Jing’an Temple",
+    "Nanjing Road West",
+    "Zhangyuan"
+   ],
+   "why": "Late start with the massage, then a single monotonic west-to-east line back toward the hotel — M50 belongs here on the Suzhou Creek side of Jing'an, not tacked onto the old-city day as it was."
+  },
+  {
+   "day": 3,
+   "theme": "Former French Concession on foot",
+   "stops": [
+    "Wukang Building",
+    "Wukang Road",
+    "Ferguson Lane",
+    "Anfu Road",
+    "Wulumuqi Road",
+    "Fuxing Park",
+    "Sinan Mansions"
+   ],
+   "why": "One continuous plane-tree walk from the Wukang flatiron north to Wulumuqi Rd, then a short hop east to the Fuxing Park / Sinan cluster — the listed minutes are conservative because cafe and browsing stops expand this day naturally."
+  },
+  {
+   "day": 4,
+   "theme": "Old city, then the Huangpu by night",
+   "stops": [
+    "Yu Garden",
+    "Mid-Lake Teahouse",
+    "Yuyuan Bazaar",
+    "City God Temple",
+    "People’s Square",
+    "Huangpu night cruise"
+   ],
+   "why": "Yu Garden at 09:00 opening beats the Saturday crush, the whole old-city block sits within 400 m, and People's Square is the mid-afternoon breather next to the hotel before heading back out to Shiliupu Wharf for the cruise."
+  },
+  {
+   "day": 5,
+   "theme": "West Bund art mile, then move to Pudong",
+   "stops": [
+    "TANK Shanghai",
+    "West Bund Museum",
+    "West Bund riverside",
+    "Long Museum West Bund"
+   ],
+   "why": "All three West Bund museums are closed Mondays, so Sunday is the only possible slot; running south-to-north ends the day at the Long Museum (open to 21:00 on Sundays) pointing straight at the hotel move to Lujiazui."
+  },
+  {
+   "day": 6,
+   "theme": "Pudong finale — museum, Lujiazui trio, riverfront at dusk",
+   "stops": [
+    "Shanghai Museum East",
+    "Shanghai Tower base",
+    "World Financial Center",
+    "Jin Mao Tower",
+    "Oriental Pearl Tower",
+    "Pudong promenade"
+   ],
+   "why": "Sleeping in Shanghai Tower makes the whole last day car-free on the Pudong side: museum at opening, bags stored at the hotel, the supertall circuit on foot, then the Bund-facing promenade at dusk before leaving for PVG around 20:10."
+  }
+ ],
+ "ideas": [
+  {
+   "name": "Check in at Marriott",
+   "why": "Hotel admin, not a sight — slots itself between the Maglev and Nanjing Rd East on day 1."
+  },
+  {
+   "name": "Check in — J Hotel (Tower)",
+   "why": "Hotel admin — the day 5 evening move from Puxi to Lujiazui, roughly 17:00–18:00."
+  },
+  {
+   "name": "Dinner alt · Donghu Rd",
+   "why": "Flagged as a dinner alternate, not a stop — use it for day 3's Concession dinner."
+  },
+  {
+   "name": "Dinner alt · Fumin Rd",
+   "why": "Second Concession dinner alternate — backup to Donghu Rd on the same evening."
+  }
+ ],
+ "notes": [
+  "Day 6 is Monday 7 Sep: Shanghai Museum East is Wed–Mon 10:00–18:00, last entry 17:00, closed TUESDAY — so Monday is safe. Start at 10:00 and the 3 focused hours still leave the afternoon for Lujiazui.",
+  "Shanghai Museum East no longer requires an individual reservation (only groups of 20+), but the policy has changed twice — re-check the WeChat mini-programme a week out and book if timed entry is back.",
+  "West Bund Museum, Long Museum West Bund and TANK Shanghai are ALL closed Mondays. Day 5 (Sunday 6 Sep) is the only workable slot in this trip — the West Bund cannot move to day 6.",
+  "West Bund Museum closes 17:00 with last admission 16:00, so it must be entered before 16:00. TANK Shanghai is 10:00–18:00 on weekends (admission ends 17:30). Long Museum runs 10:00–21:00 Fri–Sun, so it is the safe last stop.",
+  "Yu Garden is CLOSED MONDAYS — day 4 (Saturday 5 Sep) is fine, and until 31 Oct 2026 it runs 09:00–21:50 on Sat, so the 16:30 close in the source data no longer applies. Still go at 09:00 for crowds.",
+  "City God Temple is 08:30–16:30 with no entry after 16:00 — keep it in the morning block with Yu Garden.",
+  "Jing'an Temple closes ~17:00, so day 2 must reach it by ~15:45. M50 galleries run 10:00–18:00 and most are closed Mondays — Thursday is fine.",
+  "Huangpu night cruise needs booking: Shiliupu Wharf, ~19:30–20:30 sailing, buy ahead for a Saturday.",
+  "Old Jazz Bar (Fairmont Peace Hotel) opens 18:00, the Old Jazz Band plays from ~19:00, entry ~¥418 as minimum spend, tables book out days ahead — reserve before the trip. If arrival-day fatigue wins, it slides cleanly to day 4 after the cruise (both are on the Bund).",
+  "Day 6 hard stop: bags at J Hotel, leave Lujiazui by ~19:15 to be at PVG for the 23:10 check-in on the 3-hour buffer."
+ ]
+}

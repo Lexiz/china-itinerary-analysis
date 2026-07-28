@@ -1,0 +1,140 @@
+{
+  "Land at PEK": {
+    "m": 90,
+    "n": "Deplane, immigration, bags",
+    "basis": "PEK airport guides say international arrivals take ~1h to clear fingerprinting/passport control and collect bags (immigration alone 30-60 min), plus deplaning a widebody and the long T2 walk.",
+    "conf": "med"
+  },
+  "Drop bags at Regent Beijing": {
+    "m": 20,
+    "n": "Bell desk luggage drop",
+    "basis": "TripAdvisor reviews of the Regent describe fast, smooth bell-desk luggage storage before check-in; no evidence of queues, so 20 min is a reasoned allowance for tagging and freshening up.",
+    "conf": "low"
+  },
+  "Breakfast": {
+    "m": 60,
+    "n": "Hotel buffet breakfast",
+    "basis": "TripAdvisor reviewers repeatedly call the Regent Beijing buffet one of the best in China - wide Chinese and Western spread, eggs cooked to order plus an a la carte menu - which is an hour's worth of eating, not a 20-minute refuel.",
+    "conf": "med"
+  },
+  "Temple of Heaven": {
+    "m": 120,
+    "n": "Park walk plus main halls",
+    "basis": "TripAdvisor reviews and China travel guides converge on 1-2h for the main halls and 2-3h if you also enjoy the park and the locals exercising; 2h fits the North Gate joint-ticket route.",
+    "conf": "high"
+  },
+  "Lunch": {
+    "m": 75,
+    "n": "Sit-down Chinese lunch",
+    "basis": "Restaurant-industry benchmarks put a full-service seated meal at 75-105 min from seating to check; Chinese lunches run at the quicker end of that per China dining-culture guides.",
+    "conf": "med"
+  },
+  "Beijing city model": {
+    "m": 90,
+    "n": "City model plus history floors",
+    "basis": "TravelChinaGuide and tour-beijing put the visit at 1-2h, recommending ~40 min on the 1:750 scale model alone before the historical and multimedia floors.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 90,
+    "n": "Unhurried Chinese dinner",
+    "basis": "Full-service dinners run 75-105 min per restaurant benchmarks, and China dining guides note diners routinely linger 30+ min after the food chatting - so 1.5h is the honest figure.",
+    "conf": "med"
+  },
+  "Qianmen & hutongs": {
+    "m": 90,
+    "n": "Qianmen street and Dashilan",
+    "basis": "Beijing walking guides time the Liulichang-Dashilan-Qianmen stroll at about 1.5h, with 1-2h quoted for a quick wander and half a day only if you shop and eat.",
+    "conf": "high"
+  },
+  "Shichahai lakes": {
+    "m": 90,
+    "n": "Evening loop round the lakes",
+    "basis": "AllTrails logs the Shichahai loop at 2.2 miles / 44 min average walking, and Beijing guides suggest 1-2h to actually soak up the bar lights and lakeside atmosphere at dusk.",
+    "conf": "med"
+  },
+  "Tiananmen Square": {
+    "m": 75,
+    "n": "Security queue plus the square",
+    "basis": "Guides say allocate ~2h including queuing, but note non-holiday weekday security waits are under 30 min and before 09:00 is the quietest slot - so ~30 min entry plus 45 min on the square.",
+    "conf": "med"
+  },
+  "Forbidden City": {
+    "m": 210,
+    "n": "Central axis plus a gallery",
+    "basis": "Guides put the central axis at 2-3h and 4-5h if you add the Treasure and Clock galleries; Meridian Gate security is a further 15-20 min off-peak, so 3.5h is the unhurried first-timer figure.",
+    "conf": "high"
+  },
+  "Jingshan Park": {
+    "m": 45,
+    "n": "Climb, viewpoint, descent",
+    "basis": "Trip.com and TripAdvisor reports give a 5-15 min climb each way (about 150 steps) and an average visit around 30 min, stretching to 2h only for dedicated photographers.",
+    "conf": "med"
+  },
+  "National Museum": {
+    "m": 180,
+    "n": "Ancient China galleries",
+    "basis": "TripAdvisor reviewers and museum guides say most people spend 2-3h and enthusiasts 4-6h, with the Ancient China galleries alone quoted at 2-3h; add the passport/security check on entry.",
+    "conf": "high"
+  },
+  "Wangfujing": {
+    "m": 75,
+    "n": "Pedestrian street and bookstores",
+    "basis": "Guides say half a day to a full day if you seriously shop the malls, but TripAdvisor reviews of the street itself describe an hour-ish wander among stalls, screens and bookstores.",
+    "conf": "med"
+  },
+  "Mutianyu Great Wall": {
+    "m": 165,
+    "n": "Cable car up, watchtower walk",
+    "basis": "TripAdvisor Q&A and China guides say most visitors spend 2-3h at Mutianyu including the cable car and several watchtowers (3-4h for a thorough hike); the toboggan is counted separately here.",
+    "conf": "high"
+  },
+  "Toboggan down": {
+    "m": 20,
+    "n": "Queue plus luge descent",
+    "basis": "Rider reports and operator guides put the descent itself at 5-10 min depending on braking; the rest is the walk to the launch platform, the safety briefing and the summer queue.",
+    "conf": "med"
+  },
+  "Sanlitun Taikoo Li": {
+    "m": 150,
+    "n": "Dinner plus browsing both zones",
+    "basis": "Beijing guides suggest 3-5h to explore both Taikoo Li zones leisurely and 1-2h for a quick pass; with dinner folded in, 2.5h is a realistic evening.",
+    "conf": "med"
+  },
+  "CCTV 'Big Pants'": {
+    "m": 30,
+    "n": "Exterior photo stop in the CBD",
+    "basis": "Guides note interior access is staff-only and visitors typically spend 20-60 min photographing from the open plaza or the free China World Mall viewing terrace.",
+    "conf": "med"
+  },
+  "Mutianyu night tour": {
+    "m": 150,
+    "n": "Sunset plus illuminated wall",
+    "basis": "The official Mutianyu night session runs 17:30-21:00 with lighting from 19:00 and last ticket check 20:30; operator listings describe roughly a 3.5h on-site sunset-and-lights visit.",
+    "conf": "med"
+  },
+  "Summer Palace": {
+    "m": 210,
+    "n": "Longevity Hill and lake ferry",
+    "basis": "Multiple guides state 3-4h is the minimum for a visit that feels worthwhile and that 2h is only a skim of this very spread-out site; the North Palace Gate to Longevity Hill to ferry route fits 3.5h.",
+    "conf": "high"
+  },
+  "798 Art District": {
+    "m": 150,
+    "n": "Galleries, shops, sculpture walk",
+    "basis": "TripAdvisor and district guides give 2h for a highlights loop and 2-4h for a typical visit (4-5h for art devotees); 2.5h covers the outdoor art and smaller galleries with UCCA timed separately.",
+    "conf": "med"
+  },
+  "UCCA": {
+    "m": 75,
+    "n": "Main exhibition plus store",
+    "basis": "Visitor write-ups say the UCCA halls are compact enough to walk through in about an hour; the extra 15 min covers ticketing and the UCCA Store.",
+    "conf": "med"
+  },
+  "Fly from PKX": {
+    "m": 120,
+    "n": "Domestic check-in and security",
+    "basis": "Standard guidance is 2h before a domestic departure; PKX guides warn check-in closes 45 min out, security queues run 10-30 min and the 06:00-09:00 window is the airport's busiest.",
+    "conf": "high"
+  }
+}

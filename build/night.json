@@ -1,0 +1,63 @@
+{
+  "_doc": "Night classification for every Evening-slot / night-language place in the trip. Drives replanning: only 'night' and 'show' are locked after dark; 'dusk' prefers sunset but works earlier; 'any' can move to daytime to free the evening. Default for unlisted places is 'any'. Slot=Evening in Notion means 'currently planned for the evening', NOT 'requires darkness' — that conflation is what pushed days past 21:30.",
+  "_levels": {
+    "night": "needs darkness — illumination, night cruise, night market, bar street, night viewpoint",
+    "show": "fixed showtime (evening) — treat as a hard anchor",
+    "dusk": "best at sunset/dusk, workable ~1h earlier",
+    "any": "no darkness requirement — free to move into daytime"
+  },
+  "places": {
+    "Mutianyu Summer Night Tour": "night",
+    "Liangjiang (Two Rivers) Night Cruise": "night",
+    "Hongya Cave": "night",
+    "Tuojiang Night Boat": "night",
+    "Snow Bridge (Xueqiao)": "night",
+    "Wanming Pagoda": "night",
+    "Bar street": "night",
+    "Huangpu River Night Cruise (Shiliupu Wharf)": "night",
+    "Li River night lights walk": "night",
+    "Two Rivers & Four Lakes (Shanhu Lake)": "night",
+    "Shenpu Camp Square": "night",
+    "Far-bank Viewing Platform": "night",
+    "Nanshan One Tree Overlook": "night",
+    "Olympic Green — Bird's Nest & Water Cube": "night",
+    "CCTV Headquarters (\"Big Pants\")": "night",
+    "Galaxy SOHO": "night",
+
+    "Chaoyang Theatre acrobatics": "show",
+    "Shufeng Yayun Sichuan Opera": "show",
+    "Impression Liu Sanjie": "show",
+    "Charming Xiangxi Show": "show",
+    "Baishetang Square": "show",
+    "\"Hua Kai Furong\" Show": "show",
+    "Old Jazz Bar, Fairmont Peace Hotel": "show",
+
+    "Shichahai & Houhai Lakes": "dusk",
+    "The Bund": "dusk",
+    "Nanjing Road East": "dusk",
+    "Jinli Old Street": "dusk",
+    "Kuanzhai Alleys": "dusk",
+    "Xibu Street": "dusk",
+    "Kuixinglou Plaza": "dusk",
+    "Longmenhao Old Street": "dusk",
+    "Qiansimen Bridge": "dusk",
+    "Jiangbei Riverbank — Jiangtan Park & Danzishi": "dusk",
+    "Lion Hill & Wangu Tower": "dusk",
+    "Eastern Suburb Memory": "dusk",
+
+    "Qianmen Street & Dashilan hutongs": "any",
+    "Wangfujing": "any",
+    "Sanlitun Taikoo Li": "any",
+    "Beijing SKP & SKP-S": "any",
+    "Taikoo Li": "any",
+    "Chengdu IFS Rooftop Panda": "any",
+    "Daci Temple": "any",
+    "Wuhou Shrine": "any",
+    "Fenghuang Ancient Town": "any",
+    "Furong Town Waterfall & Scenic Area": "any",
+    "Yuyuan Bazaar": "any"
+  },
+  "_closes_early_warning": [
+    "Daci Temple and Wuhou Shrine are in the Evening slot but are ticketed sites that close ~17:00-18:00 — they cannot be done at night at all. Flagged for the Chengdu days."
+  ]
+}

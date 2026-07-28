@@ -1,0 +1,1979 @@
+{
+ "Beijing|1": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 141,
+  "couldMove": [
+   "Qianmen & hutongs"
+  ],
+  "title": "retimed to suggested durations · 2h21 over — your call what gives",
+  "homeNew": "23:51",
+  "newEndMin": 1431,
+  "new": [
+   {
+    "s": 300,
+    "d": 90,
+    "label": "Land at PEK",
+    "kind": "log"
+   },
+   {
+    "s": 426,
+    "d": 20,
+    "label": "Drop bags at Regent Beijing",
+    "kind": "sight"
+   },
+   {
+    "s": 462,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 518,
+    "d": 120,
+    "label": "Temple of Heaven",
+    "kind": "sight"
+   },
+   {
+    "s": 720,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 782,
+    "d": 90,
+    "label": "Beijing city model",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1202,
+    "d": 90,
+    "label": "Qianmen & hutongs",
+    "kind": "sight"
+   },
+   {
+    "s": 1318,
+    "d": 90,
+    "label": "Shichahai lakes",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Beijing|2": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 33,
+  "couldMove": [
+   "Wangfujing"
+  ],
+  "title": "retimed to suggested durations · 0h33 over — your call what gives",
+  "homeNew": "22:03",
+  "newEndMin": 1323,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 504,
+    "d": 75,
+    "label": "Tiananmen Square",
+    "kind": "sight"
+   },
+   {
+    "s": 595,
+    "d": 210,
+    "label": "Forbidden City",
+    "kind": "sight"
+   },
+   {
+    "s": 817,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 883,
+    "d": 45,
+    "label": "Jingshan Park",
+    "kind": "sight"
+   },
+   {
+    "s": 948,
+    "d": 180,
+    "label": "National Museum",
+    "kind": "sight"
+   },
+   {
+    "s": 1146,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1240,
+    "d": 75,
+    "label": "Wangfujing",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Beijing|3": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 5,
+  "couldMove": [
+   "CCTV 'Big Pants'"
+  ],
+  "title": "retimed to suggested durations · 0h05 over — your call what gives",
+  "homeNew": "21:35",
+  "newEndMin": 1295,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 567,
+    "d": 165,
+    "label": "Mutianyu Great Wall",
+    "kind": "sight"
+   },
+   {
+    "s": 810,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 897,
+    "d": 20,
+    "label": "Toboggan down",
+    "kind": "sight"
+   },
+   {
+    "s": 944,
+    "d": 150,
+    "label": "Sanlitun Taikoo Li",
+    "kind": "sight"
+   },
+   {
+    "s": 1115,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1210,
+    "d": 60,
+    "label": "CCTV 'Big Pants'",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Beijing|4": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "20:44",
+  "newEndMin": 1244,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 523,
+    "d": 210,
+    "label": "Summer Palace",
+    "kind": "sight"
+   },
+   {
+    "s": 769,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 830,
+    "d": 150,
+    "label": "798 Art District",
+    "kind": "sight"
+   },
+   {
+    "s": 988,
+    "d": 75,
+    "label": "UCCA",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Beijing|5": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "09:40",
+  "newEndMin": 580,
+  "new": [
+   {
+    "s": 339,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 460,
+    "d": 120,
+    "label": "Fly from PKX",
+    "kind": "log"
+   }
+  ]
+ },
+ "Lijiang|1": {
+  "status": "proposed",
+  "generated": true,
+  "couldMove": [
+   "Mu Mansion"
+  ],
+  "title": "retimed to suggested durations",
+  "homeNew": "21:17",
+  "newEndMin": 1277,
+  "new": [
+   {
+    "s": 780,
+    "d": 30,
+    "label": "Land at LJG",
+    "kind": "log"
+   },
+   {
+    "s": 855,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 918,
+    "d": 60,
+    "label": "Check in at Anyin",
+    "kind": "sight"
+   },
+   {
+    "s": 991,
+    "d": 90,
+    "label": "Dayan Old Town",
+    "kind": "sight"
+   },
+   {
+    "s": 1085,
+    "d": 30,
+    "label": "Sifang Square",
+    "kind": "sight"
+   },
+   {
+    "s": 1122,
+    "d": 45,
+    "label": "Mu Mansion",
+    "kind": "sight"
+   },
+   {
+    "s": 1174,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Lijiang|2": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "21:07",
+  "newEndMin": 1267,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 520,
+    "d": 30,
+    "label": "Depart for the gorge",
+    "kind": "log"
+   },
+   {
+    "s": 658,
+    "d": 30,
+    "label": "Qiaotou gateway",
+    "kind": "log"
+   },
+   {
+    "s": 696,
+    "d": 120,
+    "label": "Tiger Leaping Gorge",
+    "kind": "sight"
+   },
+   {
+    "s": 840,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 909,
+    "d": 180,
+    "label": "Middle Gorge descent",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Lijiang|3": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "20:56",
+  "newEndMin": 1256,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 531,
+    "d": 120,
+    "label": "Glacier Park cable car",
+    "kind": "log"
+   },
+   {
+    "s": 671,
+    "d": 90,
+    "label": "Jade Dragon summit",
+    "kind": "sight"
+   },
+   {
+    "s": 827,
+    "d": 105,
+    "label": "Impression Lijiang",
+    "kind": "log"
+   },
+   {
+    "s": 939,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 1000,
+    "d": 90,
+    "label": "Blue Moon Valley",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Lijiang|4": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 90,
+  "couldMove": [
+   "Lashi Lake wetland",
+   "Black Dragon Pool"
+  ],
+  "title": "retimed to suggested durations · 1h30 over — your call what gives",
+  "homeNew": "23:00",
+  "newEndMin": 1380,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 512,
+    "d": 75,
+    "label": "Baisha Village",
+    "kind": "sight"
+   },
+   {
+    "s": 591,
+    "d": 40,
+    "label": "Baisha Murals",
+    "kind": "sight"
+   },
+   {
+    "s": 632,
+    "d": 30,
+    "label": "Baisha embroidery",
+    "kind": "sight"
+   },
+   {
+    "s": 675,
+    "d": 120,
+    "label": "Shuhe Old Town",
+    "kind": "sight"
+   },
+   {
+    "s": 802,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 863,
+    "d": 40,
+    "label": "Tea Horse Road Museum",
+    "kind": "sight"
+   },
+   {
+    "s": 927,
+    "d": 150,
+    "label": "Lashi Lake wetland",
+    "kind": "sight"
+   },
+   {
+    "s": 1103,
+    "d": 90,
+    "label": "Black Dragon Pool",
+    "kind": "sight"
+   },
+   {
+    "s": 1201,
+    "d": 75,
+    "label": "Lion Hill sunset",
+    "kind": "sight"
+   },
+   {
+    "s": 1279,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Lijiang|5": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "18:20",
+  "newEndMin": 1100,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 486,
+    "d": 60,
+    "label": "Last Dayan loop",
+    "kind": "sight"
+   },
+   {
+    "s": 547,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 980,
+    "d": 120,
+    "label": "Fly from LJG",
+    "kind": "log"
+   }
+  ]
+ },
+ "Chengdu|1": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 334,
+  "couldMove": [
+   "Check in at Minyoun Dongda"
+  ],
+  "title": "retimed to suggested durations · 5h34 over — your call what gives",
+  "homeNew": "03:04 +1",
+  "newEndMin": 1624,
+  "new": [
+   {
+    "s": 1215,
+    "d": 40,
+    "label": "Land at CTU",
+    "kind": "log"
+   },
+   {
+    "s": 1296,
+    "d": 30,
+    "label": "Check in at Minyoun Dongda",
+    "kind": "sight"
+   },
+   {
+    "s": 1341,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1433,
+    "d": 90,
+    "label": "Taikoo Li",
+    "kind": "sight"
+   },
+   {
+    "s": 1529,
+    "d": 45,
+    "label": "Daci Temple",
+    "kind": "sight"
+   },
+   {
+    "s": 1576,
+    "d": 30,
+    "label": "IFS rooftop panda",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Chengdu|2": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 209,
+  "altVenues": [
+   "Heming Teahouse"
+  ],
+  "title": "retimed to suggested durations · 3h29 over — your call what gives",
+  "homeNew": "00:59 +1",
+  "newEndMin": 1499,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 524,
+    "d": 210,
+    "label": "Chengdu Panda Base",
+    "kind": "sight"
+   },
+   {
+    "s": 766,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 827,
+    "d": 150,
+    "label": "Chengdu Museum",
+    "kind": "sight"
+   },
+   {
+    "s": 983,
+    "d": 45,
+    "label": "People’s Park",
+    "kind": "sight"
+   },
+   {
+    "s": 1033,
+    "d": 90,
+    "label": "Heming Teahouse",
+    "kind": "sight"
+   },
+   {
+    "s": 1138,
+    "d": 120,
+    "label": "Kuanzhai Alleys",
+    "kind": "sight"
+   },
+   {
+    "s": 1264,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1355,
+    "d": 120,
+    "label": "Sichuan opera",
+    "kind": "log"
+   }
+  ]
+ },
+ "Chengdu|3": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 297,
+  "couldMove": [
+   "Wuhou Shrine"
+  ],
+  "title": "retimed to suggested durations · 4h57 over — your call what gives",
+  "homeNew": "02:27 +1",
+  "newEndMin": 1587,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 546,
+    "d": 50,
+    "label": "Chengdu East → Guanghan",
+    "kind": "log"
+   },
+   {
+    "s": 658,
+    "d": 20,
+    "label": "Guanghan North",
+    "kind": "log"
+   },
+   {
+    "s": 717,
+    "d": 210,
+    "label": "Sanxingdui Museum",
+    "kind": "sight"
+   },
+   {
+    "s": 1002,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 1064,
+    "d": 60,
+    "label": "SKP Chengdu",
+    "kind": "sight"
+   },
+   {
+    "s": 1161,
+    "d": 120,
+    "label": "Wuhou Shrine",
+    "kind": "sight"
+   },
+   {
+    "s": 1294,
+    "d": 90,
+    "label": "Jinli Old Street",
+    "kind": "sight"
+   },
+   {
+    "s": 1435,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Chengdu|4": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "09:30",
+  "newEndMin": 570,
+  "new": [
+   {
+    "s": 414,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 510,
+    "d": 60,
+    "label": "Train from Chengdu East",
+    "kind": "log"
+   }
+  ]
+ },
+ "Chongqing|1": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 142,
+  "couldMove": [
+   "Jiangbei riverbank"
+  ],
+  "title": "retimed to suggested durations · 2h22 over — your call what gives",
+  "homeNew": "23:52",
+  "newEndMin": 1432,
+  "new": [
+   {
+    "s": 660,
+    "d": 20,
+    "label": "Arrive Chongqing North",
+    "kind": "log"
+   },
+   {
+    "s": 709,
+    "d": 30,
+    "label": "Check in at KS Kongshang",
+    "kind": "sight"
+   },
+   {
+    "s": 754,
+    "d": 60,
+    "label": "Jiefangbei",
+    "kind": "sight"
+   },
+   {
+    "s": 834,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 896,
+    "d": 90,
+    "label": "Raffles Crystal deck",
+    "kind": "sight"
+   },
+   {
+    "s": 1038,
+    "d": 45,
+    "label": "Chaotianmen Docks",
+    "kind": "log"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1201,
+    "d": 30,
+    "label": "Kuixinglou Plaza",
+    "kind": "sight"
+   },
+   {
+    "s": 1252,
+    "d": 30,
+    "label": "Qiansimen Bridge",
+    "kind": "sight"
+   },
+   {
+    "s": 1284,
+    "d": 30,
+    "label": "Jiangbei riverbank",
+    "kind": "sight"
+   },
+   {
+    "s": 1326,
+    "d": 105,
+    "label": "Hongya Cave",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Chongqing|2": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 115,
+  "title": "retimed to suggested durations · 1h55 over — your call what gives",
+  "homeNew": "23:25",
+  "newEndMin": 1405,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 523,
+    "d": 30,
+    "label": "Liziba monorail",
+    "kind": "log"
+   },
+   {
+    "s": 563,
+    "d": 75,
+    "label": "Eling Park",
+    "kind": "sight"
+   },
+   {
+    "s": 652,
+    "d": 90,
+    "label": "Testbed 2",
+    "kind": "sight"
+   },
+   {
+    "s": 781,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 843,
+    "d": 45,
+    "label": "Baixiang Ju",
+    "kind": "sight"
+   },
+   {
+    "s": 1037,
+    "d": 60,
+    "label": "Yangtze Cableway",
+    "kind": "log"
+   },
+   {
+    "s": 1108,
+    "d": 75,
+    "label": "Longmenhao Old Street",
+    "kind": "sight"
+   },
+   {
+    "s": 1202,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1309,
+    "d": 75,
+    "label": "Two Rivers night cruise",
+    "kind": "log"
+   }
+  ]
+ },
+ "Chongqing|3": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "09:00",
+  "newEndMin": 540,
+  "new": [
+   {
+    "s": 330,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 480,
+    "d": 60,
+    "label": "Chongqing North station",
+    "kind": "log"
+   }
+  ]
+ },
+ "Zhangjiajie|1": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 10,
+  "title": "retimed to suggested durations · 0h10 over — your call what gives",
+  "homeNew": "21:40",
+  "newEndMin": 1300,
+  "new": [
+   {
+    "s": 750,
+    "d": 15,
+    "label": "Arrive Zhangjiajie West",
+    "kind": "log"
+   },
+   {
+    "s": 777,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 877,
+    "d": 25,
+    "label": "Check in at Yuji Hotel",
+    "kind": "sight"
+   },
+   {
+    "s": 906,
+    "d": 45,
+    "label": "Wulingyuan East Gate",
+    "kind": "sight"
+   },
+   {
+    "s": 998,
+    "d": 165,
+    "label": "Golden Whip Stream",
+    "kind": "sight"
+   },
+   {
+    "s": 1176,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Zhangjiajie|2": {
+  "status": "proposed",
+  "generated": true,
+  "conflict": "Tianzi cableway down",
+  "needsDecision": true,
+  "overBy": 96,
+  "title": "retimed to suggested durations · 1h36 over — your call what gives",
+  "homeNew": "23:06",
+  "newEndMin": 1386,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 557,
+    "d": 60,
+    "label": "Bailong Elevator",
+    "kind": "log"
+   },
+   {
+    "s": 619,
+    "d": 180,
+    "label": "Yuanjiajie (Avatar)",
+    "kind": "sight"
+   },
+   {
+    "s": 837,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 899,
+    "d": 150,
+    "label": "Tianzi Mountain",
+    "kind": "sight"
+   },
+   {
+    "s": 1066,
+    "d": 60,
+    "label": "Tianzi cableway down",
+    "kind": "log"
+   },
+   {
+    "s": 1148,
+    "d": 90,
+    "label": "Ten-Mile Gallery",
+    "kind": "sight"
+   },
+   {
+    "s": 1239,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Zhangjiajie|3": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 211,
+  "title": "retimed to suggested durations · 3h31 over — your call what gives",
+  "homeNew": "01:01 +1",
+  "newEndMin": 1501,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 560,
+    "d": 35,
+    "label": "Yangjiajie cableway",
+    "kind": "log"
+   },
+   {
+    "s": 602,
+    "d": 150,
+    "label": "Yangjiajie",
+    "kind": "sight"
+   },
+   {
+    "s": 819,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 887,
+    "d": 30,
+    "label": "Bus to Zhangjiajie city",
+    "kind": "log"
+   },
+   {
+    "s": 952,
+    "d": 75,
+    "label": "Tianmen cableway",
+    "kind": "log"
+   },
+   {
+    "s": 1078,
+    "d": 255,
+    "label": "Tianmen Mountain",
+    "kind": "sight"
+   },
+   {
+    "s": 1341,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Zhangjiajie|4": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "10:00",
+  "newEndMin": 600,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 555,
+    "d": 45,
+    "label": "Head to the station",
+    "kind": "log"
+   }
+  ]
+ },
+ "Furong (Hibiscus)|1": {
+  "status": "proposed",
+  "generated": true,
+  "couldMove": [
+   "Furong waterfall",
+   "Youshui River cruise"
+  ],
+  "title": "retimed to suggested durations",
+  "homeNew": "21:24",
+  "newEndMin": 1284,
+  "new": [
+   {
+    "s": 690,
+    "d": 15,
+    "label": "Arrive Furongzhen",
+    "kind": "log"
+   },
+   {
+    "s": 715,
+    "d": 30,
+    "label": "Check in at Waterfall Bay",
+    "kind": "sight"
+   },
+   {
+    "s": 746,
+    "d": 30,
+    "label": "Liu Xiaoqing rice tofu",
+    "kind": "meal"
+   },
+   {
+    "s": 777,
+    "d": 60,
+    "label": "Wuli Stone Street",
+    "kind": "sight"
+   },
+   {
+    "s": 838,
+    "d": 30,
+    "label": "Tuwang Palace",
+    "kind": "sight"
+   },
+   {
+    "s": 869,
+    "d": 20,
+    "label": "Xizhou Bronze Pillar",
+    "kind": "sight"
+   },
+   {
+    "s": 890,
+    "d": 60,
+    "label": "Furong waterfall",
+    "kind": "sight"
+   },
+   {
+    "s": 951,
+    "d": 30,
+    "label": "Youshui River cruise",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1201,
+    "d": 30,
+    "label": "Far-bank platform",
+    "kind": "sight"
+   },
+   {
+    "s": 1232,
+    "d": 20,
+    "label": "Shenpu Camp Square",
+    "kind": "sight"
+   },
+   {
+    "s": 1253,
+    "d": 30,
+    "label": "Baishetang Square",
+    "kind": "log"
+   }
+  ]
+ },
+ "Furong (Hibiscus)|2": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "14:00",
+  "newEndMin": 840,
+  "new": [
+   {
+    "s": 333,
+    "d": 45,
+    "label": "Dawn photo session",
+    "kind": "sight"
+   },
+   {
+    "s": 379,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 415,
+    "d": 60,
+    "label": "Old-town mop-up",
+    "kind": "sight"
+   },
+   {
+    "s": 476,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 795,
+    "d": 45,
+    "label": "Train from Furongzhen",
+    "kind": "log"
+   }
+  ]
+ },
+ "Fenghuang|1": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 81,
+  "couldMove": [
+   "East Gate Tower",
+   "Hong Bridge",
+   "Jumping stones"
+  ],
+  "title": "retimed to suggested durations · 1h21 over — your call what gives",
+  "homeNew": "22:51",
+  "newEndMin": 1371,
+  "new": [
+   {
+    "s": 960,
+    "d": 15,
+    "label": "Fenghuang HSR station",
+    "kind": "log"
+   },
+   {
+    "s": 998,
+    "d": 20,
+    "label": "Check in at Jinshuian",
+    "kind": "sight"
+   },
+   {
+    "s": 1022,
+    "d": 75,
+    "label": "Fenghuang Ancient Town",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 15,
+    "label": "East Gate Tower",
+    "kind": "sight"
+   },
+   {
+    "s": 1126,
+    "d": 20,
+    "label": "Hong Bridge",
+    "kind": "sight"
+   },
+   {
+    "s": 1153,
+    "d": 15,
+    "label": "Jumping stones",
+    "kind": "sight"
+   },
+   {
+    "s": 1184,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1279,
+    "d": 30,
+    "label": "Tuojiang night boat",
+    "kind": "sight"
+   },
+   {
+    "s": 1324,
+    "d": 10,
+    "label": "Wanming Pagoda",
+    "kind": "sight"
+   },
+   {
+    "s": 1348,
+    "d": 15,
+    "label": "Snow Bridge (Xueqiao)",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Fenghuang|2": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 660,
+  "couldMove": [
+   "Sunrise / mist session",
+   "Nanhua Bridge"
+  ],
+  "altVenues": [
+   "Ginger candy stalls"
+  ],
+  "title": "retimed to suggested durations · 11h00 over — your call what gives",
+  "homeNew": "08:30 +1",
+  "newEndMin": 1950,
+  "new": [
+   {
+    "s": 1355,
+    "d": 45,
+    "label": "Sunrise / mist session",
+    "kind": "sight"
+   },
+   {
+    "s": 1405,
+    "d": 15,
+    "label": "Nanhua Bridge",
+    "kind": "sight"
+   },
+   {
+    "s": 1424,
+    "d": 25,
+    "label": "Shen Congwen Residence",
+    "kind": "sight"
+   },
+   {
+    "s": 1457,
+    "d": 30,
+    "label": "Miao batik & silver lanes",
+    "kind": "sight"
+   },
+   {
+    "s": 1488,
+    "d": 15,
+    "label": "Ginger candy stalls",
+    "kind": "sight"
+   },
+   {
+    "s": 1504,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 1905,
+    "d": 45,
+    "label": "Train from Gucheng",
+    "kind": "log"
+   }
+  ]
+ },
+ "Guilin|1": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 82,
+  "couldMove": [
+   "Elephant Trunk Hill"
+  ],
+  "title": "retimed to suggested durations · 1h22 over — your call what gives",
+  "homeNew": "22:52",
+  "newEndMin": 1372,
+  "new": [
+   {
+    "s": 870,
+    "d": 20,
+    "label": "Arrive Guilin North",
+    "kind": "log"
+   },
+   {
+    "s": 914,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 979,
+    "d": 30,
+    "label": "Check in at RongShi",
+    "kind": "sight"
+   },
+   {
+    "s": 1027,
+    "d": 75,
+    "label": "Reed Flute Cave",
+    "kind": "sight"
+   },
+   {
+    "s": 1122,
+    "d": 45,
+    "label": "Elephant Trunk Hill",
+    "kind": "sight"
+   },
+   {
+    "s": 1180,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1277,
+    "d": 90,
+    "label": "Two Rivers & Four Lakes",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Yangshuo|1": {
+  "status": "proposed",
+  "generated": true,
+  "conflict": "Impression Liu Sanjie",
+  "needsDecision": true,
+  "overBy": 204,
+  "title": "retimed to suggested durations · 3h24 over — your call what gives",
+  "homeNew": "00:54 +1",
+  "newEndMin": 1494,
+  "new": [
+   {
+    "s": 420,
+    "d": 45,
+    "label": "Zhujiang Wharf transfer",
+    "kind": "log"
+   },
+   {
+    "s": 810,
+    "d": 15,
+    "label": "Dock at Yangshuo",
+    "kind": "log"
+   },
+   {
+    "s": 845,
+    "d": 255,
+    "label": "Li River cruise",
+    "kind": "sight"
+   },
+   {
+    "s": 1103,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 1167,
+    "d": 30,
+    "label": "Fengqi Homestay",
+    "kind": "sight"
+   },
+   {
+    "s": 1200,
+    "d": 90,
+    "label": "West Street",
+    "kind": "sight"
+   },
+   {
+    "s": 1304,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1395,
+    "d": 90,
+    "label": "Impression Liu Sanjie",
+    "kind": "log"
+   }
+  ]
+ },
+ "Yangshuo|2": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "21:06",
+  "newEndMin": 1266,
+  "new": [
+   {
+    "s": 345,
+    "d": 90,
+    "label": "Xianggong sunrise",
+    "kind": "sight"
+   },
+   {
+    "s": 482,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 539,
+    "d": 90,
+    "label": "Yulong bamboo rafting",
+    "kind": "sight"
+   },
+   {
+    "s": 720,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 800,
+    "d": 150,
+    "label": "Yulong valley cycling",
+    "kind": "sight"
+   },
+   {
+    "s": 975,
+    "d": 90,
+    "label": "Moon Hill",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1220,
+    "d": 45,
+    "label": "Li River night walk",
+    "kind": "sight"
+   }
+  ]
+ },
+ "Yangshuo|3": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "20:52",
+  "newEndMin": 1252,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 543,
+    "d": 60,
+    "label": "Xingping Ancient Town",
+    "kind": "sight"
+   },
+   {
+    "s": 609,
+    "d": 30,
+    "label": "20-RMB viewpoint",
+    "kind": "sight"
+   },
+   {
+    "s": 720,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Yangshuo|4": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "10:20",
+  "newEndMin": 620,
+  "new": [
+   {
+    "s": 369,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 500,
+    "d": 120,
+    "label": "Fly from KWL",
+    "kind": "log"
+   }
+  ]
+ },
+ "Shanghai|1": {
+  "status": "proposed",
+  "generated": true,
+  "title": "retimed to suggested durations",
+  "homeNew": "21:17",
+  "newEndMin": 1277,
+  "new": [
+   {
+    "s": 780,
+    "d": 45,
+    "label": "Land at PVG",
+    "kind": "log"
+   },
+   {
+    "s": 870,
+    "d": 25,
+    "label": "Shanghai Maglev",
+    "kind": "log"
+   },
+   {
+    "s": 918,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 981,
+    "d": 30,
+    "label": "Check in at Marriott",
+    "kind": "sight"
+   },
+   {
+    "s": 1027,
+    "d": 60,
+    "label": "Nanjing Road East",
+    "kind": "sight"
+   },
+   {
+    "s": 1106,
+    "d": 60,
+    "label": "The Bund",
+    "kind": "sight"
+   },
+   {
+    "s": 1171,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Shanghai|2": {
+  "status": "proposed",
+  "generated": true,
+  "couldMove": [
+   "Nanjing Road West"
+  ],
+  "title": "retimed to suggested durations",
+  "homeNew": "20:36",
+  "newEndMin": 1236,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 720,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 800,
+    "d": 90,
+    "label": "Recovery massage / spa",
+    "kind": "sight"
+   },
+   {
+    "s": 909,
+    "d": 60,
+    "label": "Jing’an Temple",
+    "kind": "sight"
+   },
+   {
+    "s": 983,
+    "d": 60,
+    "label": "Zhangyuan",
+    "kind": "sight"
+   },
+   {
+    "s": 1050,
+    "d": 75,
+    "label": "Nanjing Road West",
+    "kind": "sight"
+   },
+   {
+    "s": 1130,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Shanghai|3": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 28,
+  "couldMove": [
+   "Sinan Mansions",
+   "Fuxing Park"
+  ],
+  "title": "retimed to suggested durations · 0h28 over — your call what gives",
+  "homeNew": "21:58",
+  "newEndMin": 1318,
+  "new": [
+   {
+    "s": 540,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 600,
+    "d": 20,
+    "label": "Wukang Building",
+    "kind": "sight"
+   },
+   {
+    "s": 630,
+    "d": 60,
+    "label": "Wukang Road",
+    "kind": "sight"
+   },
+   {
+    "s": 694,
+    "d": 45,
+    "label": "Ferguson Lane",
+    "kind": "sight"
+   },
+   {
+    "s": 753,
+    "d": 45,
+    "label": "Anfu Road",
+    "kind": "sight"
+   },
+   {
+    "s": 812,
+    "d": 30,
+    "label": "Wulumuqi Road",
+    "kind": "sight"
+   },
+   {
+    "s": 863,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 928,
+    "d": 60,
+    "label": "Sinan Mansions",
+    "kind": "sight"
+   },
+   {
+    "s": 993,
+    "d": 45,
+    "label": "Fuxing Park",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1203,
+    "d": 90,
+    "label": "Old Jazz Bar",
+    "kind": "log"
+   }
+  ]
+ },
+ "Shanghai|4": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 8,
+  "couldMove": [
+   "M50 Creative Park"
+  ],
+  "altVenues": [
+   "Mid-Lake Teahouse"
+  ],
+  "title": "retimed to suggested durations · 0h08 over — your call what gives",
+  "homeNew": "21:38",
+  "newEndMin": 1298,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 503,
+    "d": 90,
+    "label": "Yu Garden",
+    "kind": "sight"
+   },
+   {
+    "s": 596,
+    "d": 60,
+    "label": "Yuyuan Bazaar",
+    "kind": "sight"
+   },
+   {
+    "s": 662,
+    "d": 60,
+    "label": "Mid-Lake Teahouse",
+    "kind": "sight"
+   },
+   {
+    "s": 724,
+    "d": 45,
+    "label": "City God Temple",
+    "kind": "sight"
+   },
+   {
+    "s": 787,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 851,
+    "d": 45,
+    "label": "People’s Square",
+    "kind": "sight"
+   },
+   {
+    "s": 916,
+    "d": 120,
+    "label": "M50 Creative Park",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1201,
+    "d": 75,
+    "label": "Huangpu night cruise",
+    "kind": "log"
+   }
+  ]
+ },
+ "Shanghai|5": {
+  "status": "proposed",
+  "generated": true,
+  "couldMove": [
+   "Check in — J Hotel (Tower)",
+   "Shanghai Tower base",
+   "Jin Mao Tower"
+  ],
+  "title": "retimed to suggested durations",
+  "homeNew": "20:05",
+  "newEndMin": 1205,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 512,
+    "d": 45,
+    "label": "West Bund riverside",
+    "kind": "sight"
+   },
+   {
+    "s": 572,
+    "d": 90,
+    "label": "West Bund Museum",
+    "kind": "sight"
+   },
+   {
+    "s": 677,
+    "d": 90,
+    "label": "Long Museum West Bund",
+    "kind": "sight"
+   },
+   {
+    "s": 785,
+    "d": 75,
+    "label": "TANK Shanghai",
+    "kind": "sight"
+   },
+   {
+    "s": 898,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 959,
+    "d": 45,
+    "label": "Check in — J Hotel (Tower)",
+    "kind": "sight"
+   },
+   {
+    "s": 1005,
+    "d": 30,
+    "label": "Shanghai Tower base",
+    "kind": "sight"
+   },
+   {
+    "s": 1040,
+    "d": 30,
+    "label": "Jin Mao Tower",
+    "kind": "sight"
+   },
+   {
+    "s": 1078,
+    "d": 30,
+    "label": "World Financial Center",
+    "kind": "sight"
+   },
+   {
+    "s": 1110,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   }
+  ]
+ },
+ "Shanghai|6": {
+  "status": "proposed",
+  "generated": true,
+  "needsDecision": true,
+  "overBy": 280,
+  "title": "retimed to suggested durations · 4h40 over — your call what gives",
+  "homeNew": "02:10 +1",
+  "newEndMin": 1570,
+  "new": [
+   {
+    "s": 450,
+    "d": 35,
+    "label": "Breakfast",
+    "kind": "meal"
+   },
+   {
+    "s": 514,
+    "d": 60,
+    "label": "Lunch",
+    "kind": "meal"
+   },
+   {
+    "s": 587,
+    "d": 180,
+    "label": "Shanghai Museum East",
+    "kind": "sight"
+   },
+   {
+    "s": 789,
+    "d": 45,
+    "label": "Pudong promenade",
+    "kind": "sight"
+   },
+   {
+    "s": 835,
+    "d": 30,
+    "label": "Oriental Pearl Tower",
+    "kind": "sight"
+   },
+   {
+    "s": 905,
+    "d": 90,
+    "label": "Dinner",
+    "kind": "meal"
+   },
+   {
+    "s": 1390,
+    "d": 180,
+    "label": "Fly from PVG",
+    "kind": "log"
+   }
+  ]
+ }
+}

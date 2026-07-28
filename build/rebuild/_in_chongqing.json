@@ -1,0 +1,363 @@
+{
+ "city": "Chongqing",
+ "hotel": {
+  "name": "Chongqing KS Kongshang Hotel",
+  "coord": {
+   "lat": 29.565157,
+   "lng": 106.575488
+  }
+ },
+ "days": [
+  {
+   "day": 1,
+   "date": "2026-08-22",
+   "isArrival": true,
+   "isDeparture": false,
+   "hubs": [
+    {
+     "stop": "Arrive Chongqing North",
+     "role": "arrive",
+     "mode": "High-speed train",
+     "number": null,
+     "time": "11:00",
+     "buffer": 20,
+     "approx": true,
+     "clearBy": "11:20"
+    }
+   ],
+   "meals": [
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Check in at KS Kongshang",
+    "Jiefangbei",
+    "Raffles Crystal deck",
+    "Chaotianmen Docks",
+    "Kuixinglou Plaza",
+    "Qiansimen Bridge",
+    "Jiangbei riverbank",
+    "Hongya Cave"
+   ]
+  },
+  {
+   "day": 2,
+   "date": "2026-08-23",
+   "isArrival": false,
+   "isDeparture": false,
+   "hubs": [],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Liziba monorail",
+    "Eling Park",
+    "Testbed 2",
+    "Baixiang Ju",
+    "Yangtze Cableway",
+    "Longmenhao Old Street",
+    "Two Rivers night cruise"
+   ]
+  },
+  {
+   "day": 3,
+   "date": "2026-08-24",
+   "isArrival": false,
+   "isDeparture": true,
+   "hubs": [
+    {
+     "stop": "Chongqing North station",
+     "role": "depart",
+     "mode": "High-speed train",
+     "number": null,
+     "time": "08:00",
+     "buffer": 60,
+     "approx": true,
+     "clearBy": null
+    }
+   ],
+   "meals": [
+    "Breakfast"
+   ],
+   "currentStops": [
+    "Chongqing West (alt station)"
+   ]
+  }
+ ],
+ "sights": {
+  "Check in at KS Kongshang": {
+   "advice_min": 30,
+   "advice_note": "Passport check-in, 52nd-floor lifts",
+   "advice_conf": "med",
+   "type": "Hotel",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "Check-in after 14:00; check-out before 12:00; front desk 24/7",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.565157,
+    "lng": 106.575488
+   },
+   "notes": "Booked at Jiefangbei, on the 52nd floor of Xinhua International Building; 22–24 Aug."
+  },
+  "Jiefangbei": {
+   "advice_min": 60,
+   "advice_note": "Monument plaza and side alleys",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.5575,
+    "lng": 106.5771
+   },
+   "notes": "The Liberation Monument pedestrian hub."
+  },
+  "Raffles Crystal deck": {
+   "advice_min": 90,
+   "advice_note": "Ticketing, lift, exhibits, skydeck",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "10:00–21:00",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.5665,
+    "lng": 106.5854
+   },
+   "notes": "AC midday block, then up to the ~250 m Exploration Deck."
+  },
+  "Chaotianmen Docks": {
+   "advice_min": 45,
+   "advice_note": "Confluence piers stroll",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.569512,
+    "lng": 106.584099
+   },
+   "notes": "Stroll the two-river confluence piers; confirm tomorrow’s night-cruise pier."
+  },
+  "Kuixinglou Plaza": {
+   "advice_min": 30,
+   "advice_note": "22nd-floor square, photo stop",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "dusk",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.562,
+    "lng": 106.5727
+   },
+   "notes": "Enter at street level onto the 22nd-floor plaza."
+  },
+  "Qiansimen Bridge": {
+   "advice_min": 30,
+   "advice_note": "Head-on Hongya Cave shot",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "dusk",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.569738,
+    "lng": 106.574414
+   },
+   "notes": "The classic head-on framed shot of Hongya Cave’s stilt-house layers."
+  },
+  "Jiangbei riverbank": {
+   "advice_min": 30,
+   "advice_note": "Across-river panorama viewpoint",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.5688,
+    "lng": 106.5757
+   },
+   "notes": "Cross for the wide across-the-river panorama of Hongya Cave with reflections."
+  },
+  "Hongya Cave": {
+   "advice_min": 105,
+   "advice_note": "Eleven levels through the crush",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "night",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "Lights ~19:00–23:00",
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.565157,
+    "lng": 106.575488
+   },
+   "notes": "Finish at Binjiang Road at the foot of the illuminated stilt-house complex."
+  },
+  "Liziba monorail": {
+   "advice_min": 30,
+   "advice_note": "Train-through-building photo platform",
+   "advice_conf": "high",
+   "type": "Transport",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.555723,
+    "lng": 106.53399
+   },
+   "notes": "Watch from the platform across the road."
+  },
+  "Eling Park": {
+   "advice_min": 75,
+   "advice_note": "Liangjiang Pavilion two-rivers panorama",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.552548,
+    "lng": 106.532402
+   },
+   "notes": "Liangjiang Pavilion for the two-rivers panorama."
+  },
+  "Testbed 2": {
+   "advice_min": 90,
+   "advice_note": "Converted printing-factory art park",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": "Open all day",
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.5563,
+    "lng": 106.539
+   },
+   "notes": "Old printing factory turned creative park."
+  },
+  "Baixiang Ju": {
+   "advice_min": 45,
+   "advice_note": "Corridors of the elevator-less block",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.5578,
+    "lng": 106.5833
+   },
+   "notes": "The 1980s 24-storey block with no elevator — three street-level entrances."
+  },
+  "Yangtze Cableway": {
+   "advice_min": 60,
+   "advice_note": "Queue plus 4-minute crossing",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.552897,
+    "lng": 106.59104
+   },
+   "notes": "North→south over the river (¥30 one-way)."
+  },
+  "Longmenhao Old Street": {
+   "advice_min": 75,
+   "advice_note": "Terraced south-bank heritage lanes",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Evening",
+   "night": "dusk",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.559246,
+    "lng": 106.591324
+   },
+   "notes": "Restored south-bank quarter up the hillside."
+  },
+  "Two Rivers night cruise": {
+   "advice_min": 75,
+   "advice_note": "Boarding plus 45-minute sailing",
+   "advice_conf": "high",
+   "type": "Show",
+   "slot": "Evening",
+   "night": "night",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": "Departures ~19:30–22:00; aim 20:00–20:30",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.5668,
+    "lng": 106.5852
+   },
+   "notes": "Board at Chaotianmen ~20:00 for the full light show."
+  },
+  "Chongqing West (alt station)": {
+   "advice_min": 75,
+   "advice_note": "Buffer at the mega-station",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Bonus",
+   "night": "any",
+   "bonus": true,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.5215,
+    "lng": 106.428
+   },
+   "notes": "40–60 min from Jiefangbei in morning traffic — the further departure station."
+  }
+ }
+}

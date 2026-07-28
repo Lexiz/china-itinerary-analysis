@@ -12,18 +12,9 @@
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
-  @media (prefers-color-scheme:dark){
-    :root{
-      --bg:#17130F; --surface:#211A14; --surface-2:#1C1610;
-      --ink:#F3ECE0; --ink-2:#BCAF9D; --ink-3:#877A69;
-      --line:#332A21; --grid:#2C241C; --band:#211A13; --band-line:#3A3025;
-      --ok:#7FB894; --ok-soft:#222E26;
-      --warn:#E0AE52; --warn-soft:#33281485;
-      --bad:#E58072; --bad-soft:#3A211C;
-      --target:#C79A6A;
-      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -14px rgba(0,0,0,.6);
-    }
-  }
+  /* Light is the default, regardless of the OS setting — dark only via the
+     explicit [data-theme="dark"] toggle below. No prefers-color-scheme rule
+     here on purpose: it would repaint dark before the toggle's JS runs. */
   :root[data-theme="light"]{
     --bg:#FBF8F3; --surface:#FFFFFF; --surface-2:#F6F1E8;
     --ink:#241F1B; --ink-2:#6B5F54; --ink-3:#A2937F;
@@ -40,6 +31,9 @@
     --bad:#E58072; --bad-soft:#3A211C; --target:#C79A6A;
     --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -14px rgba(0,0,0,.6);
   }
+  td.coloc{color:var(--ink-3);font-size:11.5px;text-align:center;letter-spacing:.03em;}
+  td.capped{color:var(--warn);} td.capped .qm,td.capbad .qm{font-size:10px;margin-left:3px;opacity:.8}
+  td.capbad{color:var(--bad);font-weight:700;}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
     font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
@@ -72,7 +66,7 @@
   .chk input{accent-color:var(--target);width:15px;height:15px;}
 
   /* axis */
-  .axis{display:grid;grid-template-columns:var(--labelw) 1fr;align-items:end;margin:18px 0 2px;
+  .axis{display:block;margin:18px 0 2px;
     position:sticky;top:0;background:linear-gradient(var(--bg) 70%,transparent);z-index:5;padding-top:6px;}
   .axis .track-head{position:relative;height:18px;}
   .axis .tk{position:absolute;transform:translateX(-50%);font-size:10.5px;color:var(--ink-3);
@@ -89,8 +83,7 @@
   .city-body{border-left:3px solid var(--cx);padding-left:12px;display:flex;flex-direction:column;gap:2px;}
 
   /* day row */
-  .row{display:grid;grid-template-columns:var(--labelw) 1fr;align-items:center;gap:0;
-    padding:5px 0;border-radius:9px;transition:background .12s;}
+  .row{display:block;padding:2px 0;border-radius:9px;transition:background .12s;}
   .row:hover{background:var(--surface-2);}
   .row .lbl{padding-right:12px;min-width:0;}
   .row .d{font-size:13px;font-weight:700;letter-spacing:-.01em;}
@@ -118,12 +111,9 @@
   .overflow{position:absolute;top:6px;height:18px;border-radius:0 5px 5px 0;
     background:repeating-linear-gradient(45deg,var(--bad) 0 3px,color-mix(in srgb,var(--bad) 55%,transparent) 3px 7px);
     box-shadow:inset 0 0 0 1px var(--bad);}
-  .meal{position:absolute;top:4px;height:22px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
-  .meal .pip{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--surface);margin-top:3.5px;}
-  .meal .ml{font-size:8px;font-weight:800;color:var(--ink-3);line-height:1;margin-top:1px;}
   .endlbl{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;
     font-variant-numeric:tabular-nums;font-family:var(--mono);white-space:nowrap;}
-  .fix{grid-column:2;font-size:12px;color:var(--ink-2);padding:1px 0 6px 2px;max-width:70ch;}
+  .fix{font-size:12px;color:var(--ink-2);padding:1px 0 6px 2px;max-width:70ch;}
   .fix::before{content:"→ ";color:var(--bad);font-weight:800;}
   .row.ok-day .lbl .d{color:var(--ink-2);}
   body.hide-fix .fix{display:none;}

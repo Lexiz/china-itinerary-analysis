@@ -1,0 +1,38 @@
+{
+  "Lunch": {
+    "m": 60,
+    "n": "Sit-down Guilin lunch",
+    "basis": "Venue TBD; a normal Chinese sit-down lunch (Guilin rice noodles or restaurant) runs about 45-75 min including ordering and paying.",
+    "conf": "med"
+  },
+  "Check in at RongShi": {
+    "m": 30,
+    "n": "Hotel check-in and drop bags",
+    "basis": "China hotel check-in requires passport scan and police registration; trip reports consistently put this at 15-30 min for a small downtown hotel.",
+    "conf": "med"
+  },
+  "Reed Flute Cave": {
+    "m": 75,
+    "n": "Lit cave circuit",
+    "basis": "Guides and visitor reports agree the one-way U-shaped route (240 m of cave) runs 40-60 min in a guided batch, with 1-1.5 hr total from ticket gate to exit.",
+    "conf": "high"
+  },
+  "Elephant Trunk Hill": {
+    "m": 45,
+    "n": "Free riverside viewpoint stop",
+    "basis": "Viewing the hill free from the promenade/Love Island viewpoint is a photo stop of 30-45 min; only entering the paid park pushes it to the 1-2 hr range quoted for the full grounds.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 75,
+    "n": "Sit-down Guilin dinner",
+    "basis": "Venue TBD; an unhurried Chinese sit-down dinner with several shared dishes typically runs 60-90 min.",
+    "conf": "med"
+  },
+  "Two Rivers & Four Lakes": {
+    "m": 90,
+    "n": "Illuminated night boat loop",
+    "basis": "Operators and review sites put the full Two Rivers & Four Lakes night cruise at 80-90 min over ~7 km (the shorter Four Lakes-only loop is ~60 min).",
+    "conf": "high"
+  }
+}

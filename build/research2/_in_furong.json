@@ -1,0 +1,141 @@
+{
+ "city": "Furong (Hibiscus)",
+ "venues": {
+  "Arrive Furongzhen": {
+   "current_advice_min": 45,
+   "type": "Transport",
+   "meal": null,
+   "zh": "芙蓉镇站",
+   "hours": null,
+   "notes": "Arrive ~11:30; ~6 km to the old town."
+  },
+  "Check in at Waterfall Bay": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": "芙蓉镇花瀑湾民宿",
+   "hours": null,
+   "notes": "Check in and drop bags. Buy the ¥108 ticket (valid 2–3 days)."
+  },
+  "Liu Xiaoqing rice tofu": {
+   "current_advice_min": 40,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": "刘晓庆米豆腐",
+   "hours": null,
+   "notes": "Historic rice-tofu snack stop associated with actress Liu Xiaoqing."
+  },
+  "Wuli Stone Street": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "五里石板街",
+   "hours": null,
+   "notes": "The 2.5 km flagstone spine of a 2,000-year-old river trading port."
+  },
+  "Tuwang Palace": {
+   "current_advice_min": 45,
+   "type": "Sight",
+   "meal": null,
+   "zh": "土司行宫",
+   "hours": null,
+   "notes": "Seat of the Tujia Tusi (chieftain) rulers."
+  },
+  "Xizhou Bronze Pillar": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "溪州铜柱",
+   "hours": null,
+   "notes": "The 940 AD peace-treaty column — the key relic of Tujia history."
+  },
+  "Furong waterfall": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "芙蓉镇瀑布",
+   "hours": "~07:00–23:00; illumination ~19:30–22:00/22:30",
+   "notes": "Plank walkway behind the 60 m waterfall curtain (expect spray)."
+  },
+  "Youshui River cruise": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "酉水游船",
+   "hours": null,
+   "notes": "Best full panorama of Furong’s waterfall, stacked town and reflections."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Far-bank platform": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": "对岸观景台",
+   "hours": null,
+   "notes": "The classic postcard angle across the Youshui."
+  },
+  "Shenpu Camp Square": {
+   "current_advice_min": 30,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Wide panorama of lights + waterfall on the night viewpoint circuit."
+  },
+  "Baishetang Square": {
+   "current_advice_min": 30,
+   "type": "Show",
+   "meal": null,
+   "zh": "摆手堂广场",
+   "hours": null,
+   "notes": "Free Tujia song-and-dance with the waterfall as backdrop (included in ticket)."
+  },
+  "Dawn photo session": {
+   "current_advice_min": 40,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Out before breakfast — morning mist on the Youshui, empty streets, soft light."
+  },
+  "Breakfast": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "breakfast",
+   "zh": null,
+   "hours": null,
+   "notes": "Hotel breakfast; open the hotel card for details."
+  },
+  "Old-town mop-up": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Anything skipped — behind-the-falls walkway in morning light, Tuwang Palace."
+  },
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Head to the station": {
+   "current_advice_min": 30,
+   "type": "Transport",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Leave with a buffer for the ~08:30 train (station ~10 km / 20 min out)."
+  }
+ }
+}

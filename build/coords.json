@@ -1,0 +1,16 @@
+{
+ "_readme": [
+  "Coordinate corrections. Some Notion places carry a stale placeholder coord (39.9042,116.4074 is",
+  "the Beijing default and appears on anything never geocoded) or a hand-placed one that is simply",
+  "wrong. rebuild.mjs prefers this file over the snapshot, so a bad coord cannot silently invent or",
+  "delete travel time. Notion is NOT modified — fix it there separately if you ever want to.",
+  "Each entry records what was wrong and where the right value came from."
+ ],
+ "Toboggan down": {
+  "lat": 40.430765,
+  "lng": 116.564501,
+  "was": [39.9042, 116.4074],
+  "why": "Was the central-Beijing placeholder, 60 km from the wall. The toboggan IS the descent from Mutianyu — you board it at the top of the wall you just walked. The bad coord made the chain charge a 97-min, 60 km DiDi between the wall and the luge, then charge nothing for the real drive back to the city.",
+  "source": "Same coord as Mutianyu Great Wall (the launch platform is beside tower 6)."
+ }
+}

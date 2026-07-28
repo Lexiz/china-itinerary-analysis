@@ -1,0 +1,53 @@
+{
+ "city": "Guilin",
+ "venues": {
+  "Lunch": {
+   "current_advice_min": null,
+   "type": "Food",
+   "meal": "lunch",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Check in at RongShi": {
+   "current_advice_min": 30,
+   "type": "Hotel",
+   "meal": null,
+   "zh": null,
+   "hours": null,
+   "notes": "Land ~14:30; shuttle/DiDi downtown (~45 min), near the cruise-wharf side."
+  },
+  "Reed Flute Cave": {
+   "current_advice_min": 75,
+   "type": "Sight",
+   "meal": null,
+   "zh": "芦笛岩",
+   "hours": "Open to 18:00; allow 1–1.5 hr incl. transfers",
+   "notes": "Optional 1–1.5 h cave; skip if visiting the stronger Silver Cave later."
+  },
+  "Elephant Trunk Hill": {
+   "current_advice_min": 60,
+   "type": "Sight",
+   "meal": null,
+   "zh": "象鼻山",
+   "hours": null,
+   "notes": "See it free from the riverside promenade / Love Island viewpoint."
+  },
+  "Dinner": {
+   "current_advice_min": null,
+   "type": "Sight",
+   "meal": "dinner",
+   "zh": null,
+   "hours": null,
+   "notes": "Venue not chosen yet — open for shortlisted options."
+  },
+  "Two Rivers & Four Lakes": {
+   "current_advice_min": 90,
+   "type": "Sight",
+   "meal": null,
+   "zh": "两江四湖",
+   "hours": null,
+   "notes": "Sun & Moon Twin Pagodas lit up on Shanhu Lake."
+  }
+ }
+}

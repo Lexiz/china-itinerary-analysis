@@ -1,0 +1,110 @@
+{
+  "Arrive Zhangjiajie West": {
+    "m": 30,
+    "n": "Deboard, walk to bus, wait",
+    "basis": "Guides: Tourist Distributing Center is ~1 min from the station exit and Wulingyuan buses leave every ~10 min, so deboarding, ticketing and boarding runs ~30 min.",
+    "conf": "med"
+  },
+  "Lunch": {
+    "m": 60,
+    "n": "Sit-down Hunan lunch",
+    "basis": "Wulingyuan restaurants are ordered-at-table Hunan places at RMB80-120pp with no English menus; a proper unhurried meal is ~1 h.",
+    "conf": "med"
+  },
+  "Check in at Yuji Hotel": {
+    "m": 25,
+    "n": "Check in, drop bags",
+    "basis": "Standard Chinese hotel check-in plus the mandatory foreign-passport police registration typically runs 20-30 min even at a small Wulingyuan hotel.",
+    "conf": "med"
+  },
+  "Wulingyuan East Gate": {
+    "m": 45,
+    "n": "Ticket, passport, face registration",
+    "basis": "Park uses real-name face-recognition entry; one traveller reported standing 40 min at the East Gate with a passport, and guides tell foreigners to arrive 45 min early to clear security.",
+    "conf": "med"
+  },
+  "Golden Whip Stream": {
+    "m": 165,
+    "n": "Flat 7.5 km streamside walk",
+    "basis": "Trail guides and trip reports put the full 7.5 km flat walk at 2.5-3 h at a relaxed pace with photo stops (some quote 3-4 h).",
+    "conf": "high"
+  },
+  "Dinner": {
+    "m": 90,
+    "n": "Unhurried Hunan dinner",
+    "basis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
+    "conf": "med"
+  },
+  "Breakfast": {
+    "m": 35,
+    "n": "Hotel breakfast before park",
+    "basis": "Hotel buffet breakfast; 35 min is enough to eat properly while still making a 07:00 gate slot if you start around 06:30.",
+    "conf": "med"
+  },
+  "Bailong Elevator": {
+    "m": 60,
+    "n": "Queue plus 2-min ascent",
+    "basis": "Ride is only 92 seconds but peak-season (May-Oct) queues run 1-2 h and worse on summer mornings; arriving at the 07:00 opening is the one way to hold it near 30-45 min.",
+    "conf": "high"
+  },
+  "Yuanjiajie (Avatar)": {
+    "m": 180,
+    "n": "Avatar peaks, First Bridge loop",
+    "basis": "Guides put Yuanjiajie at 2-3 h (photographers 3-4 h); the loop trail is 1-2 h walking but viewing platforms are shoulder-to-shoulder after 09:00 and inter-stop shuttles queue 20 min+.",
+    "conf": "high"
+  },
+  "Tianzi Mountain": {
+    "m": 150,
+    "n": "He Long Park and viewpoints",
+    "basis": "He Long Park alone is recommended at 1-1.5 h and the classic Tianzi route at 2-3 h; add free-shuttle waits of 20 min or more between Imperial Brush Peaks and Fairy Scattering Flowers.",
+    "conf": "med"
+  },
+  "Tianzi cableway down": {
+    "m": 60,
+    "n": "Descent queue plus 7-min ride",
+    "basis": "Ride is 6 min 26 s, but peak-summer queues at the Tianzi cableway reach 2 h and only drop under 15 min after 16:00 — an afternoon descent realistically costs about an hour.",
+    "conf": "med"
+  },
+  "Ten-Mile Gallery": {
+    "m": 90,
+    "n": "Tram in, walk back out",
+    "basis": "Official guidance is ~1 h for the 2 km gallery; tram is 10-15 min each way and the walk-out ~40 min, so tram queue plus walk lands near 1.5 h in August.",
+    "conf": "med"
+  },
+  "Yangjiajie cableway": {
+    "m": 35,
+    "n": "Cable car up, short queue",
+    "basis": "Ride is 5 min 12 s and Yangjiajie is the park's quietest developed area with only moderate queues, so ~30 min of waiting is realistic even in peak season.",
+    "conf": "med"
+  },
+  "Yangjiajie": {
+    "m": 150,
+    "n": "Natural Great Wall, One Step",
+    "basis": "Most visitors do the northern highlights in 3-4 h; Natural Great Wall is ~20 min near the cable station and One Step to Heaven ~1 h from Wulong Village plus 15 min viewing, so 2.5 h covers the core without Tianbo Mansion.",
+    "conf": "med"
+  },
+  "Bus to Zhangjiajie city": {
+    "m": 30,
+    "n": "Check out, ticket, board bus",
+    "basis": "Wulingyuan bus station departures to the city run every ~20-30 min; ticketing, bag handling and boarding wait total about half an hour before the ~1 h ride.",
+    "conf": "med"
+  },
+  "Tianmen cableway": {
+    "m": 75,
+    "n": "Shuttle to gate, express cableway",
+    "basis": "Line C is a 20-min shuttle to the mountain gate then a 7-min express cableway to Tianmen Cave, with reported express-cableway queues of 30-45 min in peak season.",
+    "conf": "med"
+  },
+  "Tianmen Mountain": {
+    "m": 255,
+    "n": "Summit loop, skywalks, Heaven's Gate",
+    "basis": "Trip reports put a full Tianmen visit at 5-7 h including waits (Line C 4.5-5.5 h): summit 2-3 h, West Line cliff walkway ~2 h, 999 steps 20-30 min, each glass skywalk 5-10 min, plus escalator and descent-bus queues — with the cableway stop this is ~5.5 h, most of the day.",
+    "conf": "high"
+  },
+  "Head to the station": {
+    "m": 45,
+    "n": "Security, ID check, boarding",
+    "basis": "Chinese high-speed stations want you inside ~30 min ahead and foreigners often need the manual passport lane; gates close 5 min before departure, so 45 min at the station is the safe figure.",
+    "conf": "med"
+  }
+}

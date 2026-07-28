@@ -1,0 +1,66 @@
+{
+ "city": "Fenghuang",
+ "days": [
+  {
+   "day": 1,
+   "theme": "One riverside walk: upstream in the last light, back downstream once the lanterns are on",
+   "stops": [
+    "East Gate Tower",
+    "Hong Bridge",
+    "Fenghuang Ancient Town",
+    "Jumping stones",
+    "Snow Bridge (Xueqiao)",
+    "Tuojiang night boat",
+    "Wanming Pagoda"
+   ],
+   "why": "Train in at 16:00, cleared 16:15, ~25 min transfer, checked in and free at roughly 17:05. That is an evening, not a day, so this is deliberately ONE continuous walk along a 900 m stretch of the Tuojiang rather than a list of sights. Sunset in late August is ~19:30, so the first block (East Gate Tower 15 min, Hong Bridge 20 min, the old-town lanes 75 min, jumping stones 15 min) uses every minute of remaining daylight walking west/upstream to the North Gate, arriving at the stones around 19:00 for dusk. Dinner lands near the North Gate while the lights come on. The second block is the actual reason to be in Fenghuang and is all within 700 m: Snow Bridge for the elevated night panorama (~20:25), then the night boat from the North Gate wharf once it is genuinely dark (~20:45; sailings run to ~23:00, so there is no need to rush the meal), then the lit Wanming Pagoda as a 10-minute detour on the walk home, back by ~21:40. Stop time is 3h00, at the top of the evening-only budget and roughly a third of what was previously crammed in here. The old 10-stop version is what produced a 09:26 finish.",
+   "cut": "Bar street (45 min of loud bars against a 05:45 alarm) and everything that needs daylight or opening hours."
+  },
+  {
+   "day": 2,
+   "theme": "Twenty-five minutes of dawn river, then gone",
+   "stops": [
+    "Sunrise / mist session"
+   ],
+   "why": "The 07:45 departure from Gucheng with a 45-minute buffer means standing at the station at 07:00; the station transfer is ~25 min, so you leave the hotel at ~06:25. Sunrise is ~06:20. That is a hard 06:00-06:25 window and it holds exactly one stop. It is worth setting the alarm for, because mist on the Tuojiang with an empty town is the payoff of staying the night, and this stop is on the water directly outside the hotel — no walking budget needed. Everything else on the old day 2 is fiction: Shen Congwen Residence does not open until ~08:00, the batik and silver shops and the ginger-candy stalls open later still. Breakfast is a grab-and-go on the way to the taxi, not a sit-down."
+  }
+ ],
+ "ideas": [
+  {
+   "name": "Nanhua Bridge",
+   "why": "The best elevated sweep of the stilted houses and the classic dawn frame, but it is ~1 km upriver from the hotel — 12 min each way. A 25-minute pre-departure window cannot reach it and get back. It is the first thing a second night buys you."
+  },
+  {
+   "name": "Shen Congwen Residence",
+   "why": "Fenghuang's one real cultural stop, and it is simply not open while you are here: doors ~08:00, your train leaves at 07:45. Not a scheduling choice — a consequence of the one-night stay."
+  },
+  {
+   "name": "Miao batik & silver lanes",
+   "why": "Shops open ~09:00. The only free window is day 1's evening, and that window is spent on the lit river, which is the entire reason to come. Browse whatever is still open as you walk home past Hong Bridge instead of scheduling it."
+  },
+  {
+   "name": "Ginger candy stalls",
+   "why": "Daytime stalls with the hand-pulling demonstration. Some shops stay open late — pick up a bag in passing on the day 1 walk for the train, but do not give it a slot."
+  },
+  {
+   "name": "Bar street",
+   "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise."
+  },
+  {
+   "name": "Check in at Jinshuian",
+   "why": "Logistics, not a sight — the hotel block is inserted automatically. Budgeted at 20 min between the taxi and the 17:05 start of the walk. Booking required."
+  },
+  {
+   "name": "Station shuttle / taxi",
+   "why": "Logistics, not a sight — the station transfer is inserted automatically. Listed here because it is the hidden cost that guts this stop: ~25 min each way, which is what turns day 2 into a 25-minute dawn and nothing else."
+  }
+ ],
+ "notes": [
+  "One night in Fenghuang buys exactly one evening and one dawn. Day 1 carries 3h00 of stop time; day 2 carries ~25 minutes. Six of the fifteen sights do not fit, and that is the honest answer rather than a packing failure.",
+  "The single change that fixes this town is a second night. It converts the ideas list into a real morning: Shen Congwen Residence at opening, Nanhua Bridge at dawn, the batik lanes and the candy stalls in daylight.",
+  "Late-August sunset is ~19:30 and the riverside illumination comes up ~19:30-20:00. Do not board the night boat before ~20:00 — sailings run to about 23:00 and the ride is ~30 min round trip from the North Gate wharf down past the lit Wanming Tower and back. Booking required.",
+  "Day 2 arithmetic: 07:45 train − 45 min buffer = at Gucheng station 07:00; −25 min transfer = leave the hotel 06:25; sunrise ~06:20. Both hub times are marked PROVISIONAL — if the departure moves later, the first thing to add back is Nanhua Bridge, then Shen Congwen Residence.",
+  "If the 16:00 arrival slips past ~17:00, drop stops in this order: Jumping stones, then Wanming Pagoda, then the old-town lanes walk down to ~45 min. The night boat and Snow Bridge are the keepers — they are the only two stops that cannot be done anywhere else on this trip.",
+  "Geography that drives the order: East Gate Tower / Hong Bridge / Wanming Pagoda are the downstream cluster nearest the hotel; the jumping stones, Snow Bridge and the boat wharf are the upstream North Gate cluster. Walking out west in daylight and back east in the dark means no backtracking."
+ ]
+}

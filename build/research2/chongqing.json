@@ -1,0 +1,122 @@
+{
+  "Check in at KS Kongshang": {
+    "m": 30,
+    "n": "Passport check-in, 52nd-floor lifts",
+    "basis": "Standard China hotel passport registration plus high-rise lift waits in the Xinhua International tower; no venue-specific reports found.",
+    "conf": "med"
+  },
+  "Jiefangbei": {
+    "m": 60,
+    "n": "Monument plaza and side alleys",
+    "basis": "Trip.com lists 1-3h and Tripadvisor reviewers say 2-3h for shopping, but a monument-plus-alleys walk without shopping lands at the 1h low end.",
+    "conf": "med"
+  },
+  "Lunch": {
+    "m": 60,
+    "n": "Sit-down lunch",
+    "basis": "Standard China sit-down restaurant lunch; venue not yet chosen so no venue-specific evidence.",
+    "conf": "med"
+  },
+  "Raffles Crystal deck": {
+    "m": 90,
+    "n": "Ticketing, lift, exhibits, skydeck",
+    "basis": "Trip.com suggests 1-3h and Becksplore's review advises about two hours for deck plus skywalk; 90min covers ticketing, the 47-floor lift and the National Geographic exhibits without the add-on rides.",
+    "conf": "med"
+  },
+  "Chaotianmen Docks": {
+    "m": 45,
+    "n": "Confluence piers stroll",
+    "basis": "Trip.com recommends 1-2h for the huge ship-shaped square, but a pier stroll plus checking tomorrow's cruise wharf sits at the low end.",
+    "conf": "med"
+  },
+  "Dinner": {
+    "m": 120,
+    "n": "Chongqing hotpot, long social meal",
+    "basis": "Hotpot guides consistently describe cooking in batches over 2-3 hours (1.5-2h minimum), by design a leisurely communal meal rather than a quick dinner.",
+    "conf": "high"
+  },
+  "Kuixinglou Plaza": {
+    "m": 30,
+    "n": "22nd-floor square, photo stop",
+    "basis": "Meet Chongqing describes a small free square experienced by crossing one elevated walkway, roughly 30min to an hour with no ticket or lift queue.",
+    "conf": "med"
+  },
+  "Qiansimen Bridge": {
+    "m": 30,
+    "n": "Head-on Hongya Cave shot",
+    "basis": "Free lower pedestrian deck 5min from Hongya Cave's top terrace; a walk-out-and-back photo stop, no queue or ticket.",
+    "conf": "med"
+  },
+  "Jiangbei riverbank": {
+    "m": 30,
+    "n": "Across-river panorama viewpoint",
+    "basis": "Jiangbeizui Riverside Park viewing platforms face Hongya Cave about 1.25km away; a walk to the platform and photos, not a park circuit.",
+    "conf": "med"
+  },
+  "Hongya Cave": {
+    "m": 105,
+    "n": "Eleven levels through the crush",
+    "basis": "Guides put a full walk-through at 2-3h across 11 levels with the 19:30-22:00 window the most crowded and lift queues of 30-45min (stairs advised); trimmed because the bridge and riverbank photo stops are separate.",
+    "conf": "med"
+  },
+  "Breakfast": {
+    "m": 45,
+    "n": "Hotel buffet breakfast",
+    "basis": "Standard hotel buffet breakfast pace; no venue-specific reports.",
+    "conf": "med"
+  },
+  "Liziba monorail": {
+    "m": 30,
+    "n": "Train-through-building photo platform",
+    "basis": "Chongqing city guides give a suggested stay of 30min at the purpose-built viewing platform, with trains passing every 2-4 minutes so waits are short.",
+    "conf": "high"
+  },
+  "Eling Park": {
+    "m": 75,
+    "n": "Liangjiang Pavilion two-rivers panorama",
+    "basis": "Trip.com suggests 1-2h; the park is small but the Liangjiang Pavilion is a seven-to-nine storey climb worth lingering at for the panorama.",
+    "conf": "med"
+  },
+  "Testbed 2": {
+    "m": 90,
+    "n": "Converted printing-factory art park",
+    "basis": "Trip.com's suggested sightseeing time is 1-3h for the shops, galleries and rooftop of the old printing works; 90min covers a proper wander without a meal.",
+    "conf": "med"
+  },
+  "Baixiang Ju": {
+    "m": 45,
+    "n": "Corridors of the elevator-less block",
+    "basis": "Guides report most visitors spend 40min to 1.5h, with the main corridors and the three street-level exits coverable in about 20min.",
+    "conf": "med"
+  },
+  "Yangtze Cableway": {
+    "m": 60,
+    "n": "Queue plus 4-minute crossing",
+    "basis": "Ride is only 3.6-5min but queues run 40-60min at peak windows (1-2h on holidays); late August is peak season even with WeChat queue numbers.",
+    "conf": "med"
+  },
+  "Longmenhao Old Street": {
+    "m": 75,
+    "n": "Terraced south-bank heritage lanes",
+    "basis": "Trip.com suggests 1-3h for the six-tier hillside precinct and reviewers warn of a lot of stairs; 75min covers the main lanes and viewpoints.",
+    "conf": "med"
+  },
+  "Two Rivers night cruise": {
+    "m": 75,
+    "n": "Boarding plus 45-minute sailing",
+    "basis": "Operators state a fixed 45-50min sailing over the 16-20km loop, and Chinese booking guides advise arriving 30min before departure for ticket check and seating.",
+    "conf": "high"
+  },
+  "Chongqing West (alt station)": {
+    "m": 75,
+    "n": "Buffer at the mega-station",
+    "basis": "Station guides advise arriving 60-90min before a high-speed departure here, with 15+ minutes of walking from drop-off to gate across the five-level hub.",
+    "conf": "med"
+  },
+  "Chongqing North station": {
+    "m": 60,
+    "n": "Security, gate, two-square risk",
+    "basis": "Guides range from a 40min bare minimum to 1.5-2h, with the split North/South squares (one metro stop apart) the main risk factor; 60min is the practical buffer.",
+    "conf": "med"
+  }
+}

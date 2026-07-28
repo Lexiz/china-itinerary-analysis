@@ -1,0 +1,322 @@
+{
+ "city": "Zhangjiajie",
+ "hotel": {
+  "name": "Zhangjiajie Yuji Hotel",
+  "coord": {
+   "lat": 29.352281,
+   "lng": 110.544418
+  }
+ },
+ "days": [
+  {
+   "day": 1,
+   "date": "2026-08-24",
+   "isArrival": true,
+   "isDeparture": false,
+   "hubs": [
+    {
+     "stop": "Arrive Zhangjiajie West",
+     "role": "arrive",
+     "mode": "High-speed train",
+     "number": null,
+     "time": "12:30",
+     "buffer": 15,
+     "approx": true,
+     "clearBy": "12:45"
+    }
+   ],
+   "meals": [
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Check in at Yuji Hotel",
+    "Wulingyuan East Gate",
+    "Golden Whip Stream"
+   ]
+  },
+  {
+   "day": 2,
+   "date": "2026-08-25",
+   "isArrival": false,
+   "isDeparture": false,
+   "hubs": [],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Bailong Elevator",
+    "Yuanjiajie (Avatar)",
+    "Tianzi Mountain",
+    "Tianzi cableway down",
+    "Ten-Mile Gallery"
+   ]
+  },
+  {
+   "day": 3,
+   "date": "2026-08-26",
+   "isArrival": false,
+   "isDeparture": false,
+   "hubs": [],
+   "meals": [
+    "Breakfast",
+    "Lunch",
+    "Dinner"
+   ],
+   "currentStops": [
+    "Yangjiajie cableway",
+    "Yangjiajie",
+    "Bus to Zhangjiajie city",
+    "Tianmen cableway",
+    "Tianmen Mountain"
+   ]
+  },
+  {
+   "day": 4,
+   "date": "2026-08-27",
+   "isArrival": false,
+   "isDeparture": true,
+   "hubs": [
+    {
+     "stop": "Head to the station",
+     "role": "depart",
+     "mode": "High-speed train",
+     "number": null,
+     "time": "09:15",
+     "buffer": 45,
+     "approx": true,
+     "clearBy": null
+    }
+   ],
+   "meals": [
+    "Breakfast"
+   ],
+   "currentStops": []
+  }
+ ],
+ "sights": {
+  "Check in at Yuji Hotel": {
+   "advice_min": 25,
+   "advice_note": "Check in, drop bags",
+   "advice_conf": "med",
+   "type": "Hotel",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "Check-in after 14:00; check-out before 12:00; front desk open 24/7.",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.352281,
+    "lng": 110.544418
+   },
+   "notes": "Booked at No. 200 Jundi Road in Wulingyuan, 290m from the bus station and 1.5 km from the park’s sign gate."
+  },
+  "Wulingyuan East Gate": {
+   "advice_min": 45,
+   "advice_note": "Ticket, passport, face registration",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": "From 07:00; book earliest slot",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.352695,
+    "lng": 110.533631
+   },
+   "notes": "First park entry — your 4-day pass (¥240) starts today."
+  },
+  "Golden Whip Stream": {
+   "advice_min": 165,
+   "advice_note": "Flat 7.5 km streamside walk",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 1,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.3338673,
+    "lng": 110.4389038
+   },
+   "notes": "Flat, shaded streamside path under 300 m pillars."
+  },
+  "Bailong Elevator": {
+   "advice_min": 60,
+   "advice_note": "Queue plus 2-min ascent",
+   "advice_conf": "high",
+   "type": "Transport",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.348468,
+    "lng": 110.467549
+   },
+   "notes": "At the East Gate for 07:00 opening, then ride up (326 m in ~1 min)."
+  },
+  "Yuanjiajie (Avatar)": {
+   "advice_min": 180,
+   "advice_note": "Avatar peaks, First Bridge loop",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.353,
+    "lng": 110.468
+   },
+   "notes": "First Bridge Under Heaven and the Avatar Hallelujah Mountain viewpoint."
+  },
+  "Tianzi Mountain": {
+   "advice_min": 150,
+   "advice_note": "He Long Park and viewpoints",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.3869108,
+    "lng": 110.4882883
+   },
+   "notes": "He Long Park, Imperial Brush Peaks, Fairy Scattering Flowers."
+  },
+  "Tianzi cableway down": {
+   "advice_min": 60,
+   "advice_note": "Descent queue plus 7-min ride",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.3846234,
+    "lng": 110.4908068
+   },
+   "notes": "Descend (~¥76) to the Shili Gallery valley."
+  },
+  "Ten-Mile Gallery": {
+   "advice_min": 90,
+   "advice_note": "Tram in, walk back out",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 2,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.366321,
+    "lng": 110.483059
+   },
+   "notes": "Walk or ride the mini-tram past the Three Sisters Peaks."
+  },
+  "Yangjiajie cableway": {
+   "advice_min": 35,
+   "advice_note": "Cable car up, short queue",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.3552879,
+    "lng": 110.4134141
+   },
+   "notes": "Cable car up (~¥76) for the quieter Yangjiajie."
+  },
+  "Yangjiajie": {
+   "advice_min": 150,
+   "advice_note": "Natural Great Wall, One Step",
+   "advice_conf": "med",
+   "type": "Sight",
+   "slot": "Morning",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.3492151,
+    "lng": 110.390431
+   },
+   "notes": "Natural Great Wall / One Step to Heaven viewpoints."
+  },
+  "Bus to Zhangjiajie city": {
+   "advice_min": 30,
+   "advice_note": "Check out, ticket, board bus",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.108593,
+    "lng": 110.479451
+   },
+   "notes": "Check out, bus Wulingyuan → city central bus station (¥12–13, ~1 h)."
+  },
+  "Tianmen cableway": {
+   "advice_min": 75,
+   "advice_note": "Shuttle to gate, express cableway",
+   "advice_conf": "med",
+   "type": "Transport",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": null,
+   "bookingRequired": false,
+   "coord": {
+    "lat": 29.114441,
+    "lng": 110.478441
+   },
+   "notes": "Line C (Tianmen Cave Fast Line) is the most reliable given the ongoing."
+  },
+  "Tianmen Mountain": {
+   "advice_min": 255,
+   "advice_note": "Summit loop, skywalks, Heaven's Gate",
+   "advice_conf": "high",
+   "type": "Sight",
+   "slot": "Afternoon",
+   "night": "any",
+   "bonus": false,
+   "currentDay": 3,
+   "hours": "Timed entry; afternoon slots quieter; allow 4–5 hrs door to door",
+   "bookingRequired": true,
+   "coord": {
+    "lat": 29.051,
+    "lng": 110.479
+   },
+   "notes": "Glass skywalk, cliff-hanging West Line walkway."
+  }
+ }
+}
