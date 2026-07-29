@@ -5,3 +5,4 @@ build/gmaps-key.txt
 # editor/agent scratch copies — never part of the build
 *.bak
 *.bak2
+.vercel

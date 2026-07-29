@@ -25,10 +25,11 @@ if (PUBLISH) GKEY = '';
 // so the next review pass has somewhere to write.
 let REBUILT = { days: {}, ideas: {}, notes: {} };
 try { REBUILT = JSON.parse(readFileSync(new URL('./rebuilt.json', import.meta.url))); } catch {}
-let GEN = {}, HAND = {};
-try { GEN = JSON.parse(readFileSync(new URL('./replanned.json', import.meta.url))); } catch { GEN = {}; }
-try { HAND = JSON.parse(readFileSync(new URL('./proposals.json', import.meta.url))); } catch { HAND = {}; }
-const PROPOSALS = { ...GEN, ...HAND };
+// There used to be a second opinion here: replanned.json (replan.mjs re-chaining the day from the
+// snapshot) merged over proposals.json. It fed nothing — the Proposed side is empty by design — but
+// its sibling numbers still drove the header cards, and once the reviewed plan went back INTO Notion
+// that audit was re-deriving times that had already been derived. It read Chengdu d3 as 46:03 while
+// the row below it said 22:11. Retired: rebuilt.json is the only plan on this page.
 
 // axis: 05:00 -> 04:00 (early arrivals start at 05:00; over-packed days get you home after 02:00)
 const T0 = 300, T1 = 1680, SPAN = T1 - T0;
@@ -38,24 +39,10 @@ const EL = m => m >= 1440 ? hhmm(m) + ' ⁺¹' : hhmm(m);
 const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const wd = iso => WD[new Date(iso + 'T00:00:00Z').getUTCDay()];
 const dm = iso => { const d = new Date(iso + 'T00:00:00Z'); return d.getUTCDate() + ' ' + MO[d.getUTCMonth()]; };
-const sev = s => s === 'severe' ? 'var(--bad)' : s === 'moderate' ? 'var(--warn)' : 'var(--ok)';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 // --- segmented activity bar -------------------------------------------------
 const tkc = t => { const m = String(t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
-// Turn a day's stops into absolute-minute segments (handles a schedule that rolls past midnight).
-function absStops(stops) {
-  const out = [];
-  for (const st of (stops || [])) {
-    if (st.home) continue;                       // hotel return is the endpoint, not a block
-    const a = st.abs ?? tkc(st.t); if (a == null) continue;
-    // a hub's block IS its buffer — three hours at Pudong is three hours of the day gone
-    const d = st.hub ? (st.hub.dwell ?? st.act ?? 30) : (st.act ?? st.adv ?? 30);
-    out.push({ s: a, d, name: st.name, meal: !!st.meal, key: nk(st.name),
-      hub: st.hub || null, bonus: !!st.bonus });
-  }
-  return out;
-}
 // One activity block, positioned on the shared clock axis so it reads against the top ruler.
 // Colour = on-time (green) vs past-21:30 (red). The block shows the activity NAME (when wide) + its DURATION.
 function seg(st) {
@@ -90,11 +77,41 @@ function homeSeg(endMin, label, kind, tip) {
   return `<div class="seg homeseg ${kind}${over ? ' broken' : ''}" style="${pos}" title="${esc(tip)}">${over ? '⇥ ' : ''}${label}</div>`;
 }
 
-const flagged = DATA.filter(d => d.flagged), severe = DATA.filter(d => d.sev === 'severe'), moderate = DATA.filter(d => d.sev === 'moderate');
-const worst = [...severe].sort((a, b) => (b.jammed - a.jammed) || (b.endMin - a.endMin))[0];
-const statsHTML = [['bad', flagged.length, 'get home late'], ['bad', severe.length, 'need real cuts'],
-  ['warn', moderate.length, 'a bit late'], ['', worst ? `${worst.city} d${worst.day}` : '—', 'worst — home ' + (worst ? EL(worst.endMin) : '')]]
-  .map(([c, n, k]) => `<div class="stat ${c}"><div class="n">${esc(n)}</div><div class="k">${k}</div></div>`).join('');
+// --- the day's verdict, formed ONCE ------------------------------------------
+// Every "is this day late?" question on the page — header cards, city counts, the bad-only filter,
+// the row badge, the bar's end marker — resolves through here, and here reads rebuilt.json: the
+// same committed plan the rows below render. That is the whole point. The header and the rows
+// disagreed because they used to consult different oracles.
+const T_LATE = 21 * 60 + 30, T_SEVERE = 22 * 60 + 30;
+const RBof = d => REBUILT.days[`${d.city}|${d.day}`] || null;
+const missingRB = DATA.filter(d => !RBof(d));
+if (missingRB.length) console.warn('!! no committed plan for:', missingRB.map(d => `${d.city} d${d.day}`).join(', '),
+  '— these days fall back to the raw snapshot and will read differently from the rest of the page.');
+function verdict(d) {
+  const RB = RBof(d);
+  const endMin = RB ? RB.endMin : d.endMin;
+  const missed = !!(RB && RB.missed);
+  const sev = (missed || endMin > T_SEVERE) ? 'severe' : endMin > T_LATE ? 'moderate' : 'ok';
+  return { RB, endMin, missed, sev, late: sev !== 'ok' };
+}
+const V = new Map(DATA.map(d => [d, verdict(d)]));
+
+const late = DATA.filter(d => V.get(d).late);
+const onTime = DATA.length - late.length;
+const missedDep = DATA.filter(d => V.get(d).missed).length;
+// The latest finish is Shanghai d6's red-eye: a 02:10 airport call, not an over-packed sightseeing
+// day. Labelled as what it is, so nobody reads it as a day still needing cuts.
+const latest = [...DATA].sort((a, b) => V.get(b).endMin - V.get(a).endMin)[0];
+const lv = latest ? V.get(latest) : null;
+// These days were reviewed one by one and accepted; the page is a record of that decision, not an
+// open audit. Hence "accepted", not "need real cuts" — the old wording outlived the review.
+const statsHTML = [
+  ['ok', onTime, 'home by 21:30'],
+  ['warn', late.length, 'later — reviewed & accepted'],
+  [missedDep ? 'bad' : 'ok', missedDep, 'missed departures'],
+  ['', latest ? `${latest.city} d${latest.day}` : '—',
+    latest ? `latest — ${latest.home ? 'home' : 'airport'} ${EL(lv.endMin)}` : ''],
+].map(([c, n, k]) => `<div class="stat ${c}"><div class="n">${esc(n)}</div><div class="k">${k}</div></div>`).join('');
 
 // top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
 const clock = [[300,'05'],[420,'07'],[540,'09'],[660,'11'],[780,'13'],[900,'15'],[1020,'17'],[1140,'19'],[1260,'21'],[1380,'23'],[1500,'01'],[1620,'03']];
@@ -109,19 +126,24 @@ for (const d of DATA) {
   if (d.city !== cur) {
     if (cur !== null) out += '</div></section>';
     cur = d.city;
-    const cd = DATA.filter(x => x.city === d.city), bad = cd.filter(x => x.flagged).length;
+    const cd = DATA.filter(x => x.city === d.city), bad = cd.filter(x => V.get(x).late).length;
     out += `<section class="city" data-bad="${bad}" style="--cx:${d.accent}">` +
       `<div class="city-head"><span class="city-dot" style="background:${d.accent}"></span>` +
       `<span class="city-name">${esc(d.city)}</span>` +
       `<span class="city-meta">${cd.length} day${cd.length > 1 ? 's' : ''}${bad ? ` · <b>${bad} late</b>` : ' · all clear'}</span></div><div class="city-body">`;
   }
-  const R = P(d.endMin);
-  const ec = d.endMin > 1350 ? 'var(--bad)' : d.endMin > 1290 ? 'var(--warn)' : 'var(--ink-2)';
-  const es = R > 80 ? `right:${(100 - R).toFixed(2)}%;padding-right:6px;text-align:right` : `left:${R.toFixed(2)}%;padding-left:6px`;
-  const homeTxt = d.home && d.homeMin != null ? ` · home ${d.homeMode} ${d.homeMin}m${d.homeKm != null ? '/' + d.homeKm + 'km' : ''}` : (d.home ? '' : ' · departs (no return)');
-  const tip = esc(`${d.city} Day ${d.day} · ${wd(d.date)} ${dm(d.date)}\n${d.nStops} stops · ${d.lunchMin ? 'lunch ' + hhmm(d.lunchMin) : 'no lunch'} · ${d.dinnerMin ? 'dinner ' + hhmm(d.dinnerMin) : 'no dinner'}${homeTxt} · home ${EL(d.endMin)}`);
-  const RB = REBUILT.days[`${d.city}|${d.day}`] || null;
+  const { RB, endMin: rbEnd, sev: dsev, late: dlate } = V.get(d);
   const rbStops = RB ? RB.stops : [];
+  // The bar's tooltip reads the committed plan too. It used to quote the snapshot's literal last
+  // clock, which is how a bar ending 22:11 could carry a tooltip saying "home 46:03".
+  const mealAt = m => { const x = rbStops.find(r => r.meal === m); return x ? hhmm(x.s) : null; };
+  const homeTxt = d.home
+    ? (RB && RB.homeTravel ? ` · home ${RB.homeTravel.mode} ${RB.homeTravel.minutes}m${RB.homeTravel.km != null ? '/' + RB.homeTravel.km + 'km' : ''}` : '')
+    : ' · departs (no return)';
+  const tip = esc(`${d.city} Day ${d.day} · ${wd(d.date)} ${dm(d.date)}\n`
+    + `${rbStops.filter(r => !r.meal).length} stops · ${mealAt('lunch') ? 'lunch ' + mealAt('lunch') : 'no lunch'}`
+    + ` · ${mealAt('dinner') ? 'dinner ' + mealAt('dinner') : 'no dinner'}${homeTxt}`
+    + ` · ${d.home ? 'home' : 'out'} ${EL(rbEnd)}`);
   const advOf = n => (d.stops || []).find(x => x.name === n) || STOP_ANY.get(n) || {};
   const cell = (min, on, ttl) => `<td class="tm tv${on ? ' rec' : ''}"${ttl ? ` title="${ttl}"` : ''}>${min != null ? fmtDur(min) : '—'}</td>`;
 
@@ -197,8 +219,7 @@ for (const d of DATA) {
 
   // Everything below describes the COMMITTED (rebuilt) day. It previously read from the old
   // replan, which is why a bar ending 19:51 could sit above a note claiming 23:51.
-  const rbEnd = RB ? RB.endMin : d.endMin;
-  const fixText = RB ? [RB.theme, RB.why].filter(Boolean).join(' — ') : d.fix;
+  const fixText = RB ? [RB.theme, RB.why].filter(Boolean).join(' — ') : '';
   const chgHTML = '';                                   // nothing to diff: the Proposed side is empty by design
   const sug = [];
   if (RB && RB.missed) sug.push(`<b class="brk">MISSES A LOCKED DEPARTURE</b> — ${esc(RB.missed.name)}, be there ${esc(RB.missed.beThereBy)}. The flight/train will not wait.`);
@@ -255,19 +276,22 @@ for (const d of DATA) {
   // The proposed bar is deliberately empty — this is where the next review pass will write.
   const row2 = `<div class="row2"><div class="track2 empty" title="Proposed — nothing yet; this is where the next pass writes">${gridHTML}</div></div>`;
   const badge = RB
+    // Three states, because two could not tell the truth: a day ending 22:11 is counted in the
+    // header's "11 later" but was badged "✓ fits", so the row contradicted the card above it.
     ? (RB.missed ? '<span class="pflag warn2">misses a departure</span>'
-      : rbEnd > 22 * 60 + 30 ? '<span class="pflag warn2">late finish</span>'
+      : dsev === 'severe' ? '<span class="pflag warn2">late finish</span>'
+      : dsev === 'moderate' ? '<span class="pflag warn2">past 21:30</span>'
       : '<span class="pflag ok2">✓ fits</span>')
     : '';
-  out += `<div class="day${d.flagged ? '' : ' ok-day'} has-prop">` +
+  out += `<div class="day${dlate ? '' : ' ok-day'} has-prop">` +
     `<div class="dhead" role="button" tabindex="0" aria-expanded="false" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
       `<span class="cv">›</span><span class="dnum">Day ${d.day}</span>` +
       `<span class="ddate">${wd(d.date)} ${dm(d.date)}</span>` +
       `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>${badge}</div>` +
     mapHTML + miniAx + `<div class="row"><div class="track" title="${tip}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null })))}` +
-      homeSeg(RB ? RB.endMin : d.endMin, `${d.home ? '🏠' : '✈'} ${EL(RB ? RB.endMin : d.endMin)}`,
-        (RB ? RB.endMin : d.endMin) > 1350 ? 'bad' : (RB ? RB.endMin : d.endMin) > 1290 ? 'warn' : 'ok2',
-        d.home ? `Back to the hotel — ${EL(RB ? RB.endMin : d.endMin)}` : `Departure day — fly out ${EL(RB ? RB.endMin : d.endMin)}`) + `</div></div>` +
+      homeSeg(rbEnd, `${d.home ? '🏠' : '✈'} ${EL(rbEnd)}`,
+        dsev === 'severe' ? 'bad' : dsev === 'moderate' ? 'warn' : 'ok2',
+        d.home ? `Back to the hotel — ${EL(rbEnd)}` : `Departure day — fly out ${EL(rbEnd)}`) + `</div></div>` +
     row2 + detail + '</div>';
 }
 out += '</div></section>';
@@ -568,4 +592,6 @@ ${STYLE}
 ${EXTRA}
 <script>${script}</script>`;
 writeFileSync(new URL('./china-day-load.html', import.meta.url), html);
-console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length, '· flagged', flagged.length, '· axis 06:00→04:00');
+console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length,
+  `· ${onTime} home by 21:30 · ${late.length} later (reviewed) · ${missedDep} missed departures`,
+  '· axis 06:00→04:00');

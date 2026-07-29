@@ -1825,7 +1825,7 @@
    "origDay": 3,
    "origStart": "14:45",
    "origDurMin": 120,
-   "action": "RETIME 14:45 → 14:45"
+   "action": "no change"
   },
   {
    "city": "Chengdu",
@@ -1847,7 +1847,7 @@
    "origDay": 3,
    "origStart": "17:06",
    "origDurMin": 90,
-   "action": "RETIME 17:06 → 17:06"
+   "action": "no change"
   },
   {
    "city": "Chengdu",
@@ -1869,7 +1869,7 @@
    "origDay": 3,
    "origStart": "18:44",
    "origDurMin": 90,
-   "action": "RETIME 18:44 → 18:44"
+   "action": "no change"
   },
   {
    "city": "Chengdu",
@@ -1891,7 +1891,7 @@
    "origDay": 3,
    "origStart": "20:33",
    "origDurMin": 90,
-   "action": "RETIME 20:33 → 20:33"
+   "action": "no change"
   },
   {
    "city": "Chengdu",
@@ -5348,94 +5348,6 @@
    "origStart": "20:15",
    "origDurMin": 35,
    "action": "DURATION 35m → 40m"
-  },
-  {
-   "city": "Chengdu",
-   "day": 3,
-   "date": "2026-08-21",
-   "order": 40,
-   "activity": "Wuhou Shrine",
-   "kind": "Sight",
-   "newStart": "14:45",
-   "newEnd": "16:45",
-   "newDurMin": 120,
-   "durBasis": "Chengdu guides state the main sights take about two hours, three if you linger in the gardens or the Three Kingdoms history.",
-   "durConf": "high",
-   "toNext": "Jinli Old Street",
-   "travelMode": "walk",
-   "travelMin": 13,
-   "travelKm": 0.9,
-   "travelSource": "routed (real leg)",
-   "origDay": 3,
-   "origStart": "14:45",
-   "origDurMin": 120,
-   "action": "RETIME 14:45 → 14:45"
-  },
-  {
-   "city": "Chengdu",
-   "day": 3,
-   "date": "2026-08-21",
-   "order": 50,
-   "activity": "Jinli Old Street",
-   "kind": "Sight",
-   "newStart": "17:06",
-   "newEnd": "18:36",
-   "newDurMin": 90,
-   "durBasis": "Guides suggest 2–3 h for Jinli at sunset; 1.5 h fits a walk plus snacks when Wuhou Shrine next door is visited the same evening.",
-   "durConf": "med",
-   "toNext": "Dinner",
-   "travelMode": "none (same place)",
-   "travelMin": 0,
-   "travelKm": 0,
-   "travelSource": "co-located",
-   "origDay": 3,
-   "origStart": "17:06",
-   "origDurMin": 90,
-   "action": "RETIME 17:06 → 17:06"
-  },
-  {
-   "city": "Chengdu",
-   "day": 3,
-   "date": "2026-08-21",
-   "order": 60,
-   "activity": "Dinner",
-   "kind": "Food",
-   "newStart": "18:44",
-   "newEnd": "20:14",
-   "newDurMin": 90,
-   "durBasis": "Hunan dinner in Wulingyuan is a shared-dish sit-down affair; 1.5 h lets you order, wait and actually enjoy it rather than refuel.",
-   "durConf": "med",
-   "toNext": "Taikoo Li",
-   "travelMode": "didi",
-   "travelMin": 11,
-   "travelKm": 3.2,
-   "travelSource": "estimated (fitted model)",
-   "origDay": 3,
-   "origStart": "18:44",
-   "origDurMin": 90,
-   "action": "RETIME 18:44 → 18:44"
-  },
-  {
-   "city": "Chengdu",
-   "day": 3,
-   "date": "2026-08-21",
-   "order": 70,
-   "activity": "Taikoo Li",
-   "kind": "Sight",
-   "newStart": "20:33",
-   "newEnd": "22:03",
-   "newDurMin": 90,
-   "durBasis": "Chengdu guides put a relaxed walk through Taikoo Li at 1–2 hours, longer only if you stop to dine.",
-   "durConf": "med",
-   "toNext": "Hotel (home)",
-   "travelMode": "didi",
-   "travelMin": 8,
-   "travelKm": 1.07,
-   "travelSource": "estimated (fitted model)",
-   "origDay": 3,
-   "origStart": "20:33",
-   "origDurMin": 90,
-   "action": "RETIME 20:33 → 20:33"
   },
   {
    "city": "Chongqing",

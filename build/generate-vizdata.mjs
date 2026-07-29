@@ -7,34 +7,10 @@ const placeById = new Map(s.places.map(p => [p.id, p]));
 const normn = x => String(x || '').replace(/&amp;/g, '&').trim();
 const tk = t => { const m = (t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
 const cityById = new Map(s.cities.map(c => [c.id, c]));
-const cityByName = new Map(s.cities.map(c => [c.name, c]));
 const addDays = (iso, n) => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
-const FIX = {
- 'Beijing|1': 'Drop Beijing city model (150m) — too much for a 05:00-arrival day.',
- 'Beijing|3': 'Cut Mutianyu night tour (you’re back in the city; data error).',
- 'Lijiang|1': 'Afternoon arrival: drop Mu Mansion (90m) or move to d3.',
- 'Lijiang|3': 'Drop Old Town massage (120m); resolve Jade summit / Impression overlap.',
- 'Lijiang|4': 'Heavily over-packed: drop Baisha embroidery + one of Lashi Lake / Tea Horse.',
- 'Chengdu|1': 'Evening arrival: keep check-in + dinner + Taikoo Li; drop Daci Temple + IFS panda.',
- 'Chengdu|2': 'Sichuan opera is fixed 20:00 — drop People’s Park so dinner⇒18:30.',
- 'Chengdu|3': 'Sanxingdui is a half-day trip — drop SKP + one of Wuhou/Jinli.',
- 'Chongqing|1': 'Trim riverside night stops to Hongya Cave only (drop 3).',
- 'Chongqing|2': 'Borderline — night cruise ends ~22:00. Optional dinner →18:30.',
- 'Zhangjiajie|1': 'Wulingyuan hotel: dinner is far — eat nearer the park to shorten the trip home.',
- 'Zhangjiajie|2': 'Park has no through-roads (6km ≈ 30km drive) — dine inside the park before leaving.',
- 'Zhangjiajie|3': 'Tianmen is downtown (~46km home) — consider a downtown hotel for this night, or move Tianmen.',
- 'Furong (Hibiscus)|1': 'Drop the 3 evening squares; keep waterfall + cruise + dinner.',
- 'Fenghuang|1': 'Evening arrival: keep Ancient Town + Hong Bridge + dinner + night boat; drop 4-5.',
- 'Guilin|1': 'Drop Reed Flute Cave (out-of-town); keep Elephant Hill + night cruise.',
- 'Yangshuo|1': 'Impression show fixed ~19:45 — move dinner before it; drop Fengqi stop.',
- 'Yangshuo|2': 'Cut Sunrise balloon (21:20 is wrong — dawn activity).',
- 'Shanghai|1': 'Minor: trim Nanjing Rd East so dinner⇒19:30.',
- 'Shanghai|2': 'Drop one of Zhangyuan / Nanjing Rd West so dinner⇒19:30.',
- 'Shanghai|3': '13 stops: drop 2 stray Dinner-alts + Wulumuqi/Anfu Rd.',
- 'Shanghai|4': 'Trim Yu Garden cluster + drop M50 so dinner⇒19:00.',
- 'Shanghai|5': '3 museums too many — drop 1; tower cluster keep Shanghai Tower only.',
- 'Shanghai|6': 'Departure day: trim Oriental Pearl so dinner⇒19:00.',
-};
+// The hand-written FIX table that used to live here was pre-review advice — "Drop Mutianyu night
+// tour", "3 museums too many". The review happened, those calls were made, and the outcome is in
+// rebuilt.json. Keeping the old advice would have put two disagreeing opinions on one page.
 const out = [];
 for (const d of s.days) {
   const c = cityById.get(d.cityId);
@@ -45,14 +21,31 @@ for (const d of s.days) {
   const legByFrom = new Map((d.legs || []).map(l => [l.fromPlaceId, l]));
   const lunch = real.find(a => a.meal === 'lunch'), dinner = real.find(a => a.meal === 'dinner');
   const jammed = real.filter(a => a.time === '~23:59').length;
-  // unwrap the day across midnight, in order, so post-midnight stops score 1440+
+  // Unwrap the day across midnight, so a stop that really happens after 00:00 scores 1440+.
+  //
+  // The old rule was "any backward step in array order starts a new day". Both halves of that were
+  // wrong once the reviewed plan came back from Notion. Array order is Sequence order, and Sequence
+  // ties: Chengdu d3 files its two transfer legs at 20/30 next to Lunch at 30, so 10:58 was read
+  // after 12:28, counted as a midnight roll, and pushed the whole afternoon +1440 — the day "ended"
+  // at 46:03. And a plain backward step is far more often a mis-sequenced stop than a real rollover.
+  //
+  // So: read the day in (Sequence, clock) order, and only wrap on the shape a real rollover has —
+  // late evening followed by early morning. Fenghuang d1's 22:37 → 08:36 shuttle still wraps (that
+  // shuttle genuinely is the next morning); Chengdu d3's 12:28 → 10:58 no longer does.
+  const LATE = 20 * 60, EARLY = 10 * 60;
   const absOf = new Map();
-  { let base = 0, prev = -1;
-    for (const a of acts) {
-      const cm = tk(a.time); if (cm == null) continue;
-      let v = base + cm; if (v < prev) { base += 1440; v += 1440; } prev = v;
-      absOf.set(a, v);
-    } }
+  {
+    const ordered = acts
+      .map((a, i) => ({ a, i, cm: tk(a.time) }))
+      .filter(x => x.cm != null)
+      .sort((x, y) => (x.a.order ?? 1e9) - (y.a.order ?? 1e9) || x.cm - y.cm || x.i - y.i);
+    let base = 0, prevClock = -1;
+    for (const { a, cm } of ordered) {
+      if (prevClock >= LATE && cm <= EARLY) base += 1440;
+      absOf.set(a, base + cm);
+      prevClock = cm;
+    }
+  }
   const last = real[real.length - 1];
   const startMin = absOf.get(real[0]) ?? tk(real[0].time);
   let endMin, homeMode = null, homeKm = null, homeMin = null;
@@ -65,8 +58,10 @@ for (const d of s.days) {
   } else {
     endMin = (absOf.get(last) ?? tk(last.time)) + (last.advisedDuration ?? 60); // departure day, no return
   }
-  const flagged = (dinner && tk(dinner.time) > 19 * 60 + 30) || (lunch && tk(lunch.time) > 14 * 60) || jammed >= 1 || endMin > 21 * 60 + 30;
-  const sev = flagged ? (jammed >= 1 || endMin >= 22 * 60 + 30 ? 'severe' : 'moderate') : 'ok';
+  // NB: no verdict is formed here. Whether a day is late is decided exactly once, in rebuild.mjs,
+  // against the committed plan — see README "Direction of truth". This file only reports what the
+  // snapshot says. `endMin` in particular is the LITERAL last clock in the Notion day record, which
+  // on Fenghuang d1 is next morning's 09:26 departure shuttle; it is descriptive, not a verdict.
   // per-activity breakdown for the unfold: start · end · suggested · actual · travel→next
   const fmt = m => { const x = ((m % 1440) + 1440) % 1440; return String(Math.floor(x / 60)).padStart(2, '0') + ':' + String(x % 60).padStart(2, '0'); };
   const legBy = new Map((d.legs || []).map(l => [l.fromPlaceId, l]));
@@ -114,42 +109,19 @@ for (const d of s.days) {
   });
   out.push({ city: c.name, accent: c.accent, order: c.order, day: d.cityDay, date: addDays(c.dates.start, d.cityDay - 1),
     startMin, endMin, lunchMin: lunch ? tk(lunch.time) : null, dinnerMin: dinner ? tk(dinner.time) : null,
-    nStops: real.length, jammed, home: !!home, homeMode, homeMin, homeKm, flagged, sev,
-    isArrival: !!d.isArrival, isDeparture: !!d.isDeparture,
-    fix: FIX[`${c.name}|${d.cityDay}`] || '', stops });
+    nStops: real.length, jammed, home: !!home, homeMode, homeMin, homeKm,
+    isArrival: !!d.isArrival, isDeparture: !!d.isDeparture, stops });
 }
-// --- split transit days across the two cities they actually belong to ---------------------------
-// See split-days.json. Notion files a whole date under the destination city, so the morning you
-// spend waking, checking out and travelling in the ORIGIN city disappears from the canvas.
-const SPLITS = JSON.parse(readFileSync(new URL('./split-days.json', import.meta.url))).splits;
-for (const sp of SPLITS) {
-  const src = out.find(d => d.date === sp.date && d.stops.some(s => s.hub?.role === 'depart'));
-  if (!src) { console.warn('split-days: no departure-hub day found for', sp.date); continue; }
-  const depIx = src.stops.findIndex(s => s.hub?.role === 'depart');
-  const originStops = src.stops.slice(0, depIx + 1);          // the departure hub closes the origin day
-  const destStops = src.stops.slice(depIx + 1);               // arrival hub onward stays with the destination
-  if (!destStops.some(s => s.hub?.role === 'arrive')) {
-    console.warn('split-days:', sp.date, 'has no arrival hub after the departure — not splitting'); continue;
-  }
-  // Notion has no Breakfast on these dates; you are still in a hotel you slept in.
-  for (const meal of (sp.meals || [])) {
-    if (originStops.some(s => s.meal === meal)) continue;
-    const tmpl = out.flatMap(d => d.stops).find(s => s.meal === meal);
-    originStops.unshift({ ...(tmpl || {}), name: meal[0].toUpperCase() + meal.slice(1), meal,
-      t: null, end: null, abs: null, order: 5, hub: null, home: false, lat: null, lng: null });
-  }
-  const originCity = (cityByName.get(sp.originCity) || {});
-  out.push({ ...src, city: sp.originCity, accent: originCity.accent || src.accent,
-    order: originCity.order ?? (src.order - 0.5), day: sp.originDay, isArrival: false, isDeparture: true,
-    nStops: originStops.filter(s => !s.home).length, stops: originStops, splitOrigin: true, splitWhy: sp.why });
-  src.stops = destStops;                                       // destination keeps only its own half
-  src.nStops = destStops.filter(s => !s.home).length;
-  src.splitDest = true;
-}
+// The split-days pass that used to live here is gone, and so is build/split-days.json. It existed
+// because Notion filed a whole transit date under the DESTINATION city, so the origin-city morning
+// (wake, check out, travel) vanished. Moving the Zhujiang Wharf transfer onto Guilin fixed that at
+// the source: Notion now yields Guilin d2 (breakfast 05:39 + the 07:00 wharf call) and Yangshuo d1
+// (arrival onward) as two real day records. The pass had silently stopped matching and was warning
+// rather than splitting — a rewrite of data we no longer need to rewrite.
 
 out.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.order - b.order);
 writeFileSync(new URL('./viz-data.json', import.meta.url), JSON.stringify(out));
 const max = Math.max(...out.map(d => d.endMin));
-console.log('days:', out.length, '| flagged:', out.filter(d => d.flagged).length, '| severe:', out.filter(d => d.sev === 'severe').length);
+console.log('days:', out.length, '— descriptive only; the late/fits verdict is rebuild.mjs\'s job');
 console.log('max endMin (home arrival):', max, '=', Math.floor(max / 60) + ':' + String(max % 60).padStart(2, '0'), max > 1560 ? '→ EXCEEDS 02:00 axis' : '(within axis)');
 console.log('latest homes:', out.filter(d => d.endMin > 1440).sort((a, b) => b.endMin - a.endMin).slice(0, 6).map(d => `${d.city} d${d.day} ${Math.floor(d.endMin/60)}:${String(d.endMin%60).padStart(2,'0')}`).join(' · '));
