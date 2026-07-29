@@ -304,45 +304,63 @@ function setFilter(bad){document.body.classList.toggle("only-bad",bad);
 fAll.onclick=()=>setFilter(false);fBad.onclick=()=>setFilter(true);
 document.getElementById("tFix").onchange=e=>document.body.classList.toggle("hide-fix",!e.target.checked);
 function toggleRow(row){const day=row.closest(".day");if(!day)return;const open=day.classList.toggle("open");row.setAttribute("aria-expanded",open);if(open)initMaps(day);}
-// Click a block in either bar → select it and highlight the matching row in the table.
-function selectSeg(el){
-  const day=el.closest(".day"); if(!day) return;
-  const key=el.dataset.key, was=el.classList.contains("sel");
+// Selecting a stop moves in by this much from the day's fitted scale, so you get the streets
+// around it while still seeing where the neighbouring stops are. A fixed setZoom(16) used to
+// land at street level with the rest of the route — the reason you clicked — off-screen; the
+// cap keeps that from happening on a day whose stops are already tightly clustered.
+const SEL_ZOOM_IN=2, SEL_ZOOM_MAX=15;
+
+// Drop the current selection. refit=true pulls the map back to the whole day; the caller skips it
+// when it is about to focus a different stop, which would otherwise fit-then-pan in the same tick.
+// (No backticks in here — this whole script is itself a template literal.)
+function clearSel(day,refit){
   day.querySelectorAll(".seg.sel").forEach(s=>s.classList.remove("sel"));
   day.querySelectorAll("tr.rowsel").forEach(r=>r.classList.remove("rowsel"));
-  if(was){                                         // clicking the selected block clears it
-    const m0=day.querySelector(".map");
-    if(m0&&m0._marks&&window.google&&google.maps){
-      Object.keys(m0._marks).forEach(k=>{const m=m0._marks[k];m.setIcon(mkIcon(m.__col,false));m.setZIndex(1);});
-      if(m0._gmap&&m0._bounds){const g=m0._gmap,b=m0._bounds;
-        g.getCenter()?g.fitBounds(b,40):google.maps.event.addListenerOnce(g,"idle",()=>g.fitBounds(b,40));}
-    }
-    return;
-  }
-  day.querySelectorAll('.seg[data-key="'+CSS.escape(key)+'"]').forEach(s=>s.classList.add("sel"));
-  if(!day.classList.contains("open")){day.classList.add("open");const r=day.querySelector(".dhead");if(r)r.setAttribute("aria-expanded",true);initMaps(day);}
-  const tr=day.querySelector('tr[data-key="'+CSS.escape(key)+'"]');
-  if(tr){tr.classList.add("rowsel");tr.scrollIntoView({block:"nearest"});}
-  const mp=day.querySelector(".map");
-  if(mp&&mp._marks&&window.google&&google.maps){
-    Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key));m.setZIndex(k===key?999:1);});
-    const hit=mp._marks[key];
-    if(hit&&mp._gmap){
-      // Centre the stop, but keep the day's own scale. A fixed setZoom(16) landed you at
-      // street level, where the selected pin fills the frame and the rest of the route —
-      // the reason you clicked it — is off-screen. Only pull back if the user had manually
-      // zoomed in tighter than the day's fitted view; never zoom IN on a selection.
-      const g=mp._gmap,go=()=>{
-        g.panTo(hit.getPosition());
-        const fit=mp._fitZoom;
-        if(fit!=null&&g.getZoom()>fit)g.setZoom(fit);
-      };
-      g.getCenter()?go():google.maps.event.addListenerOnce(g,"idle",go);
-    }
+  const m0=day.querySelector(".map");
+  if(m0&&m0._marks&&window.google&&google.maps){
+    Object.keys(m0._marks).forEach(k=>{const m=m0._marks[k];m.setIcon(mkIcon(m.__col,false));m.setZIndex(1);});
+    if(refit&&m0._gmap&&m0._bounds){const g=m0._gmap,b=m0._bounds;
+      g.getCenter()?g.fitBounds(b,40):google.maps.event.addListenerOnce(g,"idle",()=>g.fitBounds(b,40));}
   }
 }
+
+// THE selection path. A timeline block and its table row are two views of one stop, so both go
+// through here — highlight the block, highlight the row, focus the pin. Whichever you clicked is
+// already where you are looking, so only the OTHER one gets scrolled into view.
+function selectKey(day,key,from){
+  if(!day||!key) return;
+  const sel='[data-key="'+CSS.escape(key)+'"]';
+  // read before clearing, so clicking the current selection toggles it off
+  const already=!!(day.querySelector(".seg.sel"+sel)||day.querySelector("tr.rowsel"+sel));
+  clearSel(day,already);          // refit only when this click is a deselect
+  if(already) return;
+
+  if(!day.classList.contains("open")){day.classList.add("open");const r=day.querySelector(".dhead");if(r)r.setAttribute("aria-expanded",true);initMaps(day);}
+  day.querySelectorAll(".seg"+sel).forEach(s=>s.classList.add("sel"));
+  const tr=day.querySelector("tr"+sel);
+  if(tr){tr.classList.add("rowsel");if(from!=="row")tr.scrollIntoView({block:"nearest"});}
+
+  const mp=day.querySelector(".map");
+  if(!mp||!mp._marks||!window.google||!google.maps) return;
+  Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key));m.setZIndex(k===key?999:1);});
+  const hit=mp._marks[key];
+  if(!hit||!mp._gmap) return;
+  // Clicking a row deep in a long table can leave the map scrolled off the top — zooming a map
+  // you cannot see is no use. "nearest" is a no-op when it is already on screen.
+  if(from==="row")mp.scrollIntoView({block:"nearest"});
+  const g=mp._gmap,go=()=>{
+    g.panTo(hit.getPosition());
+    const fit=mp._fitZoom;
+    g.setZoom(fit!=null?Math.min(fit+SEL_ZOOM_IN,SEL_ZOOM_MAX):Math.min(g.getZoom()+SEL_ZOOM_IN,SEL_ZOOM_MAX));
+  };
+  g.getCenter()?go():google.maps.event.addListenerOnce(g,"idle",go);
+}
+const selectSeg=el=>selectKey(el.closest(".day"),el.dataset.key,"seg");
 chart.addEventListener("click",e=>{const s=e.target.closest(".seg");if(s&&s.dataset.key){e.stopPropagation();selectSeg(s);}},true);
 chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const s=e.target.closest(".seg");if(s&&s.dataset.key){e.preventDefault();e.stopPropagation();selectSeg(s);}},true);
+// A row in the activity table is the same stop as its block — clicking it selects and focuses the
+// pin exactly the same way. Only .acts rows carry data-key; the Ideas/Moved tables have none.
+chart.addEventListener("click",e=>{const r=e.target.closest("tr[data-key]");if(r)selectKey(r.closest(".day"),r.dataset.key,"row");});
 chart.addEventListener("click",e=>{const r=e.target.closest(".dhead");if(r)toggleRow(r);});
 chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const r=e.target.closest(".dhead");if(r){e.preventDefault();toggleRow(r);}});
 // expand-all / collapse-all
@@ -469,6 +487,8 @@ const EXTRA = `<style>
 .wrap table.acts.idt td.an{color:var(--ink-2);}
 .wrap table.acts tbody tr.rowsel td,.wrap table.acts tbody tr.rowsel td.pc{background:color-mix(in srgb,var(--target) 13%,transparent);}
 .wrap table.acts tbody tr:hover td,.wrap table.acts tbody tr:hover td.pc{background:color-mix(in srgb,var(--target) 7%,transparent);}
+/* a row with a key IS its stop — clicking it selects and focuses the pin, same as its block */
+.wrap table.acts tbody tr[data-key]{cursor:pointer;}
 .wrap table.acts td.tot{font-weight:700;color:var(--ink);}
 .wrap table.acts tr.radd td.an{color:var(--ok);font-style:italic;}
 body.only-bad .wrap .day.ok-day{display:none;}
