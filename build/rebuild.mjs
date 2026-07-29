@@ -175,8 +175,13 @@ for (const day of V) {
   // once the Guilin/Yangshuo ferry was re-dated in Notion the day split naturally, neither
   // condition held, and the Li River cruise came back as a 255-minute stop that ran the day to
   // 24:54. An arrival hub is sufficient: the cruise IS how you arrived.
-  const journeyDup = n => (transit || splitDay || !!arriveHub || !!departHub)
-    && /\b(cruise|ferry|train|flight)\b/i.test(n);
+  // ...but it must match the HUB'S OWN MODE, not merely contain a travel word. Matching on the
+  // word alone swallowed Furong's Youshui River cruise — a 30-minute sightseeing boat — because
+  // that day's hub happens to be a high-speed train. Only a ferry hub absorbs a cruise/ferry.
+  const HUBWORD = { Ferry: /\b(cruise|ferry)\b/i, Flight: /\bflight\b/i };
+  const hubPat = m => HUBWORD[m] || (/train/i.test(m || '') ? /\btrain\b/i : null);
+  const journeyPats = [arriveHub, departHub].filter(Boolean).map(x => hubPat(x.hub.mode)).filter(Boolean);
+  const journeyDup = n => journeyPats.some(p => p.test(n));
   const absorbed = [];
   for (const n of (dayPlan.stops || [])) {
     if (journeyDup(n)) { absorbed.push(n); continue; }   // the sailing IS the gap between the hubs
@@ -374,9 +379,16 @@ for (const city of Object.keys(plans)) {
   const ptypeOf = n => { for (const d of V) { const s = d.stops.find(x => x.name === n); if (s) return s.ptype; } return null; };
   for (const i of (plans[city].ideas || [])) {
     if (origDay.has(i.name) || newDay.has(i.name)) continue;   // scheduled after all → not an idea
-    if (['Transport', 'Hotel'].includes(ptypeOf(i.name))) continue;   // structure, not a sight you cut
-    const firstDay = (plans[city].days || [])[0]?.day ?? 1;
-    (ideasByDay[`${city}|${firstDay}`] ||= []).push({ ...i, status: 'parked', from: null });
+    // Transport/Hotel stay out — station legs and check-ins are structure, not cuts — unless the
+    // plan file says `keep: true`. That flag exists for "Yangjiajie cableway", a cable car cut
+    // along with the area it serves, which is a real loss rather than logistics.
+    if (!i.keep && ['Transport', 'Hotel'].includes(ptypeOf(i.name))) continue;
+    // Which day it fell out of is recorded IN THE PLAN FILE (`day`), not derived. Deriving it from
+    // Notion worked only until the parking was written back: a parked page has no Day, so it
+    // vanished from every day's activity list and all 24 ideas collapsed onto day 1. The plan file
+    // is the stable record of where each cut came from.
+    const originDay = i.day ?? (plans[city].days || [])[0]?.day ?? 1;
+    (ideasByDay[`${city}|${originDay}`] ||= []).push({ ...i, status: 'parked', from: i.day ?? null });
   }
 }
 writeFileSync(new URL('./rebuilt.json', import.meta.url), JSON.stringify({ days: out, ideas, ideasByDay, movesByDay, notes: Object.fromEntries(Object.entries(plans).map(([c, p]) => [c, p.notes || []])) }, null, 1));

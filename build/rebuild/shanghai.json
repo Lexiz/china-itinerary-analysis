@@ -134,11 +134,13 @@
   },
   {
    "name": "Dinner alt · Donghu Rd",
-   "why": "Flagged as a dinner alternate, not a stop — use it for day 3's Concession dinner."
+   "why": "Flagged as a dinner alternate, not a stop — use it for day 3's Concession dinner.",
+   "day": 1
   },
   {
    "name": "Dinner alt · Fumin Rd",
-   "why": "Second Concession dinner alternate — backup to Donghu Rd on the same evening."
+   "why": "Second Concession dinner alternate — backup to Donghu Rd on the same evening.",
+   "day": 1
   }
  ],
  "notes": [

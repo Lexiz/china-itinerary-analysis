@@ -54,7 +54,8 @@
  "ideas": [
   {
    "name": "Chengdu Museum",
-   "why": "The hardest cut and the closest call. Free, air-conditioned, genuinely good — but 2.5 h indoors was the most expendable block on day 2, and Sanxingdui tells the ancient-Shu bronze story far better on day 3, so the overlap made it the one to lose. Confirmed Tue–Sun and open to 20:30 in summer (May–Oct), closed Mondays, free but needs online booking 1–3 days ahead. If you want it back: it is on Tianfu Square, five minutes from People’s Park, and the 20:30 closing means it is the natural swap for either the teahouse or Kuanzhai on day 2 — or a rain/heat refuge if the weather turns."
+   "why": "The hardest cut and the closest call. Free, air-conditioned, genuinely good — but 2.5 h indoors was the most expendable block on day 2, and Sanxingdui tells the ancient-Shu bronze story far better on day 3, so the overlap made it the one to lose. Confirmed Tue–Sun and open to 20:30 in summer (May–Oct), closed Mondays, free but needs online booking 1–3 days ahead. If you want it back: it is on Tianfu Square, five minutes from People’s Park, and the 20:30 closing means it is the natural swap for either the teahouse or Kuanzhai on day 2 — or a rain/heat refuge if the weather turns.",
+   "day": 2
   },
   {
    "name": "Taikoo Li",
@@ -62,23 +63,28 @@
   },
   {
    "name": "Daci Temple",
-   "why": "Data-bug casualty. It was tagged Evening, but it is a ticket-checked site that closes 17:30 with last entry 17:00 (the Zen tea area runs to 19:30, the halls do not), and it needs ID / QR registration at the gate. With both full days committed in daylight there is no daytime hour left for it. It sits inside the Taikoo Li block by the hotel, so if a morning frees up it is a 45-min drop-in — but never after dark."
+   "why": "Data-bug casualty. It was tagged Evening, but it is a ticket-checked site that closes 17:30 with last entry 17:00 (the Zen tea area runs to 19:30, the halls do not), and it needs ID / QR registration at the gate. With both full days committed in daylight there is no daytime hour left for it. It sits inside the Taikoo Li block by the hotel, so if a morning frees up it is a 45-min drop-in — but never after dark.",
+   "day": 1
   },
   {
    "name": "IFS rooftop panda",
-   "why": "A 30-minute photo queue for one sculpture, in the same block as Taikoo Li and the hotel. Pure opportunistic add-on — not worth a planned slot when you only have two real days."
+   "why": "A 30-minute photo queue for one sculpture, in the same block as Taikoo Li and the hotel. Pure opportunistic add-on — not worth a planned slot when you only have two real days.",
+   "day": 1
   },
   {
    "name": "SKP Chengdu",
-   "why": "Dropped outright. A luxury mall ~14 km south of the hotel, well off every other cluster, and the only argument for it is architecture and air conditioning — both of which Chengdu Museum gives you for free and centrally. The round-trip transit alone would cost most of a Kuanzhai."
+   "why": "Dropped outright. A luxury mall ~14 km south of the hotel, well off every other cluster, and the only argument for it is architecture and air conditioning — both of which Chengdu Museum gives you for free and centrally. The round-trip transit alone would cost most of a Kuanzhai.",
+   "day": 3
   },
   {
    "name": "Hotpot alt · Shu Daxia",
-   "why": "This is a dinner, and you insert meals yourself. Kept as the recommendation for arrival night: it is in the Chunxi Road / Taikoo Li block near the hotel, so it fits the one slot day 1 actually has."
+   "why": "This is a dinner, and you insert meals yourself. Kept as the recommendation for arrival night: it is in the Chunxi Road / Taikoo Li block near the hotel, so it fits the one slot day 1 actually has.",
+   "day": 1
   },
   {
    "name": "Hotpot alt · Lao Matou",
-   "why": "Also a dinner, not a stop. Worth holding as the day-2 or day-3 dinner if you want a shorter queue than Shu Daxia — but check the address before booking, the coordinate in the source data is wrong (see notes)."
+   "why": "Also a dinner, not a stop. Worth holding as the day-2 or day-3 dinner if you want a shorter queue than Shu Daxia — but check the address before booking, the coordinate in the source data is wrong (see notes).",
+   "day": 3
   }
  ],
  "notes": [

@@ -37,23 +37,28 @@
  "ideas": [
   {
    "name": "Nanhua Bridge",
-   "why": "The best elevated sweep of the stilted houses and the classic dawn frame, but it is ~1 km upriver from the hotel — 12 min each way. A 25-minute pre-departure window cannot reach it and get back. It is the first thing a second night buys you."
+   "why": "The best elevated sweep of the stilted houses and the classic dawn frame, but it is ~1 km upriver from the hotel — 12 min each way. A 25-minute pre-departure window cannot reach it and get back. It is the first thing a second night buys you.",
+   "day": 2
   },
   {
    "name": "Shen Congwen Residence",
-   "why": "Fenghuang's one real cultural stop, and it is simply not open while you are here: doors ~08:00, your train leaves at 07:45. Not a scheduling choice — a consequence of the one-night stay."
+   "why": "Fenghuang's one real cultural stop, and it is simply not open while you are here: doors ~08:00, your train leaves at 07:45. Not a scheduling choice — a consequence of the one-night stay.",
+   "day": 2
   },
   {
    "name": "Miao batik & silver lanes",
-   "why": "Shops open ~09:00. The only free window is day 1's evening, and that window is spent on the lit river, which is the entire reason to come. Browse whatever is still open as you walk home past Hong Bridge instead of scheduling it."
+   "why": "Shops open ~09:00. The only free window is day 1's evening, and that window is spent on the lit river, which is the entire reason to come. Browse whatever is still open as you walk home past Hong Bridge instead of scheduling it.",
+   "day": 2
   },
   {
    "name": "Ginger candy stalls",
-   "why": "Daytime stalls with the hand-pulling demonstration. Some shops stay open late — pick up a bag in passing on the day 1 walk for the train, but do not give it a slot."
+   "why": "Daytime stalls with the hand-pulling demonstration. Some shops stay open late — pick up a bag in passing on the day 1 walk for the train, but do not give it a slot.",
+   "day": 2
   },
   {
    "name": "Bar street",
-   "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise."
+   "why": "Flagged bonus, 45 min, and it sits right on the route home past Hong Bridge. With a 05:45 wake-up for the dawn session and a 07:45 train, walk through it and keep walking. Only worth sitting down if you abandon the sunrise.",
+   "day": 1
   },
   {
    "name": "Check in at Jinshuian",
@@ -65,11 +70,13 @@
   },
   {
    "name": "Jumping stones",
-   "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears."
+   "why": "Cut on this city's own stated drop order — it is the first thing the day-1 note says to lose if time is short, and time is short by construction: one night buys one evening, and the full seven-stop version finished at 00:09 against a 05:38 dawn call. Fifteen minutes of stop plus twelve of walking and the slack around it costs about 35 min for a set of stepping stones you will cross anyway. Restore it the moment a second night appears.",
+   "day": 1
   },
   {
    "name": "Wanming Pagoda",
-   "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight."
+   "why": "Cut second, and it costs the least of anything here: the night boat sails DOWN PAST the lit Wanming Tower and back, so you still see it — illuminated, from the water, which is the better view. The on-foot version was a 15-min walk downstream and back at 23:43, purely to stand under it. Parking it saves ~33 min and no actual sight.",
+   "day": 1
   }
  ],
  "notes": [

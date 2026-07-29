@@ -46,11 +46,14 @@
  "ideas": [
   {
    "name": "Yangjiajie cableway",
-   "why": "The lift that makes Yangjiajie reachable — cut with the area it serves. Only worth restoring if you add a fifth day or trade away the entire Tianzi/Ten-Mile half of day 2."
+   "why": "The lift that makes Yangjiajie reachable — cut with the area it serves. Only worth restoring if you add a fifth day or trade away the entire Tianzi/Ten-Mile half of day 2.",
+   "day": 3,
+   "keep": true
   },
   {
    "name": "Yangjiajie",
-   "why": "Genuinely excellent and much quieter than Yuanjiajie — Natural Great Wall and One Step to Heaven — but it sits at the far western end of the plateau. Reaching it costs its own cable car plus roughly an hour of extra shuttle each way, about 4 h of marginal cost against Ten-Mile Gallery's 90 min for zero extra transfer. With one afternoon and two full days it is the correct thing to lose. If you would rather have it than Tianmen, swap the whole of day 3 for it — do not try to squeeze it into day 2."
+   "why": "Genuinely excellent and much quieter than Yuanjiajie — Natural Great Wall and One Step to Heaven — but it sits at the far western end of the plateau. Reaching it costs its own cable car plus roughly an hour of extra shuttle each way, about 4 h of marginal cost against Ten-Mile Gallery's 90 min for zero extra transfer. With one afternoon and two full days it is the correct thing to lose. If you would rather have it than Tianmen, swap the whole of day 3 for it — do not try to squeeze it into day 2.",
+   "day": 3
   }
  ],
  "notes": [
