@@ -6,3 +6,7 @@ build/gmaps-key.txt
 *.bak
 *.bak2
 .vercel
+
+# build tooling only — the page itself has no dependencies
+node_modules/
+package-lock.json

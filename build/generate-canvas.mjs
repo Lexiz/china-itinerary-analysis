@@ -103,11 +103,13 @@ const missedDep = DATA.filter(d => V.get(d).missed).length;
 // day. Labelled as what it is, so nobody reads it as a day still needing cuts.
 const latest = [...DATA].sort((a, b) => V.get(b).endMin - V.get(a).endMin)[0];
 const lv = latest ? V.get(latest) : null;
-// These days were reviewed one by one and accepted; the page is a record of that decision, not an
-// open audit. Hence "accepted", not "need real cuts" — the old wording outlived the review.
+// "reviewed & accepted" was true of the 28 Jul rework — and that rework was never applied to the
+// database. This page now shows what Postgres actually holds, which is the plan as it stands, so
+// these days are simply late and undecided. Calling them accepted would claim a decision nobody
+// made about these times.
 const statsHTML = [
   ['ok', onTime, 'home by 21:30'],
-  ['warn', late.length, 'later — reviewed & accepted'],
+  ['warn', late.length, 'later — not yet decided'],
   [missedDep ? 'bad' : 'ok', missedDep, 'missed departures'],
   ['', latest ? `${latest.city} d${latest.day}` : '—',
     latest ? `latest — ${latest.home ? 'home' : 'airport'} ${EL(lv.endMin)}` : ''],
@@ -185,9 +187,12 @@ for (const d of DATA) {
           + cell(t.mode === 'didi' ? t.minutes : null, t.mode === 'didi', ttl);
     // A dwell cut short by a closing time must SAY so — otherwise a shorter Total silently reads as
     // "this is all it needs" instead of "this is all the day could buy".
+    // The overrun is REPORTED, not applied — the plan's dwell is whatever Postgres
+    // says. This used to read "Cut short", from when the canvas shortened the stop
+    // itself; it no longer does, so saying so would be describing the wrong thing.
     const capT = r.cap
-      ? esc(`Cut short: ${r.name} closes ${r.cap.closes}${r.cap.lastEntry ? ` (last entry ${r.cap.lastEntry})` : ''}. `
-          + `${r.cap.lost} min less than the ${fmtDur(r.advice ?? 0)} advice.${r.cap.tooLate ? ' ARRIVES AFTER LAST ENTRY.' : ''}`
+      ? esc(`${r.name} closes ${r.cap.closes}${r.cap.lastEntry ? ` (last entry ${r.cap.lastEntry})` : ''}. `
+          + (r.cap.tooLate ? 'YOU ARRIVE AFTER LAST ENTRY.' : `This stop runs ${r.cap.lost} min past closing.`)
           + (r.cap.conf && r.cap.conf !== 'high' ? ` Closing time confidence: ${r.cap.conf}.` : ''))
       : '';
     const totCls = 'tm tot b1r' + (r.cap ? (r.cap.tooLate ? ' capbad' : ' capped') : '');
@@ -204,10 +209,13 @@ for (const d of DATA) {
   const dayKey = `${d.city}|${d.day}`;
   const dayIdeas = (REBUILT.ideasByDay || {})[dayKey] || [];
   const dayMoves = (REBUILT.movesByDay || {})[dayKey] || [];
-  const ideasHTML = (dayIdeas.length ? `<div class="ideas"><div class="chgh">Ideas — dropped from Day ${d.day} · not scheduled (${dayIdeas.length})</div>`
-    + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Why it is parked</th></tr></thead><tbody>`
-    + dayIdeas.map(i => { const a = advOf(i.name); return `<tr><td class="an">${esc(i.name)}</td>`
-        + `<td class="tm sug">${a.res != null ? fmtDur(a.res) : '—'}</td><td class="iw">${esc(i.why || '')}</td></tr>`; }).join('')
+  // Suggestions for the day, not casualties of it. These are Postgres ideas — places
+  // no committed stop uses, tagged with the day they want — so nothing here was
+  // "dropped"; the old heading described a planner's cut list.
+  const ideasHTML = (dayIdeas.length ? `<div class="ideas"><div class="chgh">Suggestions for Day ${d.day} · not scheduled (${dayIdeas.length})</div>`
+    + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Kind</th></tr></thead><tbody>`
+    + dayIdeas.map(i => { const a = advOf(i.name); const res = a.res ?? i.res; return `<tr><td class="an">${esc(i.name)}</td>`
+        + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td><td class="iw">${esc(i.why || '')}</td></tr>`; }).join('')
     + `</tbody></table></div>` : '')
     + (dayMoves.length ? `<div class="ideas"><div class="chgh">Moved · still happening (${dayMoves.length})</div>`
     + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Where it went</th></tr></thead><tbody>`
@@ -613,5 +621,5 @@ ${EXTRA}
 <script>${script}</script>`;
 writeFileSync(new URL('./china-day-load.html', import.meta.url), html);
 console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length,
-  `· ${onTime} home by 21:30 · ${late.length} later (reviewed) · ${missedDep} missed departures`,
+  `· ${onTime} home by 21:30 · ${late.length} later (undecided) · ${missedDep} missed departures`,
   '· axis 06:00→04:00');

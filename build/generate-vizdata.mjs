@@ -9,8 +9,8 @@ const tk = t => { const m = (t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m
 const cityById = new Map(s.cities.map(c => [c.id, c]));
 const addDays = (iso, n) => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 // The hand-written FIX table that used to live here was pre-review advice — "Drop Mutianyu night
-// tour", "3 museums too many". The review happened, those calls were made, and the outcome is in
-// rebuilt.json. Keeping the old advice would have put two disagreeing opinions on one page.
+// tour", "3 museums too many". It went because two disagreeing opinions on one page is worse than
+// none; the plan itself is whatever Postgres holds, and this file only describes it.
 const out = [];
 for (const d of s.days) {
   const c = cityById.get(d.cityId);
@@ -58,10 +58,11 @@ for (const d of s.days) {
   } else {
     endMin = (absOf.get(last) ?? tk(last.time)) + (last.advisedDuration ?? 60); // departure day, no return
   }
-  // NB: no verdict is formed here. Whether a day is late is decided exactly once, in rebuild.mjs,
-  // against the committed plan — see README "Direction of truth". This file only reports what the
-  // snapshot says. `endMin` in particular is the LITERAL last clock in the Notion day record, which
-  // on Fenghuang d1 is next morning's 09:26 departure shuttle; it is descriptive, not a verdict.
+  // NB: no verdict is formed here. Whether a day is late is decided exactly once, in
+  // generate-canvas's verdict() — see README "Direction of truth". This file only reports
+  // what the snapshot says, and the snapshot is recalc()'s output. `endMin` in particular is
+  // the literal last clock of the day record, which on Fenghuang d1 is next morning's
+  // departure shuttle; it is descriptive, not a judgement.
   // per-activity breakdown for the unfold: start · end · suggested · actual · travel→next
   const fmt = m => { const x = ((m % 1440) + 1440) % 1440; return String(Math.floor(x / 60)).padStart(2, '0') + ':' + String(x % 60).padStart(2, '0'); };
   const legBy = new Map((d.legs || []).map(l => [l.fromPlaceId, l]));
@@ -107,10 +108,24 @@ for (const d of s.days) {
       rec: leg ? leg.recommended : null,
     };
   });
+  // Suggestions parked against this day. In Postgres an idea is simply a place no
+  // committed stop references, carrying the day it wants to land on — so this is
+  // read straight off the snapshot rather than being a by-product of a planner
+  // deciding what to drop.
+  const ideas = (s.ideas || [])
+    .filter((p) => p.cityId === d.cityId && p.day === d.cityDay)
+    .map((p) => ({
+      name: normn(p.shortLabel || p.name).slice(0, 46),
+      kind: p.type === 'Food' ? (p.meal?.length ? p.meal.join('/').toLowerCase() : 'food') : 'activity',
+      res: RES[normn(p.shortLabel || p.name)]?.m ?? p.advisedDuration ?? null,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   out.push({ city: c.name, accent: c.accent, order: c.order, day: d.cityDay, date: addDays(c.dates.start, d.cityDay - 1),
+    theme: d.theme || null,
     startMin, endMin, lunchMin: lunch ? tk(lunch.time) : null, dinnerMin: dinner ? tk(dinner.time) : null,
     nStops: real.length, jammed, home: !!home, homeMode, homeMin, homeKm,
-    isArrival: !!d.isArrival, isDeparture: !!d.isDeparture, stops });
+    isArrival: !!d.isArrival, isDeparture: !!d.isDeparture, ideas, stops });
 }
 // The split-days pass that used to live here is gone, and so is build/split-days.json. It existed
 // because Notion filed a whole transit date under the DESTINATION city, so the origin-city morning
@@ -122,6 +137,6 @@ for (const d of s.days) {
 out.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.order - b.order);
 writeFileSync(new URL('./viz-data.json', import.meta.url), JSON.stringify(out));
 const max = Math.max(...out.map(d => d.endMin));
-console.log('days:', out.length, '— descriptive only; the late/fits verdict is rebuild.mjs\'s job');
+console.log('days:', out.length, '— descriptive only; the plan itself comes from Postgres');
 console.log('max endMin (home arrival):', max, '=', Math.floor(max / 60) + ':' + String(max % 60).padStart(2, '0'), max > 1560 ? '→ EXCEEDS 02:00 axis' : '(within axis)');
 console.log('latest homes:', out.filter(d => d.endMin > 1440).sort((a, b) => b.endMin - a.endMin).slice(0, 6).map(d => `${d.city} d${d.day} ${Math.floor(d.endMin/60)}:${String(d.endMin%60).padStart(2,'0')}`).join(' · '));

@@ -1,0 +1,22 @@
+{
+  "name": "china-itinerary-analysis",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Review canvas for the China itinerary — a rendering of the plan held in Postgres.",
+  "type": "module",
+  "scripts": {
+    "build": "./build.sh",
+    "check": "node build/check-against-db.mjs"
+  },
+  "comment": [
+    "THE PAGE has no dependencies and never will — index.html is self-contained, which is why",
+    "it can be opened from a file:// URL or served by GitHub Pages with no build step.",
+    "",
+    "This manifest is for the BUILD, and it exists for one script: check-against-db.mjs needs a",
+    "Postgres driver to prove the page agrees with the database. That check is the whole reason",
+    "the canvas can be trusted, so a dependency to run it is worth having."
+  ],
+  "devDependencies": {
+    "postgres": "^3.4.9"
+  }
+}
