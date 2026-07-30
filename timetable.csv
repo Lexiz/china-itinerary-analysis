@@ -3,12 +3,12 @@ Day,Date,City,Kind,#,Activity,Start,End,Min,Travel to next (min),Capped,Now star
 1,2026-08-11,Beijing,sight,2,Drop bags at Regent Beijing,07:13,07:41,28,1,,07:13,28,20,
 1,2026-08-11,Beijing,meal,3,Breakfast,07:42,08:20,38,38,,07:42,38,35,
 1,2026-08-11,Beijing,sight,4,Temple of Heaven,08:58,11:06,128,18,,08:58,128,120,
-1,2026-08-11,Beijing,sight,5,Qianmen & hutongs,11:24,13:02,98,12,,11:24,98,90,
-1,2026-08-11,Beijing,meal,6,Lunch,13:14,14:22,68,2,,13:14,68,60,
-1,2026-08-11,Beijing,sight,7,Beijing city model,14:24,16:02,98,24,,14:24,98,90,
-1,2026-08-11,Beijing,sight,8,Shichahai lakes,16:26,18:04,98,28,,16:26,98,90,
-1,2026-08-11,Beijing,meal,9,Dinner,18:32,20:02,90,21,,18:32,90,90,
-1,2026-08-11,Beijing,endpoint,10,Back to the hotel,20:23,,,,,,,,metro 21m/4.6km (routed)
+1,2026-08-11,Beijing,sight,5,Qianmen & hutongs,11:24,13:02,98,30,,11:24,98,90,
+1,2026-08-11,Beijing,meal,6,Lunch,13:32,14:40,68,29,,13:32,68,60,
+1,2026-08-11,Beijing,sight,7,Beijing city model,15:09,16:47,98,24,,15:09,98,90,
+1,2026-08-11,Beijing,sight,8,Shichahai lakes,17:11,18:49,98,6,,17:11,98,90,
+1,2026-08-11,Beijing,meal,9,Dinner,18:55,20:25,90,22,,18:55,90,90,
+1,2026-08-11,Beijing,endpoint,10,Back to the hotel,20:47,,,,,,,,metro 22m/5km (routed)
 2,2026-08-12,Beijing,meal,1,Breakfast,07:00,07:38,38,23,,07:00,38,35,
 2,2026-08-12,Beijing,sight,2,Tiananmen Square,08:01,09:24,83,16,,08:01,83,75,
 2,2026-08-12,Beijing,sight,3,Forbidden City,09:40,13:18,218,12,,09:40,218,210,

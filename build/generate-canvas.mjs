@@ -123,6 +123,36 @@ const miniAx = `<div class="miniax">` + clock.map(([m, l]) => `<span class="mtk"
 const gridHTML = clock.map(([m]) => `<div class="gl" style="left:${P(m)}%"></div>`).join('');
 // the sane window (07:00 → 21:30) is shaded rather than labelled, so it costs no vertical space
 const BAND = `linear-gradient(90deg,var(--surface-2) 0 ${P(420).toFixed(3)}%,var(--band) ${P(420).toFixed(3)}% ${P(1290).toFixed(3)}%,var(--surface-2) ${P(1290).toFixed(3)}% 100%)`;
+
+// NIGHT, shaded onto each day's own track.
+//
+// Shaded from CIVIL DUSK, not sunset: there is about half an hour of usable light
+// after the sun goes down, and several stops are deliberately placed in it (Lion
+// Hill at 19:44 against a 20:22 Lijiang dusk; Jingshan at 18:00 against 19:47).
+// Darkening from sunset would black out exactly the slots the re-plan chose.
+//
+// Per day rather than once for the page, because the trip crosses 15 degrees of
+// latitude and 20 of longitude on a single clock: Lijiang goes dark at 20:22 and
+// Shanghai at 18:37, an hour and three quarters apart. One shared band would be
+// wrong for almost every day of the trip.
+//
+// Layered UNDER the sane-hours band with a translucent ink so the band, the grid
+// lines and the blocks all still read through it.
+const NIGHT_INK = 'color-mix(in srgb, var(--ink) 17%, transparent)';
+function bandFor(d) {
+  const dusk = tkc(d.dusk), dawn = tkc(d.dawn);
+  if (dusk == null && dawn == null) return BAND;
+  const stops = [];
+  // before first light — the axis opens at 05:00, so this catches the dawn shoots
+  if (dawn != null && dawn > T0) stops.push(`${NIGHT_INK} 0 ${P(dawn).toFixed(3)}%`);
+  else stops.push('transparent 0 0%');
+  if (dusk != null) {
+    stops.push(`transparent ${P(dawn != null && dawn > T0 ? dawn : T0).toFixed(3)}% ${P(dusk).toFixed(3)}%`);
+    // …and after dark, all the way to the end of the axis (which runs to 04:00 next day)
+    stops.push(`${NIGHT_INK} ${P(dusk).toFixed(3)}% 100%`);
+  }
+  return `linear-gradient(90deg,${stops.join(',')}),${BAND}`;
+}
 let cur = null, out = '';
 for (const d of DATA) {
   if (d.city !== cur) {
@@ -296,7 +326,7 @@ for (const d of DATA) {
       `<span class="cv">›</span><span class="dnum">Day ${d.day}</span>` +
       `<span class="ddate">${wd(d.date)} ${dm(d.date)}</span>` +
       `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>${badge}</div>` +
-    mapHTML + miniAx + `<div class="row"><div class="track" title="${tip}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null })))}` +
+    mapHTML + miniAx + `<div class="row"><div class="track" style="background:${bandFor(d)}" title="${tip}${d.sunset ? `\nSunset ${d.sunset} · dark from ${d.dusk}` : ''}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null })))}` +
       homeSeg(rbEnd, `${d.home ? '🏠' : '✈'} ${EL(rbEnd)}`,
         dsev === 'severe' ? 'bad' : dsev === 'moderate' ? 'warn' : 'ok2',
         d.home ? `Back to the hotel — ${EL(rbEnd)}` : `Departure day — fly out ${EL(rbEnd)}`) + `</div></div>` +

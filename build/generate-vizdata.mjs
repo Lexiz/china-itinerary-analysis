@@ -125,6 +125,13 @@ for (const d of s.days) {
     theme: d.theme || null,
     startMin, endMin, lunchMin: lunch ? tk(lunch.time) : null, dinnerMin: dinner ? tk(dinner.time) : null,
     nStops: real.length, jammed, home: !!home, homeMode, homeMin, homeKm,
+    // Daylight, straight from the snapshot — which reads it from `day`, which got it
+    // from the city's own coordinates. The canvas shades the timeline dark from DUSK
+    // (civil twilight) rather than sunset: there is roughly half an hour of usable
+    // light after the sun goes down, and shading from sunset would darken the exact
+    // slots the re-plan deliberately put dusk stops in.
+    sunrise: d.sunrise || null, sunset: d.sunset || null,
+    dawn: d.dawn || null, dusk: d.dusk || null,
     isArrival: !!d.isArrival, isDeparture: !!d.isDeparture, ideas, stops });
 }
 // The split-days pass that used to live here is gone, and so is build/split-days.json. It existed
