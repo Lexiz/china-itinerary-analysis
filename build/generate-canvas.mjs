@@ -275,6 +275,10 @@ for (const d of DATA) {
     ? rbStops[i + 1].travelIn
     : (RB && RB.homeTravel ? { ...RB.homeTravel, est: RB.homeTravel.estimated } : null);
 
+  // Which meals actually have a venue behind them. Read once here because both the
+  // table rows and the add-buttons further down need the same answer, and two reads of
+  // "is dinner decided?" is how they would come to disagree.
+  const mealsDecided = d.mealsDecided || { lunch: null, dinner: null };
   const rows = rbStops.map((r, ri) => {
     const a = advOf(r.name);
     const isHub = !!r.hub, isMeal = !!r.meal;
@@ -284,7 +288,16 @@ for (const d of DATA) {
     // "Which of today's stops must be booked?" — answered in the table itself,
     // from the same snapshot state the app's bookings tab reads (a.booking is
     // place.booking_state), so the two surfaces cannot disagree.
-    const bkg = a.booking === 'to-book' ? ' <span class="tag bkg">book</span>'
+    //
+    // A LUNCH OR DINNER WITH NO VENUE IS ALWAYS STILL TO BOOK. That is what an open
+    // slot means, and it needs no data to say so — which is the point, because the
+    // tag used to come only from a place row's booking_state, and an open slot has no
+    // place row. So the two days that happened to have a restaurant attached showed
+    // "book" and the other 54 showed nothing, on a trip where not one meal is
+    // arranged. Breakfast is excluded: it comes with the room.
+    const undecidedMeal = (r.meal === 'lunch' || r.meal === 'dinner') && !mealsDecided[r.meal];
+    const bkg = undecidedMeal ? ' <span class="tag bkg">book</span>'
+      : a.booking === 'to-book' ? ' <span class="tag bkg">book</span>'
       : a.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : '';
     const why = [a.resnote, a.resbasis].filter(Boolean).join(' — ');
     // advOf only searches the ORIGINAL day's stops, so a stop moved in from another day had no
@@ -356,18 +369,9 @@ for (const d of DATA) {
   // Suggestions for the day, not casualties of it. These are Postgres ideas — places
   // no committed stop uses, tagged with the day they want — so nothing here was
   // "dropped"; the old heading described a planner's cut list.
-  // SPLIT BY KIND, because "12 suggestions" answers the wrong question. Standing on a
-  // street at 18:00 you want to know whether DINNER is decided — and one combined list
-  // hid a day with four activity ideas and nothing to eat behind the same count as the
-  // reverse. `kind` comes from place.type + meal_pref, which is the catalogue's own
-  // opinion rather than a guess made here.
-  // A meal slot already holding a venue cannot take another — the API refuses it, so
-  // the button should say so up front rather than let someone discover it by pressing.
-  // From the snapshot's own meal state, not from "a stop exists": every day has
-  // lunch and dinner slots and they all carry a Food type and an id, so presence
-  // proves nothing. 'open' means no venue chosen.
-  const mealTaken = d.mealsDecided || { lunch: null, dinner: null };
-
+  // The Kind column carries the lunch/dinner/activity split that four separate tables
+  // used to; `kind` is place.type + meal_pref, the catalogue's own opinion rather than
+  // a guess made here.
   // "Add to lunch/dinner" — the same POST the app's button makes, to the same endpoint.
   //
   // A TAKEN SLOT IS NOT A DEAD BUTTON. It used to render greyed out with "remove it
@@ -383,7 +387,7 @@ for (const d of DATA) {
   // app makes. Only a missing token disables it now, because without one nothing can be
   // written at all.
   const mealBtn = (i, meal) => {
-    const taken = mealTaken[meal];
+    const taken = mealsDecided[meal];
     const dis = !MUTATE_TOKEN ? 'no token — rebuild the page with MUTATE_TOKEN set' : '';
     const ttl = dis || (taken
       ? `${meal} is ${taken} — replace it with ${i.full || i.name}`
