@@ -63,7 +63,12 @@ function seg(st) {
   else if (st.bonus) cls += ' bonusseg';                            // on the timeline, but not committed clock
   const m = st.meal ? ' mealseg' : '';                                   // NB: not "meal" — that clashes with the old meal-pip rule (translateX(-50%))
   const named = w >= 11;                                                 // room for the activity name
-  const lock = st.hub ? `<span class="lk">${st.hub.approx ? '~' : '\u{1F512}'}</span>` : '';
+  // The hub block used to carry a padlock. It said "fixed" but not WHAT is fixed —
+  // the mode icon says both: this reserved time is the flight/train/ferry itself.
+  // A provisional time keeps its '~' after the icon.
+  const HUB_ICON = { 'Flight': '✈️', 'High-speed train': '\u{1F684}', 'Maglev': '\u{1F685}',
+                     'Ferry': '⛴️', 'Bus': '\u{1F68C}', 'Car': '\u{1F697}' };
+  const lock = st.hub ? `<span class="lk">${HUB_ICON[st.hub.mode] || '\u{1F686}'}${st.hub.approx ? '~' : ''}</span>` : '';
   const nm = named ? `<span class="sn">${lock}${esc(st.name)}</span>` : lock;
   const dd = w >= 3 ? `<span class="sd">${d}m</span>` : '';              // duration where it fits
   const tight = named ? '' : ' tight';                                   // narrow blocks drop padding so they never inflate past their slot
@@ -749,7 +754,7 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .seg.hub .sn{font-weight:800;}
 .wrap .seg.hub .sd{opacity:.75;}
 .wrap .seg.hub.approx{background:transparent;color:var(--ink);border:1px dashed var(--ink-2);}
-.wrap .seg .lk{margin-right:3px;font-size:8px;vertical-align:1px;}
+.wrap .seg .lk{margin-right:3px;font-size:10px;vertical-align:0;}
 .wrap .seg.bonusseg{opacity:.55;border-style:dashed;}
 .wrap .seg.homeseg.broken{background:var(--bad);color:#fff;border-color:var(--bad);}
 .wrap .seg.homeseg{width:auto;padding:0 7px;gap:4px;font-weight:800;cursor:default;font-family:var(--mono);
