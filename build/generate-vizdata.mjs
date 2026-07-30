@@ -132,6 +132,13 @@ for (const d of s.days) {
       meals: (p.meal || []).map((m) => m.toLowerCase()),
       full: p.name,
       booking: p.bookingRequired ? (p.booked ? 'booked' : 'to-book') : null,
+      // Where it actually is. A suggestion you cannot place on the map is a name and
+      // nothing else — "is this on the way, or across town?" is the first question you
+      // ask of one, and until now the page could not answer it. Same corrected-coord
+      // precedence the committed stops use, so an idea and the stop it might become
+      // cannot be drawn in two different places.
+      lat: COORDS[normn(p.shortLabel || p.name)]?.lat ?? p.coord?.lat ?? null,
+      lng: COORDS[normn(p.shortLabel || p.name)]?.lng ?? p.coord?.lng ?? null,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 

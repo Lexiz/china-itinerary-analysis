@@ -148,6 +148,7 @@ for (const d of V) {
     name: i.name, icon: i.icon || null, why: i.kind, res: i.res,
     id: i.id || null, meals: i.meals || [], kind: i.kind, full: i.full || i.name,
     booking: i.booking || null,
+    lat: i.lat ?? null, lng: i.lng ?? null,
   }));
 }
 

@@ -397,7 +397,13 @@ for (const d of DATA) {
   const ideaRows = dayIdeas.map(i => {
     const a = advOf(i.name); const res = a.res ?? i.res;
     const isFood = (i.meals || []).length > 0 || i.kind === 'food';
-    return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''} class="idrow">`
+    // data-key is what makes the row a VIEW OF A PIN rather than a line of text: the
+    // one selection path (selectKey) keys on it, so a suggestion row now highlights,
+    // focuses its marker and un-focuses on a second click, exactly as a stop row does.
+    // Only rows the map can actually place get one — a key with no marker behind it
+    // would select nothing and read as a dead click.
+    const mapped = i.lat != null && i.lng != null;
+    return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''}${mapped ? ` data-key="${esc(nk(i.name))}"` : ''} class="idrow">`
       + `<td class="an">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
       + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
       + `<td class="iw">${esc(i.kind)}</td>`
@@ -438,14 +444,26 @@ for (const d of DATA) {
   const pts = mapSeq.map((s, i) => (s && s.lat != null)
     ? { n: i + 1, lat: s.lat, lng: s.lng, name: s.name || s.label, k: nk(s.name || s.label),
         t: s.ptype === 'Hotel' ? 'hotel' : s.ptype === 'Food' ? 'food' : 'act' } : null).filter(Boolean);
+  // The day's SUGGESTIONS, on the same map. "Is this on the way, or across town?" is
+  // the first question you ask of a suggestion, and until now the page listed them by
+  // name only and could not answer it. They are pins like any other — selectable from
+  // their row, focusing and un-focusing exactly as a committed stop does.
+  //
+  // Drawn UNNUMBERED and hollow, and deliberately left out of both the route line and
+  // the fitted bounds: they are not part of the sequence you walk, and letting one
+  // stretch the frame would zoom the actual day out to accommodate a maybe.
+  const ideaPts = dayIdeas
+    .filter(i => i.lat != null && i.lng != null)
+    .map(i => ({ lat: i.lat, lng: i.lng, name: i.name, k: nk(i.name), t: 'idea' }));
   const noCoord = mapSeq.length - pts.length;
   const mapHTML = `<div class="mapwrap"><div class="chgh">Route map — ${esc(d.city)}, day ${d.day}` +
     `` + ` <span class="apx">numbered in the committed order</span>` +
     `${noCoord ? ` <span class="apx">· ${noCoord} stop${noCoord > 1 ? 's' : ''} without coordinates not shown</span>` : ''}</div>` +
     `<div class="mlg"><span class="mit"><i class="msw mk-act"></i>activity</span>` +
     `<span class="mit"><i class="msw mk-food"></i>food</span>` +
-    `<span class="mit"><i class="msw mk-hotel"></i>hotel</span></div>` +
-    `<div class="map" data-pts="${esc(JSON.stringify(pts))}"></div></div>`;
+    `<span class="mit"><i class="msw mk-hotel"></i>hotel</span>` +
+    (ideaPts.length ? `<span class="mit"><i class="msw mk-idea"></i>suggestion</span>` : '') + `</div>` +
+    `<div class="map" data-pts="${esc(JSON.stringify(pts))}" data-ideas="${esc(JSON.stringify(ideaPts))}"></div></div>`;
 
   // Two CARDS, each with a stated title — "Activity" (the committed table) and
   // "Suggestions" (the merged ideas table) — so the unfold reads as two clearly
@@ -544,7 +562,7 @@ function clearSel(day,refit){
   day.querySelectorAll("tr.rowsel").forEach(r=>r.classList.remove("rowsel"));
   const m0=day.querySelector(".map");
   if(m0&&m0._marks&&window.google&&google.maps){
-    Object.keys(m0._marks).forEach(k=>{const m=m0._marks[k];m.setIcon(mkIcon(m.__col,false));m.setZIndex(1);});
+    Object.keys(m0._marks).forEach(k=>{const m=m0._marks[k];m.setIcon(mkIcon(m.__col,false,m.__idea));m.setZIndex(m.__idea?0:1);});
     if(refit&&m0._gmap&&m0._bounds){const g=m0._gmap,b=m0._bounds;
       g.getCenter()?g.fitBounds(b,40):google.maps.event.addListenerOnce(g,"idle",()=>g.fitBounds(b,40));}
   }
@@ -568,7 +586,7 @@ function selectKey(day,key,from){
 
   const mp=day.querySelector(".map");
   if(!mp||!mp._marks||!window.google||!google.maps) return;
-  Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key));m.setZIndex(k===key?999:1);});
+  Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key,m.__idea));m.setZIndex(k===key?999:m.__idea?0:1);});
   const hit=mp._marks[key];
   if(!hit||!mp._gmap) return;
   // Clicking a row deep in a long table can leave the map scrolled off the top — zooming a map
@@ -585,7 +603,9 @@ const selectSeg=el=>selectKey(el.closest(".day"),el.dataset.key,"seg");
 chart.addEventListener("click",e=>{const s=e.target.closest(".seg");if(s&&s.dataset.key){e.stopPropagation();selectSeg(s);}},true);
 chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const s=e.target.closest(".seg");if(s&&s.dataset.key){e.preventDefault();e.stopPropagation();selectSeg(s);}},true);
 // A row in the activity table is the same stop as its block — clicking it selects and focuses the
-// pin exactly the same way. Only .acts rows carry data-key; the Ideas/Moved tables have none.
+// pin exactly the same way. Suggestion rows carry data-key too, whenever the map can place them,
+// so one path serves both: a stop has a timeline block AND a pin, an idea has only a pin, and
+// selectKey simply finds whichever exist.
 chart.addEventListener("click",e=>{const r=e.target.closest("tr[data-key]");if(r)selectKey(r.closest(".day"),r.dataset.key,"row");});
 chart.addEventListener("click",e=>{const r=e.target.closest(".dhead");if(r)toggleRow(r);});
 chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const r=e.target.closest(".dhead");if(r){e.preventDefault();toggleRow(r);}});
@@ -601,9 +621,14 @@ const thm=document.getElementById("thm");if(thm){const root=document.documentEle
 // and a map sized inside a hidden container comes out wrong.
 window.__gmready=false;
 window.gmapsReady=function(){window.__gmready=true;document.querySelectorAll(".day.open").forEach(initMaps);};
-const MKCOL={act:"#2F6FB5",food:"#C77A16",hotel:"#2E7D57"};
-function mkIcon(col,on){return{path:google.maps.SymbolPath.CIRCLE,scale:on?15:11,fillColor:col,fillOpacity:1,
-  strokeColor:on?"#C1443C":"#ffffff",strokeWeight:on?4:2};}
+const MKCOL={act:"#2F6FB5",food:"#C77A16",hotel:"#2E7D57",idea:"#6A5FA0"};
+/* A suggestion is drawn INVERTED — white fill, thick coloured ring — the same
+   "under consideration" treatment the app gives a candidate venue, so a maybe can
+   never be mistaken for something already in the day. Selected, it fills in and
+   grows like any other pin. */
+function mkIcon(col,on,idea){return{path:google.maps.SymbolPath.CIRCLE,scale:on?15:idea?9:11,
+  fillColor:idea&&!on?"#ffffff":col,fillOpacity:1,
+  strokeColor:on?"#C1443C":idea?col:"#ffffff",strokeWeight:on?4:idea?3:2};}
 function initMaps(day){
   if(!window.__gmready||!window.google||!google.maps)return;
   day.querySelectorAll(".map").forEach(el=>{
@@ -624,6 +649,20 @@ function initMaps(day){
       const iw=new google.maps.InfoWindow({content:"<b>"+p.n+". "+p.name+"</b>"});
       m.addListener("click",()=>iw.open({anchor:m,map}));
       marks[p.k]=m; b.extend(m.getPosition());
+    });
+    /* Suggestions: same marker registry, so selecting one from its row works through
+       exactly the same path as a stop. NOT added to the bounds — the frame belongs to the day
+       you are actually doing, and one idea across town would zoom the whole route out
+       to fit a maybe. Selecting it still pans there. */
+    let ideas=[];try{ideas=JSON.parse(el.dataset.ideas||"[]");}catch(e){}
+    ideas.forEach(p=>{
+      const col=MKCOL.idea;
+      const m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map,icon:mkIcon(col,false,true),
+        title:"Suggestion: "+p.name,zIndex:0});
+      m.__col=col; m.__idea=true;
+      const iw=new google.maps.InfoWindow({content:"<b>"+p.name+"</b><br>suggestion — not scheduled"});
+      m.addListener("click",()=>iw.open({anchor:m,map}));
+      if(!marks[p.k])marks[p.k]=m;
     });
     el._marks=marks; el._gmap=map; el._bounds=b;
     map.fitBounds(b,40);
@@ -909,6 +948,10 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .mit{display:inline-flex;align-items:center;gap:5px;}
 .wrap .msw{width:11px;height:11px;border-radius:50%;display:inline-block;}
 .wrap .msw.mk-act{background:#2F6FB5;} .wrap .msw.mk-food{background:#C77A16;} .wrap .msw.mk-hotel{background:#2E7D57;}
+/* the suggestion swatch is hollow, like its pin */
+.wrap .msw.mk-idea{background:#fff;border:2.5px solid #6A5FA0;}
+/* a selected suggestion row reads like a selected stop row */
+.wrap table.acts tbody tr.idrow[data-key]{cursor:pointer;}
 .wrap .sumwrap{margin:22px 0 20px;}
 .wrap .detail .fix{padding-left:0;max-width:none;margin:0;color:var(--ink-2);line-height:1.6;}
 .wrap .detail .fix::before{content:none;}
