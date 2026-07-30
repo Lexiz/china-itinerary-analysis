@@ -5,6 +5,15 @@ const DATA = JSON.parse(readFileSync(new URL('./viz-data.json', import.meta.url)
 const STOP_ANY = new Map();
 for (const d of DATA) for (const s of (d.stops || [])) if (!STOP_ANY.has(s.name)) STOP_ANY.set(s.name, s);
 const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf8');
+// Place detail, written by generate-vizdata from the same snapshot the app renders —
+// so the panel here and the sheet there cannot describe one venue two ways.
+const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)));
+// Where the app lives, and the token that lets this page write to it. The page is
+// public, so the token is deterrence rather than a secret: it stops the mutating
+// endpoint being callable by anyone who merely guesses the URL, which is what it
+// was before. Absent token → the buttons render disabled and say why.
+const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
+const MUTATE_TOKEN = process.env.NEXT_PUBLIC_MUTATE_TOKEN || process.env.MUTATE_TOKEN || '';
 // Working plan, keyed "City|day": machine-replanned days, overridden by hand-agreed ones.
 import { changeList, matchStop, nk } from './lib-plan.mjs';
 // Durations read as clock time: 45m, 1h30, 2h
@@ -58,6 +67,7 @@ function seg(st) {
   const nm = named ? `<span class="sn">${lock}${esc(st.name)}</span>` : lock;
   const dd = w >= 3 ? `<span class="sd">${d}m</span>` : '';              // duration where it fits
   const tight = named ? '' : ' tight';                                   // narrow blocks drop padding so they never inflate past their slot
+  const pidAttr = st.pid ? ` data-pid="${esc(st.pid)}"` : '';            // opens the detail panel
   let tip = `${st.name} · ${hhmm(s)}–${hhmm(end)} · ${d}m${st.opt ? ' (optional)' : ''}`;
   if (st.hub) {
     const h = st.hub;
@@ -65,7 +75,7 @@ function seg(st) {
       ? `${h.number || h.mode} ${h.route || ''} departs ${h.departTime}\nBe at ${h.terminal ? h.terminal + ' ' : ''}the ${h.mode === 'Flight' ? 'airport' : 'station'} by ${h.beThereBy} — ${d}m check-in${h.approx ? '\n⚠ time is provisional (tickets not on sale yet)' : ''}`
       : `${h.number || h.mode} ${h.route || ''} arrives ${h.arriveTime}\n${d}m to clear${h.terminal ? ' ' + h.terminal : ''} — out by ${h.clearBy}${h.approx ? '\n⚠ time is provisional' : ''}`;
   } else if (st.bonus) tip += ' · bonus / swap — not part of the committed plan';
-  return `<div class="${cls}${m}${tight}" data-key="${esc(key)}" role="button" tabindex="0" style="left:${left.toFixed(2)}%;width:${w.toFixed(2)}%" title="${esc(tip)}">${nm}${dd}</div>`;
+  return `<div class="${cls}${m}${tight}" data-key="${esc(key)}"${pidAttr} role="button" tabindex="0" style="left:${left.toFixed(2)}%;width:${w.toFixed(2)}%" title="${esc(tip)}">${nm}${dd}</div>`;
 }
 const renderTrack = segs => (segs || []).map(seg).join('');
 // The end of the day is a block like any other: it begins the moment you get home and is
@@ -153,8 +163,36 @@ function bandFor(d) {
   }
   return `linear-gradient(90deg,${stops.join(',')}),${BAND}`;
 }
+// rebuilt.json carries names, not ids, so the pid is resolved by name against the
+// day's own stops (and then anywhere in the trip) — the same two-step lib-plan.mjs
+// already uses to match a stop that moved between days.
+let PID_BY_NAME = new Map();
+const pidOf = n => PID_BY_NAME.get(nk(n)) || null;
+
+// The counts the app shows on its day cards, so both surfaces answer "what is on this
+// day" identically: places committed, then activity / lunch / dinner suggestions.
+// A badge is omitted at zero, exactly as in the app — a settled day stays quiet.
+function dayBadges(d, nStops) {
+  const ideas = d.ideas || [];
+  const nAct = ideas.filter(i => i.kind === 'activity').length;
+  const nLunch = ideas.filter(i => (i.meals || []).includes('lunch')).length;
+  const nDin = ideas.filter(i => (i.meals || []).includes('dinner')).length;
+  const b = (n, icon, label, cls) => n > 0
+    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${icon}${n}</span>` : '';
+  return `<span class="cbdgs">`
+    + `<span class="cbdg pl" title="${esc(nStops + ' place' + (nStops === 1 ? '' : 's') + ' scheduled')}">◍${nStops}</span>`
+    + b(nAct, '\u{1F4A1}', 'activity idea', 'id-a')
+    + b(nLunch, '\u{1F354}', 'lunch idea', 'id-l')
+    + b(nDin, '\u{1F35C}', 'dinner idea', 'id-d')
+    + `</span>`;
+}
+
 let cur = null, out = '';
 for (const d of DATA) {
+  // resolve this day's names → place ids before anything renders it
+  PID_BY_NAME = new Map();
+  for (const st of (d.stops || [])) if (st.pid) PID_BY_NAME.set(nk(st.name), st.pid);
+  for (const [, st] of STOP_ANY) if (st.pid && !PID_BY_NAME.has(nk(st.name))) PID_BY_NAME.set(nk(st.name), st.pid);
   if (d.city !== cur) {
     if (cur !== null) out += '</div></section>';
     cur = d.city;
@@ -242,11 +280,55 @@ for (const d of DATA) {
   // Suggestions for the day, not casualties of it. These are Postgres ideas — places
   // no committed stop uses, tagged with the day they want — so nothing here was
   // "dropped"; the old heading described a planner's cut list.
-  const ideasHTML = (dayIdeas.length ? `<div class="ideas"><div class="chgh">Suggestions for Day ${d.day} · not scheduled (${dayIdeas.length})</div>`
-    + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Kind</th></tr></thead><tbody>`
-    + dayIdeas.map(i => { const a = advOf(i.name); const res = a.res ?? i.res; return `<tr><td class="an">${esc(i.name)}</td>`
-        + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td><td class="iw">${esc(i.why || '')}</td></tr>`; }).join('')
-    + `</tbody></table></div>` : '')
+  // SPLIT BY KIND, because "12 suggestions" answers the wrong question. Standing on a
+  // street at 18:00 you want to know whether DINNER is decided — and one combined list
+  // hid a day with four activity ideas and nothing to eat behind the same count as the
+  // reverse. `kind` comes from place.type + meal_pref, which is the catalogue's own
+  // opinion rather than a guess made here.
+  // A meal slot already holding a venue cannot take another — the API refuses it, so
+  // the button should say so up front rather than let someone discover it by pressing.
+  // From the snapshot's own meal state, not from "a stop exists": every day has
+  // lunch and dinner slots and they all carry a Food type and an id, so presence
+  // proves nothing. 'open' means no venue chosen.
+  const mealTaken = d.mealsDecided || { lunch: null, dinner: null };
+
+  const ideaAct = dayIdeas.filter(i => i.kind === 'activity');
+  const ideaLunch = dayIdeas.filter(i => (i.meals || []).includes('lunch'));
+  const ideaDin = dayIdeas.filter(i => (i.meals || []).includes('dinner'));
+  const ideaOther = dayIdeas.filter(i => i.kind !== 'activity' && !(i.meals || []).length);
+
+  // "Add to lunch/dinner" — the same POST the app's button makes, to the same endpoint.
+  // Disabled with a stated reason rather than hidden when the slot is already taken or
+  // the page was built without a token: a missing button reads as a bug.
+  const mealBtn = (i, meal) => {
+    const taken = mealTaken[meal];
+    const dis = !MUTATE_TOKEN ? 'no token — rebuild the page with MUTATE_TOKEN set'
+      : taken ? `${meal} is already ${taken} — remove it first` : '';
+    return `<button class="addbtn${dis ? ' off' : ''}" ${dis ? 'disabled' : ''}`
+      + ` data-pid="${esc(i.id || '')}" data-city="${esc(d.cityId)}" data-day="${d.day}"`
+      + ` data-meal="${meal === 'lunch' ? 'Lunch' : 'Dinner'}" data-name="${esc(i.full || i.name)}"`
+      + ` title="${esc(dis || `Put ${i.full || i.name} in this day's ${meal} slot`)}">`
+      + `+ ${meal}</button>`;
+  };
+
+  const ideaTable = (rows, heading, withMeal) => rows.length ? `<div class="ideas"><div class="chgh">${heading} (${rows.length})</div>`
+    + `<table class="acts idt"><thead><tr><th>Name</th><th>Advice</th><th>Kind</th>${withMeal ? '<th>Add</th>' : ''}</tr></thead><tbody>`
+    + rows.map(i => { const a = advOf(i.name); const res = a.res ?? i.res;
+        return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''} class="idrow">`
+          + `<td class="an">${esc(i.name)}</td>`
+          + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
+          + `<td class="iw">${esc(i.kind)}</td>`
+          + (withMeal ? `<td class="iw addcell">`
+              + ((i.meals || []).includes('lunch') ? mealBtn(i, 'lunch') : '')
+              + ((i.meals || []).includes('dinner') ? mealBtn(i, 'dinner') : '')
+              + `</td>` : '')
+          + `</tr>`; }).join('')
+    + `</tbody></table></div>` : '';
+
+  const ideasHTML = ideaTable(ideaAct, `Activity suggestions for Day ${d.day} · not scheduled`, false)
+    + ideaTable(ideaLunch, `Lunch suggestions for Day ${d.day}`, true)
+    + ideaTable(ideaDin, `Dinner suggestions for Day ${d.day}`, true)
+    + ideaTable(ideaOther, `Other food suggestions for Day ${d.day}`, false)
     + (dayMoves.length ? `<div class="ideas"><div class="chgh">Moved · still happening (${dayMoves.length})</div>`
     + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Where it went</th></tr></thead><tbody>`
     + dayMoves.map(m => { const a = advOf(m.name); return `<tr><td class="an">${esc(m.name)}</td>`
@@ -325,8 +407,9 @@ for (const d of DATA) {
     `<div class="dhead" role="button" tabindex="0" aria-expanded="false" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
       `<span class="cv">›</span><span class="dnum">Day ${d.day}</span>` +
       `<span class="ddate">${wd(d.date)} ${dm(d.date)}</span>` +
-      `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>${badge}</div>` +
-    mapHTML + miniAx + `<div class="row"><div class="track" style="background:${bandFor(d)}" title="${tip}${d.sunset ? `\nSunset ${d.sunset} · dark from ${d.dusk}` : ''}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null })))}` +
+      `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>` +
+      dayBadges(d, RB ? RB.stops.filter(x => !x.meal).length : d.nStops) + `${badge}</div>` +
+    mapHTML + miniAx + `<div class="row"><div class="track" style="background:${bandFor(d)}" title="${tip}${d.sunset ? `\nSunset ${d.sunset} · dark from ${d.dusk}` : ''}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null, pid: pidOf(r.name) })))}` +
       homeSeg(rbEnd, `${d.home ? '🏠' : '✈'} ${EL(rbEnd)}`,
         dsev === 'severe' ? 'bad' : dsev === 'moderate' ? 'warn' : 'ok2',
         d.home ? `Back to the hotel — ${EL(rbEnd)}` : `Departure day — fly out ${EL(rbEnd)}`) + `</div></div>` +
@@ -445,7 +528,92 @@ function initMaps(day){
     google.maps.event.addListenerOnce(map,"idle",()=>{el._fitZoom=map.getZoom();});
   });
 }
-if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);`;
+if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
+
+/* ---- place detail panel -------------------------------------------------
+   Opened from a timeline block or a suggestion row. It renders the SAME fields
+   the app's place sheet shows, from places.json, which generate-vizdata writes
+   out of the very snapshot the app reads — so the two surfaces cannot describe
+   one venue two different ways. */
+var PP=document.getElementById("pp"), PPB=PP.querySelector(".ppbox");
+function esc2(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function dur(m){if(m==null)return null;m=Math.round(m);return m<60?m+"m":Math.floor(m/60)+"h"+(m%60?String(m%60).padStart(2,"0"):"");}
+function row(k,v){return v?'<div class="pprow"><b>'+esc2(k)+'</b><span>'+esc2(v)+'</span></div>':"";}
+function openPlace(pid){
+  var p=(window.__PLACES||{})[pid]; if(!p)return;
+  var imgs=(p.photos||[]).map(function(u){return '<img loading="lazy" src="'+esc2(u)+'" alt="">';}).join("");
+  /* status is already 'To book' / 'Booked' / 'Idea', so a separate booking chip
+     repeated it verbatim: "To book · booking: to book". Kept only when it adds
+     something the status does not already say. */
+  var chips=[p.type, p.category!==p.type?p.category:null, p.status,
+             (p.booking && String(p.status).toLowerCase()!==p.booking) ? ("booking: "+p.booking) : null,
+             p.meals&&p.meals.length?("good for "+p.meals.join(" / ")):null]
+            .filter(Boolean).map(function(c){return '<span class="ppchip">'+esc2(c)+'</span>';}).join("");
+  var warn=[p.closedToday?"Closed today.":null,
+            p.opensAt?("Opens at "+p.opensAt+" — you arrive before that."):null,
+            p.lastEntryAt?("Last entry "+p.lastEntryAt+"."):null,
+            p.closesAt?("Closes at "+p.closesAt+" — less time here than planned."):null]
+           .filter(Boolean).map(function(w){return '<div class="ppwarn">⚠ '+esc2(w)+'</div>';}).join("");
+  var g=p.ratings&&p.ratings.google, t=p.ratings&&p.ratings.trip;
+  PPB.innerHTML='<button class="ppx" aria-label="Close">×</button>'
+    +'<h3>'+esc2(p.name)+'</h3>'
+    +(p.zh?'<div class="ppzh">'+esc2(p.zh)+'</div>':'')
+    +(imgs?'<div class="ppimgs">'+imgs+'</div>':'')
+    +(chips?'<div class="ppchips">'+chips+'</div>':'')
+    +warn
+    +(p.desc?'<div class="ppdesc">'+esc2(p.desc)+'</div>':'')
+    +row("Advised", dur(p.advised))
+    +row("Planned", dur(p.planned))
+    +row("Hours", p.hours)
+    +row("Price", p.price)
+    +(g?row("Google", g.rating+" ★"+(g.reviews?" ("+g.reviews+")":"")):"")
+    +(t?row("Trip.com", t.rating+" ★"+(t.reviews?" ("+t.reviews+")":"")):"")
+    +(p.coord?row("Coordinates", p.coord.lat.toFixed(5)+", "+p.coord.lng.toFixed(5)):"")
+    +(p.planningNote?'<div class="pprow"><b>Why / note</b><span>'+esc2(p.planningNote)+'</span></div>':'')
+    +(p.bookingLink?'<div class="pprow"><b>Booking</b><span><a href="'+esc2(p.bookingLink)+'" target="_blank" rel="noopener">open</a></span></div>':'')
+    +(p.credit?'<div class="ppcred">Image: '+esc2([p.credit.artist,p.credit.source,p.credit.license].filter(Boolean).join(" · "))+'</div>':'');
+  PP.classList.add("on"); document.body.style.overflow="hidden";
+  PPB.querySelector(".ppx").focus();
+}
+function closePlace(){PP.classList.remove("on");document.body.style.overflow="";}
+PP.addEventListener("click",function(e){ if(e.target.closest(".ppx")||e.target.classList.contains("ppbg")) closePlace(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&PP.classList.contains("on")) closePlace(); });
+/* A block or row opens the panel.
+   CAPTURE PHASE, on document, and that is not incidental: the chart already has a
+   capture-phase listener that calls stopPropagation() to handle segment SELECTION,
+   so a bubble-phase listener here never fired at all. Document is above the chart,
+   so this capture runs first — and it deliberately does NOT stop propagation, so
+   selecting the segment still happens underneath the panel. */
+document.addEventListener("click",function(e){
+  if(e.target.closest(".addbtn")) return;
+  var el=e.target.closest("[data-pid]");
+  if(el&&el.dataset.pid) openPlace(el.dataset.pid);
+},true);
+
+/* ---- add a suggestion to a meal slot ------------------------------------
+   The same POST the app's own button makes, to the same endpoint, cross-origin.
+   The mutation and the publish are two calls by design (see lib/sync/publish.ts):
+   a slow publish must never be able to report a committed change as a failure. */
+/* Capture too, and this one DOES stop the event: a button press must not also open
+   the detail panel behind it. */
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".addbtn"); if(!b||b.disabled)return;
+  e.preventDefault(); e.stopPropagation();
+  var msg=b.parentElement.querySelector(".ppmsg")||(function(){var d=document.createElement("div");d.className="ppmsg";b.parentElement.appendChild(d);return d;})();
+  b.classList.add("busy"); b.disabled=true; msg.textContent="Adding…"; msg.style.color="var(--ink-2)";
+  fetch(window.__APP+"/api/meal",{method:"POST",headers:{"Content-Type":"application/json","x-trip-token":window.__TOK||""},
+    body:JSON.stringify({action:"assign",cityId:b.dataset.city,day:+b.dataset.day,meal:b.dataset.meal,placeId:b.dataset.pid})})
+  .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t);}catch(_){}
+    if(!j){ msg.textContent="Took too long to confirm — it has probably been applied. Refresh the app and check."; msg.style.color="var(--warn)"; return; }
+    if(!r.ok||!j.ok){ msg.textContent=j.error||"That did not work."; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; return; }
+    msg.textContent="Added. Publishing…"; msg.style.color="var(--ok)";
+    return fetch(window.__APP+"/api/sync",{method:"POST",headers:{"x-trip-token":window.__TOK||""}})
+      .then(function(){ msg.textContent="Added to "+b.dataset.meal.toLowerCase()+". Rebuild this page to see it move."; })
+      .catch(function(){ msg.textContent="Added. The app copy is still catching up."; });
+  });})
+  .catch(function(){ msg.textContent="No connection — nothing was changed."; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; });
+},true);
+`;
 
 const EXTRA = `<style>
 .wrap .dhead{display:flex;align-items:center;gap:9px;cursor:pointer;padding:7px 4px 5px;border-radius:8px;}
@@ -612,6 +780,44 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .chg.sug li{color:var(--ink-2);}
 .wrap .chg.sug .chgh{color:var(--target);}
 .wrap .track{background:${BAND};}
+/* per-day count badges, mirroring the app's day cards */
+.wrap .cbdgs{display:inline-flex;gap:4px;align-items:center;margin-left:8px;}
+.wrap .cbdg{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;font-weight:800;
+  padding:1px 6px;border-radius:7px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);font-family:var(--mono);}
+.wrap .cbdg.pl{background:color-mix(in srgb, var(--accent) 12%, transparent);color:var(--accent);
+  border-color:color-mix(in srgb, var(--accent) 30%, transparent);}
+/* add-to-meal buttons in the suggestion tables */
+.wrap .addcell{white-space:nowrap;}
+.wrap .addbtn{font:inherit;font-size:10.5px;font-weight:800;padding:2px 8px;margin-right:4px;border-radius:8px;
+  cursor:pointer;background:color-mix(in srgb, var(--ok) 14%, transparent);color:var(--ok);
+  border:1px solid color-mix(in srgb, var(--ok) 45%, transparent);}
+.wrap .addbtn.off{opacity:.45;cursor:not-allowed;background:transparent;color:var(--ink-3);border-color:var(--line);}
+.wrap .addbtn.busy{opacity:.6;cursor:progress;}
+.wrap .idrow{cursor:pointer;}
+.wrap .idrow:hover{background:var(--surface-2);}
+.wrap .seg[data-pid]{cursor:pointer;}
+/* place detail panel — a right-hand drawer, so the timeline stays on screen behind it */
+#pp{position:fixed;inset:0;z-index:60;display:none;}
+#pp.on{display:block;}
+#pp .ppbg{position:absolute;inset:0;background:rgba(0,0,0,.42);}
+#pp .ppbox{position:absolute;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--surface);
+  border-left:1px solid var(--line);overflow-y:auto;padding:18px 20px 40px;box-shadow:-8px 0 32px rgba(0,0,0,.18);}
+#pp h3{margin:0 0 2px;font-size:20px;letter-spacing:-.01em;}
+#pp .ppzh{font-size:14px;color:var(--ink-2);margin-bottom:10px;}
+#pp .ppx{position:sticky;top:0;float:right;font:inherit;font-size:20px;line-height:1;border:0;background:none;
+  cursor:pointer;color:var(--ink-2);padding:2px 4px;}
+#pp .ppimgs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0 12px;}
+#pp .ppimgs img{width:100%;height:104px;object-fit:cover;border-radius:9px;display:block;background:var(--surface-2);}
+#pp .ppimgs img:first-child{grid-column:1/-1;height:170px;}
+#pp .ppchips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+#pp .ppchip{font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:8px;background:var(--surface-2);
+  color:var(--ink-2);border:1px solid var(--line);font-family:var(--mono);}
+#pp .ppdesc{font-size:13.5px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;margin-bottom:12px;}
+#pp .pprow{display:flex;gap:8px;font-size:12.5px;padding:5px 0;border-top:1px solid var(--line);}
+#pp .pprow b{min-width:104px;color:var(--ink-3);font-weight:700;}
+#pp .ppwarn{font-size:12px;font-weight:700;color:var(--bad);margin:8px 0;}
+#pp .ppcred{font-size:10.5px;color:var(--ink-3);margin-top:10px;line-height:1.5;}
+#pp .ppmsg{font-size:12px;font-weight:700;margin-top:10px;}
 .wrap .track2{position:relative;height:30px;border-radius:7px;background:${BAND};}
 .wrap .endlbl2{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;font-family:var(--mono);color:var(--ok);white-space:nowrap;}
 @media (max-width:520px){.wrap table.acts{min-width:300px;}.wrap .seg .sn{display:none;}}
@@ -648,6 +854,8 @@ ${GKEY
 </div>
 ${STYLE}
 ${EXTRA}
+<div id="pp" role="dialog" aria-modal="true" aria-label="Place detail"><div class="ppbg"></div><div class="ppbox"></div></div>
+<script>window.__PLACES=${JSON.stringify(PLACES)};window.__APP=${JSON.stringify(APP_ORIGIN)};window.__TOK=${JSON.stringify(MUTATE_TOKEN)};<\/script>
 <script>${script}</script>`;
 writeFileSync(new URL('./china-day-load.html', import.meta.url), html);
 console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length,

@@ -75,11 +75,13 @@ for (const d of s.days) {
     const pl = placeById.get(a.placeId);
     // night level drives replanning: only 'night'/'show' are locked after dark, 'any' is free to move to daytime
     const night = a.isHotelReturn ? null : (NIGHT.places[normn(pl?.name)] || 'any');
+    // the place this block IS, so the canvas can open the same detail the app shows
+    const pid = a.placeId || null;
     const f = a.flight || null;
     // a hub's dwell IS its buffer: 3h at Pudong is 3h of the day gone, not a gap
     const hubDwell = f ? (f.role === 'depart' ? (f.bufferMin ?? null) : (f.clearMin ?? null)) : null;
     return {
-      night, ptype: pl?.type || null, slot: pl?.slot || null,
+      night, pid, ptype: pl?.type || null, slot: pl?.slot || null,
       order: a.order ?? null, bonus: !!a.bonus, impossible: a.impossible || null, abs: absOf.get(a) ?? null,
       hub: f ? {
         role: f.role, mode: f.mode, number: f.number || null, approx: !!f.approx,
@@ -118,13 +120,30 @@ for (const d of s.days) {
       name: normn(p.shortLabel || p.name).slice(0, 46),
       kind: p.type === 'Food' ? (p.meal?.length ? p.meal.join('/').toLowerCase() : 'food') : 'activity',
       res: RES[normn(p.shortLabel || p.name)]?.m ?? p.advisedDuration ?? null,
+      // The identity a button needs. `id` is what /api/meal expects as `placeId`,
+      // and `meals` says which slots this venue is actually a candidate for — so the
+      // page offers "Add to lunch" only where the catalogue says lunch is plausible.
+      id: p.id,
+      meals: (p.meal || []).map((m) => m.toLowerCase()),
+      full: p.name,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  out.push({ city: c.name, accent: c.accent, order: c.order, day: d.cityDay, date: addDays(c.dates.start, d.cityDay - 1),
+  out.push({ city: c.name, cityId: d.cityId, accent: c.accent, order: c.order, day: d.cityDay, date: addDays(c.dates.start, d.cityDay - 1),
     theme: d.theme || null,
     startMin, endMin, lunchMin: lunch ? tk(lunch.time) : null, dinnerMin: dinner ? tk(dinner.time) : null,
     nStops: real.length, jammed, home: !!home, homeMode, homeMin, homeKm,
+    // Is each meal actually DECIDED? Not "does a stop exist" — every day has lunch
+    // and dinner slots and they all carry a Food type and an id, so presence says
+    // nothing. `state` is the snapshot's own verdict: 'open' means no venue, anything
+    // else means one is chosen (to-book / booked / arranged). Without this the canvas
+    // disabled 34 of its 39 add-buttons on days whose slots were empty.
+    mealsDecided: {
+      lunch: d.meals?.lunch?.state && d.meals.lunch.state !== 'open'
+        ? (placeById.get(d.meals.lunch.placeId)?.name || 'chosen') : null,
+      dinner: d.meals?.dinner?.state && d.meals.dinner.state !== 'open'
+        ? (placeById.get(d.meals.dinner.placeId)?.name || 'chosen') : null,
+    },
     // Daylight, straight from the snapshot — which reads it from `day`, which got it
     // from the city's own coordinates. The canvas shades the timeline dark from DUSK
     // (civil twilight) rather than sunset: there is roughly half an hour of usable
@@ -143,6 +162,55 @@ for (const d of s.days) {
 
 out.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.order - b.order);
 writeFileSync(new URL('./viz-data.json', import.meta.url), JSON.stringify(out));
+
+// ---- place details, for the canvas's own detail panel ----------------------
+//
+// Written as a SIDECAR rather than folded into viz-data.json, which is an array
+// that project.mjs consumes positionally — changing its shape to carry a lookup
+// map would be a contract change for a rendering convenience.
+//
+// The fields are exactly what the app's place sheet shows, read from the same
+// snapshot the app renders, so the two cannot describe the same venue differently.
+// `blocks` is flattened to plain paragraphs: the canvas has no RichText renderer
+// and inventing a second one is how two descriptions of one place start to drift.
+const flat = (blocks) => (blocks || [])
+  .map((b) => b.type === 'bulleted_list'
+    ? (b.items || []).map((it) => '• ' + (it || []).map((sp) => sp.text).join('')).join('\n')
+    : b.type === 'heading' ? b.text
+    : ((b.spans) || []).map((sp) => sp.text).join(''))
+  .filter(Boolean).join('\n\n');
+
+// Where the app serves its images from — the canvas has none of its own.
+const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
+const PLACES = {};
+for (const p of [...s.places, ...(s.ideas || [])]) {
+  if (PLACES[p.id]) continue;
+  PLACES[p.id] = {
+    id: p.id, name: p.name, zh: p.zh || null, type: p.type, category: p.category || null,
+    typeColor: p.typeColor || null, status: p.status,
+    // ROOT-RELATIVE paths ('/img/places/…') are served by the APP, and this page is a
+    // different origin on GitHub Pages — so left alone every image is a broken icon.
+    // Absolutised here rather than in the template, so the sidecar is correct wherever
+    // it is read from. A path that is already absolute is left alone.
+    photos: (p.photos || []).slice(0, 6)
+      .map((u) => (/^https?:\/\//.test(u) ? u : APP_ORIGIN + u)),
+    credit: p.photoCredit ? { source: p.photoCredit.source, artist: p.photoCredit.artist || null,
+                              license: p.photoCredit.license || null, article: p.photoCredit.article || null } : null,
+    desc: flat(p.description),
+    hours: p.hours || null, price: p.price || null,
+    advised: p.advisedDuration ?? null, planned: p.visitDuration ?? null,
+    ratings: p.ratings || null,
+    planningNote: p.planningNote || null,
+    booking: p.bookingRequired ? (p.booked ? 'booked' : 'to book') : null,
+    bookingLink: p.bookingLink || null,
+    coord: p.coord || null,
+    meals: (p.meal || []).map((m) => m.toLowerCase()),
+    opensAt: p.opensAt || null, closesAt: p.closesAt || null,
+    lastEntryAt: p.lastEntryAt || null, closedToday: p.closedToday || false,
+  };
+}
+writeFileSync(new URL('./places.json', import.meta.url), JSON.stringify(PLACES));
+console.log('places.json:', Object.keys(PLACES).length, 'places with detail for the panel');
 const max = Math.max(...out.map(d => d.endMin));
 console.log('days:', out.length, '— descriptive only; the plan itself comes from Postgres');
 console.log('max endMin (home arrival):', max, '=', Math.floor(max / 60) + ':' + String(max % 60).padStart(2, '0'), max > 1560 ? '→ EXCEEDS 02:00 axis' : '(within axis)');

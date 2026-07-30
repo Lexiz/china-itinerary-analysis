@@ -113,10 +113,18 @@ for (const d of V) {
       return { name: bad.name, beThereBy: hub?.hub?.beThereBy ?? '—', reason: bad.impossible };
     })(),
     absorbed: null,
+    mealsDecided: d.mealsDecided || { lunch: null, dinner: null },
     stops,
   };
 
-  if (d.ideas?.length) ideasByDay[key] = d.ideas.map((i) => ({ name: i.name, why: i.kind, res: i.res }));
+  // Carry the idea's IDENTITY through, not just its label. `id` is what /api/meal
+  // needs as a placeId and `meals` is which slots the catalogue thinks it suits —
+  // without them the canvas can list a restaurant but not offer to use it, which is
+  // the difference between a report and a tool.
+  if (d.ideas?.length) ideasByDay[key] = d.ideas.map((i) => ({
+    name: i.name, why: i.kind, res: i.res,
+    id: i.id || null, meals: i.meals || [], kind: i.kind, full: i.full || i.name,
+  }));
 }
 
 // `movesByDay` listed stops the planner shifted between days. Nothing moves stops
