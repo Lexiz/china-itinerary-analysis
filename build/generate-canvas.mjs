@@ -25,18 +25,33 @@ const fmtDur = m => { const x = Math.round(m); return x < 60 ? x + 'm' : (Math.f
 const MEAL_MS = { breakfast: 'bakery_dining', lunch: 'lunch_dining', dinner: 'dinner_dining' };
 const ms = (name, cls) => `<span class="msym${cls ? ' ' + cls : ''}" aria-hidden="true">${name}</span>`;
 const stopIcon = r => r.meal ? (MEAL_MS[r.meal] || 'restaurant') : (r.icon || 'place');
-// Google Maps key: env first, else the local gitignored file. NOTE: it is embedded in the
-// generated HTML, so it becomes public once this repo is pushed — restrict it by HTTP referrer.
-// PUBLISH=1 builds for the PUBLIC GitHub Pages repo and deliberately omits the Maps key.
-// The key is currently unrestricted — it answers requests with no referrer at all — so committing
-// it to a public repo publishes a working credential to anyone who reads the HTML. Everything else
-// on the page (37 days, tables, ideas, rationale, travel legs) renders identically; only the
-// per-day map is withheld. Once the key has an HTTP-referrer restriction (lexiz.github.io/* and
-// localhost:*) on Google Cloud project 451021051046, drop PUBLISH and the maps come back.
-const PUBLISH = process.env.PUBLISH === '1';
+// Google Maps key: env first, else the local gitignored file.
+//
+// THIS KEY IS MEANT TO BE PUBLIC, and that is not a compromise — it is what a Maps
+// JavaScript key is. It goes in the HTML because the browser is what calls Google;
+// every Maps embed on the web ships its key the same way. Project 451021051046 holds
+// two keys, deliberately split by who calls Google:
+//
+//   5046dd22  "China canvas — Maps JS"   → THIS one. Referrer-locked to
+//             lexiz.github.io/* and localhost, API-locked to maps-backend. Copied
+//             anywhere else it is inert, which is the whole point.
+//   7372a1ce  "China app — server-side"  → geocoding / directions / routes / places.
+//             No referrer restriction, because a server sends no referrer. It must
+//             NEVER reach this file or any generated page.
+//
+// There used to be a PUBLISH=1 flag here that blanked the key for the public build,
+// from a time when only one unrestricted key existed. The restricted key replaced
+// that need; the comment saying otherwise was never updated, and on 30 Jul it was
+// read at face value and the flag was used — which published 37 days of tables with
+// every per-day map replaced by "route map hidden", for no security gain whatever,
+// since the key in those commits was the restricted one all along. The flag is gone
+// rather than corrected: a switch that silently degrades the page is not worth
+// keeping for a threat that does not exist.
+//
+// The empty-key path below is still real, and still honest: it is what a build with
+// no key file and no env var produces.
 let GKEY = process.env.GOOGLE_MAPS_API_KEY || '';
 try { if (!GKEY) GKEY = readFileSync(new URL('./gmaps-key.txt', import.meta.url), 'utf8').trim(); } catch { GKEY = ''; }
-if (PUBLISH) GKEY = '';
 // The reworked plan is now the committed schedule; the Proposed side is deliberately left empty
 // so the next review pass has somewhere to write.
 let REBUILT = { days: {}, ideas: {}, notes: {} };
@@ -987,7 +1002,7 @@ ${GKEY
   ? `<script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&callback=gmapsReady" async><\/script>`
   : `<script>window.addEventListener("DOMContentLoaded",function(){
        document.querySelectorAll(".map").forEach(function(el){
-         el.innerHTML='<div class="mapempty">Route map hidden on the published build \\u2014 the Google Maps key is not committed to this public repo. Run the canvas locally to see maps.<\\/div>';
+         el.innerHTML='<div class="mapempty">No Google Maps key was available when this page was built \\u2014 set GOOGLE_MAPS_API_KEY, or put the canvas key in build/gmaps-key.txt, and rebuild.<\\/div>';
        });});<\/script>`}
 <div class="wrap" style="--labelw:128px;--sanea:8.7%;--saneb:71.74%;">
   <header class="top">

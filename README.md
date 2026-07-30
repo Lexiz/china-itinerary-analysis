@@ -105,10 +105,19 @@ Assumes the app snapshot at `~/ClaudeCode/sandbox/China/app/data/snapshot.json`.
 ## This repo is public
 
 `index.html` embeds the Maps JS key on purpose — key `5046dd22`, restricted by HTTP referrer to
-`lexiz.github.io` and localhost. The server-side key (`7372a1ce`, geocode/routes/places) must
-**never** appear here. `build/gmaps-key.txt` is gitignored. `PUBLISH=1 ./build.sh` omits the key
-entirely. Before pushing, check the **commit range**, not just the working tree — that
-distinction is what leaked a key once already.
+`lexiz.github.io` and localhost and to `maps-backend` only. Copied anywhere else it is inert;
+that restriction, not secrecy, is what protects it. The server-side key (`7372a1ce`,
+geocode/routes/places) has **no** referrer restriction — a server sends no referrer — so it must
+**never** appear here. `build/gmaps-key.txt` is gitignored. Before pushing, check the **commit
+range**, not just the working tree — that distinction is what leaked a key once already.
+
+There was a `PUBLISH=1 ./build.sh` that blanked the key for the public build, left from when a
+single unrestricted key did both jobs. It outlived its reason, and on 30 Jul 2026 a stale comment
+in `generate-canvas.mjs` still recommended it: the flag was used, and the published page carried
+37 days of tables with every per-day map replaced by "route map hidden" — for no security gain,
+because the committed key was the restricted one the whole time. The flag is gone. **This file was
+correct while that comment was wrong**, so if the two ever disagree again, verify against
+`gcloud services api-keys list` rather than believing either.
 
 `node_modules/` is gitignored too. The page has no dependencies; the manifest exists only so
 `check-against-db.mjs` has a Postgres driver.
