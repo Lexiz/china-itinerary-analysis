@@ -126,6 +126,7 @@ for (const d of s.days) {
       id: p.id,
       meals: (p.meal || []).map((m) => m.toLowerCase()),
       full: p.name,
+      booking: p.bookingRequired ? (p.booked ? 'booked' : 'to-book') : null,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 

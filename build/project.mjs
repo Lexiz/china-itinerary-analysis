@@ -124,6 +124,7 @@ for (const d of V) {
   if (d.ideas?.length) ideasByDay[key] = d.ideas.map((i) => ({
     name: i.name, why: i.kind, res: i.res,
     id: i.id || null, meals: i.meals || [], kind: i.kind, full: i.full || i.name,
+    booking: i.booking || null,
   }));
 }
 

@@ -239,6 +239,11 @@ for (const d of DATA) {
     const tag = isHub ? ' <span class="tag">' + (r.hub.role === 'depart' ? 'depart' : 'arrive') + '</span>'
       : isMeal ? ' <span class="tag">meal</span>' : '';
     const cls = [isMeal ? 'rmeal' : '', isHub ? 'rhub' : ''].filter(Boolean).join(' ');
+    // "Which of today's stops must be booked?" — answered in the table itself,
+    // from the same snapshot state the app's bookings tab reads (a.booking is
+    // place.booking_state), so the two surfaces cannot disagree.
+    const bkg = a.booking === 'to-book' ? ' <span class="tag bkg">book</span>'
+      : a.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : '';
     const why = [a.resnote, a.resbasis].filter(Boolean).join(' — ');
     // advOf only searches the ORIGINAL day's stops, so a stop moved in from another day had no
     // Advice at all. Fall back to the researched value the rebuild already resolved for it.
@@ -272,7 +277,7 @@ for (const d of DATA) {
           + (r.cap.conf && r.cap.conf !== 'high' ? ` Closing time confidence: ${r.cap.conf}.` : ''))
       : '';
     const totCls = 'tm tot b1r' + (r.cap ? (r.cap.tooLate ? ' capbad' : ' capped') : '');
-    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"><td class="an">${esc(r.name)}${tag}</td>`
+    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"><td class="an">${esc(r.name)}${tag}${bkg}</td>`
       + `<td class="tm b1">${hhmm(r.s)}</td><td class="tm">${hhmm(r.s + r.d)}</td>`
       + `<td class="${totCls}"${capT ? ` title="${capT}"` : ''}>${fmtDur(r.d)}${r.cap ? '<span class="qm">⏱</span>' : ''}</td>`
       + `<td class="tm pc b2">—</td><td class="tm pc">—</td><td class="tm tot pc b2r">—</td>`
@@ -323,7 +328,7 @@ for (const d of DATA) {
     + `<table class="acts idt"><thead><tr><th>Name</th><th>Advice</th><th>Kind</th>${withMeal ? '<th>Add</th>' : ''}</tr></thead><tbody>`
     + rows.map(i => { const a = advOf(i.name); const res = a.res ?? i.res;
         return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''} class="idrow">`
-          + `<td class="an">${esc(i.name)}</td>`
+          + `<td class="an">${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
           + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
           + `<td class="iw">${esc(i.kind)}</td>`
           + (withMeal ? `<td class="iw addcell">`
@@ -666,6 +671,8 @@ const EXTRA = `<style>
 .wrap table.acts tr.rhome td.an{color:var(--ink-2);}
 .wrap table.acts tr.rmeal td.an{font-style:italic;}
 .wrap table.acts .tag{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:8px;vertical-align:middle;}
+.wrap table.acts .tag.bkg{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 55%,transparent);background:color-mix(in srgb,var(--warn) 12%,transparent);}
+.wrap table.acts .tag.bkd{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 50%,transparent);background:color-mix(in srgb,var(--ok) 10%,transparent);}
 .wrap table.acts td.end{color:var(--ink-2);}
 .wrap table.acts td.def{color:var(--ink-3);}
 .wrap table.acts td.res,.wrap table.acts th.hres{color:var(--target);font-weight:800;}
