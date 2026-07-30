@@ -93,10 +93,32 @@ for (const d of V) {
       cap: capOf(s.name, s.abs, s.act),
     }));
 
+  // The end of the day, as a row rather than only a chip on the bar.
+  //
+  // Kept OUT of `stops` on purpose. `stops` is the set the agrees-with-Postgres gate
+  // walks, and its contract is that every entry is a row in the database — the hotel
+  // return is not one, it is derived by the app's builder from "where do you sleep
+  // tonight". Putting it in that array would have made the gate report a phantom stop
+  // on 35 days, or forced it to learn an exception, and an exception in the one check
+  // that keeps this page honest is a bad trade for a table row.
+  const homeSrc = d.stops.find((s) => s.home);
+  const homeStop = homeSrc
+    ? {
+        name: homeSrc.name,
+        icon: homeSrc.icon || 'hotel',
+        pid: homeSrc.pid || null,
+        s: homeSrc.abs ?? d.endMin,
+        // arriving home is not a dwell — the day simply ends here
+        d: 0,
+        travelIn: d.home ? { mode: d.homeMode, minutes: d.homeMin, km: d.homeKm, est: false, coloc: false } : null,
+      }
+    : null;
+
   days[key] = {
     city: d.city,
     day: d.day,
     date: d.date,
+    homeStop,
     // The day's own theme, from Postgres. `rebuild.mjs` also carried a `why`
     // paragraph written by the city curators to justify ITS arrangement — printing
     // that above a different day's times would explain a plan nobody is looking at.

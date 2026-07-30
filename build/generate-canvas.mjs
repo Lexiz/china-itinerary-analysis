@@ -202,8 +202,11 @@ function dayBadges(d) {
   const nDin = ideas.filter(i => (i.meals || []).includes('dinner')).length;
   // The icons are the app's own (CountBadges.tsx): lightbulb / lunch_dining /
   // dinner_dining as Material Symbols, not lookalike emoji.
+  // The badge says the whole category name. It used to strip "activity " off, so the
+  // three kinds read "lunch ideas / dinner ideas / ideas" — and the unqualified one
+  // looked like a total rather than the third sibling.
   const b = (n, icon, label, cls) => n > 0
-    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${ms(icon)} ${n} ${esc(label.replace('activity ', '') + (n === 1 ? '' : 's'))}</span>` : '';
+    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${ms(icon)} ${n} ${esc(label + (n === 1 ? '' : 's'))}</span>` : '';
   const inner = b(nAct, 'lightbulb', 'activity idea', 'id-a')
     + b(nLunch, 'lunch_dining', 'lunch idea', 'id-l')
     + b(nDin, 'dinner_dining', 'dinner idea', 'id-d');
@@ -307,6 +310,21 @@ for (const d of DATA) {
       + `<td class="${totCls}"${capT ? ` title="${capT}"` : ''}>${fmtDur(r.d)}${r.cap ? '<span class="qm">⏱</span>' : ''}</td>`
       + adv + trav + `</tr>`;
   }).join('');
+
+  // …and the day's last line: getting back to the hotel. The bar has always ended with
+  // a 🏠 chip, but the table stopped at the final sight, so the row that answers "and
+  // then what?" — the one you look for when a day runs late — was the only part of the
+  // evening you could not read. It carries the hotel's own icon and opens the hotel's
+  // panel; its travel columns are blank because the leg home is already stated on the
+  // row above, under "travel to next", which is exactly where it belongs.
+  const homeRow = RB && RB.homeStop
+    ? `<tr class="rhome"${RB.homeStop.pid ? ` data-pid="${esc(RB.homeStop.pid)}"` : ''}>`
+      + `<td class="an">${ms(RB.homeStop.icon || 'hotel', 'ic-home')}${esc(RB.homeStop.name)}`
+      + ` <span class="tag">end of day</span></td>`
+      + `<td class="tm b1">${hhmm(RB.homeStop.s)}</td><td class="tm">—</td>`
+      + `<td class="tm tot b1r">—</td><td class="tm sug">—</td>`
+      + `<td class="tm tv b3">—</td><td class="tm tv">—</td><td class="tm tv b3r">—</td></tr>`
+    : '';
 
   // Ideas belong to the day they FELL OUT OF, not to the city at large — a parked stop is only
   // meaningful next to the day whose budget rejected it. Moves are listed separately: a stop that
@@ -419,9 +437,10 @@ for (const d of DATA) {
   // bounded sections rather than tables running into each other. "Your call"
   // (the day's genuine warnings) sits between them, because its advice points at
   // the suggestions below it.
-  const nAct = rbStops.length;
+  // The section's own count matches its rows, hotel line included.
+  const nAct = rbStops.length + (RB && RB.homeStop ? 1 : 0);
   const detail = `<div class="detail">`
-    + `<div class="sect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct} stop${nAct === 1 ? '' : 's'}</span></div>`
+    + `<div class="sect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct} activit${nAct === 1 ? 'y' : 'ies'}</span></div>`
     + `<table class="acts">`
     // The three "Proposed" columns are gone. They were the other half of a
     // Current-vs-Proposed comparison, and the Proposed side has been empty by design
@@ -436,7 +455,7 @@ for (const d of DATA) {
     + `<tr><th>Activity</th><th class="b1">Start</th><th>End</th><th class="b1r">Total</th>`
     + `<th class="hsug">Advice</th>`
     + `<th class="htv b3">Walk</th><th class="htv">Metro</th><th class="htv b3r">DiDi</th></tr></thead>`
-    + `<tbody>${rows}</tbody>`
+    + `<tbody>${rows}${homeRow}</tbody>`
     + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Scheduled</th><th></th>`
     + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table></div>`
     + sugHTML
@@ -445,9 +464,14 @@ for (const d of DATA) {
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
   const row2 = `<div class="row2"><div class="track2 empty" title="Proposed — nothing yet; this is where the next pass writes">${gridHTML}</div></div>`;
-  // Committed places on this day — meals excluded, exactly as the header always counted
-  // them. Named once here because the chip and its tooltip both need it.
-  const nPlaces = RB ? RB.stops.filter(x => !x.meal).length : d.nStops;
+  // What you actually do today — the same number the app's badge shows, counted the
+  // same way (Day.activityCount): the whole timeline, meals and the hotel included,
+  // minus bonuses, which are alternatives rather than commitments. This chip used to
+  // count only the non-meal stops while the app counted everything but the hotel, so
+  // Beijing d1 read "6 places" here and "9" there, for one day, from one database.
+  const nActivities = RB
+    ? RB.stops.filter(x => !x.bonus).length + (RB.homeStop ? 1 : 0)
+    : d.nStops;
   const badge = RB
     // Three states, because two could not tell the truth: a day ending 22:11 is counted in the
     // header's "11 later" but was badged "✓ fits", so the row contradicted the card above it.
@@ -468,7 +492,7 @@ for (const d of DATA) {
       // the separate "📍 N places" badge were the same number rendered twice, side by
       // side, so they read as two facts when there was only ever one.
       `<span class="dright">${badge}` +
-      `<span class="stops nplaces" title="${esc(nPlaces + ' place' + (nPlaces === 1 ? '' : 's') + ' scheduled')}">${ms('place')}${nPlaces} place${nPlaces === 1 ? '' : 's'}</span>` +
+      `<span class="stops nplaces" title="${esc(nActivities + ' activit' + (nActivities === 1 ? 'y' : 'ies') + ' today — the whole day, meals and the hotel included')}">${ms('place')}${nActivities} activit${nActivities === 1 ? 'y' : 'ies'}</span>` +
       `</span></div>` +
     mapHTML + miniAx + `<div class="row"><div class="track" style="background:${bandFor(d)}" title="${tip}${d.sunset ? `\nSunset ${d.sunset} · dark from ${d.dusk}` : ''}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null, pid: pidOf(r.name) })))}` +
       // The end chip exists to answer "when am I back at the hotel?". A departure
@@ -890,6 +914,10 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .msym.ic-act{color:var(--cx,var(--ink-2));}
 .wrap .msym.ic-meal{color:#B8621B;}   /* the app's one colour that means "food" */
 .wrap .msym.ic-hub{color:var(--ink);}
+.wrap .msym.ic-home{color:var(--ink-3);}
+/* the day's last row — where you sleep, not something you do */
+.wrap table.acts tr.rhome td{color:var(--ink-3);font-style:normal;}
+.wrap table.acts tr.rhome td.an{color:var(--ink-2);}
 .wrap .cbdg .msym{font-size:13px;}
 /* the two titled section cards inside an unfolded day: Activity, then Suggestions */
 .wrap .sect{background:color-mix(in srgb,var(--surface-2) 55%,transparent);border:1px solid var(--line);
