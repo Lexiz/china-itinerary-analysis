@@ -110,6 +110,11 @@ for (const d of V) {
         s: homeSrc.abs ?? d.endMin,
         // arriving home is not a dwell — the day simply ends here
         d: 0,
+        // where the hotel is, so the last row of the table can be a pin like every
+        // other row: the day ends somewhere, and "where am I sleeping relative to
+        // all this?" is a fair question to ask of the map
+        lat: homeSrc.lat ?? null,
+        lng: homeSrc.lng ?? null,
         travelIn: d.home ? { mode: d.homeMode, minutes: d.homeMin, km: d.homeKm, est: false, coloc: false } : null,
       }
     : null;

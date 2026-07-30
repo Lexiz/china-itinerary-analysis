@@ -107,11 +107,14 @@ function seg(st) {
 const renderTrack = segs => (segs || []).map(seg).join('');
 // The end of the day is a block like any other: it begins the moment you get home and is
 // sized to its own label. Anchored right when it would otherwise run off the end of the track.
-function homeSeg(endMin, label, kind, tip) {
+// `key` makes the chip a third view of the same thing — table row, timeline chip and
+// map pin all selecting together, which is how every other stop on this page behaves.
+function homeSeg(endMin, label, kind, tip, key, pid) {
   const over = endMin > T1;                       // past the right edge of the clock entirely
   const left = P(endMin);
   const pos = (over || left > 86) ? 'right:2px' : `left:${left.toFixed(2)}%`;
-  return `<div class="seg homeseg ${kind}${over ? ' broken' : ''}" style="${pos}" title="${esc(tip)}">${over ? '⇥ ' : ''}${label}</div>`;
+  const sel = key ? ` data-key="${esc(key)}" role="button" tabindex="0"` : '';
+  return `<div class="seg homeseg ${kind}${over ? ' broken' : ''}${key ? ' pick' : ''}"${sel}${pid ? ` data-pid="${esc(pid)}"` : ''} style="${pos}" title="${esc(tip)}">${over ? '⇥ ' : ''}${label}</div>`;
 }
 
 // --- the day's verdict, formed ONCE ------------------------------------------
@@ -332,8 +335,12 @@ for (const d of DATA) {
   // evening you could not read. It carries the hotel's own icon and opens the hotel's
   // panel; its travel columns are blank because the leg home is already stated on the
   // row above, under "travel to next", which is exactly where it belongs.
+  // data-key on the same terms as every other row: it is a view of a pin, so it
+  // selects, focuses the hotel and un-focuses on a second click. Only when the map can
+  // actually place it — a key with no marker behind it is a dead click.
+  const homeKey = RB && RB.homeStop && RB.homeStop.lat != null ? nk(RB.homeStop.name) : null;
   const homeRow = RB && RB.homeStop
-    ? `<tr class="rhome"${RB.homeStop.pid ? ` data-pid="${esc(RB.homeStop.pid)}"` : ''}>`
+    ? `<tr class="rhome"${RB.homeStop.pid ? ` data-pid="${esc(RB.homeStop.pid)}"` : ''}${homeKey ? ` data-key="${esc(homeKey)}"` : ''}>`
       + `<td class="an">${ms(RB.homeStop.icon || 'hotel', 'ic-home')}${esc(RB.homeStop.name)}`
       + ` <span class="tag">end of day</span></td>`
       + `<td class="tm b1">${hhmm(RB.homeStop.s)}</td><td class="tm">—</td>`
@@ -456,8 +463,19 @@ for (const d of DATA) {
     .filter(i => i.lat != null && i.lng != null)
     .map(i => ({ lat: i.lat, lng: i.lng, name: i.name, k: nk(i.name), t: 'idea' }));
   const noCoord = mapSeq.length - pts.length;
-  const mapHTML = `<div class="mapwrap"><div class="chgh">Route map — ${esc(d.city)}, day ${d.day}` +
-    `` + ` <span class="apx">numbered in the committed order</span>` +
+  // The hotel is the day's last pin, numbered after the last stop and joined to the
+  // route line — so the map ends where the table now ends. Appended after `noCoord` is
+  // measured, which counts stops only and must not be moved by it.
+  if (RB && RB.homeStop && RB.homeStop.lat != null) {
+    pts.push({ n: pts.length + 1, lat: RB.homeStop.lat, lng: RB.homeStop.lng,
+      name: RB.homeStop.name, k: nk(RB.homeStop.name), t: 'hotel' });
+  }
+  // The heading said "Route map — Beijing, day 3" directly under a card header reading
+  // "Day 3 · Thu 13 Aug" inside a section headed "Beijing": the same three facts, twice,
+  // two lines apart. "numbered in the committed order" went with it — the numbers run
+  // 1, 2, 3 down a table in that order, which says it without a caption. What is left
+  // is the one thing the heading knows that nothing else does: when a stop is missing.
+  const mapHTML = `<div class="mapwrap"><div class="chgh">Route map` +
     `${noCoord ? ` <span class="apx">· ${noCoord} stop${noCoord > 1 ? 's' : ''} without coordinates not shown</span>` : ''}</div>` +
     `<div class="mlg"><span class="mit"><i class="msw mk-act"></i>activity</span>` +
     `<span class="mit"><i class="msw mk-food"></i>food</span>` +
@@ -473,7 +491,7 @@ for (const d of DATA) {
   // The section's own count matches its rows, hotel line included.
   const nAct = rbStops.length + (RB && RB.homeStop ? 1 : 0);
   const detail = `<div class="detail">`
-    + `<div class="sect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct} activit${nAct === 1 ? 'y' : 'ies'}</span></div>`
+    + `<div class="sect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct}</span></div>`
     + `<table class="acts">`
     // The three "Proposed" columns are gone. They were the other half of a
     // Current-vs-Proposed comparison, and the Proposed side has been empty by design
@@ -536,7 +554,7 @@ for (const d of DATA) {
       // home to get back to.
       (d.home ? homeSeg(rbEnd, `🏠 ${EL(rbEnd)}`,
         dsev === 'severe' ? 'bad' : dsev === 'moderate' ? 'warn' : 'ok2',
-        `Back to the hotel — ${EL(rbEnd)}`) : '') + `</div></div>` +
+        `Back to the hotel — ${EL(rbEnd)}`, homeKey, RB && RB.homeStop ? RB.homeStop.pid : null) : '') + `</div></div>` +
     row2 + detail + '</div>';
 }
 out += '</div></section>';
@@ -924,6 +942,8 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .seg.homeseg.broken{background:var(--bad);color:#fff;border-color:var(--bad);}
 .wrap .seg.homeseg{width:auto;padding:0 7px;gap:4px;font-weight:800;cursor:default;font-family:var(--mono);
   background:var(--surface);border:1px solid var(--line);color:var(--ink-2);box-shadow:none;}
+/* selectable once the hotel has a pin behind it */
+.wrap .seg.homeseg.pick{cursor:pointer;}
 .wrap .seg.homeseg.ok2{color:var(--ok);background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 45%,transparent);}
 .wrap .seg.homeseg.warn{color:var(--warn);background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 50%,transparent);}
 .wrap .seg.homeseg.bad{color:var(--bad);background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 50%,transparent);}
