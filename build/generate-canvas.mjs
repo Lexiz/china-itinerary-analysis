@@ -181,27 +181,35 @@ function bandFor(d) {
 let PID_BY_NAME = new Map();
 const pidOf = n => PID_BY_NAME.get(nk(n)) || null;
 
-// The counts the app shows on its day cards, so both surfaces answer "what is on this
-// day" identically: places committed, then activity / lunch / dinner suggestions.
+// The IDEA counts the app shows on its day cards — activity / lunch / dinner
+// suggestions — sitting on the left beside the date, because they describe what is
+// still open about the day and belong next to which day it is.
+//
+// The place count is NOT here any more. It used to render as a fourth badge in this
+// row while the header separately printed "N stops" two spans earlier — the same
+// number, from the same expression, twice on one line in two different treatments.
+// One count survives, in the `.stops` chip the header already had, and it moved to
+// the right-hand end with the verdict flag. See the dhead assembly below.
+//
 // A badge is omitted at zero, exactly as in the app — a settled day stays quiet.
 // UNLIKE the app, the count is written out in words next to the icon ("💡 2 ideas",
 // not "💡2") — this page has the horizontal room a phone card does not, and a spelled
 // label needs no decoding on first read.
-function dayBadges(d, nStops) {
+function dayBadges(d) {
   const ideas = d.ideas || [];
   const nAct = ideas.filter(i => i.kind === 'activity').length;
   const nLunch = ideas.filter(i => (i.meals || []).includes('lunch')).length;
   const nDin = ideas.filter(i => (i.meals || []).includes('dinner')).length;
-  // The icons are the app's own (CountBadges.tsx): place / lightbulb / lunch_dining /
+  // The icons are the app's own (CountBadges.tsx): lightbulb / lunch_dining /
   // dinner_dining as Material Symbols, not lookalike emoji.
   const b = (n, icon, label, cls) => n > 0
     ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${ms(icon)} ${n} ${esc(label.replace('activity ', '') + (n === 1 ? '' : 's'))}</span>` : '';
-  return `<span class="cbdgs">`
-    + `<span class="cbdg pl" title="${esc(nStops + ' place' + (nStops === 1 ? '' : 's') + ' scheduled')}">${ms('place')} ${nStops} place${nStops === 1 ? '' : 's'}</span>`
-    + b(nAct, 'lightbulb', 'activity idea', 'id-a')
+  const inner = b(nAct, 'lightbulb', 'activity idea', 'id-a')
     + b(nLunch, 'lunch_dining', 'lunch idea', 'id-l')
-    + b(nDin, 'dinner_dining', 'dinner idea', 'id-d')
-    + `</span>`;
+    + b(nDin, 'dinner_dining', 'dinner idea', 'id-d');
+  // No wrapper at all on a day with nothing outstanding, so its left margin cannot
+  // open a gap next to the date on an otherwise settled day.
+  return inner ? `<span class="cbdgs">${inner}</span>` : '';
 }
 
 let cur = null, out = '';
@@ -232,7 +240,11 @@ for (const d of DATA) {
     + ` · ${mealAt('dinner') ? 'dinner ' + mealAt('dinner') : 'no dinner'}${homeTxt}`
     + ` · ${d.home ? 'home' : 'out'} ${EL(rbEnd)}`);
   const advOf = n => (d.stops || []).find(x => x.name === n) || STOP_ANY.get(n) || {};
-  const cell = (min, on, ttl) => `<td class="tm tv${on ? ' rec' : ''}"${ttl ? ` title="${ttl}"` : ''}>${min != null ? fmtDur(min) : '—'}</td>`;
+  // `edge` carries the travel group's left/right rule down through the BODY. The rule
+  // was only ever on the header cell and the footer label, so the line appeared above
+  // the table and below it with nothing joining the two — see the .b3 note in the
+  // stylesheet. Every cell in the column now states its own edge.
+  const cell = (min, on, ttl, edge) => `<td class="tm tv${on ? ' rec' : ''}${edge ? ' ' + edge : ''}"${ttl ? ` title="${ttl}"` : ''}>${min != null ? fmtDur(min) : '—'}</td>`;
 
   // "Travel to next" means exactly that: row i carries the leg OUT of it, which is the travelIn of
   // row i+1 — and the last row carries the leg home. Previously each row showed its own travelIn
@@ -269,12 +281,12 @@ for (const d of DATA) {
       : '';
     // A co-located hop is a real, known zero — draw it as 0, not as the "—" that means "no data".
     const trav = !t
-      ? '<td class="tm tv">—</td><td class="tm tv">—</td><td class="tm tv">—</td>'
+      ? '<td class="tm tv b3">—</td><td class="tm tv">—</td><td class="tm tv b3r">—</td>'
       : t.coloc
-        ? `<td class="tm tv coloc" colspan="3" title="${ttl}">· same place ·</td>`
-        : cell(t.mode === 'walk' ? t.minutes : null, t.mode === 'walk', ttl)
+        ? `<td class="tm tv coloc b3 b3r" colspan="3" title="${ttl}">· same place ·</td>`
+        : cell(t.mode === 'walk' ? t.minutes : null, t.mode === 'walk', ttl, 'b3')
           + cell(t.mode === 'metro' ? t.minutes : null, t.mode === 'metro', ttl)
-          + cell(t.mode === 'didi' ? t.minutes : null, t.mode === 'didi', ttl);
+          + cell(t.mode === 'didi' ? t.minutes : null, t.mode === 'didi', ttl, 'b3r');
     // A dwell cut short by a closing time must SAY so — otherwise a shorter Total silently reads as
     // "this is all it needs" instead of "this is all the day could buy".
     // The overrun is REPORTED, not applied — the plan's dwell is whatever Postgres
@@ -293,7 +305,6 @@ for (const d of DATA) {
     return `<tr class="${cls}" data-key="${esc(nk(r.name))}"${rowPid ? ` data-pid="${esc(rowPid)}"` : ''}><td class="an">${ic}${esc(r.name)}${tag}${bkg}</td>`
       + `<td class="tm b1">${hhmm(r.s)}</td><td class="tm">${hhmm(r.s + r.d)}</td>`
       + `<td class="${totCls}"${capT ? ` title="${capT}"` : ''}>${fmtDur(r.d)}${r.cap ? '<span class="qm">⏱</span>' : ''}</td>`
-      + `<td class="tm pc b2">—</td><td class="tm pc">—</td><td class="tm tot pc b2r">—</td>`
       + adv + trav + `</tr>`;
   }).join('');
 
@@ -318,17 +329,31 @@ for (const d of DATA) {
   const mealTaken = d.mealsDecided || { lunch: null, dinner: null };
 
   // "Add to lunch/dinner" — the same POST the app's button makes, to the same endpoint.
-  // Disabled with a stated reason rather than hidden when the slot is already taken or
-  // the page was built without a token: a missing button reads as a bug.
+  //
+  // A TAKEN SLOT IS NOT A DEAD BUTTON. It used to render greyed out with "remove it
+  // first", which is true of a single `assign` call — /api/meal answers 409 when the
+  // slot already holds a venue — but reads as "this page is broken", and it fires on
+  // most days of the trip, because most days have their meals decided. Beijing d1 is
+  // the plain case: both slots are filled (Quanjude, Kao Rou Ji), so its one suggestion
+  // offered two dead buttons and no way to act on it.
+  //
+  // The endpoint also takes `remove`, which is exactly what the app's own meal sheet
+  // uses to change a choice. So the button offers the swap instead: remove the sitting
+  // venue, then assign this one — two calls the client makes in order, the same two the
+  // app makes. Only a missing token disables it now, because without one nothing can be
+  // written at all.
   const mealBtn = (i, meal) => {
     const taken = mealTaken[meal];
-    const dis = !MUTATE_TOKEN ? 'no token — rebuild the page with MUTATE_TOKEN set'
-      : taken ? `${meal} is already ${taken} — remove it first` : '';
-    return `<button class="addbtn${dis ? ' off' : ''}" ${dis ? 'disabled' : ''}`
+    const dis = !MUTATE_TOKEN ? 'no token — rebuild the page with MUTATE_TOKEN set' : '';
+    const ttl = dis || (taken
+      ? `${meal} is ${taken} — replace it with ${i.full || i.name}`
+      : `Put ${i.full || i.name} in this day's ${meal} slot`);
+    return `<button class="addbtn${dis ? ' off' : ''}${taken ? ' swap' : ''}" ${dis ? 'disabled' : ''}`
       + ` data-pid="${esc(i.id || '')}" data-city="${esc(d.cityId)}" data-day="${d.day}"`
       + ` data-meal="${meal === 'lunch' ? 'Lunch' : 'Dinner'}" data-name="${esc(i.full || i.name)}"`
-      + ` title="${esc(dis || `Put ${i.full || i.name} in this day's ${meal} slot`)}">`
-      + `+ ${meal}</button>`;
+      + (taken ? ` data-replace="${esc(taken)}"` : '')
+      + ` title="${esc(ttl)}">`
+      + `${taken ? `replace ${meal}` : `+ ${meal}`}</button>`;
   };
 
   // ONE suggestions table, not four. The lunch/dinner/activity split moved into the
@@ -398,16 +423,21 @@ for (const d of DATA) {
   const detail = `<div class="detail">`
     + `<div class="sect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct} stop${nAct === 1 ? '' : 's'}</span></div>`
     + `<table class="acts">`
+    // The three "Proposed" columns are gone. They were the other half of a
+    // Current-vs-Proposed comparison, and the Proposed side has been empty by design
+    // since the re-plan was committed — so every row carried three em-dashes under a
+    // heading for a plan that does not exist. Their width went to the columns that do
+    // carry something, which is why Start/End/Total now sit further right and breathe.
+    // The group footer no longer says "Current" either: with nothing to contrast
+    // against, the word was only meaningful next to the column that went.
     + `<colgroup><col class="wA"><col class="wT"><col class="wT"><col class="wTot">`
-    + `<col class="wT"><col class="wT"><col class="wTotP"><col class="wSug">`
+    + `<col class="wSug">`
     + `<col class="wTv"><col class="wTv"><col class="wTv"></colgroup><thead>`
     + `<tr><th>Activity</th><th class="b1">Start</th><th>End</th><th class="b1r">Total</th>`
-    + `<th class="b2">Start</th><th>End</th><th class="b2r">Total</th>`
     + `<th class="hsug">Advice</th>`
     + `<th class="htv b3">Walk</th><th class="htv">Metro</th><th class="htv b3r">DiDi</th></tr></thead>`
     + `<tbody>${rows}</tbody>`
-    + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Current</th>`
-    + `<th class="b2 b2r gh" colspan="3">Proposed</th><th></th>`
+    + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Scheduled</th><th></th>`
     + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table></div>`
     + sugHTML
     + (ideasHTML ? `<div class="sect"><div class="secth">${ms('lightbulb', 'sic')}<span>Suggestions</span><span class="scount">${dayIdeas.length}</span></div>${ideasHTML}</div>` : '')
@@ -415,6 +445,9 @@ for (const d of DATA) {
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
   const row2 = `<div class="row2"><div class="track2 empty" title="Proposed — nothing yet; this is where the next pass writes">${gridHTML}</div></div>`;
+  // Committed places on this day — meals excluded, exactly as the header always counted
+  // them. Named once here because the chip and its tooltip both need it.
+  const nPlaces = RB ? RB.stops.filter(x => !x.meal).length : d.nStops;
   const badge = RB
     // Three states, because two could not tell the truth: a day ending 22:11 is counted in the
     // header's "11 later" but was badged "✓ fits", so the row contradicted the card above it.
@@ -427,8 +460,16 @@ for (const d of DATA) {
     `<div class="dhead" role="button" tabindex="0" aria-expanded="false" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
       `<span class="cv">›</span><span class="dnum">Day ${d.day}</span>` +
       `<span class="ddate">${wd(d.date)} ${dm(d.date)}</span>` +
-      `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>` +
-      dayBadges(d, RB ? RB.stops.filter(x => !x.meal).length : d.nStops) + `${badge}</div>` +
+      // Left of the row: what is still OPEN about this day (idea badges).
+      dayBadges(d) +
+      // Right of the row, pinned to the card's corner by `margin-left:auto`: the day's
+      // verdict, then the one place count. This chip is the header's own `.stops`
+      // treatment with the app's `place` glyph inside it — the "N stops" text chip and
+      // the separate "📍 N places" badge were the same number rendered twice, side by
+      // side, so they read as two facts when there was only ever one.
+      `<span class="dright">${badge}` +
+      `<span class="stops nplaces" title="${esc(nPlaces + ' place' + (nPlaces === 1 ? '' : 's') + ' scheduled')}">${ms('place')}${nPlaces} place${nPlaces === 1 ? '' : 's'}</span>` +
+      `</span></div>` +
     mapHTML + miniAx + `<div class="row"><div class="track" style="background:${bandFor(d)}" title="${tip}${d.sunset ? `\nSunset ${d.sunset} · dark from ${d.dusk}` : ''}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null, pid: pidOf(r.name) })))}` +
       // The end chip exists to answer "when am I back at the hotel?". A departure
       // day has no such moment — it ends WITH the hub block, which already carries
@@ -625,18 +666,37 @@ document.addEventListener("click",function(e){
   var b=e.target.closest(".addbtn"); if(!b||b.disabled)return;
   e.preventDefault(); e.stopPropagation();
   var msg=b.parentElement.querySelector(".ppmsg")||(function(){var d=document.createElement("div");d.className="ppmsg";b.parentElement.appendChild(d);return d;})();
-  b.classList.add("busy"); b.disabled=true; msg.textContent="Adding…"; msg.style.color="var(--ink-2)";
-  fetch(window.__APP+"/api/meal",{method:"POST",headers:{"Content-Type":"application/json","x-trip-token":window.__TOK||""},
-    body:JSON.stringify({action:"assign",cityId:b.dataset.city,day:+b.dataset.day,meal:b.dataset.meal,placeId:b.dataset.pid})})
+  var swap=b.dataset.replace||null, cleared=false;
+  var slot={cityId:b.dataset.city,day:+b.dataset.day,meal:b.dataset.meal};
+  var post=function(body){return fetch(window.__APP+"/api/meal",{method:"POST",
+    headers:{"Content-Type":"application/json","x-trip-token":window.__TOK||""},
+    body:JSON.stringify(body)});};
+  var fail=function(t){ msg.textContent=t; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; };
+  b.classList.add("busy"); b.disabled=true; msg.style.color="var(--ink-2)";
+  msg.textContent=swap?("Removing "+swap+"…"):"Adding…";
+  /* Replacing is remove-then-assign, in that order, because assign on its own is
+     refused while the slot still holds a venue (409 "Remove it first"). Two calls,
+     the same two the app's meal sheet makes. If the REMOVE fails nothing has moved;
+     if the assign fails after a successful remove the slot really is empty now, and
+     the message says that rather than letting it read as "nothing happened". */
+  var step1=swap
+    ? post({action:"remove",cityId:slot.cityId,day:slot.day,meal:slot.meal})
+        .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t);}catch(_){}
+          if(!r.ok||!j||!j.ok) throw new Error((j&&j.error)||("Could not clear "+swap+" — nothing was changed."));
+          cleared=true; msg.textContent="Adding…";});})
+    : Promise.resolve();
+  step1.then(function(){
+    return post({action:"assign",cityId:slot.cityId,day:slot.day,meal:slot.meal,placeId:b.dataset.pid});
+  })
   .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t);}catch(_){}
     if(!j){ msg.textContent="Took too long to confirm — it has probably been applied. Refresh the app and check."; msg.style.color="var(--warn)"; return; }
-    if(!r.ok||!j.ok){ msg.textContent=j.error||"That did not work."; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; return; }
+    if(!r.ok||!j.ok){ fail((j.error||"That did not work.")+(cleared?(" "+swap+" was already removed, so the slot is empty now."):"")); return; }
     msg.textContent="Added. Publishing…"; msg.style.color="var(--ok)";
     return fetch(window.__APP+"/api/sync",{method:"POST",headers:{"x-trip-token":window.__TOK||""}})
-      .then(function(){ msg.textContent="Added to "+b.dataset.meal.toLowerCase()+". Rebuild this page to see it move."; })
+      .then(function(){ msg.textContent=(swap?"Replaced ":"Added to ")+b.dataset.meal.toLowerCase()+". Rebuild this page to see it move."; })
       .catch(function(){ msg.textContent="Added. The app copy is still catching up."; });
   });})
-  .catch(function(){ msg.textContent="No connection — nothing was changed."; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; });
+  .catch(function(err){ fail((err&&err.message)?err.message:"No connection — nothing was changed."); });
 },true);
 `;
 
@@ -689,12 +749,21 @@ const EXTRA = `<style>
 .wrap table.acts{min-width:800px;width:100%;}
 .wrap table.acts th,.wrap table.acts td{padding-left:10px;}
 .wrap table.acts{table-layout:fixed;}
-.wrap table.acts col.wA{width:23%;} .wrap table.acts col.wT{width:7.5%;}
-.wrap table.acts col.wTot{width:8.5%;} .wrap table.acts col.wTotP{width:12%;}
-.wrap table.acts col.wSug{width:9%;} .wrap table.acts col.wTv{width:7%;}
+/* Eight columns since the three empty "Proposed" ones went. Their 27% was given to
+   the columns that carry something — the activity name (which was truncating on long
+   venues) and the Start/End/Total group, which now sits further right with room to
+   breathe instead of being squeezed against a dead half of the table. */
+.wrap table.acts col.wA{width:26%;} .wrap table.acts col.wT{width:11%;}
+.wrap table.acts col.wTot{width:12%;}
+.wrap table.acts col.wSug{width:11%;} .wrap table.acts col.wTv{width:9.6%;}
 .wrap table.acts td.an{overflow:hidden;text-overflow:ellipsis;}
 .wrap table.acts td.tm,.wrap table.acts thead th,.wrap table.acts tfoot th{text-align:left;white-space:nowrap;}
 .wrap table.acts th.htv,.wrap table.acts td.tv{padding-left:10px;text-align:left;}
+/* The travel group's edges. These classes are carried by the HEADER cell, every BODY
+   cell in the column and the footer label — all three, which is the point: the rule
+   used to sit on the header and the footer only, so the line appeared above the table
+   and again below it with the rows in between unruled, reading as two stray marks
+   rather than one column edge. Same width, same var(--line), as the .b1 group. */
 .wrap table.acts .b3{border-left:1px solid var(--line);}
 .wrap table.acts .b3r{border-right:1px solid var(--line);}
 .wrap table.acts td.sug,.wrap table.acts th.hsug,.wrap table.acts th.gs{color:var(--ink-3);}
@@ -710,13 +779,12 @@ const EXTRA = `<style>
 .wrap table.acts tr.grp th{font-size:9px;letter-spacing:.07em;padding-bottom:3px;border-bottom:0;}
 .wrap table.acts tfoot tr.gfoot th{padding-top:7px;padding-bottom:0;border-top:1px solid var(--line);}
 .wrap table.acts th.gh{text-align:left;color:var(--ink-2);}
-.wrap table.acts th.b2.gh{color:var(--target);}
 .wrap table.acts th.gt{text-align:left;color:var(--ink-3);}
+/* The scheduled-times group. Header, every body cell and the footer label all carry
+   these — the pattern .b3 above now follows. */
 .wrap table.acts .b1{border-left:1px solid var(--line);}
 .wrap table.acts .b1r{border-right:1px solid var(--line);}
-.wrap table.acts .b2{border-left:1px solid var(--line);}
-.wrap table.acts .b2r{border-right:1px solid var(--line);}
-.wrap table.acts tbody td.pc{background:color-mix(in srgb,var(--target) 5%,transparent);color:var(--ink-3);}
+/* .b2 / .b2r / td.pc styled the "Proposed" columns and went with them. */
 .wrap .track2.empty{background:repeating-linear-gradient(90deg,var(--surface-2) 0 6px,transparent 6px 12px);opacity:.5;}
 .wrap table.acts tr.rhub td{font-weight:700;}
 .wrap .ideas{margin:18px 0 4px;}
@@ -831,12 +899,22 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .secth .msym.sic{font-size:16px;color:var(--cx,var(--ink-2));}
 .wrap .secth .scount{font-weight:700;color:var(--ink-3);text-transform:none;letter-spacing:0;
   font-family:var(--mono);font-size:11px;}
-/* per-day count badges, mirroring the app's day cards */
+/* per-day count badges, mirroring the app's day cards. Idea counts only — they sit at
+   the LEFT of the header row, beside the date, because they describe what is still
+   open about the day. */
 .wrap .cbdgs{display:inline-flex;gap:4px;align-items:center;margin-left:8px;}
 .wrap .cbdg{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;font-weight:800;
   padding:1px 6px;border-radius:7px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);font-family:var(--mono);}
-.wrap .cbdg.pl{background:color-mix(in srgb, var(--accent) 12%, transparent);color:var(--accent);
-  border-color:color-mix(in srgb, var(--accent) 30%, transparent);}
+/* The right-hand end of the day header: the verdict flag, then the place count, pushed
+   into the card's corner. margin-left:auto inside the flex row does the pinning, so
+   the left group can grow to any width without the two ever colliding.
+   NB: no backticks in this stylesheet — it is itself a template literal (see the
+   trap in the project briefing; a stray one silently truncates the whole page). */
+.wrap .dright{margin-left:auto;display:inline-flex;align-items:center;gap:7px;flex:none;}
+/* The place count reuses the header's own .stops chip — same border, radius, weight and
+   tabular figures — with the app's own place glyph set inside it. */
+.wrap .stops.nplaces{display:inline-flex;align-items:center;gap:4px;margin-top:0;}
+.wrap .stops.nplaces .msym{font-size:12.5px;}
 /* add-to-meal buttons in the suggestion tables */
 .wrap .addcell{white-space:nowrap;}
 .wrap .addbtn{font:inherit;font-size:10.5px;font-weight:800;padding:2px 8px;margin-right:4px;border-radius:8px;
