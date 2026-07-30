@@ -76,11 +76,11 @@ Retired, deliberately (do not reintroduce):
 
 ## The plan as it stands
 
-23 days home by 21:30 · 14 later and **not yet decided** · 0 missed departures.
-Latest is Chengdu d3 at 07:14⁺¹ — a genuinely over-packed day, not a red-eye.
-
-Those 14 are undecided on purpose. A rework was drafted in July and never applied, so the old
-"reviewed & accepted" label was claiming a decision nobody made about *these* times.
+As of the 30 Jul 2026 re-plan: **27 days home by 21:30 · 10 later, each with a stated cause ·
+0 missed departures.** The latest finish is the Shanghai red-eye itself, which is a flight, not
+an over-packed day. (The live numbers are in the page header — the build prints them and the
+gate checks them against Postgres, so if this paragraph ever disagrees with the page, the page
+is the one to trust.)
 
 ## Update it
 

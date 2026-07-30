@@ -172,15 +172,18 @@ const pidOf = n => PID_BY_NAME.get(nk(n)) || null;
 // The counts the app shows on its day cards, so both surfaces answer "what is on this
 // day" identically: places committed, then activity / lunch / dinner suggestions.
 // A badge is omitted at zero, exactly as in the app — a settled day stays quiet.
+// UNLIKE the app, the count is written out in words next to the icon ("💡 2 ideas",
+// not "💡2") — this page has the horizontal room a phone card does not, and a spelled
+// label needs no decoding on first read.
 function dayBadges(d, nStops) {
   const ideas = d.ideas || [];
   const nAct = ideas.filter(i => i.kind === 'activity').length;
   const nLunch = ideas.filter(i => (i.meals || []).includes('lunch')).length;
   const nDin = ideas.filter(i => (i.meals || []).includes('dinner')).length;
   const b = (n, icon, label, cls) => n > 0
-    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${icon}${n}</span>` : '';
+    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${icon} ${n} ${esc(label.replace('activity ', '') + (n === 1 ? '' : 's'))}</span>` : '';
   return `<span class="cbdgs">`
-    + `<span class="cbdg pl" title="${esc(nStops + ' place' + (nStops === 1 ? '' : 's') + ' scheduled')}">◍${nStops}</span>`
+    + `<span class="cbdg pl" title="${esc(nStops + ' place' + (nStops === 1 ? '' : 's') + ' scheduled')}">\u{1F4CD} ${nStops} place${nStops === 1 ? '' : 's'}</span>`
     + b(nAct, '\u{1F4A1}', 'activity idea', 'id-a')
     + b(nLunch, '\u{1F354}', 'lunch idea', 'id-l')
     + b(nDin, '\u{1F35C}', 'dinner idea', 'id-d')
@@ -627,7 +630,12 @@ const EXTRA = `<style>
 .wrap .pflag.ok2{color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent);border-color:color-mix(in srgb,var(--ok) 34%,transparent);}
 .wrap .pflag.warn2{color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent);border-color:color-mix(in srgb,var(--warn) 34%,transparent);}
 .wrap .row2{display:block;padding:0 0 6px;}
-.wrap .day{padding-bottom:6px;}
+/* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
+   day unfolded the tables ran into each other and nothing said where one day ended
+   and the next began; the card edge is that boundary. */
+.wrap .day{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:4px 12px 8px;box-shadow:var(--shadow);}
+.wrap .city-body{gap:10px;padding-top:2px;padding-bottom:2px;}
 .wrap .cv{display:inline-block;transition:transform .15s ease;color:var(--ink-3);font-weight:700;margin-right:5px;}
 .wrap .day.open .cv{transform:rotate(90deg);}
 
