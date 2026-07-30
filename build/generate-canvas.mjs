@@ -77,7 +77,7 @@ function seg(st) {
   if (st.hub) {
     const h = st.hub;
     tip = h.role === 'depart'
-      ? `${h.number || h.mode} ${h.route || ''} departs ${h.departTime}\nBe at ${h.terminal ? h.terminal + ' ' : ''}the ${h.mode === 'Flight' ? 'airport' : 'station'} by ${h.beThereBy} — ${d}m check-in${h.approx ? '\n⚠ time is provisional (tickets not on sale yet)' : ''}`
+      ? `${h.number || h.mode} ${h.route || ''} departs ${h.departTime}\nBe at ${h.terminal ? h.terminal + ' ' : ''}the ${h.mode === 'Flight' ? 'airport' : h.mode === 'Ferry' ? 'wharf' : 'station'} by ${h.beThereBy} — ${d}m check-in${h.approx ? '\n⚠ time is provisional (tickets not on sale yet)' : ''}`
       : `${h.number || h.mode} ${h.route || ''} arrives ${h.arriveTime}\n${d}m to clear${h.terminal ? ' ' + h.terminal : ''} — out by ${h.clearBy}${h.approx ? '\n⚠ time is provisional' : ''}`;
   } else if (st.bonus) tip += ' · bonus / swap — not part of the committed plan';
   return `<div class="${cls}${m}${tight}" data-key="${esc(key)}"${pidAttr} role="button" tabindex="0" style="left:${left.toFixed(2)}%;width:${w.toFixed(2)}%" title="${esc(tip)}">${nm}${dd}</div>`;
@@ -418,9 +418,15 @@ for (const d of DATA) {
       `<span class="stops">${RB ? RB.stops.filter(x => !x.meal).length : d.nStops} stops</span>` +
       dayBadges(d, RB ? RB.stops.filter(x => !x.meal).length : d.nStops) + `${badge}</div>` +
     mapHTML + miniAx + `<div class="row"><div class="track" style="background:${bandFor(d)}" title="${tip}${d.sunset ? `\nSunset ${d.sunset} · dark from ${d.dusk}` : ''}">${gridHTML}${renderTrack(rbStops.map(r => ({ s: r.s, d: r.d, name: r.name, meal: !!r.meal, key: nk(r.name), hub: r.hub || null, pid: pidOf(r.name) })))}` +
-      homeSeg(rbEnd, `${d.home ? '🏠' : '✈'} ${EL(rbEnd)}`,
+      // The end chip exists to answer "when am I back at the hotel?". A departure
+      // day has no such moment — it ends WITH the hub block, which already carries
+      // the mode icon and the departure time — so a second chip right after it read
+      // as a phantom activity that was on the timeline but not in the table
+      // (and said ✈ even for trains and ferries). Render it only when there is a
+      // home to get back to.
+      (d.home ? homeSeg(rbEnd, `🏠 ${EL(rbEnd)}`,
         dsev === 'severe' ? 'bad' : dsev === 'moderate' ? 'warn' : 'ok2',
-        d.home ? `Back to the hotel — ${EL(rbEnd)}` : `Departure day — fly out ${EL(rbEnd)}`) + `</div></div>` +
+        `Back to the hotel — ${EL(rbEnd)}`) : '') + `</div></div>` +
     row2 + detail + '</div>';
 }
 out += '</div></section>';
