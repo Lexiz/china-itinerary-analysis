@@ -81,6 +81,10 @@ for (const d of s.days) {
     // a hub's dwell IS its buffer: 3h at Pudong is 3h of the day gone, not a gap
     const hubDwell = f ? (f.role === 'depart' ? (f.bufferMin ?? null) : (f.clearMin ?? null)) : null;
     return {
+      // The Material Symbol the app shows for this stop — computed ONCE in the app's
+      // sync layer (Place.typeIcon; hubs get their leg icon on the Activity), so both
+      // surfaces draw the same glyph from the same field.
+      icon: a.typeIcon || null,
       night, pid, ptype: pl?.type || null, slot: pl?.slot || null,
       order: a.order ?? null, bonus: !!a.bonus, impossible: a.impossible || null, abs: absOf.get(a) ?? null,
       hub: f ? {
@@ -118,6 +122,7 @@ for (const d of s.days) {
     .filter((p) => p.cityId === d.cityId && p.day === d.cityDay)
     .map((p) => ({
       name: normn(p.shortLabel || p.name).slice(0, 46),
+      icon: p.typeIcon || null,
       kind: p.type === 'Food' ? (p.meal?.length ? p.meal.join('/').toLowerCase() : 'food') : 'activity',
       res: RES[normn(p.shortLabel || p.name)]?.m ?? p.advisedDuration ?? null,
       // The identity a button needs. `id` is what /api/meal expects as `placeId`,

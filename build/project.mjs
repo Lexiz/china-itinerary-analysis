@@ -81,6 +81,7 @@ for (const d of V) {
     .sort((a, b) => a.abs - b.abs)
     .map((s, i, arr) => ({
       name: s.name,
+      icon: s.icon || null,
       s: s.abs,
       d: s.act ?? s.adv ?? 0,
       kind: s.hub ? 'hub' : s.meal ? 'meal' : 'sight',
@@ -122,7 +123,7 @@ for (const d of V) {
   // without them the canvas can list a restaurant but not offer to use it, which is
   // the difference between a report and a tool.
   if (d.ideas?.length) ideasByDay[key] = d.ideas.map((i) => ({
-    name: i.name, why: i.kind, res: i.res,
+    name: i.name, icon: i.icon || null, why: i.kind, res: i.res,
     id: i.id || null, meals: i.meals || [], kind: i.kind, full: i.full || i.name,
     booking: i.booking || null,
   }));

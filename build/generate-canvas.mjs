@@ -18,6 +18,13 @@ const MUTATE_TOKEN = process.env.NEXT_PUBLIC_MUTATE_TOKEN || process.env.MUTATE_
 import { changeList, matchStop, nk } from './lib-plan.mjs';
 // Durations read as clock time: 45m, 1h30, 2h
 const fmtDur = m => { const x = Math.round(m); return x < 60 ? x + 'm' : (Math.floor(x / 60) + 'h' + (x % 60 ? String(x % 60).padStart(2, '0') : '')); };
+// Material Symbols by ligature name — the SAME glyph set the app renders. The name
+// itself comes through the snapshot (Place.typeIcon / Activity.typeIcon, computed once
+// in the app's sync layer), so the icon mapping has one oracle. The only rule repeated
+// here is the app's own row rule (City.tsx): on a meal stop the MEAL icon wins.
+const MEAL_MS = { breakfast: 'bakery_dining', lunch: 'lunch_dining', dinner: 'dinner_dining' };
+const ms = (name, cls) => `<span class="msym${cls ? ' ' + cls : ''}" aria-hidden="true">${name}</span>`;
+const stopIcon = r => r.meal ? (MEAL_MS[r.meal] || 'restaurant') : (r.icon || 'place');
 // Google Maps key: env first, else the local gitignored file. NOTE: it is embedded in the
 // generated HTML, so it becomes public once this repo is pushed — restrict it by HTTP referrer.
 // PUBLISH=1 builds for the PUBLIC GitHub Pages repo and deliberately omits the Maps key.
@@ -185,13 +192,15 @@ function dayBadges(d, nStops) {
   const nAct = ideas.filter(i => i.kind === 'activity').length;
   const nLunch = ideas.filter(i => (i.meals || []).includes('lunch')).length;
   const nDin = ideas.filter(i => (i.meals || []).includes('dinner')).length;
+  // The icons are the app's own (CountBadges.tsx): place / lightbulb / lunch_dining /
+  // dinner_dining as Material Symbols, not lookalike emoji.
   const b = (n, icon, label, cls) => n > 0
-    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${icon} ${n} ${esc(label.replace('activity ', '') + (n === 1 ? '' : 's'))}</span>` : '';
+    ? `<span class="cbdg ${cls}" title="${esc(n + ' ' + label + (n === 1 ? '' : 's'))}">${ms(icon)} ${n} ${esc(label.replace('activity ', '') + (n === 1 ? '' : 's'))}</span>` : '';
   return `<span class="cbdgs">`
-    + `<span class="cbdg pl" title="${esc(nStops + ' place' + (nStops === 1 ? '' : 's') + ' scheduled')}">\u{1F4CD} ${nStops} place${nStops === 1 ? '' : 's'}</span>`
-    + b(nAct, '\u{1F4A1}', 'activity idea', 'id-a')
-    + b(nLunch, '\u{1F354}', 'lunch idea', 'id-l')
-    + b(nDin, '\u{1F35C}', 'dinner idea', 'id-d')
+    + `<span class="cbdg pl" title="${esc(nStops + ' place' + (nStops === 1 ? '' : 's') + ' scheduled')}">${ms('place')} ${nStops} place${nStops === 1 ? '' : 's'}</span>`
+    + b(nAct, 'lightbulb', 'activity idea', 'id-a')
+    + b(nLunch, 'lunch_dining', 'lunch idea', 'id-l')
+    + b(nDin, 'dinner_dining', 'dinner idea', 'id-d')
     + `</span>`;
 }
 
@@ -277,7 +286,11 @@ for (const d of DATA) {
           + (r.cap.conf && r.cap.conf !== 'high' ? ` Closing time confidence: ${r.cap.conf}.` : ''))
       : '';
     const totCls = 'tm tot b1r' + (r.cap ? (r.cap.tooLate ? ' capbad' : ' capped') : '');
-    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"><td class="an">${esc(r.name)}${tag}${bkg}</td>`
+    const ic = ms(stopIcon(r), isMeal ? 'ic-meal' : isHub ? 'ic-hub' : 'ic-act');
+    // data-pid: clicking a row opens the place drawer, exactly like the timeline
+    // block and the suggestion rows — a row IS its stop, so it opens the same panel.
+    const rowPid = pidOf(r.name);
+    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"${rowPid ? ` data-pid="${esc(rowPid)}"` : ''}><td class="an">${ic}${esc(r.name)}${tag}${bkg}</td>`
       + `<td class="tm b1">${hhmm(r.s)}</td><td class="tm">${hhmm(r.s + r.d)}</td>`
       + `<td class="${totCls}"${capT ? ` title="${capT}"` : ''}>${fmtDur(r.d)}${r.cap ? '<span class="qm">⏱</span>' : ''}</td>`
       + `<td class="tm pc b2">—</td><td class="tm pc">—</td><td class="tm tot pc b2r">—</td>`
@@ -289,7 +302,6 @@ for (const d of DATA) {
   // simply changed day is still happening and must not be mistaken for a cut.
   const dayKey = `${d.city}|${d.day}`;
   const dayIdeas = (REBUILT.ideasByDay || {})[dayKey] || [];
-  const dayMoves = (REBUILT.movesByDay || {})[dayKey] || [];
   // Suggestions for the day, not casualties of it. These are Postgres ideas — places
   // no committed stop uses, tagged with the day they want — so nothing here was
   // "dropped"; the old heading described a planner's cut list.
@@ -305,11 +317,6 @@ for (const d of DATA) {
   // proves nothing. 'open' means no venue chosen.
   const mealTaken = d.mealsDecided || { lunch: null, dinner: null };
 
-  const ideaAct = dayIdeas.filter(i => i.kind === 'activity');
-  const ideaLunch = dayIdeas.filter(i => (i.meals || []).includes('lunch'));
-  const ideaDin = dayIdeas.filter(i => (i.meals || []).includes('dinner'));
-  const ideaOther = dayIdeas.filter(i => i.kind !== 'activity' && !(i.meals || []).length);
-
   // "Add to lunch/dinner" — the same POST the app's button makes, to the same endpoint.
   // Disabled with a stated reason rather than hidden when the slot is already taken or
   // the page was built without a token: a missing button reads as a bug.
@@ -324,36 +331,29 @@ for (const d of DATA) {
       + `+ ${meal}</button>`;
   };
 
-  const ideaTable = (rows, heading, withMeal) => rows.length ? `<div class="ideas"><div class="chgh">${heading} (${rows.length})</div>`
-    + `<table class="acts idt"><thead><tr><th>Name</th><th>Advice</th><th>Kind</th>${withMeal ? '<th>Add</th>' : ''}</tr></thead><tbody>`
-    + rows.map(i => { const a = advOf(i.name); const res = a.res ?? i.res;
-        return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''} class="idrow">`
-          + `<td class="an">${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
-          + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
-          + `<td class="iw">${esc(i.kind)}</td>`
-          + (withMeal ? `<td class="iw addcell">`
-              + ((i.meals || []).includes('lunch') ? mealBtn(i, 'lunch') : '')
-              + ((i.meals || []).includes('dinner') ? mealBtn(i, 'dinner') : '')
-              + `</td>` : '')
-          + `</tr>`; }).join('')
-    + `</tbody></table></div>` : '';
+  // ONE suggestions table, not four. The lunch/dinner/activity split moved into the
+  // existing Kind column — the split tables answered "is dinner decided?" by making
+  // you scan four headings, and a venue good for both meals appeared twice. A row's
+  // icon is the same glyph the app would give it as a stop; meal-capable rows keep
+  // both their +lunch/+dinner buttons side by side.
+  const ideaRows = dayIdeas.map(i => {
+    const a = advOf(i.name); const res = a.res ?? i.res;
+    const isFood = (i.meals || []).length > 0 || i.kind === 'food';
+    return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''} class="idrow">`
+      + `<td class="an">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
+      + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
+      + `<td class="iw">${esc(i.kind)}</td>`
+      + `<td class="iw addcell">`
+      + ((i.meals || []).includes('lunch') ? mealBtn(i, 'lunch') : '')
+      + ((i.meals || []).includes('dinner') ? mealBtn(i, 'dinner') : '')
+      + `</td></tr>`;
+  }).join('');
+  const ideasHTML = dayIdeas.length
+    ? `<table class="acts idt"><thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody>${ideaRows}</tbody></table>`
+    : '';
 
-  const ideasHTML = ideaTable(ideaAct, `Activity suggestions for Day ${d.day} · not scheduled`, false)
-    + ideaTable(ideaLunch, `Lunch suggestions for Day ${d.day}`, true)
-    + ideaTable(ideaDin, `Dinner suggestions for Day ${d.day}`, true)
-    + ideaTable(ideaOther, `Other food suggestions for Day ${d.day}`, false)
-    + (dayMoves.length ? `<div class="ideas"><div class="chgh">Moved · still happening (${dayMoves.length})</div>`
-    + `<table class="acts idt"><thead><tr><th>Activity</th><th>Advice</th><th>Where it went</th></tr></thead><tbody>`
-    + dayMoves.map(m => { const a = advOf(m.name); return `<tr><td class="an">${esc(m.name)}</td>`
-        + `<td class="tm sug">${a.res != null ? fmtDur(a.res) : '—'}</td><td class="iw">`
-        + (m.status === 'moved' ? `was on this day → now <b>Day ${m.to}</b>` : `moved here from <b>Day ${m.from}</b>`)
-        + `</td></tr>`; }).join('')
-    + `</tbody></table></div>` : '');
-
-  // Everything below describes the COMMITTED (rebuilt) day. It previously read from the old
-  // replan, which is why a bar ending 19:51 could sit above a note claiming 23:51.
-  const fixText = RB ? [RB.theme, RB.why].filter(Boolean).join(' — ') : '';
-  const chgHTML = '';                                   // nothing to diff: the Proposed side is empty by design
+  // The Summary block (theme — why) that used to sit under the table is gone: it
+  // restated what the activity table already shows, so it was noise on every day.
   const sug = [];
   if (RB && RB.missed) sug.push(`<b class="brk">MISSES A LOCKED DEPARTURE</b> — ${esc(RB.missed.name)}, be there ${esc(RB.missed.beThereBy)}. The flight/train will not wait.`);
   if (rbEnd > 21 * 60 + 30) {
@@ -389,7 +389,14 @@ for (const d of DATA) {
     `<span class="mit"><i class="msw mk-hotel"></i>hotel</span></div>` +
     `<div class="map" data-pts="${esc(JSON.stringify(pts))}"></div></div>`;
 
+  // Two CARDS, each with a stated title — "Activity" (the committed table) and
+  // "Suggestions" (the merged ideas table) — so the unfold reads as two clearly
+  // bounded sections rather than tables running into each other. "Your call"
+  // (the day's genuine warnings) sits between them, because its advice points at
+  // the suggestions below it.
+  const nAct = rbStops.length;
   const detail = `<div class="detail">`
+    + `<div class="sect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct} stop${nAct === 1 ? '' : 's'}</span></div>`
     + `<table class="acts">`
     + `<colgroup><col class="wA"><col class="wT"><col class="wT"><col class="wTot">`
     + `<col class="wT"><col class="wT"><col class="wTotP"><col class="wSug">`
@@ -401,10 +408,10 @@ for (const d of DATA) {
     + `<tbody>${rows}</tbody>`
     + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Current</th>`
     + `<th class="b2 b2r gh" colspan="3">Proposed</th><th></th>`
-    + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table>`
-    + (fixText ? `<div class="sumwrap"><div class="chgh">Summary</div>`
-      + `<div class="fix fix-prop${RB && RB.missed ? ' fix-warn' : ''}">${esc(fixText)}</div></div>` : '')
-    + ideasHTML + chgHTML + sugHTML + `</div>`;
+    + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table></div>`
+    + sugHTML
+    + (ideasHTML ? `<div class="sect"><div class="secth">${ms('lightbulb', 'sic')}<span>Suggestions</span><span class="scount">${dayIdeas.length}</span></div>${ideasHTML}</div>` : '')
+    + `</div>`;
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
   const row2 = `<div class="row2"><div class="track2 empty" title="Proposed — nothing yet; this is where the next pass writes">${gridHTML}</div></div>`;
@@ -442,7 +449,6 @@ function setFilter(bad){document.body.classList.toggle("only-bad",bad);
   fBad.setAttribute("aria-pressed",bad);fAll.setAttribute("aria-pressed",!bad);
   document.querySelectorAll(".city").forEach(c=>c.classList.toggle("empty",bad&&c.dataset.bad==="0"));}
 fAll.onclick=()=>setFilter(false);fBad.onclick=()=>setFilter(true);
-document.getElementById("tFix").onchange=e=>document.body.classList.toggle("hide-fix",!e.target.checked);
 function toggleRow(row){const day=row.closest(".day");if(!day)return;const open=day.classList.toggle("open");row.setAttribute("aria-expanded",open);if(open)initMaps(day);}
 // Selecting a stop moves in by this much from the day's fitted scale, so you get the streets
 // around it while still seeing where the neighbouring stops are. A fixed setZoom(16) used to
@@ -806,6 +812,25 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .chg.sug li{color:var(--ink-2);}
 .wrap .chg.sug .chgh{color:var(--target);}
 .wrap .track{background:${BAND};}
+/* Material Symbols — the app's own icon font and treatment (.msym in app/globals.css),
+   rendered by ligature name so the canvas shows the exact glyphs the app shows */
+.msym{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;
+  letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;
+  -webkit-font-feature-settings:'liga';font-feature-settings:'liga';-webkit-font-smoothing:antialiased;
+  display:inline-flex;align-items:center;justify-content:center;user-select:none;flex:none;vertical-align:middle;}
+.wrap table.acts td.an .msym{font-size:15px;margin-right:7px;margin-top:-2px;}
+.wrap .msym.ic-act{color:var(--cx,var(--ink-2));}
+.wrap .msym.ic-meal{color:#B8621B;}   /* the app's one colour that means "food" */
+.wrap .msym.ic-hub{color:var(--ink);}
+.wrap .cbdg .msym{font-size:13px;}
+/* the two titled section cards inside an unfolded day: Activity, then Suggestions */
+.wrap .sect{background:color-mix(in srgb,var(--surface-2) 55%,transparent);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px 10px;margin:0 0 14px;overflow-x:auto;}
+.wrap .secth{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;}
+.wrap .secth .msym.sic{font-size:16px;color:var(--cx,var(--ink-2));}
+.wrap .secth .scount{font-weight:700;color:var(--ink-3);text-transform:none;letter-spacing:0;
+  font-family:var(--mono);font-size:11px;}
 /* per-day count badges, mirroring the app's day cards */
 .wrap .cbdgs{display:inline-flex;gap:4px;align-items:center;margin-left:8px;}
 .wrap .cbdg{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;font-weight:800;
@@ -850,6 +875,8 @@ body.only-bad .wrap .day.ok-day{display:none;}
 </style>`;
 
 const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=block" rel="stylesheet">
 ${GKEY
   ? `<script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&callback=gmapsReady" async><\/script>`
   : `<script>window.addEventListener("DOMContentLoaded",function(){
@@ -867,7 +894,6 @@ ${GKEY
     <div class="seg" role="group" aria-label="Filter days"><button id="fAll" aria-pressed="true">All days</button><button id="fBad" aria-pressed="false">Home-late only</button></div>
     <button id="xAll" class="xbtn">Expand all</button>
     <button id="thm" class="xbtn" aria-pressed="false">☾ Dark</button>
-    <label class="chk"><input type="checkbox" id="tFix" checked> Show fixes</label>
     <div class="legend">
       <span class="it"><span class="sw" style="background:var(--ok)"></span>Home by 21:30</span>
       <span class="it"><span class="sw" style="background:var(--warn)"></span>A bit late</span>
