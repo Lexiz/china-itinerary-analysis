@@ -13,7 +13,6 @@ const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)
 // endpoint being callable by anyone who merely guesses the URL, which is what it
 // was before. Absent token → the buttons render disabled and say why.
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
-const MUTATE_TOKEN = process.env.NEXT_PUBLIC_MUTATE_TOKEN || process.env.MUTATE_TOKEN || '';
 // Working plan, keyed "City|day": machine-replanned days, overridden by hand-agreed ones.
 import { changeList, matchStop, nk } from './lib-plan.mjs';
 // Durations read as clock time: 45m, 1h30, 2h
@@ -388,11 +387,10 @@ for (const d of DATA) {
   // written at all.
   const mealBtn = (i, meal) => {
     const taken = mealsDecided[meal];
-    const dis = !MUTATE_TOKEN ? 'no token — rebuild the page with MUTATE_TOKEN set' : '';
-    const ttl = dis || (taken
+    const ttl = taken
       ? `${meal} is ${taken} — replace it with ${i.full || i.name}`
-      : `Put ${i.full || i.name} in this day's ${meal} slot`);
-    return `<button class="addbtn${dis ? ' off' : ''}${taken ? ' swap' : ''}" ${dis ? 'disabled' : ''}`
+      : `Put ${i.full || i.name} in this day's ${meal} slot`;
+    return `<button class="addbtn${taken ? ' swap' : ''}"`
       + ` data-pid="${esc(i.id || '')}" data-city="${esc(d.cityId)}" data-day="${d.day}"`
       + ` data-meal="${meal === 'lunch' ? 'Lunch' : 'Dinner'}" data-name="${esc(i.full || i.name)}"`
       + (taken ? ` data-replace="${esc(taken)}"` : '')
@@ -414,7 +412,7 @@ for (const d of DATA) {
     // Only rows the map can actually place get one — a key with no marker behind it
     // would select nothing and read as a dead click.
     const mapped = i.lat != null && i.lng != null;
-    const canPlan = !!i.id && !isFood && !!MUTATE_TOKEN;
+    const canPlan = !!i.id && !isFood;
     return `<tr${i.id ? ` data-pid="${esc(i.id)}" data-idea-id="${esc(i.id)}" data-idea-name="${esc(i.name)}"` : ''}`
       + `${mapped ? ` data-key="${esc(nk(i.name))}"` : ''}${canPlan ? ' draggable="true" title="Drag onto the Proposed timeline to plan it"' : ''} class="idrow${canPlan ? ' planidea' : ''}">`
       + `<td class="an">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
@@ -521,9 +519,8 @@ for (const d of DATA) {
     + `</div>`;
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
-  const planDisabled = !MUTATE_TOKEN ? ' title="Rebuild with MUTATE_TOKEN to enable planning"' : '';
   const row2 = `<div class="row2"><div class="planlabel"><span>Proposed</span><span class="planstatus">Drag an activity suggestion here</span></div>`
-    + `<div class="track2 empty plantrack"${planDisabled}>${gridHTML}<div class="plandrop">Drop an activity to start planning</div></div>`
+    + `<div class="track2 empty plantrack">${gridHTML}<div class="plandrop">Drop an activity to start planning</div></div>`
     + `<div class="plancontrols"><button class="plancancel">Cancel</button><button class="planconfirm">Confirm plan</button></div></div>`;
   // What you actually do today — the same number the app's badge shows, counted the
   // same way (Day.activityCount): the whole timeline, meals and the hotel included,
@@ -708,6 +705,9 @@ if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
    Confirm or Cancel. Exact times always come back from the scheduling oracle. */
 var PLAN=new WeakMap();
 var PLAN_TIME=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit",hour12:false});
+function plannerToken(){if(window.__TOK)return window.__TOK;var saved="";try{saved=localStorage.getItem("china-planner-key")||"";}catch(_){}if(saved){window.__TOK=saved;return saved;}
+  var entered=prompt("Unlock planning once: paste the private part after /t/ in your mobile-app link, or paste the planner key.");if(!entered)return "";entered=entered.trim().replace(/^.*\\/t\\//,"").replace(/\\/.*$/,"");
+  window.__TOK=entered;try{localStorage.setItem("china-planner-key",entered);}catch(_){}return entered;}
 function planClock(iso){return iso?PLAN_TIME.format(new Date(iso)):"—";}
 function planMin(iso){if(!iso)return 300;var p=PLAN_TIME.formatToParts(new Date(iso)),h=0,m=0;
   p.forEach(function(x){if(x.type==="hour")h=+x.value;if(x.type==="minute")m=+x.value;});
@@ -718,7 +718,8 @@ function planState(day){var s=PLAN.get(day);if(!s){s={diff:null,busy:false,start
 function planMessage(day,msg,bad){var x=day.querySelector(".planstatus");if(x){x.textContent=msg;x.classList.toggle("bad",!!bad);}}
 function planPost(day,action,extra){var s=planState(day);s.busy=true;day.classList.add("planbusy");planMessage(day,action==="commit"?"Confirming and publishing…":"Recalculating…");
   var body=Object.assign({action:action,cityId:day.dataset.cityId,day:+day.dataset.day},extra||{});
-  return fetch(window.__APP+"/api/plan",{method:"POST",headers:{"Content-Type":"application/json","x-trip-token":window.__TOK||""},body:JSON.stringify(body)})
+  var token=plannerToken();if(!token){s.busy=false;day.classList.remove("planbusy");planMessage(day,"Planning was not unlocked.",true);return Promise.reject(new Error("Planning was not unlocked."));}
+  return fetch(window.__APP+"/api/plan",{method:"POST",headers:{"Content-Type":"application/json","x-trip-token":token},body:JSON.stringify(body)})
     .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t);}catch(_){}if(!r.ok||!j||!j.ok)throw new Error((j&&j.error)||"Planning request failed.");return j;});})
     .finally(function(){s.busy=false;day.classList.remove("planbusy");});
 }
@@ -848,7 +849,7 @@ document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&PP.classLi
    so this capture runs first — and it deliberately does NOT stop propagation, so
    selecting the segment still happens underneath the panel. */
 document.addEventListener("click",function(e){
-  if(e.target.closest(".addbtn")) return;
+  if(e.target.closest(".addbtn,.planadd")) return;
   var el=e.target.closest("[data-pid]");
   if(el&&el.dataset.pid) openPlace(el.dataset.pid);
 },true);
@@ -863,12 +864,13 @@ document.addEventListener("click",function(e){
   var b=e.target.closest(".addbtn"); if(!b||b.disabled)return;
   e.preventDefault(); e.stopPropagation();
   var msg=b.parentElement.querySelector(".ppmsg")||(function(){var d=document.createElement("div");d.className="ppmsg";b.parentElement.appendChild(d);return d;})();
+  var fail=function(t){ msg.textContent=t; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; };
+  var token=plannerToken();if(!token){fail("Planning was not unlocked.");return;}
   var swap=b.dataset.replace||null, cleared=false;
   var slot={cityId:b.dataset.city,day:+b.dataset.day,meal:b.dataset.meal};
   var post=function(body){return fetch(window.__APP+"/api/meal",{method:"POST",
-    headers:{"Content-Type":"application/json","x-trip-token":window.__TOK||""},
+    headers:{"Content-Type":"application/json","x-trip-token":token},
     body:JSON.stringify(body)});};
-  var fail=function(t){ msg.textContent=t; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; };
   b.classList.add("busy"); b.disabled=true; msg.style.color="var(--ink-2)";
   msg.textContent=swap?("Removing "+swap+"…"):"Adding…";
   /* Replacing is remove-then-assign, in that order, because assign on its own is
@@ -889,7 +891,7 @@ document.addEventListener("click",function(e){
     if(!j){ msg.textContent="Took too long to confirm — it has probably been applied. Refresh the app and check."; msg.style.color="var(--warn)"; return; }
     if(!r.ok||!j.ok){ fail((j.error||"That did not work.")+(cleared?(" "+swap+" was already removed, so the slot is empty now."):"")); return; }
     msg.textContent="Added. Publishing…"; msg.style.color="var(--ok)";
-    return fetch(window.__APP+"/api/sync",{method:"POST",headers:{"x-trip-token":window.__TOK||""}})
+    return fetch(window.__APP+"/api/sync",{method:"POST",headers:{"x-trip-token":token}})
       .then(function(){ msg.textContent=(swap?"Replaced ":"Added to ")+b.dataset.meal.toLowerCase()+". Rebuild this page to see it move."; })
       .catch(function(){ msg.textContent="Added. The app copy is still catching up."; });
   });})
@@ -1218,7 +1220,7 @@ ${GKEY
 ${STYLE}
 ${EXTRA}
 <div id="pp" role="dialog" aria-modal="true" aria-label="Place detail"><div class="ppbg"></div><div class="ppbox"></div></div>
-<script>window.__PLACES=${JSON.stringify(PLACES)};window.__APP=${JSON.stringify(APP_ORIGIN)};window.__TOK=${JSON.stringify(MUTATE_TOKEN)};<\/script>
+<script>window.__PLACES=${JSON.stringify(PLACES)};window.__APP=${JSON.stringify(APP_ORIGIN)};window.__TOK="";<\/script>
 <script>${script}</script>`;
 writeFileSync(new URL('./china-day-load.html', import.meta.url), html);
 console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length,
