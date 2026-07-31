@@ -709,7 +709,7 @@ function saveAuth(token,user){AUTH.token=token||"";AUTH.user=user||null;window._
 function renderAuth(){var state=document.getElementById("authstate"),signin=document.getElementById("googleSignIn"),manage=document.getElementById("manageUsers"),out=document.getElementById("signOut"),badge=document.getElementById("plannerBadge"),badgeText=document.getElementById("plannerBadgeText");if(!state)return;
   state.innerHTML="";if(AUTH.user){if(AUTH.user.picture){var img=document.createElement("img");img.src=AUTH.user.picture;img.alt="";state.appendChild(img);}var label=document.createElement("span");label.textContent=AUTH.user.name||AUTH.user.email;state.appendChild(label);signin.hidden=true;manage.hidden=false;out.hidden=false;if(badge)badge.classList.add("on");if(badgeText)badgeText.textContent="Planning unlocked";authMessage("Planning enabled");}
   else{var label=document.createElement("span");label.textContent="View only";state.appendChild(label);signin.hidden=false;manage.hidden=true;out.hidden=true;if(badge)badge.classList.remove("on");if(badgeText)badgeText.textContent="Sign in required to plan";}}
-function renderGoogleButton(){var host=document.getElementById("googleSignIn");if(!host||AUTH.user||host.dataset.ready||!window.google||!window.__GOOGLE_CLIENT_ID)return;host.dataset.ready="1";
+function renderGoogleButton(){var host=document.getElementById("googleSignIn");if(!host||AUTH.user||host.dataset.ready||!window.google||!google.accounts||!google.accounts.id||!window.__GOOGLE_CLIENT_ID)return;host.dataset.ready="1";
   google.accounts.id.initialize({client_id:window.__GOOGLE_CLIENT_ID,callback:googleCredential,auto_select:false,cancel_on_tap_outside:true});
   google.accounts.id.renderButton(host,{type:"standard",theme:"outline",size:"medium",shape:"pill",text:"signin_with"});}
 function googleCredential(response){if(!response||!response.credential)return;authMessage("Signing in…");fetch(window.__APP+"/api/auth/google",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({credential:response.credential})})
@@ -730,7 +730,7 @@ document.getElementById("manageUsers").addEventListener("click",function(){docum
 document.getElementById("signOut").addEventListener("click",signOutPlanner);
 document.getElementById("adminModal").addEventListener("click",function(e){if(e.target.classList.contains("ambg")||e.target.classList.contains("amclose")){this.classList.remove("on");return;}var remove=e.target.closest(".amremove");if(!remove)return;var status=document.getElementById("adminStatus");status.textContent="Removing…";adminRequest("DELETE",{email:remove.dataset.email}).then(function(j){renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
 document.getElementById("adminForm").addEventListener("submit",function(e){e.preventDefault();var input=document.getElementById("adminEmail"),status=document.getElementById("adminStatus"),email=input.value.trim().toLowerCase();if(!email)return;status.textContent="Adding…";adminRequest("POST",{email:email}).then(function(j){input.value="";renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
-var authWait=setInterval(function(){if(window.google){clearInterval(authWait);renderGoogleButton();}},200);setTimeout(function(){clearInterval(authWait);if(!window.google&&!AUTH.user)authMessage("Google sign-in could not load. Refresh to try again.",true);},10000);restoreAuth();
+var authWait=setInterval(function(){if(window.google&&google.accounts&&google.accounts.id){clearInterval(authWait);renderGoogleButton();}},200);setTimeout(function(){clearInterval(authWait);if((!window.google||!google.accounts||!google.accounts.id)&&!AUTH.user)authMessage("Google sign-in could not load. Refresh to try again.",true);},10000);restoreAuth();
 function planClock(iso){return iso?PLAN_TIME.format(new Date(iso)):"—";}
 function planMin(iso){if(!iso)return 300;var p=PLAN_TIME.formatToParts(new Date(iso)),h=0,m=0;
   p.forEach(function(x){if(x.type==="hour")h=+x.value;if(x.type==="minute")m=+x.value;});
@@ -1249,7 +1249,7 @@ const html = `<meta charset="utf-8"><title>China Journey Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=block" rel="stylesheet">
 ${GKEY
-  ? `<script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&callback=gmapsReady" async><\/script>`
+  ? `<script>window.__gmready=false;window.gmapsReady=function(){window.__gmready=true;};<\/script><script src="https://maps.googleapis.com/maps/api/js?key=${GKEY}&language=en&region=US&loading=async&callback=gmapsReady" async><\/script>`
   : `<script>window.addEventListener("DOMContentLoaded",function(){
        document.querySelectorAll(".map").forEach(function(el){
          el.innerHTML='<div class="mapempty">No Google Maps key was available when this page was built \\u2014 set GOOGLE_MAPS_API_KEY, or put the canvas key in build/gmaps-key.txt, and rebuild.<\\/div>';
