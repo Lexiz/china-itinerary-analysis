@@ -567,11 +567,7 @@ for (const d of DATA) {
 out += '</div></section>';
 
 const script = `
-const fAll=document.getElementById("fAll"),fBad=document.getElementById("fBad"),chart=document.getElementById("chart");
-function setFilter(bad){document.body.classList.toggle("only-bad",bad);
-  fBad.setAttribute("aria-pressed",bad);fAll.setAttribute("aria-pressed",!bad);
-  document.querySelectorAll(".city").forEach(c=>c.classList.toggle("empty",bad&&c.dataset.bad==="0"));}
-fAll.onclick=()=>setFilter(false);fBad.onclick=()=>setFilter(true);
+const chart=document.getElementById("chart");
 function toggleRow(row){const day=row.closest(".day");if(!day)return;const open=day.classList.toggle("open");row.setAttribute("aria-expanded",open);if(open)initMaps(day);}
 // Selecting a stop moves in by this much from the day's fitted scale, so you get the streets
 // around it while still seeing where the neighbouring stops are. A fixed setZoom(16) used to
@@ -710,9 +706,9 @@ try{AUTH.token=localStorage.getItem("china-planner-session")||"";localStorage.re
 function authMessage(msg,bad){var el=document.getElementById("authmsg");if(el){el.textContent=msg||"";el.classList.toggle("bad",!!bad);}}
 function authHeaders(){return AUTH.token?{"x-trip-token":AUTH.token}:{};}
 function saveAuth(token,user){AUTH.token=token||"";AUTH.user=user||null;window.__TOK=AUTH.token;try{if(AUTH.token)localStorage.setItem("china-planner-session",AUTH.token);else localStorage.removeItem("china-planner-session");}catch(_){}renderAuth();}
-function renderAuth(){var state=document.getElementById("authstate"),signin=document.getElementById("googleSignIn"),manage=document.getElementById("manageUsers"),out=document.getElementById("signOut");if(!state)return;
-  state.innerHTML="";if(AUTH.user){if(AUTH.user.picture){var img=document.createElement("img");img.src=AUTH.user.picture;img.alt="";state.appendChild(img);}var label=document.createElement("span");label.textContent=AUTH.user.name||AUTH.user.email;state.appendChild(label);signin.hidden=true;manage.hidden=false;out.hidden=false;authMessage("Planning enabled");}
-  else{var label=document.createElement("span");label.textContent="View only";state.appendChild(label);signin.hidden=false;manage.hidden=true;out.hidden=true;}}
+function renderAuth(){var state=document.getElementById("authstate"),signin=document.getElementById("googleSignIn"),manage=document.getElementById("manageUsers"),out=document.getElementById("signOut"),badge=document.getElementById("plannerBadge"),badgeText=document.getElementById("plannerBadgeText");if(!state)return;
+  state.innerHTML="";if(AUTH.user){if(AUTH.user.picture){var img=document.createElement("img");img.src=AUTH.user.picture;img.alt="";state.appendChild(img);}var label=document.createElement("span");label.textContent=AUTH.user.name||AUTH.user.email;state.appendChild(label);signin.hidden=true;manage.hidden=false;out.hidden=false;if(badge)badge.classList.add("on");if(badgeText)badgeText.textContent="Planning unlocked";authMessage("Planning enabled");}
+  else{var label=document.createElement("span");label.textContent="View only";state.appendChild(label);signin.hidden=false;manage.hidden=true;out.hidden=true;if(badge)badge.classList.remove("on");if(badgeText)badgeText.textContent="Sign in required to plan";}}
 function renderGoogleButton(){var host=document.getElementById("googleSignIn");if(!host||AUTH.user||host.dataset.ready||!window.google||!window.__GOOGLE_CLIENT_ID)return;host.dataset.ready="1";
   google.accounts.id.initialize({client_id:window.__GOOGLE_CLIENT_ID,callback:googleCredential,auto_select:false,cancel_on_tap_outside:true});
   google.accounts.id.renderButton(host,{type:"standard",theme:"outline",size:"medium",shape:"pill",text:"signin_with"});}
@@ -964,12 +960,27 @@ const EXTRA = `<style>
 .wrap .planidea:hover{background:color-mix(in srgb,#6A5FA0 8%,transparent);}
 .wrap .planadd{border:1px solid var(--target);border-radius:12px;background:color-mix(in srgb,var(--target) 9%,var(--surface));color:var(--target);padding:3px 8px;font:800 10px var(--sans);white-space:nowrap;cursor:grab;}
 .wrap .planadd:active{cursor:grabbing;}
-.wrap .authbar{display:flex;align-items:center;gap:8px;margin-left:auto;min-height:34px;}
-.wrap .authstate{display:flex;align-items:center;gap:7px;font:700 11px var(--sans);color:var(--ink-3);white-space:nowrap;}
+.wrap .hero{position:relative;overflow:hidden;border-radius:22px;padding:18px 22px 22px;color:#fff;background:linear-gradient(125deg,#651d22 0%,#9f3028 46%,#c06a31 100%);box-shadow:0 20px 55px -30px rgba(80,20,12,.8);isolation:isolate;}
+.wrap .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 82% 18%,rgba(255,218,137,.36) 0 8%,transparent 8.5%),linear-gradient(145deg,transparent 46%,rgba(61,18,25,.24) 46.2% 55%,transparent 55.2%);}
+.wrap .hero:after{content:"";position:absolute;left:-4%;right:-4%;bottom:-58px;height:150px;z-index:-1;opacity:.42;background:linear-gradient(155deg,transparent 0 22%,#36151d 22.5% 36%,transparent 36.5%),linear-gradient(25deg,transparent 0 38%,#4b1920 38.5% 51%,transparent 51.5%),linear-gradient(165deg,transparent 0 59%,#32151c 59.5% 74%,transparent 74.5%);}
+.wrap .hero-nav{display:flex;align-items:center;gap:18px;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,.2);}
+.wrap .brand{display:flex;align-items:center;gap:10px;min-width:max-content;}
+.wrap .brandseal{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#f0c36a;color:#6e2020;font:900 19px Georgia,serif;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45);}
+.wrap .brandcopy{display:flex;flex-direction:column;line-height:1.1}.wrap .brandcopy b{font-size:12px;letter-spacing:.12em;text-transform:uppercase}.wrap .brandcopy span{font-size:10px;color:rgba(255,255,255,.66);margin-top:4px;}
+.wrap .navtools{display:flex;align-items:center;justify-content:flex-end;gap:9px;margin-left:auto;min-width:0;}
+.wrap .plannerbadge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid rgba(255,255,255,.23);border-radius:999px;background:rgba(42,10,16,.2);font:750 10.5px var(--sans);white-space:nowrap;color:rgba(255,255,255,.86);}
+.wrap .plannerbadge i{width:7px;height:7px;border-radius:50%;background:#f0c36a;box-shadow:0 0 0 3px rgba(240,195,106,.14)}.wrap .plannerbadge.on i{background:#8fe0a8;box-shadow:0 0 0 3px rgba(143,224,168,.15)}
+.wrap .hero-body{padding:32px 0 6px;max-width:720px}.wrap .hero .eyebrow{color:#f4cd83}.wrap .hero h1{font-size:clamp(32px,5vw,52px);max-width:14ch;margin:9px 0 10px;}.wrap .hero .lede{color:rgba(255,255,255,.78);max-width:64ch;}
+.wrap .hero .stats{margin:20px 0 0}.wrap .hero .stat{background:rgba(255,255,255,.93);border-color:rgba(255,255,255,.48);box-shadow:0 8px 30px -18px rgba(30,5,8,.8);color:#241f1b}.wrap .hero .stat .k{color:#6b5f54}
+.wrap .authbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:34px;min-width:0;}
+.wrap .authstate{display:flex;align-items:center;gap:7px;font:700 11px var(--sans);color:rgba(255,255,255,.78);white-space:nowrap;}
 .wrap .authstate img{width:25px;height:25px;border-radius:50%;object-fit:cover;}
-.wrap .authbtn{border:1px solid var(--line-strong);border-radius:15px;background:var(--surface);color:var(--ink-2);padding:6px 10px;font:750 10.5px var(--sans);cursor:pointer;}
+.wrap .authbtn{border:1px solid rgba(255,255,255,.32);border-radius:15px;background:rgba(255,255,255,.11);color:#fff;padding:6px 10px;font:750 10.5px var(--sans);cursor:pointer;}
 .wrap .authbtn.primary{border-color:var(--target);background:var(--target);color:#fff;}
-.wrap .authmsg{font:700 10.5px var(--sans);color:var(--bad);max-width:220px;}
+.wrap .authmsg{font:700 10.5px var(--sans);color:#ffd1cb;max-width:180px;}
+.wrap .hero .themebtn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;white-space:nowrap;}
+.wrap .toolbar{display:flex;align-items:center;gap:14px;margin:16px 0 8px;padding:0 2px 14px;border-bottom:1px solid var(--line);}
+.wrap .toolbar .legend{margin-left:auto;}
 #adminModal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:20px;}
 #adminModal.on{display:flex;} #adminModal .ambg{position:absolute;inset:0;background:rgba(0,0,0,.45);}
 #adminModal .ambox{position:relative;width:min(570px,100%);max-height:82vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.24);}
@@ -982,7 +993,8 @@ const EXTRA = `<style>
 #adminModal .amname{font-weight:750;} #adminModal .amemail{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);}
 #adminModal .amremove{border-color:var(--bad);background:transparent;color:var(--bad);float:right;} #adminModal .amremove[disabled]{opacity:.35;cursor:not-allowed;}
 #adminModal .amstatus{min-height:16px;font-size:11px;font-weight:700;color:var(--bad);}
-@media(max-width:760px){.wrap .controls{flex-wrap:wrap}.wrap .authbar{order:3;width:100%;margin-left:0;}.wrap .authstate span{max-width:180px;overflow:hidden;text-overflow:ellipsis;}}
+@media(max-width:900px){.wrap .hero-nav{align-items:flex-start;flex-wrap:wrap}.wrap .navtools{width:100%;justify-content:flex-start;flex-wrap:wrap;margin-left:0}.wrap .authbar{justify-content:flex-start}.wrap .hero-body{padding-top:24px}}
+@media(max-width:620px){.wrap .hero{margin:0 -6px;padding:15px 15px 19px;border-radius:17px}.wrap .brandcopy span{display:none}.wrap .plannerbadge{order:3;width:100%;justify-content:center}.wrap .authstate span{max-width:135px;overflow:hidden;text-overflow:ellipsis}.wrap .toolbar{align-items:flex-start;flex-wrap:wrap}.wrap .toolbar .legend{width:100%;margin-left:0;gap:8px 13px}.wrap .hero .stat{min-width:calc(50% - 5px);flex:1}.wrap .authmsg{width:100%;max-width:none}}
 /* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
    day unfolded the tables ran into each other and nothing said where one day ended
    and the next began; the card edge is that boundary. */
@@ -1233,7 +1245,7 @@ body.only-bad .wrap .day.ok-day{display:none;}
 @media (max-width:520px){.wrap table.acts{min-width:300px;}.wrap .seg .sn{display:none;}}
 </style>`;
 
-const html = `<meta charset="utf-8"><title>China Trip — Day Load Audit</title>
+const html = `<meta charset="utf-8"><title>China Journey Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=block" rel="stylesheet">
 ${GKEY
@@ -1244,22 +1256,31 @@ ${GKEY
        });});<\/script>`}
 <div class="wrap" style="--labelw:128px;--sanea:8.7%;--saneb:71.74%;">
   <header class="top">
-    <div class="eyebrow">China · 11 Aug – 7 Sep 2026 · schedule audit</div>
-    <h1>How late each day really ends</h1>
-    <p class="lede">Each bar is one day on a real clock — from the first stop to <b>getting back to the hotel</b> (recommended time at every stop, plus real travel and the leg home). Bars past the dashed <b style="color:var(--target)">21:30</b> line get you home late; hatched red is past midnight.</p>
-    <div class="stats" id="stats">${statsHTML}</div>
-  </header>
-  <div class="controls">
-    <div class="seg" role="group" aria-label="Filter days"><button id="fAll" aria-pressed="true">All days</button><button id="fBad" aria-pressed="false">Home-late only</button></div>
-    <button id="xAll" class="xbtn">Expand all</button>
-    <button id="thm" class="xbtn" aria-pressed="false">☾ Dark</button>
-    <div id="authbar" class="authbar">
-      <div id="authstate" class="authstate"><span>View only</span></div>
-      <div id="googleSignIn"></div>
-      <button id="manageUsers" class="authbtn" hidden>Manage users</button>
-      <button id="signOut" class="authbtn" hidden>Sign out</button>
-      <span id="authmsg" class="authmsg"></span>
+    <div class="hero">
+      <div class="hero-nav">
+        <div class="brand"><span class="brandseal">中</span><span class="brandcopy"><b>China Journey</b><span>11 Aug – 7 Sep 2026</span></span></div>
+        <div class="navtools">
+          <span id="plannerBadge" class="plannerbadge"><i></i><span id="plannerBadgeText">Sign in required to plan</span></span>
+          <button id="thm" class="xbtn themebtn" aria-pressed="false">☾ Dark</button>
+          <div id="authbar" class="authbar">
+            <div id="authstate" class="authstate"><span>View only</span></div>
+            <div id="googleSignIn"></div>
+            <button id="manageUsers" class="authbtn" hidden>Manage users</button>
+            <button id="signOut" class="authbtn" hidden>Sign out</button>
+            <span id="authmsg" class="authmsg"></span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-body">
+        <div class="eyebrow">Itinerary planning canvas</div>
+        <h1>China, day by day.</h1>
+        <p class="lede">See every day on a real clock, compare ideas with the committed itinerary, and shape the journey before departure. Sign in with an approved Google account to plan.</p>
+      </div>
+      <div class="stats" id="stats">${statsHTML}</div>
     </div>
+  </header>
+  <div class="toolbar">
+    <button id="xAll" class="xbtn">Expand all</button>
     <div class="legend">
       <span class="it"><span class="sw" style="background:var(--ok)"></span>Home by 21:30</span>
       <span class="it"><span class="sw" style="background:var(--warn)"></span>A bit late</span>
