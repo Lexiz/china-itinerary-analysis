@@ -8,11 +8,11 @@ const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf
 // Place detail, written by generate-vizdata from the same snapshot the app renders —
 // so the panel here and the sheet there cannot describe one venue two ways.
 const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)));
-// Where the app lives, and the token that lets this page write to it. The page is
-// public, so the token is deterrence rather than a secret: it stops the mutating
-// endpoint being callable by anyone who merely guesses the URL, which is what it
-// was before. Absent token → the buttons render disabled and say why.
+// Where the app lives. Google Sign-In returns a verified, short-lived planner
+// session from that app; no write credential is ever built into this public page.
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
+const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID
+  || '797848231858-inani0bd295607kmtrl99060biqih5g2.apps.googleusercontent.com';
 // Working plan, keyed "City|day": machine-replanned days, overridden by hand-agreed ones.
 import { changeList, matchStop, nk } from './lib-plan.mjs';
 // Durations read as clock time: 45m, 1h30, 2h
@@ -705,9 +705,36 @@ if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
    Confirm or Cancel. Exact times always come back from the scheduling oracle. */
 var PLAN=new WeakMap();
 var PLAN_TIME=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit",hour12:false});
-function plannerToken(){if(window.__TOK)return window.__TOK;var saved="";try{saved=localStorage.getItem("china-planner-key")||"";}catch(_){}if(saved){window.__TOK=saved;return saved;}
-  var entered=prompt("Unlock planning once: paste the private part after /t/ in your mobile-app link, or paste the planner key.");if(!entered)return "";entered=entered.trim().replace(/^.*\\/t\\//,"").replace(/\\/.*$/,"");
-  window.__TOK=entered;try{localStorage.setItem("china-planner-key",entered);}catch(_){}return entered;}
+var AUTH={token:"",user:null};
+try{AUTH.token=localStorage.getItem("china-planner-session")||"";localStorage.removeItem("china-planner-key");}catch(_){}
+function authMessage(msg,bad){var el=document.getElementById("authmsg");if(el){el.textContent=msg||"";el.classList.toggle("bad",!!bad);}}
+function authHeaders(){return AUTH.token?{"x-trip-token":AUTH.token}:{};}
+function saveAuth(token,user){AUTH.token=token||"";AUTH.user=user||null;window.__TOK=AUTH.token;try{if(AUTH.token)localStorage.setItem("china-planner-session",AUTH.token);else localStorage.removeItem("china-planner-session");}catch(_){}renderAuth();}
+function renderAuth(){var state=document.getElementById("authstate"),signin=document.getElementById("googleSignIn"),manage=document.getElementById("manageUsers"),out=document.getElementById("signOut");if(!state)return;
+  state.innerHTML="";if(AUTH.user){if(AUTH.user.picture){var img=document.createElement("img");img.src=AUTH.user.picture;img.alt="";state.appendChild(img);}var label=document.createElement("span");label.textContent=AUTH.user.name||AUTH.user.email;state.appendChild(label);signin.hidden=true;manage.hidden=false;out.hidden=false;authMessage("Planning enabled");}
+  else{var label=document.createElement("span");label.textContent="View only";state.appendChild(label);signin.hidden=false;manage.hidden=true;out.hidden=true;}}
+function renderGoogleButton(){var host=document.getElementById("googleSignIn");if(!host||AUTH.user||host.dataset.ready||!window.google||!window.__GOOGLE_CLIENT_ID)return;host.dataset.ready="1";
+  google.accounts.id.initialize({client_id:window.__GOOGLE_CLIENT_ID,callback:googleCredential,auto_select:false,cancel_on_tap_outside:true});
+  google.accounts.id.renderButton(host,{type:"standard",theme:"outline",size:"medium",shape:"pill",text:"signin_with"});}
+function googleCredential(response){if(!response||!response.credential)return;authMessage("Signing in…");fetch(window.__APP+"/api/auth/google",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({credential:response.credential})})
+  .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok||!j.token)throw new Error(j.error||"Sign-in failed.");return j;});})
+  .then(function(j){saveAuth(j.token,j.user);})
+  .catch(function(err){saveAuth("",null);authMessage(err.message||"This account is not allowed to plan.",true);});}
+function restoreAuth(){renderAuth();if(!AUTH.token){renderGoogleButton();return;}fetch(window.__APP+"/api/auth/google",{headers:authHeaders()})
+  .then(function(r){if(!r.ok)throw new Error();return r.json();}).then(function(j){saveAuth(AUTH.token,j.user);})
+  .catch(function(){saveAuth("",null);renderGoogleButton();});}
+function signOutPlanner(){if(window.google&&google.accounts&&google.accounts.id)google.accounts.id.disableAutoSelect();saveAuth("",null);var host=document.getElementById("googleSignIn");if(host){host.innerHTML="";host.dataset.ready="";}renderGoogleButton();authMessage("Signed out");}
+function plannerToken(){if(AUTH.token)return AUTH.token;authMessage("Sign in with Google to plan.",true);var bar=document.getElementById("authbar");if(bar)bar.scrollIntoView({behavior:"smooth",block:"center"});return "";}
+function adminRequest(method,body){var opts={method:method,headers:authHeaders()};if(body){opts.headers["Content-Type"]="application/json";opts.body=JSON.stringify(body);}return fetch(window.__APP+"/api/admins",opts).then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error||"Request failed.");return j;});});}
+function renderAdmins(admins){var body=document.getElementById("adminRows");if(!body)return;body.innerHTML="";(admins||[]).forEach(function(a){var tr=document.createElement("tr"),who=document.createElement("td"),box=document.createElement("div");box.className="amwho";
+  if(a.picture){var img=document.createElement("img");img.src=a.picture;img.alt="";box.appendChild(img);}var text=document.createElement("div"),name=document.createElement("div"),email=document.createElement("div");name.className="amname";name.textContent=a.name||a.email;email.className="amemail";email.textContent=a.email;text.appendChild(name);text.appendChild(email);box.appendChild(text);who.appendChild(box);tr.appendChild(who);
+  var actions=document.createElement("td"),remove=document.createElement("button");remove.className="amremove";remove.type="button";remove.textContent="Remove";remove.dataset.email=a.email;remove.disabled=AUTH.user&&a.email===AUTH.user.email;actions.appendChild(remove);tr.appendChild(actions);body.appendChild(tr);});}
+function loadAdmins(){var status=document.getElementById("adminStatus");if(status)status.textContent="Loading…";return adminRequest("GET").then(function(j){renderAdmins(j.admins);if(status)status.textContent="";}).catch(function(e){if(status)status.textContent=e.message;});}
+document.getElementById("manageUsers").addEventListener("click",function(){document.getElementById("adminModal").classList.add("on");loadAdmins();});
+document.getElementById("signOut").addEventListener("click",signOutPlanner);
+document.getElementById("adminModal").addEventListener("click",function(e){if(e.target.classList.contains("ambg")||e.target.classList.contains("amclose")){this.classList.remove("on");return;}var remove=e.target.closest(".amremove");if(!remove)return;var status=document.getElementById("adminStatus");status.textContent="Removing…";adminRequest("DELETE",{email:remove.dataset.email}).then(function(j){renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
+document.getElementById("adminForm").addEventListener("submit",function(e){e.preventDefault();var input=document.getElementById("adminEmail"),status=document.getElementById("adminStatus"),email=input.value.trim().toLowerCase();if(!email)return;status.textContent="Adding…";adminRequest("POST",{email:email}).then(function(j){input.value="";renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
+var authWait=setInterval(function(){if(window.google){clearInterval(authWait);renderGoogleButton();}},200);setTimeout(function(){clearInterval(authWait);if(!window.google&&!AUTH.user)authMessage("Google sign-in could not load. Refresh to try again.",true);},10000);restoreAuth();
 function planClock(iso){return iso?PLAN_TIME.format(new Date(iso)):"—";}
 function planMin(iso){if(!iso)return 300;var p=PLAN_TIME.formatToParts(new Date(iso)),h=0,m=0;
   p.forEach(function(x){if(x.type==="hour")h=+x.value;if(x.type==="minute")m=+x.value;});
@@ -937,6 +964,25 @@ const EXTRA = `<style>
 .wrap .planidea:hover{background:color-mix(in srgb,#6A5FA0 8%,transparent);}
 .wrap .planadd{border:1px solid var(--target);border-radius:12px;background:color-mix(in srgb,var(--target) 9%,var(--surface));color:var(--target);padding:3px 8px;font:800 10px var(--sans);white-space:nowrap;cursor:grab;}
 .wrap .planadd:active{cursor:grabbing;}
+.wrap .authbar{display:flex;align-items:center;gap:8px;margin-left:auto;min-height:34px;}
+.wrap .authstate{display:flex;align-items:center;gap:7px;font:700 11px var(--sans);color:var(--ink-3);white-space:nowrap;}
+.wrap .authstate img{width:25px;height:25px;border-radius:50%;object-fit:cover;}
+.wrap .authbtn{border:1px solid var(--line-strong);border-radius:15px;background:var(--surface);color:var(--ink-2);padding:6px 10px;font:750 10.5px var(--sans);cursor:pointer;}
+.wrap .authbtn.primary{border-color:var(--target);background:var(--target);color:#fff;}
+.wrap .authmsg{font:700 10.5px var(--sans);color:var(--bad);max-width:220px;}
+#adminModal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:20px;}
+#adminModal.on{display:flex;} #adminModal .ambg{position:absolute;inset:0;background:rgba(0,0,0,.45);}
+#adminModal .ambox{position:relative;width:min(570px,100%);max-height:82vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.24);}
+#adminModal h2{margin:0 0 5px;font-size:20px;} #adminModal p{margin:0 0 15px;color:var(--ink-2);font-size:12.5px;line-height:1.45;}
+#adminModal .amclose{position:absolute;right:14px;top:12px;border:0;background:none;color:var(--ink-2);font-size:22px;cursor:pointer;}
+#adminModal .amadd{display:flex;gap:8px;margin:12px 0;} #adminModal .amadd input{flex:1;min-width:0;border:1px solid var(--line-strong);border-radius:8px;padding:8px 10px;background:var(--surface);color:var(--ink);}
+#adminModal .amadd button,#adminModal .amremove{border:1px solid var(--target);border-radius:12px;padding:6px 10px;background:var(--target);color:#fff;font:750 11px var(--sans);cursor:pointer;}
+#adminModal table{width:100%;border-collapse:collapse;font-size:12px;} #adminModal td{padding:9px 4px;border-top:1px solid var(--line);vertical-align:middle;}
+#adminModal .amwho{display:flex;align-items:center;gap:9px;} #adminModal .amwho img{width:29px;height:29px;border-radius:50%;object-fit:cover;background:var(--surface-2);}
+#adminModal .amname{font-weight:750;} #adminModal .amemail{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);}
+#adminModal .amremove{border-color:var(--bad);background:transparent;color:var(--bad);float:right;} #adminModal .amremove[disabled]{opacity:.35;cursor:not-allowed;}
+#adminModal .amstatus{min-height:16px;font-size:11px;font-weight:700;color:var(--bad);}
+@media(max-width:760px){.wrap .controls{flex-wrap:wrap}.wrap .authbar{order:3;width:100%;margin-left:0;}.wrap .authstate span{max-width:180px;overflow:hidden;text-overflow:ellipsis;}}
 /* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
    day unfolded the tables ran into each other and nothing said where one day ended
    and the next began; the card edge is that boundary. */
@@ -1207,6 +1253,13 @@ ${GKEY
     <div class="seg" role="group" aria-label="Filter days"><button id="fAll" aria-pressed="true">All days</button><button id="fBad" aria-pressed="false">Home-late only</button></div>
     <button id="xAll" class="xbtn">Expand all</button>
     <button id="thm" class="xbtn" aria-pressed="false">☾ Dark</button>
+    <div id="authbar" class="authbar">
+      <div id="authstate" class="authstate"><span>View only</span></div>
+      <div id="googleSignIn"></div>
+      <button id="manageUsers" class="authbtn" hidden>Manage users</button>
+      <button id="signOut" class="authbtn" hidden>Sign out</button>
+      <span id="authmsg" class="authmsg"></span>
+    </div>
     <div class="legend">
       <span class="it"><span class="sw" style="background:var(--ok)"></span>Home by 21:30</span>
       <span class="it"><span class="sw" style="background:var(--warn)"></span>A bit late</span>
@@ -1220,7 +1273,14 @@ ${GKEY
 ${STYLE}
 ${EXTRA}
 <div id="pp" role="dialog" aria-modal="true" aria-label="Place detail"><div class="ppbg"></div><div class="ppbox"></div></div>
-<script>window.__PLACES=${JSON.stringify(PLACES)};window.__APP=${JSON.stringify(APP_ORIGIN)};window.__TOK="";<\/script>
+<div id="adminModal" role="dialog" aria-modal="true" aria-label="Manage planning administrators"><div class="ambg"></div><div class="ambox">
+  <button class="amclose" aria-label="Close">×</button><h2>Planning administrators</h2>
+  <p>Administrators can change the itinerary, confirm plans in PostgreSQL, and update the mobile app.</p>
+  <form id="adminForm" class="amadd"><input id="adminEmail" type="email" autocomplete="email" placeholder="person@gmail.com" aria-label="New administrator email"><button type="submit">Add administrator</button></form>
+  <div id="adminStatus" class="amstatus"></div><table><tbody id="adminRows" class="amrows"></tbody></table>
+</div></div>
+<script src="https://accounts.google.com/gsi/client" async defer><\/script>
+<script>window.__PLACES=${JSON.stringify(PLACES)};window.__APP=${JSON.stringify(APP_ORIGIN)};window.__GOOGLE_CLIENT_ID=${JSON.stringify(GOOGLE_OAUTH_CLIENT_ID)};window.__TOK="";<\/script>
 <script>${script}</script>`;
 writeFileSync(new URL('./china-day-load.html', import.meta.url), html);
 console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length,
