@@ -754,7 +754,7 @@ var SUGGESTION_DAY=null,SUGGESTION_POLL=null;
 function openSuggestionModal(day){if(!AUTH.token){openAccessModal();return;}SUGGESTION_DAY=day;var modal=document.getElementById("suggestionModal");modal.classList.add("on");document.body.classList.add("modalopen");var p=document.getElementById("suggestionPrompt"),sub=document.getElementById("suggestionSub"),types=modal.querySelectorAll('input[name="suggestionKind"]'),scope=document.getElementById("suggestionAllDays");p.value="";types.forEach(function(input){input.checked=input.value==="activity";});scope.setAttribute("aria-pressed","false");scope.classList.remove("on");sub.textContent=day.closest(".city").querySelector(".city-name").textContent+" · Day "+day.dataset.day;document.getElementById("suggestionError").textContent="";setTimeout(function(){p.focus();},30);}
 function closeSuggestionModal(){var modal=document.getElementById("suggestionModal");modal.classList.remove("on");document.body.classList.remove("modalopen");SUGGESTION_DAY=null;}
 function jobIcon(status){return status==="failed"?"error":status==="needs_input"?"help":status==="complete"?"check_circle":"progress_activity";}
-function renderSuggestionJobs(day,jobs){var host=day.querySelector(".suggestionjobs");if(!host)return;host.innerHTML="";(jobs||[]).filter(function(j){return j.status!=="complete";}).forEach(function(j){var card=document.createElement("div");card.className="sjob "+j.status;card.dataset.jobId=j.id;
+function renderSuggestionJobs(day,jobs){var host=day.querySelector(".suggestionjobs");if(!host)return;host.innerHTML="";(jobs||[]).filter(function(j){return j.status!=="complete"&&j.jobType!=="enrichment";}).forEach(function(j){var card=document.createElement("div");card.className="sjob "+j.status;card.dataset.jobId=j.id;
   var top=document.createElement("div");top.className="sjobtop";var icon=document.createElement("span");icon.className="msym sjobicon"+(j.status==="researching"||j.status==="queued"?" spin":"");icon.textContent=jobIcon(j.status);var title=document.createElement("b");title.textContent=j.placeName||j.prompt;var kind=document.createElement("span");kind.className="sjobkind";kind.textContent=(j.kind==="activity"?"activity":(j.mealKinds||[j.kind]).join(" + "))+(j.allCityDays?" · every day":"");top.appendChild(icon);top.appendChild(title);top.appendChild(kind);card.appendChild(top);
   var rail=document.createElement("div");rail.className="sjobrail";var fill=document.createElement("i");fill.style.width=Math.max(2,Math.min(100,j.progress||0))+"%";rail.appendChild(fill);card.appendChild(rail);var msg=document.createElement("div");msg.className="sjobmsg";msg.textContent=j.message;card.appendChild(msg);
   if(j.status==="failed"||j.status==="needs_input"){var help=document.createElement("div");help.className="sjobhelp";var input=document.createElement("input");input.placeholder="Add an address, Chinese name or another detail…";var retry=document.createElement("button");retry.type="button";retry.className="sugretry";retry.textContent="Retry";help.appendChild(input);help.appendChild(retry);card.appendChild(help);}host.appendChild(card);});}
@@ -919,13 +919,17 @@ fetch(window.__APP+"/api/plan").then(function(r){return r.json();}).then(functio
    the app's place sheet shows, from places.json, which generate-vizdata writes
    out of the very snapshot the app reads — so the two surfaces cannot describe
    one venue two different ways. */
-var PP=document.getElementById("pp"), PPB=PP.querySelector(".ppbox");
+var PP=document.getElementById("pp"), PPB=PP.querySelector(".ppbox"),PP_CURRENT="",PP_DAY=null,PP_ENRICH={},PP_ENRICH_TIMER=null;
+var PHOTO_VIEW=document.getElementById("photoViewer"),PHOTO_IMAGE=PHOTO_VIEW.querySelector("img"),PHOTO_COUNT=PHOTO_VIEW.querySelector(".photoviewcount"),PHOTO_INDEX=0,PHOTO_LIST=[];
 function esc2(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function dur(m){if(m==null)return null;m=Math.round(m);return m<60?m+"m":Math.floor(m/60)+"h"+(m%60?String(m%60).padStart(2,"0"):"");}
 function row(k,v){return v?'<div class="pprow"><b>'+esc2(k)+'</b><span>'+esc2(v)+'</span></div>':"";}
-function openPlace(pid){
+function enrichJobHTML(pid){var j=PP_ENRICH[pid];if(!j)return'<div class="ppenrichmsg">Searches current sources and fills any details or photos it can find. Existing information is kept.</div>';var busy=j.status==="queued"||j.status==="researching";return'<div class="ppenrichrail"><i style="width:'+Math.max(2,Math.min(100,j.progress||0))+'%"></i></div><div class="ppenrichmsg '+(j.status==="failed"?"bad":j.status==="complete"?"good":"")+'">'+esc2(j.message||"")+'</div>'+(busy?'<div class="ppenrichstage">'+esc2(j.stage||"researching")+'</div>':'');}
+function renderEnrichState(){if(!PP_CURRENT)return;var b=PPB.querySelector(".ppenrich"),host=PPB.querySelector(".ppenrichstatus"),j=PP_ENRICH[PP_CURRENT];if(host)host.innerHTML=enrichJobHTML(PP_CURRENT);if(b){var busy=j&&(j.status==="queued"||j.status==="researching");b.disabled=!!busy;b.innerHTML='<span class="msym" aria-hidden="true">travel_explore</span>'+(busy?'Enriching…':'Enrich details');}}
+function openPlace(pid,day){
   var p=(window.__PLACES||{})[pid]; if(!p)return;
-  var imgs=(p.photos||[]).map(function(u){return '<img loading="lazy" src="'+esc2(u)+'" alt="">';}).join("");
+  PP_CURRENT=pid;if(day)PP_DAY=day;
+  var imgs=(p.photos||[]).map(function(u,i){return '<button type="button" class="ppphoto" data-photo="'+i+'" aria-label="Open photo '+(i+1)+' of '+p.photos.length+'"><img loading="lazy" src="'+esc2(u)+'" alt=""></button>';}).join("");
   /* status is already 'To book' / 'Booked' / 'Idea', so a separate booking chip
      repeated it verbatim: "To book · booking: to book". Kept only when it adds
      something the status does not already say. */
@@ -955,13 +959,21 @@ function openPlace(pid){
     +(p.coord?row("Coordinates", p.coord.lat.toFixed(5)+", "+p.coord.lng.toFixed(5)):"")
     +(p.planningNote?'<div class="pprow"><b>Why / note</b><span>'+esc2(p.planningNote)+'</span></div>':'')
     +(p.bookingLink?'<div class="pprow"><b>Booking</b><span><a href="'+esc2(p.bookingLink)+'" target="_blank" rel="noopener">open</a></span></div>':'')
-    +(p.credit?'<div class="ppcred">Image: '+esc2([p.credit.artist,p.credit.source,p.credit.license].filter(Boolean).join(" · "))+'</div>':'');
+    +(p.credit?'<div class="ppcred">Image: '+esc2([p.credit.artist,p.credit.source,p.credit.license].filter(Boolean).join(" · "))+'</div>':'')
+    +'<div class="ppactions"><button type="button" class="ppenrich"><span class="msym" aria-hidden="true">travel_explore</span>Enrich details</button><div class="ppenrichstatus">'+enrichJobHTML(pid)+'</div></div>';
   PP.classList.add("on"); document.body.style.overflow="hidden";
   PPB.querySelector(".ppx").focus();
 }
-function closePlace(){PP.classList.remove("on");document.body.style.overflow="";}
-PP.addEventListener("click",function(e){ if(e.target.closest(".ppx")||e.target.classList.contains("ppbg")) closePlace(); });
-document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(document.getElementById("suggestionModal").classList.contains("on")){closeSuggestionModal();return;}if(document.getElementById("accessModal").classList.contains("on")){closeAccessModal();return;}if(PP.classList.contains("on"))closePlace();});
+function closePlace(){PP.classList.remove("on");PP_CURRENT="";PP_DAY=null;document.body.style.overflow="";}
+function showPhoto(n){if(!PHOTO_LIST.length)return;PHOTO_INDEX=(n+PHOTO_LIST.length)%PHOTO_LIST.length;PHOTO_IMAGE.src=PHOTO_LIST[PHOTO_INDEX];PHOTO_IMAGE.alt="Photo "+(PHOTO_INDEX+1)+" of "+PHOTO_LIST.length;PHOTO_COUNT.textContent=(PHOTO_INDEX+1)+" / "+PHOTO_LIST.length;}
+function openPhotoViewer(n){var p=(window.__PLACES||{})[PP_CURRENT];PHOTO_LIST=p&&Array.isArray(p.photos)?p.photos.slice():[];if(!PHOTO_LIST.length)return;showPhoto(n);PHOTO_VIEW.classList.add("on");PHOTO_VIEW.querySelector(".photoviewclose").focus();}
+function closePhotoViewer(){PHOTO_VIEW.classList.remove("on");PHOTO_IMAGE.removeAttribute("src");}
+function refreshPlaceDetail(pid){return fetch(window.__APP+"/api/place?id="+encodeURIComponent(pid)).then(function(r){return r.json().then(function(j){if(!r.ok||!j.ok)throw new Error(j.error||"Could not refresh place details.");window.__PLACES[pid]=Object.assign({},window.__PLACES[pid]||{},j.place);return j.place;});});}
+function pollEnrichment(pid,id){clearTimeout(PP_ENRICH_TIMER);researchRequest("/api/research?id="+encodeURIComponent(id)).then(function(j){var job=j.jobs&&j.jobs[0];if(!job)return;PP_ENRICH[pid]=job;if(PP_CURRENT===pid)renderEnrichState();if(job.status==="queued"||job.status==="researching"){PP_ENRICH_TIMER=setTimeout(function(){pollEnrichment(pid,id);},2200);}else if(job.status==="complete"){refreshPlaceDetail(pid).then(function(){if(PP_CURRENT===pid)openPlace(pid,PP_DAY);}).catch(function(){});}}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Research status could not be loaded.",progress:100};if(PP_CURRENT===pid)renderEnrichState();});}
+function startPlaceEnrichment(){if(!plannerToken()||!PP_CURRENT||!PP_DAY)return;var pid=PP_CURRENT,b=PPB.querySelector(".ppenrich");if(b)b.disabled=true;PP_ENRICH[pid]={status:"queued",stage:"queued",message:"Starting research…",progress:2};renderEnrichState();researchRequest("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"enrich",placeId:pid,cityId:PP_DAY.dataset.cityId,day:+PP_DAY.dataset.day})}).then(function(j){PP_ENRICH[pid]=j.job;renderEnrichState();pollEnrichment(pid,j.job.id);}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Enrichment could not start.",progress:100};renderEnrichState();});}
+PP.addEventListener("click",function(e){var photo=e.target.closest(".ppphoto");if(photo){openPhotoViewer(+photo.dataset.photo);return;}if(e.target.closest(".ppenrich")){startPlaceEnrichment();return;}if(e.target.closest(".ppx")||e.target.classList.contains("ppbg"))closePlace();});
+PHOTO_VIEW.addEventListener("click",function(e){if(e.target.closest(".photoviewclose")||e.target.classList.contains("photoviewbg")){closePhotoViewer();return;}if(e.target.closest(".photoviewprev"))showPhoto(PHOTO_INDEX-1);if(e.target.closest(".photoviewnext"))showPhoto(PHOTO_INDEX+1);});
+document.addEventListener("keydown",function(e){if(PHOTO_VIEW.classList.contains("on")){if(e.key==="Escape")closePhotoViewer();else if(e.key==="ArrowLeft")showPhoto(PHOTO_INDEX-1);else if(e.key==="ArrowRight")showPhoto(PHOTO_INDEX+1);return;}if(e.key!=="Escape")return;if(document.getElementById("suggestionModal").classList.contains("on")){closeSuggestionModal();return;}if(document.getElementById("accessModal").classList.contains("on")){closeAccessModal();return;}if(PP.classList.contains("on"))closePlace();});
 /* A block or row opens the panel.
    CAPTURE PHASE, on document, and that is not incidental: the chart already has a
    capture-phase listener that calls stopPropagation() to handle segment SELECTION,
@@ -971,7 +983,7 @@ document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(do
 document.addEventListener("click",function(e){
   if(e.target.closest(".addbtn,.planadd")) return;
   var el=e.target.closest("[data-pid]");
-  if(el&&el.dataset.pid) openPlace(el.dataset.pid);
+  if(el&&el.dataset.pid) openPlace(el.dataset.pid,el.closest(".day"));
 },true);
 
 /* ---- add a suggestion to a meal slot ------------------------------------
@@ -1350,8 +1362,11 @@ body.only-bad .wrap .day.ok-day{display:none;}
 #pp .ppx{position:sticky;top:0;float:right;font:inherit;font-size:20px;line-height:1;border:0;background:none;
   cursor:pointer;color:var(--ink-2);padding:2px 4px;}
 #pp .ppimgs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0 12px;}
-#pp .ppimgs img{width:100%;height:104px;object-fit:cover;border-radius:9px;display:block;background:var(--surface-2);}
-#pp .ppimgs img:first-child{grid-column:1/-1;height:170px;}
+#pp .ppphoto{display:block;border:0;padding:0;background:none;cursor:zoom-in;border-radius:9px;overflow:hidden;min-width:0;}
+#pp .ppphoto:first-child{grid-column:1/-1;}
+#pp .ppphoto img{width:100%;height:104px;object-fit:cover;display:block;background:var(--surface-2);transition:transform .2s ease,filter .2s ease;}
+#pp .ppphoto:first-child img{height:170px;}
+#pp .ppphoto:hover img{transform:scale(1.025);filter:brightness(.94);}
 #pp .ppchips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
 #pp .ppchip{font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:8px;background:var(--surface-2);
   color:var(--ink-2);border:1px solid var(--line);font-family:var(--mono);}
@@ -1361,6 +1376,18 @@ body.only-bad .wrap .day.ok-day{display:none;}
 #pp .ppwarn{font-size:12px;font-weight:700;color:var(--bad);margin:8px 0;}
 #pp .ppcred{font-size:10.5px;color:var(--ink-3);margin-top:10px;line-height:1.5;}
 #pp .ppmsg{font-size:12px;font-weight:700;margin-top:10px;}
+#pp .ppactions{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);}
+#pp .ppenrich{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--target);border-radius:999px;background:color-mix(in srgb,var(--target) 9%,var(--surface));color:var(--target);padding:8px 13px;font:800 11px var(--sans);cursor:pointer;}
+#pp .ppenrich .msym{font-size:17px}#pp .ppenrich:disabled{opacity:.58;cursor:progress}
+#pp .ppenrichstatus{margin-top:8px}#pp .ppenrichmsg{font-size:10.5px;line-height:1.45;color:var(--ink-3)}#pp .ppenrichmsg.good{color:var(--ok)}#pp .ppenrichmsg.bad{color:var(--bad)}
+#pp .ppenrichrail{height:4px;border-radius:4px;background:var(--surface-2);overflow:hidden;margin-bottom:7px}#pp .ppenrichrail i{display:block;height:100%;background:var(--target);transition:width .25s}
+#pp .ppenrichstage{margin-top:3px;font:700 9px var(--mono);color:var(--ink-3);text-transform:uppercase}
+#photoViewer{position:fixed;inset:0;z-index:110;display:none;align-items:center;justify-content:center;padding:52px 76px}#photoViewer.on{display:flex}
+#photoViewer .photoviewbg{position:absolute;inset:0;background:rgba(10,8,8,.92);backdrop-filter:blur(8px)}#photoViewer img{position:relative;max-width:min(1200px,90vw);max-height:82vh;object-fit:contain;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+#photoViewer button{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.3);background:rgba(20,16,16,.58);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(5px)}
+#photoViewer .photoviewclose{right:22px;top:20px;width:40px;height:40px;border-radius:50%;font-size:24px}#photoViewer .photoviewprev,#photoViewer .photoviewnext{top:50%;transform:translateY(-50%);width:46px;height:58px;border-radius:14px;font-size:30px}#photoViewer .photoviewprev{left:20px}#photoViewer .photoviewnext{right:20px}
+#photoViewer .photoviewcount{position:absolute;z-index:2;bottom:18px;left:50%;transform:translateX(-50%);color:#fff;background:rgba(20,16,16,.62);border-radius:999px;padding:6px 11px;font:800 11px var(--mono)}
+@media(max-width:600px){#photoViewer{padding:58px 12px 70px}#photoViewer .photoviewprev{left:8px}#photoViewer .photoviewnext{right:8px}#photoViewer .photoviewprev,#photoViewer .photoviewnext{width:38px;height:48px}}
 .wrap .track2{position:relative;height:30px;border-radius:7px;background:${BAND};}
 .wrap .endlbl2{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;font-family:var(--mono);color:var(--ok);white-space:nowrap;}
 @media (max-width:520px){.wrap table.acts{min-width:300px;}.wrap .seg .sn{display:none;}}
@@ -1416,6 +1443,7 @@ ${GKEY
 ${STYLE}
 ${EXTRA}
 <div id="pp" role="dialog" aria-modal="true" aria-label="Place detail"><div class="ppbg"></div><div class="ppbox"></div></div>
+<div id="photoViewer" role="dialog" aria-modal="true" aria-label="Photo viewer"><div class="photoviewbg"></div><button type="button" class="photoviewclose" aria-label="Close photo viewer">×</button><button type="button" class="photoviewprev" aria-label="Previous photo">‹</button><img alt=""><button type="button" class="photoviewnext" aria-label="Next photo">›</button><div class="photoviewcount"></div></div>
 <div id="accessModal" role="dialog" aria-modal="true" aria-labelledby="accessTitle" aria-describedby="accessCopy"><div class="accessbg"></div><div class="accessbox">
   <button type="button" class="accessclose" aria-label="Close">×</button><span class="msym accessicon" aria-hidden="true">admin_panel_settings</span>
   <div class="accesseye">Planning access</div><h2 id="accessTitle">Invitation required</h2>
