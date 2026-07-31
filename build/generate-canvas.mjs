@@ -423,6 +423,7 @@ for (const d of DATA) {
       + `<td class="iw addcell">`
       + ((i.meals || []).includes('lunch') ? mealBtn(i, 'lunch') : '')
       + ((i.meals || []).includes('dinner') ? mealBtn(i, 'dinner') : '')
+      + (canPlan ? `<button type="button" class="planadd" draggable="true" title="Drag this onto Proposed, or click to add it">↗ <span>plan</span></button>` : '')
       + `</td></tr>`;
   }).join('');
   const ideasHTML = dayIdeas.length
@@ -758,14 +759,24 @@ function committedFromDiff(day,diff){var top=day.querySelector(".track");if(!top
 }
 chart.addEventListener("dragstart",function(e){var idea=e.target.closest(".planidea"),seg=e.target.closest(".pseg");if(!idea&&!seg)return;
   var data=idea?{kind:"idea",placeId:idea.dataset.ideaId,name:idea.dataset.ideaName}:{kind:"stop",stopId:seg.dataset.stopId};
-  e.dataTransfer.effectAllowed=idea?"copy":"move";e.dataTransfer.setData("application/json",JSON.stringify(data));});
-chart.addEventListener("dragover",function(e){if(e.target.closest(".plantrack")){e.preventDefault();e.dataTransfer.dropEffect="move";}});
-chart.addEventListener("drop",function(e){var tr=e.target.closest(".plantrack");if(!tr)return;e.preventDefault();var day=tr.closest(".day"),data=null;try{data=JSON.parse(e.dataTransfer.getData("application/json"));}catch(_){}if(!data)return;
+  var payload=JSON.stringify(data);e.dataTransfer.effectAllowed=idea?"copy":"move";
+  /* WebKit and embedded browser surfaces can discard custom drag types from a
+     table row. text/plain keeps the payload intact there; application/json is
+     retained for browsers that support it. */
+  try{e.dataTransfer.setData("application/json",payload);}catch(_){}e.dataTransfer.setData("text/plain",payload);});
+chart.addEventListener("dragover",function(e){var tr=e.target.closest(".plantrack");if(tr){e.preventDefault();e.dataTransfer.dropEffect="move";tr.classList.add("dragover");}});
+chart.addEventListener("dragleave",function(e){var tr=e.target.closest(".plantrack");if(tr&&!tr.contains(e.relatedTarget))tr.classList.remove("dragover");});
+chart.addEventListener("dragend",function(){chart.querySelectorAll(".plantrack.dragover").forEach(function(x){x.classList.remove("dragover");});});
+chart.addEventListener("drop",function(e){var tr=e.target.closest(".plantrack");if(!tr)return;e.preventDefault();tr.classList.remove("dragover");var day=tr.closest(".day"),data=null;
+  try{data=JSON.parse(e.dataTransfer.getData("application/json")||e.dataTransfer.getData("text/plain"));}catch(_){}if(!data){planMessage(day,"The browser did not provide the dragged activity. Use + plan instead.",true);return;}
   ensurePlan(day).then(function(){var before=stopBeforeX(day,e.clientX,data.stopId||null);
     if(data.kind==="idea")return planPost(day,"add",{placeId:data.placeId,afterSeq:before?before.seq:null});
     return planPost(day,"move",{stopId:data.stopId,afterStopId:before?before.stopId:null});
   }).then(function(j){if(j&&j.diff)renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message||"Could not update the draft.",true);});});
-chart.addEventListener("click",function(e){var rm=e.target.closest(".prm");if(rm){e.preventDefault();e.stopPropagation();var day=rm.closest(".day"),seg=rm.closest(".pseg");
+chart.addEventListener("click",function(e){var add=e.target.closest(".planadd");if(add){e.preventDefault();e.stopImmediatePropagation();var row=add.closest(".planidea"),day0=add.closest(".day"),s0=planState(day0);if(s0.busy)return;
+    ensurePlan(day0).then(function(){var stops=draftStops(planState(day0).diff),last=stops[stops.length-1];return planPost(day0,"add",{placeId:row.dataset.ideaId,afterSeq:last?last.seq:null});})
+      .then(function(j){renderDraft(day0,j.diff);}).catch(function(err){planMessage(day0,err.message||"Could not add the activity.",true);});return;}
+  var rm=e.target.closest(".prm");if(rm){e.preventDefault();e.stopPropagation();var day=rm.closest(".day"),seg=rm.closest(".pseg");
     planPost(day,"drop",{stopId:seg.dataset.stopId}).then(function(j){renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message,true);});return;}
   var cancel=e.target.closest(".plancancel");if(cancel){var d=cancel.closest(".day");planPost(d,"discard").then(function(){clearPlan(d);}).catch(function(err){planMessage(d,err.message,true);});return;}
   var confirm=e.target.closest(".planconfirm");if(confirm){var d2=confirm.closest(".day"),s=planState(d2);if(!s.diff)return;var kept=s.diff;
@@ -903,6 +914,7 @@ const EXTRA = `<style>
 .wrap .planstatus.bad{color:var(--bad);}
 .wrap .plantrack{position:relative;min-height:32px;border:1px dashed var(--line-strong);border-radius:7px;background:var(--surface-2);overflow:visible;}
 .wrap .plantrack.empty{opacity:.72;}
+.wrap .plantrack.dragover{opacity:1;border-color:var(--target);background:color-mix(in srgb,var(--target) 9%,var(--surface));box-shadow:0 0 0 3px color-mix(in srgb,var(--target) 13%,transparent);}
 .wrap .plandrop{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--ink-3);pointer-events:none;}
 .wrap .planning .plandrop{display:none;}
 .wrap .pseg{position:absolute;top:4px;height:24px;border-radius:6px;background:color-mix(in srgb,var(--target) 18%,var(--surface));border:1px solid color-mix(in srgb,var(--target) 58%,transparent);display:flex;align-items:center;gap:4px;padding:0 7px;min-width:12px;box-sizing:border-box;cursor:grab;z-index:3;overflow:visible;}
@@ -921,6 +933,8 @@ const EXTRA = `<style>
 .wrap .planbusy .plancontrols button{opacity:.55;pointer-events:none;}
 .wrap .planidea{cursor:grab;}
 .wrap .planidea:hover{background:color-mix(in srgb,#6A5FA0 8%,transparent);}
+.wrap .planadd{border:1px solid var(--target);border-radius:12px;background:color-mix(in srgb,var(--target) 9%,var(--surface));color:var(--target);padding:3px 8px;font:800 10px var(--sans);white-space:nowrap;cursor:grab;}
+.wrap .planadd:active{cursor:grabbing;}
 /* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
    day unfolded the tables ran into each other and nothing said where one day ended
    and the next began; the card edge is that boundary. */
