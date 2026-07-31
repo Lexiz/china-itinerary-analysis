@@ -176,6 +176,38 @@ for (const d of s.days) {
 out.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.order - b.order);
 writeFileSync(new URL('./viz-data.json', import.meta.url), JSON.stringify(out));
 
+// Whole-trip headline stats, shared with the mobile app's activity semantics.
+// `activityCount` is the number shown on each day card: every scheduled row that
+// actually belongs to that day, including its meal slots and hotel return, while
+// excluding away/bonus alternatives. Summing those day counts keeps the hero in
+// lockstep with the activity tables instead of counting catalogue Place records.
+const routeModes = {
+  walk: { count: 0, km: 0, minutes: 0 },
+  metro: { count: 0, km: 0, minutes: 0 },
+  didi: { count: 0, km: 0, minutes: 0 },
+};
+for (const d of s.days) {
+  for (const leg of (d.legs || [])) {
+    const mode = leg.recommended;
+    const choice = routeModes[mode] && leg[mode];
+    if (!choice || choice.minutes == null) continue;
+    routeModes[mode].count += 1;
+    routeModes[mode].km += choice.km || 0;
+    routeModes[mode].minutes += choice.minutes;
+  }
+}
+writeFileSync(new URL('./trip-stats.json', import.meta.url), JSON.stringify({
+  days: s.trip.stats.days,
+  nights: s.trip.stats.nights,
+  cities: s.trip.stats.cities,
+  distanceKm: s.trip.stats.distanceKm,
+  distanceLabel: s.trip.stats.distanceLabel,
+  activities: s.days.reduce((n, d) => n + (d.activityCount || 0), 0),
+  flights: s.trip.stats.flights,
+  trains: s.trip.stats.trains,
+  routes: routeModes,
+}));
+
 // ---- place details, for the canvas's own detail panel ----------------------
 //
 // Written as a SIDECAR rather than folded into viz-data.json, which is an array

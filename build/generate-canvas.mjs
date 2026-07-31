@@ -8,6 +8,7 @@ const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf
 // Place detail, written by generate-vizdata from the same snapshot the app renders —
 // so the panel here and the sheet there cannot describe one venue two ways.
 const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)));
+const TRIP = JSON.parse(readFileSync(new URL('./trip-stats.json', import.meta.url)));
 // Where the app lives. Google Sign-In returns a verified, short-lived planner
 // session from that app; no write credential is ever built into this public page.
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
@@ -135,24 +136,24 @@ function verdict(d) {
 }
 const V = new Map(DATA.map(d => [d, verdict(d)]));
 
-const late = DATA.filter(d => V.get(d).late);
-const onTime = DATA.length - late.length;
-const missedDep = DATA.filter(d => V.get(d).missed).length;
-// The latest finish is Shanghai d6's red-eye: a 02:10 airport call, not an over-packed sightseeing
-// day. Labelled as what it is, so nobody reads it as a day still needing cuts.
-const latest = [...DATA].sort((a, b) => V.get(b).endMin - V.get(a).endMin)[0];
-const lv = latest ? V.get(latest) : null;
-// "reviewed & accepted" was true of the 28 Jul rework — and that rework was never applied to the
-// database. This page now shows what Postgres actually holds, which is the plan as it stands, so
-// these days are simply late and undecided. Calling them accepted would claim a decision nobody
-// made about these times.
-const statsHTML = [
-  ['ok', onTime, 'home by 21:30'],
-  ['warn', late.length, 'later — not yet decided'],
-  [missedDep ? 'bad' : 'ok', missedDep, 'missed departures'],
-  ['', latest ? `${latest.city} d${latest.day}` : '—',
-    latest ? `latest — ${latest.home ? 'home' : 'airport'} ${EL(lv.endMin)}` : ''],
-].map(([c, n, k]) => `<div class="stat ${c}"><div class="n">${esc(n)}</div><div class="k">${k}</div></div>`).join('');
+const stat = (icon, n, k) => `<div class="stat">${ms(icon, 'stic')}<div><div class="n">${esc(n)}</div><div class="k">${esc(k)}</div></div></div>`;
+const distance = TRIP.distanceLabel || `≈${Math.round(TRIP.distanceKm).toLocaleString('en-US')} km`;
+const route = TRIP.routes;
+const walkingTime = fmtDur(route.walk.minutes);
+const statsHTML = `<div class="statgroup"><div class="statlabel">The journey</div><div class="statrow">`
+  + stat('calendar_month', TRIP.days, 'days')
+  + stat('bedtime', TRIP.nights, 'nights')
+  + stat('location_city', TRIP.cities, 'cities')
+  + stat('route', distance, 'across China')
+  + stat('place', TRIP.activities, 'scheduled activities')
+  + stat('flight', TRIP.flights, 'internal flights')
+  + stat('train', TRIP.trains, 'internal trains')
+  + `</div></div><div class="statgroup"><div class="statlabel">Between stops</div><div class="statrow">`
+  + stat('local_taxi', route.didi.count, `Didi rides · ≈${Math.round(route.didi.km).toLocaleString('en-US')} km`)
+  + stat('subway', route.metro.count, `metro trips · ≈${Math.round(route.metro.km).toLocaleString('en-US')} km`)
+  + stat('directions_walk', route.walk.count, `walks · ≈${route.walk.km.toFixed(1)} km`)
+  + stat('schedule', walkingTime, 'estimated walking time')
+  + `</div></div>`;
 
 // top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
 const clock = [[300,'05'],[420,'07'],[540,'09'],[660,'11'],[780,'13'],[900,'15'],[1020,'17'],[1140,'19'],[1260,'21'],[1380,'23'],[1500,'01'],[1620,'03']];
@@ -1002,7 +1003,7 @@ const EXTRA = `<style>
 .wrap .plannerbadge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid rgba(255,255,255,.23);border-radius:999px;background:rgba(42,10,16,.2);font:750 10.5px var(--sans);white-space:nowrap;color:rgba(255,255,255,.86);}
 .wrap .plannerbadge i{width:7px;height:7px;border-radius:50%;background:#f0c36a;box-shadow:0 0 0 3px rgba(240,195,106,.14)}.wrap .plannerbadge.on i{background:#8fe0a8;box-shadow:0 0 0 3px rgba(143,224,168,.15)}
 .wrap .hero-body{padding:32px 0 6px;max-width:720px}.wrap .hero .eyebrow{color:#f4cd83}.wrap .hero h1{font-size:clamp(32px,5vw,52px);max-width:14ch;margin:9px 0 10px;}.wrap .hero .lede{color:rgba(255,255,255,.78);max-width:64ch;}
-.wrap .hero .stats{margin:20px 0 0}.wrap .hero .stat{background:rgba(255,255,255,.93);border-color:rgba(255,255,255,.48);box-shadow:0 8px 30px -18px rgba(30,5,8,.8);color:#241f1b}.wrap .hero .stat .k{color:#6b5f54}
+.wrap .hero .stats{display:grid;gap:13px;margin:20px 0 0}.wrap .hero .statgroup{display:grid;gap:7px}.wrap .hero .statlabel{font:800 9.5px var(--sans);letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.67)}.wrap .hero .statrow{display:flex;flex-wrap:wrap;gap:7px}.wrap .hero .stat{display:flex;align-items:center;gap:8px;min-width:0;padding:8px 11px;background:rgba(255,255,255,.93);border-color:rgba(255,255,255,.48);border-radius:11px;box-shadow:0 8px 30px -18px rgba(30,5,8,.8);color:#241f1b}.wrap .hero .stat .stic{font-size:17px;color:#9f3028}.wrap .hero .stat .n{font-size:16px;line-height:1}.wrap .hero .stat .k{font-size:9.5px;line-height:1.2;margin-top:3px;color:#6b5f54;white-space:nowrap}
 .wrap .authbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:34px;min-width:0;}
 .wrap .authstate{display:flex;align-items:center;gap:7px;font:700 11px var(--sans);color:rgba(255,255,255,.78);white-space:nowrap;}
 .wrap .authstate img{width:25px;height:25px;border-radius:50%;object-fit:cover;}
@@ -1336,5 +1337,5 @@ ${EXTRA}
 <script>${script}</script>`;
 writeFileSync(new URL('./china-day-load.html', import.meta.url), html);
 console.log('canvas rebuilt:', html.length, 'bytes · days', DATA.length,
-  `· ${onTime} home by 21:30 · ${late.length} later (undecided) · ${missedDep} missed departures`,
+  `· ${TRIP.activities} scheduled activities · ${route.didi.count} Didi · ${route.metro.count} metro · ${route.walk.count} walks`,
   '· axis 06:00→04:00');
