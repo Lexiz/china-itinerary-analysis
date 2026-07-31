@@ -336,7 +336,7 @@ for (const d of DATA) {
     // data-pid: clicking a row opens the place drawer, exactly like the timeline
     // block and the suggestion rows — a row IS its stop, so it opens the same panel.
     const rowPid = pidOf(r.name);
-    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"${rowPid ? ` data-pid="${esc(rowPid)}"` : ''}><td class="an">${ic}${esc(r.name)}${tag}${bkg}</td>`
+    return `<tr class="${cls}" data-key="${esc(nk(r.name))}"${rowPid ? ` data-pid="${esc(rowPid)}"` : ''}><td class="an"><span class="anmain">${ic}<span class="antext">${esc(r.name)}</span>${tag}${bkg}</span></td>`
       + `<td class="tm b1">${hhmm(r.s)}</td><td class="tm">${hhmm(r.s + r.d)}</td>`
       + `<td class="${totCls}"${capT ? ` title="${capT}"` : ''}>${fmtDur(r.d)}${r.cap ? '<span class="qm">⏱</span>' : ''}</td>`
       + adv + trav + `</tr>`;
@@ -354,8 +354,8 @@ for (const d of DATA) {
   const homeKey = RB && RB.homeStop && RB.homeStop.lat != null ? nk(RB.homeStop.name) : null;
   const homeRow = RB && RB.homeStop
     ? `<tr class="rhome"${RB.homeStop.pid ? ` data-pid="${esc(RB.homeStop.pid)}"` : ''}${homeKey ? ` data-key="${esc(homeKey)}"` : ''}>`
-      + `<td class="an">${ms(RB.homeStop.icon || 'hotel', 'ic-home')}${esc(RB.homeStop.name)}`
-      + ` <span class="tag">end of day</span></td>`
+      + `<td class="an"><span class="anmain">${ms(RB.homeStop.icon || 'hotel', 'ic-home')}<span class="antext">${esc(RB.homeStop.name)}</span>`
+      + ` <span class="tag">end of day</span></span></td>`
       + `<td class="tm b1">${hhmm(RB.homeStop.s)}</td><td class="tm">—</td>`
       + `<td class="tm tot b1r">—</td><td class="tm sug">—</td>`
       + `<td class="tm tv b3">—</td><td class="tm tv">—</td><td class="tm tv b3r">—</td></tr>`
@@ -416,7 +416,7 @@ for (const d of DATA) {
     const canPlan = !!i.id && !isFood;
     return `<tr${i.id ? ` data-pid="${esc(i.id)}" data-idea-id="${esc(i.id)}" data-idea-name="${esc(i.name)}"` : ''}`
       + `${mapped ? ` data-key="${esc(nk(i.name))}"` : ''}${canPlan ? ' draggable="true" title="Drag onto the Proposed timeline to plan it"' : ''} class="idrow${canPlan ? ' planidea' : ''}">`
-      + `<td class="an">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
+      + `<td class="an"><span class="anmain">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}<span class="antext">${esc(i.name)}</span>${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</span></td>`
       + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
       + `<td class="iw">${esc(i.kind)}</td>`
       + `<td class="iw addcell">`
@@ -429,22 +429,6 @@ for (const d of DATA) {
     ? `<table class="acts idt"><thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody>${ideaRows}</tbody></table>`
     : '';
 
-  // The Summary block (theme — why) that used to sit under the table is gone: it
-  // restated what the activity table already shows, so it was noise on every day.
-  const sug = [];
-  if (RB && RB.missed) sug.push(`<b class="brk">MISSES A LOCKED DEPARTURE</b> — ${esc(RB.missed.name)}, be there ${esc(RB.missed.beThereBy)}. The flight/train will not wait.`);
-  if (rbEnd > 21 * 60 + 30) {
-    const over = rbEnd - (21 * 60 + 30);
-    sug.push(`Gets home <b>${EL(rbEnd)}</b> — ${Math.floor(over / 60)}h${String(over % 60).padStart(2, '0')} past 21:30. Fine if you want the stretch; otherwise the Ideas table below is where to trade.`);
-  }
-  const approxHubs = [...new Set((RB ? RB.stops : []).filter(x => x.hub && x.hub.approx).map(x => x.name))];
-  if (approxHubs.length) sug.push(`<b>${esc(approxHubs.join(', '))}</b> — train time is still provisional (HSR tickets go on sale ~15 days ahead), so don't plan tightly against it yet.`);
-  for (const n of (RB && RB.absorbed) || []) sug.push(`<b>${esc(n)}</b> is the journey itself — it is the gap between the two locked hubs, not a separate stop.`);
-  // The "N of this day's hops are estimated" note was dropped — it fired on nearly every day and said
-  // nothing actionable. Estimated-vs-routed is still per-leg in the travel column's tooltip, which is
-  // where you'd actually want it. Genuine hard warnings above (missed departure, provisional train)
-  // stay; when a day raises none, the whole "Your call" block simply doesn't render.
-  const sugHTML = sug.length ? `<div class="chg sug"><div class="chgh">Your call</div><ul>` + sug.map(t => `<li>${t}</li>`).join('') + `</ul></div>` : '';
   // Per-day map: the stops in the sequence you actually walk them, numbered. Uses the proposed
   // order when there is one, otherwise the current order. Coordless places are skipped.
   // Look the stop up across the WHOLE snapshot, not just this day's original stop list: a stop that
@@ -491,14 +475,12 @@ for (const d of DATA) {
 
   // Two CARDS, each with a stated title — "Activity" (the committed table) and
   // "Suggestions" (the merged ideas table) — so the unfold reads as two clearly
-  // bounded sections rather than tables running into each other. "Your call"
-  // (the day's genuine warnings) sits between them, because its advice points at
-  // the suggestions below it.
+  // bounded sections rather than tables running into each other.
   // The section's own count matches its rows, hotel line included.
   const nAct = rbStops.length + (RB && RB.homeStop ? 1 : 0);
   const detail = `<div class="detail">`
     + `<div class="sect activitysect"><div class="secth">${ms('event_note', 'sic')}<span>Activity</span><span class="scount">${nAct}</span>`
-    + `<span class="recalcstamp">Loading last recalculation…</span><button type="button" class="adjustplan">Adjust planning</button></div>`
+    + `<button type="button" class="adjustplan">Adjust planning</button></div>`
     + `<table class="acts">`
     // The three "Proposed" columns are gone. They were the other half of a
     // Current-vs-Proposed comparison, and the Proposed side has been empty by design
@@ -516,13 +498,12 @@ for (const d of DATA) {
     + `<tbody>${rows}${homeRow}</tbody>`
     + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Scheduled</th><th></th>`
     + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table></div>`
-    + sugHTML
     + (ideasHTML ? `<div class="sect"><div class="secth">${ms('lightbulb', 'sic')}<span>Suggestions</span><span class="scount">${dayIdeas.length}</span></div>${ideasHTML}</div>` : '')
     + `</div>`;
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
   const row2 = `<div class="row2"><div class="track2 empty plantrack">${gridHTML}<div class="plandrop">Drop a suggestion to start planning</div></div>`
-    + `<div class="planfeedback"><span class="planstatus"></span></div>`
+    + `<div class="planfeedback"><span class="planstatus"></span><span class="recalcstamp">Loading last recalculation…</span></div>`
     + `<div class="plancontrols"><button class="plancancel">Cancel</button><button class="planconfirm">Save planning</button></div></div>`;
   // What you actually do today — the same number the app's badge shows, counted the
   // same way (Day.activityCount): the whole timeline, meals and the hotel included,
@@ -757,7 +738,7 @@ function makeDraftSeg(d){var start=planMin(d.startAfter),left=planPct(start),rig
 function renderDraft(day,diff){var s=planState(day);s.diff=diff;var tr=day.querySelector(".plantrack");if(!tr)return;
   tr.querySelectorAll(".pseg").forEach(function(x){x.remove();});
   draftStops(diff).forEach(function(d){tr.appendChild(makeDraftSeg(d));});
-  if(diff&&diff.homeAfter){var hm=document.createElement("div"),at=planMin(diff.homeAfter.arrivalAt||diff.endsAfter);hm.className="pseg phome locked";if(at>1487){hm.style.right="2px";hm.classList.add("edge");}else hm.style.left=planPct(at).toFixed(2)+"%";hm.style.width="auto";hm.title=diff.homeAfter.name+" · "+planClock(diff.homeAfter.arrivalAt||diff.endsAfter);hm.textContent="🏠 "+diff.homeAfter.name+" · "+planClock(diff.homeAfter.arrivalAt||diff.endsAfter);tr.appendChild(hm);}
+  if(diff&&diff.homeAfter){var hm=document.createElement("div"),arrival=diff.homeAfter.arrivalAt||diff.endsAfter,at=planMin(arrival),pct=planPct(at);hm.className="pseg phome locked";if(pct>92){hm.style.right="2px";hm.classList.add("edge");}else hm.style.left=pct.toFixed(2)+"%";hm.style.width="auto";hm.title=diff.homeAfter.name+" · "+planClock(arrival);hm.textContent="🏠 "+planClock(arrival);tr.appendChild(hm);}
   tr.classList.remove("empty");day.classList.add("planning");
   var end=diff&&diff.endsAfter?planClock(diff.endsAfter):"—";
   var debt=diff&&diff.rushDebtAfter?" · "+planDur(diff.rushDebtAfter)+" rushed":"";
@@ -783,7 +764,7 @@ function minuteSpan(a,b){return a&&b?Math.max(0,Math.round((new Date(b)-new Date
 function addCell(row,text,cls){var td=document.createElement("td");if(cls)td.className=cls;td.textContent=text==null||text===""?"—":text;row.appendChild(td);return td;}
 function captureNameMarkup(day){var names=new Map();day.querySelectorAll("tr td.an").forEach(function(cell){var row=cell.closest("tr"),copy=cell.cloneNode(true);copy.querySelectorAll(".removeplan").forEach(function(x){x.remove();});var html=copy.innerHTML;if(row&&row.dataset.pid)names.set("p:"+row.dataset.pid,html);if(row&&row.dataset.key)names.set("n:"+row.dataset.key,html);});return names;}
 function liveIcon(s){if(s.meal==="breakfast")return"bakery_dining";if(s.meal==="lunch")return"lunch_dining";if(s.meal==="dinner")return"dinner_dining";if(s.kind==="hotel")return"hotel";if(s.kind==="show")return"theater_comedy";if(s.kind==="shopping")return"storefront";if(s.kind==="food")return"restaurant";return"place";}
-function restoreNameCell(cell,item,names){var html=names.get("n:"+planKey(item.name))||(item.placeId&&names.get("p:"+item.placeId));if(html){cell.innerHTML=html;return;}var icon=document.createElement("span");icon.className="msym "+(item.meal||item.kind==="food"?"ic-meal":"ic-act");icon.setAttribute("aria-hidden","true");icon.textContent=liveIcon(item);cell.appendChild(icon);cell.appendChild(document.createTextNode(item.name));}
+function restoreNameCell(cell,item,names){var html=names.get("n:"+planKey(item.name))||(item.placeId&&names.get("p:"+item.placeId));if(html){cell.innerHTML=html;return;}var main=document.createElement("span");main.className="anmain";var icon=document.createElement("span");icon.className="msym "+(item.meal||item.kind==="food"?"ic-meal":"ic-act");icon.setAttribute("aria-hidden","true");icon.textContent=liveIcon(item);var label=document.createElement("span");label.className="antext";label.textContent=item.name;main.appendChild(icon);main.appendChild(label);cell.appendChild(main);}
 function reconcileActivities(day,v,names){var table=day.querySelector(".detail .acts:not(.idt)"),body=table&&table.tBodies[0];if(!body)return;body.textContent="";
   (v.stops||[]).slice().sort(function(a,b){return a.seq-b.seq;}).forEach(function(s){var row=document.createElement("tr");row.className="idrow";row.dataset.stopId=s.stopId;row.dataset.key=planKey(s.name);if(s.placeId)row.dataset.pid=s.placeId;var name=addCell(row,"","an");restoreNameCell(name,s,names);name.title=s.name;if(s.removable){row.classList.add("canremove");var rm=document.createElement("button");rm.type="button";rm.className="removeplan";rm.dataset.stopId=s.stopId;rm.dataset.placeId=s.placeId||"";rm.dataset.name=s.name;rm.textContent="Move to suggestions";name.appendChild(rm);}addCell(row,planClock(s.start),"tm");addCell(row,planClock(s.end),"tm");var total=minuteSpan(s.start,s.end);addCell(row,total==null?"—":planDur(total),"tm");addCell(row,s.advised==null?"—":planDur(s.advised),"tm sug");addCell(row,s.walkMin==null?"—":planDur(s.walkMin),"tm");addCell(row,s.metroMin==null?"—":planDur(s.metroMin),"tm");addCell(row,s.didiMin==null?"—":planDur(s.didiMin),"tm");body.appendChild(row);});
   if(v.home){var h=document.createElement("tr");h.className="rhome idrow";h.dataset.key=planKey(v.home.name);if(v.home.placeId)h.dataset.pid=v.home.placeId;var hn=addCell(h,"","an");restoreNameCell(hn,{placeId:v.home.placeId,name:v.home.name||"Back to the hotel",kind:"hotel"},names);addCell(h,planClock(v.home.arrivalAt),"tm");for(var i=0;i<6;i++)addCell(h,"—",i===2?"tm sug":"tm");body.appendChild(h);}
@@ -796,7 +777,7 @@ function reconcileIdeas(day,ideas,names){var current=new Map((ideas||[]).map(fun
   var visible=body.querySelectorAll("tr:not([hidden])").length;if(sect){sect.hidden=!visible;var count=sect.querySelector(".scount");if(count)count.textContent=visible;}
 }
 function reconcileDay(day,v){var names=captureNameMarkup(day);planState(day).live=v;committedFromDiff(day,liveDiff(v));reconcileActivities(day,v,names);reconcileIdeas(day,v.ideas||[],names);showRecalculated(day,v.recalculatedAt);refreshLiveMap(day,v);}
-function commitDraft(day,fallback){return planPost(day,"commit").then(function(j){if(j.day)reconcileDay(day,j.day);else committedFromDiff(day,fallback||planState(day).diff);clearPlan(day,j.publishWarning?"Plan saved · mobile publish needs attention":"Saved · routes, times, canvas and mobile snapshot updated");if(j.publishWarning)planMessage(day,"Plan saved, but mobile publish failed: "+j.publishWarning,true);return j;});}
+function commitDraft(day,fallback){return planPost(day,"commit").then(function(j){if(j.day)reconcileDay(day,j.day);else committedFromDiff(day,fallback||planState(day).diff);clearPlan(day);if(j.publishWarning)planMessage(day,"Plan saved, but mobile publish failed: "+j.publishWarning,true);return j;});}
 chart.addEventListener("dragstart",function(e){var idea=e.target.closest(".planidea"),seg=e.target.closest(".pseg");if(!idea&&!seg)return;
   var data=idea?{kind:"idea",placeId:idea.dataset.ideaId,name:idea.dataset.ideaName}:{kind:"stop",stopId:seg.dataset.stopId};
   PLAN_DRAG=data;var payload=JSON.stringify(data);e.dataTransfer.effectAllowed="copyMove";
@@ -956,7 +937,7 @@ const EXTRA = `<style>
 .wrap .planlabel{display:flex;align-items:center;gap:10px;margin:2px 0 4px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);}
 .wrap .planstatus{font-size:10px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-3);}
 .wrap .planstatus.bad{color:var(--bad);}
-.wrap .recalcstamp{margin-left:auto;font-size:9px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-3);font-variant-numeric:tabular-nums;}
+.wrap .recalcstamp{font-size:9px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-3);font-variant-numeric:tabular-nums;}
 .wrap .plantrack{position:relative;min-height:32px;border:1px dashed var(--line-strong);border-radius:7px;background:var(--surface-2);overflow:visible;}
 .wrap .plantrack.empty{opacity:1;border-color:color-mix(in srgb,var(--cx,var(--target)) 55%,var(--line));background:color-mix(in srgb,var(--cx,var(--target)) 5%,var(--surface));}
 .wrap .plantrack.dragover{opacity:1;border-color:var(--target);background:color-mix(in srgb,var(--target) 9%,var(--surface));box-shadow:0 0 0 3px color-mix(in srgb,var(--target) 13%,transparent);}
@@ -964,11 +945,11 @@ const EXTRA = `<style>
 .wrap .planning .plandrop{display:none;}
 .wrap .planfeedback{min-height:18px;padding-top:4px;}
 .wrap .planfeedback .planstatus:empty{display:none;}
+.wrap .planfeedback .planstatus:not(:empty)+.recalcstamp{display:none;}
 .wrap .pseg{position:absolute;top:4px;height:24px;border-radius:6px;background:color-mix(in srgb,var(--target) 18%,var(--surface));border:1px solid color-mix(in srgb,var(--target) 58%,transparent);display:flex;align-items:center;gap:4px;padding:0 7px;min-width:12px;box-sizing:border-box;cursor:grab;z-index:3;overflow:visible;}
 .wrap .pseg.added{background:color-mix(in srgb,#6A5FA0 20%,var(--surface));border-color:#6A5FA0;}
 .wrap .pseg.locked{background:var(--surface-2);border-style:dashed;cursor:not-allowed;}
-.wrap .pseg.phome{min-width:max-content;max-width:180px;transform:translateX(-12px);background:color-mix(in srgb,var(--ok) 13%,var(--surface));border-color:color-mix(in srgb,var(--ok) 46%,transparent);z-index:4;font:800 9px var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.wrap .pseg.phome.edge{transform:none;}
+.wrap .pseg.phome{min-width:max-content;max-width:none;transform:none;background:color-mix(in srgb,var(--target) 18%,var(--surface));border-color:color-mix(in srgb,var(--target) 58%,transparent);border-style:solid;z-index:4;font:800 9px var(--sans);white-space:nowrap;overflow:hidden;cursor:default;padding:0 7px;}
 .wrap .pseg.infeasible{border-color:var(--bad);box-shadow:0 0 0 1px color-mix(in srgb,var(--bad) 25%,transparent);}
 .wrap .pseg .pn{font-size:9.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
 .wrap .pseg .pd{font-size:8.5px;font-family:var(--mono);margin-left:auto;white-space:nowrap;}
@@ -989,9 +970,12 @@ const EXTRA = `<style>
 .wrap .adjustplan{margin-left:8px;border:1px solid color-mix(in srgb,var(--cx,var(--target)) 55%,var(--line));border-radius:999px;background:color-mix(in srgb,var(--cx,var(--target)) 10%,var(--surface));color:var(--cx,var(--target));padding:5px 10px;font:800 10px var(--sans);text-transform:none;letter-spacing:0;cursor:pointer;white-space:nowrap;}
 .wrap .adjustplan:hover{background:color-mix(in srgb,var(--cx,var(--target)) 18%,var(--surface));}
 .wrap table.acts td.an{position:relative;}
+.wrap table.acts td.an .anmain{display:flex;align-items:center;min-width:0;max-width:100%;}
+.wrap table.acts td.an .antext{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.wrap table.acts td.an .tag{flex:none;}
 .wrap .removeplan{position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:0;pointer-events:none;border:1px solid color-mix(in srgb,var(--bad) 48%,var(--line));border-radius:999px;background:var(--surface);color:var(--bad);padding:3px 8px;font:800 9.5px var(--sans);white-space:nowrap;transition:opacity .14s ease;}
 .wrap tr.canremove:hover .removeplan,.wrap .removeplan:focus-visible{opacity:1;pointer-events:auto;}
-.wrap tr.canremove td.an{padding-right:128px;}
+.wrap .activitysect .secth .adjustplan{margin-left:auto;}
 .wrap .hero{position:relative;overflow:hidden;border-radius:22px;padding:18px 22px 22px;color:#fff;background:linear-gradient(125deg,#651d22 0%,#9f3028 46%,#c06a31 100%);box-shadow:0 20px 55px -30px rgba(80,20,12,.8);isolation:isolate;}
 .wrap .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 82% 18%,rgba(255,218,137,.36) 0 8%,transparent 8.5%),linear-gradient(145deg,transparent 46%,rgba(61,18,25,.24) 46.2% 55%,transparent 55.2%);}
 .wrap .hero:after{content:"";position:absolute;left:-4%;right:-4%;bottom:-58px;height:150px;z-index:-1;opacity:.42;background:linear-gradient(155deg,transparent 0 22%,#36151d 22.5% 36%,transparent 36.5%),linear-gradient(25deg,transparent 0 38%,#4b1920 38.5% 51%,transparent 51.5%),linear-gradient(165deg,transparent 0 59%,#32151c 59.5% 74%,transparent 74.5%);}
@@ -1142,15 +1126,8 @@ body.only-bad .wrap .day.ok-day{display:none;}
 
 
 
-.wrap .chg{margin:0 0 14px;}
 .wrap .chgh{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
 .wrap .chgh .apx{text-transform:none;letter-spacing:0;font-weight:600;color:var(--warn);margin-left:6px;}
-.wrap .chg ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;}
-.wrap .chg li{font-size:12px;color:var(--ink-2);padding-left:14px;position:relative;max-width:82ch;line-height:1.45;}
-.wrap .chg li::before{content:"•";position:absolute;left:2px;color:var(--ink-3);}
-.wrap .chg li b{color:var(--ink);font-weight:700;}
-.wrap .chg li.c-dropped::before{content:"−";color:var(--bad);}
-.wrap .chg li.c-rest::before{content:"+";color:var(--ok);}
 .wrap .seg{cursor:pointer;}
 .wrap .seg.hub{background:var(--ink);color:var(--bg);border:1px solid var(--ink);font-weight:800;box-shadow:none;}
 .wrap .seg.hub .sn{font-weight:800;}
@@ -1196,10 +1173,6 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .detail .fix::before{content:none;}
 .wrap .nummk.on{background:var(--bad);transform:scale(1.25);}
 .wrap .leaflet-container{font:inherit;border-radius:12px;}
-.wrap .chg.sug li::before{content:"?";color:var(--target);font-weight:800;}
-.wrap .chg.sug li b.brk{color:var(--bad);}
-.wrap .chg.sug li{color:var(--ink-2);}
-.wrap .chg.sug .chgh{color:var(--target);}
 .wrap .track{background:${BAND};}
 /* Material Symbols — the app's own icon font and treatment (.msym in app/globals.css),
    rendered by ligature name so the canvas shows the exact glyphs the app shows */
