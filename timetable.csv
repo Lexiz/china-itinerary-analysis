@@ -12,11 +12,12 @@ Day,Date,City,Kind,#,Activity,Start,End,Min,Travel to next (min),Capped,Now star
 2,2026-08-12,Beijing,meal,1,Breakfast,07:00,07:38,38,23,,07:00,38,35,
 2,2026-08-12,Beijing,sight,2,Tiananmen Square,08:01,09:24,83,16,,08:01,83,75,
 2,2026-08-12,Beijing,sight,3,Forbidden City,09:40,13:18,218,12,,09:40,218,210,
-2,2026-08-12,Beijing,meal,4,Lunch — still to book,13:30,14:38,68,20,,13:30,68,,
-2,2026-08-12,Beijing,sight,5,National Museum,14:58,17:36,158,24,closes 17:00 (−36m),14:58,158,180,
-2,2026-08-12,Beijing,sight,6,Jingshan Park,18:00,18:53,53,24,,18:00,53,45,
-2,2026-08-12,Beijing,meal,7,Dinner — still to book,19:17,20:47,90,8,,19:17,90,,
-2,2026-08-12,Beijing,endpoint,8,Back to the hotel,20:55,,,,,,,,walk 8m/0.3km (routed)
+2,2026-08-12,Beijing,meal,4,Lunch — still to book,13:30,14:38,68,36,,13:30,68,,
+2,2026-08-12,Beijing,sight,5,Acrobatics show,15:14,16:52,98,28,,15:14,98,,
+2,2026-08-12,Beijing,sight,6,National Museum,17:20,19:58,158,24,closes 17:00 — ARRIVES AFTER LAST ENTRY,17:20,158,180,
+2,2026-08-12,Beijing,sight,7,Jingshan Park,20:22,21:15,53,24,closes 21:00 (−15m),20:22,53,45,
+2,2026-08-12,Beijing,meal,8,Dinner — still to book,21:39,23:09,90,8,,21:39,90,,
+2,2026-08-12,Beijing,endpoint,9,Back to the hotel,23:17,,,,,,,,walk 8m/0.3km (routed)
 3,2026-08-13,Beijing,meal,1,Breakfast,07:00,07:38,38,84,,07:00,38,35,
 3,2026-08-13,Beijing,sight,2,Mutianyu Great Wall,09:02,11:55,173,1,,09:02,173,165,
 3,2026-08-13,Beijing,sight,3,Toboggan down,11:56,12:24,28,10,,11:56,28,20,

@@ -519,7 +519,7 @@ for (const d of DATA) {
     + `</div>`;
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
-  const row2 = `<div class="row2"><div class="planlabel"><span>Proposed</span><span class="planstatus">Drag an activity suggestion here</span></div>`
+  const row2 = `<div class="row2"><div class="planlabel"><span>Proposed</span><span class="planstatus">Drag an activity suggestion here</span><span class="recalcstamp">Loading last recalculation…</span></div>`
     + `<div class="track2 empty plantrack">${gridHTML}<div class="plandrop">Drop an activity to start planning</div></div>`
     + `<div class="plancontrols"><button class="plancancel">Cancel</button><button class="planconfirm">Confirm plan</button></div></div>`;
   // What you actually do today — the same number the app's badge shows, counted the
@@ -701,6 +701,8 @@ if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
    Confirm or Cancel. Exact times always come back from the scheduling oracle. */
 var PLAN=new WeakMap();
 var PLAN_TIME=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit",hour12:false});
+var PLAN_STAMP=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Shanghai",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false,timeZoneName:"short"});
+var PLAN_DRAG=null;
 var AUTH={token:"",user:null};
 try{AUTH.token=localStorage.getItem("china-planner-session")||"";localStorage.removeItem("china-planner-key");}catch(_){}
 function authMessage(msg,bad){var el=document.getElementById("authmsg");if(el){el.textContent=msg||"";el.classList.toggle("bad",!!bad);}}
@@ -739,7 +741,8 @@ function planPct(n){return Math.max(0,Math.min(100,(n-300)/1380*100));}
 function planDur(n){n=Math.round(n||0);return n<60?n+"m":Math.floor(n/60)+"h"+(n%60?String(n%60).padStart(2,"0"):"");}
 function planState(day){var s=PLAN.get(day);if(!s){s={diff:null,busy:false,started:false};PLAN.set(day,s);}return s;}
 function planMessage(day,msg,bad){var x=day.querySelector(".planstatus");if(x){x.textContent=msg;x.classList.toggle("bad",!!bad);}}
-function planPost(day,action,extra){var s=planState(day);s.busy=true;day.classList.add("planbusy");planMessage(day,action==="commit"?"Confirming and publishing…":"Recalculating…");
+function showRecalculated(day,iso){var x=day.querySelector(".recalcstamp");if(x)x.textContent=iso?"Last recalculated "+PLAN_STAMP.format(new Date(iso)):"Recalculation time unavailable";}
+function planPost(day,action,extra){var s=planState(day);s.busy=true;day.classList.add("planbusy");planMessage(day,action==="commit"?"Recalculating routes and all times, saving, then publishing…":"Recalculating day…");
   var body=Object.assign({action:action,cityId:day.dataset.cityId,day:+day.dataset.day},extra||{});
   var token=plannerToken();if(!token){s.busy=false;day.classList.remove("planbusy");planMessage(day,"Planning was not unlocked.",true);return Promise.reject(new Error("Planning was not unlocked."));}
   return fetch(window.__APP+"/api/plan",{method:"POST",headers:{"Content-Type":"application/json","x-trip-token":token},body:JSON.stringify(body)})
@@ -762,6 +765,7 @@ function makeDraftSeg(d){var start=planMin(d.startAfter),left=planPct(start),rig
 function renderDraft(day,diff){var s=planState(day);s.diff=diff;var tr=day.querySelector(".plantrack");if(!tr)return;
   tr.querySelectorAll(".pseg").forEach(function(x){x.remove();});
   draftStops(diff).forEach(function(d){tr.appendChild(makeDraftSeg(d));});
+  if(diff&&diff.homeAfter){var hm=document.createElement("div"),at=planMin(diff.homeAfter.arrivalAt||diff.endsAfter);hm.className="pseg phome locked";hm.style.left=planPct(at).toFixed(2)+"%";hm.style.width="auto";hm.title=diff.homeAfter.name+" · "+planClock(diff.homeAfter.arrivalAt||diff.endsAfter);hm.textContent="🏠 "+diff.homeAfter.name+" · "+planClock(diff.homeAfter.arrivalAt||diff.endsAfter);tr.appendChild(hm);}
   tr.classList.remove("empty");day.classList.add("planning");
   var end=diff&&diff.endsAfter?planClock(diff.endsAfter):"—";
   var debt=diff&&diff.rushDebtAfter?" · "+planDur(diff.rushDebtAfter)+" rushed":"";
@@ -778,44 +782,58 @@ function committedFromDiff(day,diff){var top=day.querySelector(".track");if(!top
   draftStops(diff).forEach(function(d){var start=planMin(d.startAfter),left=planPct(start),right=planPct(start+Math.max(5,d.dwellAfter||0));var el=document.createElement("div");
     el.className="seg "+(d.locked?"hub":"ok")+(d.isInfeasible?" late":"");el.style.left=left.toFixed(2)+"%";el.style.width=Math.max(.7,right-left).toFixed(2)+"%";el.dataset.key=d.name.toLowerCase().replace(/[^a-z0-9]+/g,"");if(d.placeId)el.dataset.pid=d.placeId;
     el.title=d.name+" · "+planClock(d.startAfter)+" · "+planDur(d.dwellAfter);var n=document.createElement("span");n.className="sn";n.textContent=d.name;el.appendChild(n);var q=document.createElement("span");q.className="sd";q.textContent=planDur(d.dwellAfter);el.appendChild(q);top.appendChild(el);});
-  if(diff&&diff.endsAfter){var minute=planMin(diff.endsAfter),home=document.createElement("div");home.className="seg homeseg ok2";home.style[minute>1487?"right":"left"]=minute>1487?"2px":planPct(minute).toFixed(2)+"%";home.title="Back to base · "+planClock(diff.endsAfter);home.textContent="🏠 "+planClock(diff.endsAfter);top.appendChild(home);}
+  if(diff&&diff.endsAfter){var minute=planMin(diff.endsAfter),home=document.createElement("div"),hn=diff.homeAfter&&diff.homeAfter.name||"Back to the hotel";home.className="seg homeseg ok2";home.style[minute>1487?"right":"left"]=minute>1487?"2px":planPct(minute).toFixed(2)+"%";home.title=hn+" · "+planClock(diff.endsAfter);if(diff.homeAfter&&diff.homeAfter.placeId)home.dataset.pid=diff.homeAfter.placeId;home.textContent="🏠 "+planClock(diff.endsAfter);top.appendChild(home);}
   draftStops(diff).filter(function(d){return d.change==="added"&&d.placeId;}).forEach(function(d){var row=day.querySelector('[data-idea-id="'+CSS.escape(d.placeId)+'"]');if(row)row.hidden=true;});
 }
+function liveDiff(v){var stops=v.stops||[],last=stops[stops.length-1],ends=v.home&&v.home.arrivalAt||last&&last.end&&new Date(new Date(last.end).getTime()+(last.travelMinToNext||0)*60000).toISOString();return{endsAfter:ends||null,homeAfter:v.home||null,deltas:stops.map(function(s){return{stopId:s.stopId,name:s.name,seq:s.seq,placeId:s.placeId,slot:s.slot,locked:s.locked,startAfter:s.start,dwellAfter:s.dwell,change:"unchanged",isInfeasible:s.infeasible};})};}
+function minuteSpan(a,b){return a&&b?Math.max(0,Math.round((new Date(b)-new Date(a))/60000)):null;}
+function addCell(row,text,cls){var td=document.createElement("td");if(cls)td.className=cls;td.textContent=text==null||text===""?"—":text;row.appendChild(td);return td;}
+function reconcileActivities(day,v){var table=day.querySelector(".detail .acts:not(.idt)"),body=table&&table.tBodies[0];if(!body)return;body.textContent="";
+  (v.stops||[]).slice().sort(function(a,b){return a.seq-b.seq;}).forEach(function(s){var row=document.createElement("tr");row.className="idrow";if(s.placeId)row.dataset.pid=s.placeId;var name=addCell(row,s.name,"an");name.title=s.name;addCell(row,planClock(s.start),"tm");addCell(row,planClock(s.end),"tm");var total=minuteSpan(s.start,s.end);addCell(row,total==null?"—":planDur(total),"tm");addCell(row,s.advised==null?"—":planDur(s.advised),"tm sug");addCell(row,s.walkMin==null?"—":planDur(s.walkMin),"tm");addCell(row,s.metroMin==null?"—":planDur(s.metroMin),"tm");addCell(row,s.didiMin==null?"—":planDur(s.didiMin),"tm");body.appendChild(row);});
+  if(v.home){var h=document.createElement("tr");h.className="home-row idrow";if(v.home.placeId)h.dataset.pid=v.home.placeId;addCell(h,"Back to the hotel","an");addCell(h,planClock(v.home.arrivalAt),"tm");for(var i=0;i<6;i++)addCell(h,"—",i===2?"tm sug":"tm");body.appendChild(h);}
+  var count=table.closest(".sect").querySelector(".scount");if(count)count.textContent=body.rows.length;
+}
+function reconcileIdeas(day,ideas){var current=new Map((ideas||[]).map(function(x){return[String(x.placeId),x];})),table=day.querySelector(".detail .acts.idt"),sect=table&&table.closest(".sect"),detail=day.querySelector(".detail");
+  if(!table&&current.size&&detail){sect=document.createElement("div");sect.className="sect";var hd=document.createElement("div");hd.className="secth";var ttl=document.createElement("span");ttl.textContent="Suggestions";var cnt=document.createElement("span");cnt.className="scount";hd.appendChild(ttl);hd.appendChild(cnt);sect.appendChild(hd);table=document.createElement("table");table.className="acts idt";table.innerHTML="<thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody></tbody>";sect.appendChild(table);detail.appendChild(sect);}
+  if(!table)return;var body=table.tBodies[0],seen=new Set();body.querySelectorAll("[data-idea-id]").forEach(function(row){var id=row.dataset.ideaId,idea=current.get(id);row.hidden=!idea;if(idea){seen.add(id);row.dataset.ideaName=idea.name;}});
+  current.forEach(function(idea,id){if(seen.has(id))return;var row=document.createElement("tr");row.className="idrow"+(idea.kind==="food"?"":" planidea");row.dataset.pid=id;row.dataset.ideaId=id;row.dataset.ideaName=idea.name;if(idea.kind!=="food"){row.draggable=true;row.title="Drag onto the Proposed timeline to plan it";}addCell(row,idea.name,"an");addCell(row,idea.advised==null?"—":planDur(idea.advised),"tm sug");addCell(row,idea.kind||"activity","iw");var action=addCell(row,"","iw addcell");if(idea.kind!=="food"){var button=document.createElement("button");button.type="button";button.className="planadd";button.draggable=true;button.title="Drag this onto Proposed, or click to add it";button.textContent="↗ plan";action.appendChild(button);}body.appendChild(row);});
+  var visible=body.querySelectorAll("tr:not([hidden])").length;if(sect){sect.hidden=!visible;var count=sect.querySelector(".scount");if(count)count.textContent=visible;}
+}
+function reconcileDay(day,v){committedFromDiff(day,liveDiff(v));reconcileActivities(day,v);reconcileIdeas(day,v.ideas||[]);showRecalculated(day,v.recalculatedAt);}
 chart.addEventListener("dragstart",function(e){var idea=e.target.closest(".planidea"),seg=e.target.closest(".pseg");if(!idea&&!seg)return;
   var data=idea?{kind:"idea",placeId:idea.dataset.ideaId,name:idea.dataset.ideaName}:{kind:"stop",stopId:seg.dataset.stopId};
-  var payload=JSON.stringify(data);e.dataTransfer.effectAllowed=idea?"copy":"move";
+  PLAN_DRAG=data;var payload=JSON.stringify(data);e.dataTransfer.effectAllowed="copyMove";
   /* WebKit and embedded browser surfaces can discard custom drag types from a
      table row. text/plain keeps the payload intact there; application/json is
      retained for browsers that support it. */
   try{e.dataTransfer.setData("application/json",payload);}catch(_){}e.dataTransfer.setData("text/plain",payload);});
-chart.addEventListener("dragover",function(e){var tr=e.target.closest(".plantrack");if(tr){e.preventDefault();e.dataTransfer.dropEffect="move";tr.classList.add("dragover");}});
+chart.addEventListener("dragover",function(e){var tr=e.target.closest(".plantrack");if(tr){e.preventDefault();e.dataTransfer.dropEffect=PLAN_DRAG&&PLAN_DRAG.kind==="idea"?"copy":"move";tr.classList.add("dragover");}});
 chart.addEventListener("dragleave",function(e){var tr=e.target.closest(".plantrack");if(tr&&!tr.contains(e.relatedTarget))tr.classList.remove("dragover");});
-chart.addEventListener("dragend",function(){chart.querySelectorAll(".plantrack.dragover").forEach(function(x){x.classList.remove("dragover");});});
+chart.addEventListener("dragend",function(){PLAN_DRAG=null;chart.querySelectorAll(".plantrack.dragover").forEach(function(x){x.classList.remove("dragover");});});
 chart.addEventListener("drop",function(e){var tr=e.target.closest(".plantrack");if(!tr)return;e.preventDefault();tr.classList.remove("dragover");var day=tr.closest(".day"),data=null;
-  try{data=JSON.parse(e.dataTransfer.getData("application/json")||e.dataTransfer.getData("text/plain"));}catch(_){}if(!data){planMessage(day,"The browser did not provide the dragged activity. Use + plan instead.",true);return;}
+  try{data=JSON.parse(e.dataTransfer.getData("application/json")||e.dataTransfer.getData("text/plain"));}catch(_){}data=data||PLAN_DRAG;PLAN_DRAG=null;if(!data){planMessage(day,"The browser did not provide the dragged activity. Use + plan instead.",true);return;}
   ensurePlan(day).then(function(){var before=stopBeforeX(day,e.clientX,data.stopId||null);
-    if(data.kind==="idea")return planPost(day,"add",{placeId:data.placeId,afterSeq:before?before.seq:null});
+    if(data.kind==="idea")return planPost(day,"add",{placeId:data.placeId,name:data.name,afterSeq:before?before.seq:null});
     return planPost(day,"move",{stopId:data.stopId,afterStopId:before?before.stopId:null});
   }).then(function(j){if(j&&j.diff)renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message||"Could not update the draft.",true);});});
 chart.addEventListener("click",function(e){var add=e.target.closest(".planadd");if(add){e.preventDefault();e.stopImmediatePropagation();var row=add.closest(".planidea"),day0=add.closest(".day"),s0=planState(day0);if(s0.busy)return;
-    ensurePlan(day0).then(function(){var stops=draftStops(planState(day0).diff),last=stops[stops.length-1];return planPost(day0,"add",{placeId:row.dataset.ideaId,afterSeq:last?last.seq:null});})
+    ensurePlan(day0).then(function(){var stops=draftStops(planState(day0).diff),last=stops[stops.length-1];return planPost(day0,"add",{placeId:row.dataset.ideaId,name:row.dataset.ideaName,afterSeq:last?last.seq:null});})
       .then(function(j){renderDraft(day0,j.diff);}).catch(function(err){planMessage(day0,err.message||"Could not add the activity.",true);});return;}
   var rm=e.target.closest(".prm");if(rm){e.preventDefault();e.stopPropagation();var day=rm.closest(".day"),seg=rm.closest(".pseg");
     planPost(day,"drop",{stopId:seg.dataset.stopId}).then(function(j){renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message,true);});return;}
   var cancel=e.target.closest(".plancancel");if(cancel){var d=cancel.closest(".day");planPost(d,"discard").then(function(){clearPlan(d);}).catch(function(err){planMessage(d,err.message,true);});return;}
   var confirm=e.target.closest(".planconfirm");if(confirm){var d2=confirm.closest(".day"),s=planState(d2);if(!s.diff)return;var kept=s.diff;
-    planPost(d2,"commit").then(function(){committedFromDiff(d2,kept);clearPlan(d2,"Confirmed · the mobile app snapshot is updated");}).catch(function(err){planMessage(d2,err.message,true);});return;}});
+    planPost(d2,"commit").then(function(j){if(j.day)reconcileDay(d2,j.day);else committedFromDiff(d2,kept);clearPlan(d2,j.publishWarning?"Plan saved · mobile publish needs attention":"Confirmed · routes, times, canvas and mobile snapshot updated");if(j.publishWarning)planMessage(d2,"Plan saved, but mobile publish failed: "+j.publishWarning,true);}).catch(function(err){planMessage(d2,err.message,true);});return;}});
 var RESIZE=null;
 chart.addEventListener("pointerdown",function(e){var h=e.target.closest(".ph");if(!h)return;e.preventDefault();e.stopPropagation();var seg=h.closest(".pseg"),day=seg.closest(".day"),d=draftStops(planState(day).diff).find(function(x){return x.stopId===seg.dataset.stopId;});if(!d)return;
   RESIZE={day:day,seg:seg,stopId:d.stopId,startX:e.clientX,startMin:d.dwellAfter,track:day.querySelector(".plantrack").getBoundingClientRect()};h.setPointerCapture&&h.setPointerCapture(e.pointerId);});
 chart.addEventListener("pointermove",function(e){if(!RESIZE)return;var delta=(e.clientX-RESIZE.startX)/RESIZE.track.width*1380,min=Math.max(5,Math.round((RESIZE.startMin+delta)/15)*15);RESIZE.preview=min;var start=parseFloat(RESIZE.seg.style.left),w=planPct(planMin(draftStops(planState(RESIZE.day).diff).find(function(x){return x.stopId===RESIZE.stopId;}).startAfter)+min)-start;RESIZE.seg.style.width=Math.max(.7,w).toFixed(2)+"%";RESIZE.seg.querySelector(".pd").textContent=planDur(min);});
 chart.addEventListener("pointerup",function(){if(!RESIZE)return;var x=RESIZE;RESIZE=null;if(!x.preview||x.preview===x.startMin){renderDraft(x.day,planState(x.day).diff);return;}planPost(x.day,"dwell",{stopId:x.stopId,minutes:x.preview}).then(function(j){renderDraft(x.day,j.diff);}).catch(function(err){planMessage(x.day,err.message,true);});});
 
-/* Pull the compact committed plan at load so a static GitHub Pages build never
-   stays stale after a confirmation made from another browser. */
+/* Reconcile all live planning surfaces at load so a static GitHub Pages build
+   never stays stale after a confirmation made from another browser. */
 fetch(window.__APP+"/api/plan").then(function(r){return r.json();}).then(function(j){if(!j||!j.ok)return;(j.days||[]).forEach(function(v){var day=chart.querySelector('.day[data-city-id="'+CSS.escape(v.cityId)+'"][data-day="'+v.day+'"]');if(!day)return;
-    var stops=v.stops||[],last=stops[stops.length-1],ends=last&&last.end?new Date(new Date(last.end).getTime()+(last.travelMinToNext||0)*60000).toISOString():null;
-    var diff={endsAfter:ends,deltas:stops.map(function(s){return{stopId:s.stopId,name:s.name,seq:s.seq,placeId:s.placeId,locked:s.locked,startAfter:s.start,dwellAfter:s.dwell,change:"unchanged",isInfeasible:s.infeasible};})};committedFromDiff(day,diff);});}).catch(function(){});
+    reconcileDay(day,v);});}).catch(function(){});
 
 /* ---- place detail panel -------------------------------------------------
    Opened from a timeline block or a suggestion row. It renders the SAME fields
@@ -937,6 +955,7 @@ const EXTRA = `<style>
 .wrap .planlabel{display:flex;align-items:center;gap:10px;margin:2px 0 4px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);}
 .wrap .planstatus{font-size:10px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-3);}
 .wrap .planstatus.bad{color:var(--bad);}
+.wrap .recalcstamp{margin-left:auto;font-size:9px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-3);font-variant-numeric:tabular-nums;}
 .wrap .plantrack{position:relative;min-height:32px;border:1px dashed var(--line-strong);border-radius:7px;background:var(--surface-2);overflow:visible;}
 .wrap .plantrack.empty{opacity:.72;}
 .wrap .plantrack.dragover{opacity:1;border-color:var(--target);background:color-mix(in srgb,var(--target) 9%,var(--surface));box-shadow:0 0 0 3px color-mix(in srgb,var(--target) 13%,transparent);}
@@ -945,6 +964,7 @@ const EXTRA = `<style>
 .wrap .pseg{position:absolute;top:4px;height:24px;border-radius:6px;background:color-mix(in srgb,var(--target) 18%,var(--surface));border:1px solid color-mix(in srgb,var(--target) 58%,transparent);display:flex;align-items:center;gap:4px;padding:0 7px;min-width:12px;box-sizing:border-box;cursor:grab;z-index:3;overflow:visible;}
 .wrap .pseg.added{background:color-mix(in srgb,#6A5FA0 20%,var(--surface));border-color:#6A5FA0;}
 .wrap .pseg.locked{background:var(--surface-2);border-style:dashed;cursor:not-allowed;}
+.wrap .pseg.phome{min-width:max-content;max-width:180px;transform:translateX(-12px);background:color-mix(in srgb,var(--ok) 13%,var(--surface));border-color:color-mix(in srgb,var(--ok) 46%,transparent);z-index:4;font:800 9px var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .wrap .pseg.infeasible{border-color:var(--bad);box-shadow:0 0 0 1px color-mix(in srgb,var(--bad) 25%,transparent);}
 .wrap .pseg .pn{font-size:9.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
 .wrap .pseg .pd{font-size:8.5px;font-family:var(--mono);margin-left:auto;white-space:nowrap;}
@@ -956,6 +976,8 @@ const EXTRA = `<style>
 .wrap .plancancel{border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);}
 .wrap .planconfirm{border:1px solid var(--target);background:var(--target);color:#fff;}
 .wrap .planbusy .plancontrols button{opacity:.55;pointer-events:none;}
+.wrap .planbusy .planconfirm:before{content:"";display:inline-block;width:10px;height:10px;margin:0 7px -1px 0;border:2px solid rgba(255,255,255,.42);border-top-color:#fff;border-radius:50%;animation:planspin .72s linear infinite;}
+@keyframes planspin{to{transform:rotate(360deg)}}
 .wrap .planidea{cursor:grab;}
 .wrap .planidea:hover{background:color-mix(in srgb,#6A5FA0 8%,transparent);}
 .wrap .planadd{border:1px solid var(--target);border-radius:12px;background:color-mix(in srgb,var(--target) 9%,var(--surface));color:var(--target);padding:3px 8px;font:800 10px var(--sans);white-space:nowrap;cursor:grab;}
