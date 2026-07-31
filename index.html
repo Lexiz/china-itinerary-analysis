@@ -354,9 +354,20 @@ Be at T2 the airport by 23:10 — 180m check-in"><span class="sn"><span class="l
 #adminModal .amname{font-weight:750;} #adminModal .amemail{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);}
 #adminModal .amremove{border-color:var(--bad);background:transparent;color:var(--bad);float:right;} #adminModal .amremove[disabled]{opacity:.35;cursor:not-allowed;}
 #adminModal .amstatus{min-height:16px;font-size:11px;font-weight:700;color:var(--bad);}
+body.modalopen{overflow:hidden;}
+#accessModal{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;padding:20px;}
+#accessModal.on{display:flex;animation:accessfade .16s ease-out;}#accessModal .accessbg{position:absolute;inset:0;background:rgba(31,20,18,.54);backdrop-filter:blur(4px);}
+#accessModal .accessbox{position:relative;width:min(430px,100%);background:var(--surface);border:1px solid color-mix(in srgb,var(--target) 24%,var(--line));border-radius:20px;padding:27px 27px 23px;box-shadow:0 28px 80px rgba(42,18,15,.28);text-align:center;animation:accesspop .2s ease-out;}
+#accessModal .accessclose{position:absolute;right:13px;top:11px;border:0;background:transparent;color:var(--ink-3);font:400 24px/1 var(--sans);padding:5px;cursor:pointer;}
+#accessModal .accessicon{width:56px;height:56px;margin:0 auto 15px;border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--target) 18%,var(--surface)),color-mix(in srgb,#D7834D 18%,var(--surface)));color:var(--target);font-size:29px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--target) 18%,transparent);}
+#accessModal .accesseye{margin-bottom:6px;color:var(--target);font:800 9.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;}#accessModal h2{margin:0 0 9px;font-size:22px;letter-spacing:-.02em;}#accessModal p{margin:0 auto;color:var(--ink-2);font-size:13px;line-height:1.58;max-width:35em;}
+#accessModal .accessnote{display:flex;align-items:flex-start;gap:9px;margin:17px 0 19px;padding:11px 12px;border-radius:11px;background:var(--surface-2);color:var(--ink-2);text-align:left;font-size:11.5px;line-height:1.45;}#accessModal .accessnote .msym{font-size:18px;color:var(--ok);margin-top:1px;}
+#accessModal .accessactions{display:flex;justify-content:center;gap:8px;}#accessModal .accessactions button{border-radius:999px;padding:8px 15px;font:750 11px var(--sans);cursor:pointer;}#accessModal .accessdismiss{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);}#accessModal .accesssignin{border:1px solid var(--target);background:var(--target);color:#fff;}
+@keyframes accessfade{from{opacity:0}to{opacity:1}}@keyframes accesspop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
 @media(max-width:900px){.wrap .hero-nav{align-items:flex-start;flex-wrap:wrap}.wrap .navtools{width:100%;justify-content:flex-start;flex-wrap:wrap;margin-left:0}.wrap .authbar{justify-content:flex-start}.wrap .hero-body{padding-top:24px}}
 @media(max-width:620px){.wrap .hero{margin:0 -6px;padding:15px 15px 19px;border-radius:17px}.wrap .brandcopy span{display:none}.wrap .plannerbadge{order:3;width:100%;justify-content:center}.wrap .authstate span{max-width:135px;overflow:hidden;text-overflow:ellipsis}.wrap .toolbar{align-items:flex-start;flex-wrap:wrap}.wrap .toolbar .legend{width:100%;margin-left:0;gap:8px 13px}.wrap .hero .stat{min-width:calc(50% - 5px);flex:1}.wrap .authmsg{width:100%;max-width:none}}
 @media(max-width:620px){.wrap .stepspanel summary{padding:11px 12px}.wrap .stepsheading small{display:none}.wrap .stepstotal small{display:none}.wrap .stepsbody{padding:3px 10px 13px}.wrap .steprow{grid-template-columns:72px minmax(42px,1fr) 126px;gap:6px}.wrap .steplabel{display:grid;gap:0}.wrap .steplabel b{font-size:9.5px}.wrap .steplabel small,.wrap .stepvalue small{font-size:8.5px}.wrap .stepvalue{gap:6px}.wrap .stepvalue b{font-size:9px}}
+@media(max-width:480px){#accessModal{padding:14px}#accessModal .accessbox{padding:24px 18px 19px;border-radius:17px}#accessModal .accessactions{display:grid}#accessModal .accessactions button{width:100%}}
 /* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
    day unfolded the tables ran into each other and nothing said where one day ended
    and the next began; the card edge is that boundary. */
@@ -596,6 +607,13 @@ body.only-bad .wrap .day.ok-day{display:none;}
 @media (max-width:520px){.wrap table.acts{min-width:300px;}.wrap .seg .sn{display:none;}}
 </style>
 <div id="pp" role="dialog" aria-modal="true" aria-label="Place detail"><div class="ppbg"></div><div class="ppbox"></div></div>
+<div id="accessModal" role="dialog" aria-modal="true" aria-labelledby="accessTitle" aria-describedby="accessCopy"><div class="accessbg"></div><div class="accessbox">
+  <button type="button" class="accessclose" aria-label="Close">×</button><span class="msym accessicon" aria-hidden="true">admin_panel_settings</span>
+  <div class="accesseye">Planning access</div><h2 id="accessTitle">Invitation required</h2>
+  <p id="accessCopy">Planning is available only to invited administrators. Sign in with Google using an approved email address. If you have not been invited, ask a current administrator to add you.</p>
+  <div class="accessnote"><span class="msym" aria-hidden="true">visibility</span><span>Everyone can view the complete itinerary. Without administrator access, nothing can be added, removed, moved or saved.</span></div>
+  <div class="accessactions"><button type="button" class="accessdismiss">Continue viewing</button><button type="button" class="accesssignin">Go to sign in</button></div>
+</div></div>
 <div id="adminModal" role="dialog" aria-modal="true" aria-label="Manage planning administrators"><div class="ambg"></div><div class="ambox">
   <button class="amclose" aria-label="Close">×</button><h2>Planning administrators</h2>
   <p>Administrators can change the itinerary, confirm plans in PostgreSQL, and update the mobile app.</p>
@@ -743,7 +761,10 @@ function restoreAuth(){renderAuth();if(!AUTH.token){renderGoogleButton();return;
   .then(function(r){if(!r.ok)throw new Error();return r.json();}).then(function(j){saveAuth(AUTH.token,j.user);})
   .catch(function(){saveAuth("",null);renderGoogleButton();});}
 function signOutPlanner(){if(window.google&&google.accounts&&google.accounts.id)google.accounts.id.disableAutoSelect();saveAuth("",null);var host=document.getElementById("googleSignIn");if(host){host.innerHTML="";host.dataset.ready="";}renderGoogleButton();authMessage("Signed out");}
-function plannerToken(){if(AUTH.token)return AUTH.token;authMessage("Sign in with Google to plan.",true);var bar=document.getElementById("authbar");if(bar)bar.scrollIntoView({behavior:"smooth",block:"center"});return "";}
+var ACCESS_RETURN=null;
+function openAccessModal(){if(AUTH.token)return false;var modal=document.getElementById("accessModal");if(!modal)return false;ACCESS_RETURN=document.activeElement;modal.classList.add("on");document.body.classList.add("modalopen");var close=modal.querySelector(".accessclose");if(close)close.focus();return true;}
+function closeAccessModal(){var modal=document.getElementById("accessModal");if(!modal)return;modal.classList.remove("on");document.body.classList.remove("modalopen");if(ACCESS_RETURN&&ACCESS_RETURN.focus)ACCESS_RETURN.focus();ACCESS_RETURN=null;}
+function plannerToken(){if(AUTH.token)return AUTH.token;openAccessModal();return "";}
 function adminRequest(method,body){var opts={method:method,headers:authHeaders()};if(body){opts.headers["Content-Type"]="application/json";opts.body=JSON.stringify(body);}return fetch(window.__APP+"/api/admins",opts).then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error||"Request failed.");return j;});});}
 function renderAdmins(admins){var body=document.getElementById("adminRows");if(!body)return;body.innerHTML="";(admins||[]).forEach(function(a){var tr=document.createElement("tr"),who=document.createElement("td"),box=document.createElement("div");box.className="amwho";
   if(a.picture){var img=document.createElement("img");img.src=a.picture;img.alt="";box.appendChild(img);}var text=document.createElement("div"),name=document.createElement("div"),email=document.createElement("div");name.className="amname";name.textContent=a.name||a.email;email.className="amemail";email.textContent=a.email;text.appendChild(name);text.appendChild(email);box.appendChild(text);who.appendChild(box);tr.appendChild(who);
@@ -751,6 +772,7 @@ function renderAdmins(admins){var body=document.getElementById("adminRows");if(!
 function loadAdmins(){var status=document.getElementById("adminStatus");if(status)status.textContent="Loading…";return adminRequest("GET").then(function(j){renderAdmins(j.admins);if(status)status.textContent="";}).catch(function(e){if(status)status.textContent=e.message;});}
 document.getElementById("manageUsers").addEventListener("click",function(){document.getElementById("adminModal").classList.add("on");loadAdmins();});
 document.getElementById("signOut").addEventListener("click",signOutPlanner);
+document.getElementById("accessModal").addEventListener("click",function(e){if(e.target.classList.contains("accessbg")||e.target.closest(".accessclose,.accessdismiss")){closeAccessModal();return;}if(e.target.closest(".accesssignin")){closeAccessModal();var bar=document.getElementById("authbar");if(bar)bar.scrollIntoView({behavior:"smooth",block:"center"});}});
 document.getElementById("adminModal").addEventListener("click",function(e){if(e.target.classList.contains("ambg")||e.target.classList.contains("amclose")){this.classList.remove("on");return;}var remove=e.target.closest(".amremove");if(!remove)return;var status=document.getElementById("adminStatus");status.textContent="Removing…";adminRequest("DELETE",{email:remove.dataset.email}).then(function(j){renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
 document.getElementById("adminForm").addEventListener("submit",function(e){e.preventDefault();var input=document.getElementById("adminEmail"),status=document.getElementById("adminStatus"),email=input.value.trim().toLowerCase();if(!email)return;status.textContent="Adding…";adminRequest("POST",{email:email}).then(function(j){input.value="";renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
 var authWait=setInterval(function(){if(window.google&&google.accounts&&google.accounts.id){clearInterval(authWait);renderGoogleButton();}},200);setTimeout(function(){clearInterval(authWait);if((!window.google||!google.accounts||!google.accounts.id)&&!AUTH.user)authMessage("Google sign-in could not load. Refresh to try again.",true);},10000);restoreAuth();
@@ -846,6 +868,7 @@ function reconcileWalkingStats(v){var key=v.cityId+":"+v.day;LIVE_STEP_PARTS[key
 function reconcileDay(day,v){var names=captureNameMarkup(day);planState(day).live=v;committedFromDiff(day,liveDiff(v));reconcileActivities(day,v,names);reconcileIdeas(day,v.ideas||[],names);reconcileDayHeader(day,v);reconcileTripActivityTotal();reconcileWalkingStats(v);showRecalculated(day,v.recalculatedAt);refreshLiveMap(day,v);}
 function commitDraft(day,fallback){return planPost(day,"commit").then(function(j){if(j.day)reconcileDay(day,j.day);else committedFromDiff(day,fallback||planState(day).diff);clearPlan(day);if(j.publishWarning)planMessage(day,"Plan saved, but mobile publish failed: "+j.publishWarning,true);return j;});}
 chart.addEventListener("dragstart",function(e){var idea=e.target.closest(".planidea"),seg=e.target.closest(".pseg");if(!idea&&!seg)return;
+  if(!AUTH.token){e.preventDefault();PLAN_DRAG=null;openAccessModal();return;}
   var data=idea?{kind:"idea",placeId:idea.dataset.ideaId,name:idea.dataset.ideaName}:{kind:"stop",stopId:seg.dataset.stopId};
   PLAN_DRAG=data;var payload=JSON.stringify(data);e.dataTransfer.effectAllowed="copyMove";
   /* WebKit and embedded browser surfaces can discard custom drag types from a
@@ -856,15 +879,16 @@ chart.addEventListener("dragover",function(e){var tr=e.target.closest(".plantrac
 chart.addEventListener("dragleave",function(e){var tr=e.target.closest(".plantrack");if(tr&&!tr.contains(e.relatedTarget))tr.classList.remove("dragover");});
 chart.addEventListener("dragend",function(){PLAN_DRAG=null;chart.querySelectorAll(".plantrack.dragover").forEach(function(x){x.classList.remove("dragover");});});
 chart.addEventListener("drop",function(e){var tr=e.target.closest(".plantrack");if(!tr)return;e.preventDefault();tr.classList.remove("dragover");var day=tr.closest(".day"),data=null;
+  if(!AUTH.token){PLAN_DRAG=null;openAccessModal();return;}
   try{data=JSON.parse(e.dataTransfer.getData("application/json")||e.dataTransfer.getData("text/plain"));}catch(_){}data=data||PLAN_DRAG;PLAN_DRAG=null;if(!data){planMessage(day,"The browser did not provide the dragged activity. Use + plan instead.",true);return;}
   ensurePlan(day).then(function(){var before=stopBeforeX(day,e.clientX,data.stopId||null);
     if(data.kind==="idea")return planPost(day,"add",{placeId:data.placeId,name:data.name,afterSeq:before?before.seq:null});
     return planPost(day,"move",{stopId:data.stopId,afterStopId:before?before.stopId:null});
   }).then(function(j){if(j&&j.diff)renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message||"Could not update the draft.",true);});});
-chart.addEventListener("click",function(e){var add=e.target.closest(".planadd");if(add){e.preventDefault();e.stopImmediatePropagation();var row=add.closest(".planidea"),day0=add.closest(".day"),s0=planState(day0);if(s0.busy)return;
+chart.addEventListener("click",function(e){var add=e.target.closest(".planadd");if(add){e.preventDefault();e.stopImmediatePropagation();if(!AUTH.token){openAccessModal();return;}var row=add.closest(".planidea"),day0=add.closest(".day"),s0=planState(day0);if(s0.busy)return;
     ensurePlan(day0).then(function(){var stops=draftStops(planState(day0).diff),last=stops[stops.length-1];return planPost(day0,"add",{placeId:row.dataset.ideaId,name:row.dataset.ideaName,afterSeq:last?last.seq:null});})
       .then(function(j){renderDraft(day0,j.diff);}).catch(function(err){planMessage(day0,err.message||"Could not add the activity.",true);});return;}
-  var adjust=e.target.closest(".adjustplan");if(adjust){e.preventDefault();e.stopImmediatePropagation();var ad=adjust.closest(".day");if(planState(ad).busy)return;ensurePlan(ad).then(function(){ad.querySelector(".plantrack").scrollIntoView({block:"center",behavior:"smooth"});}).catch(function(err){planMessage(ad,err.message||"Could not start planning.",true);});return;}
+  var adjust=e.target.closest(".adjustplan");if(adjust){e.preventDefault();e.stopImmediatePropagation();if(!AUTH.token){openAccessModal();return;}var ad=adjust.closest(".day");if(planState(ad).busy)return;ensurePlan(ad).then(function(){ad.querySelector(".plantrack").scrollIntoView({block:"center",behavior:"smooth"});}).catch(function(err){planMessage(ad,err.message||"Could not start planning.",true);});return;}
   var moveOut=e.target.closest(".removeplan");if(moveOut){e.preventDefault();e.stopImmediatePropagation();var rd=moveOut.closest(".day");if(planState(rd).busy)return;if(!plannerToken()){planMessage(rd,"Sign in to change the plan.",true);return;}if(!window.confirm('Move "'+moveOut.dataset.name+'" to Suggestions? The day will be recalculated.'))return;
     ensurePlan(rd).then(function(diff){var target=draftStops(diff).find(function(x){return x.originStopId===moveOut.dataset.stopId;});if(!target)throw new Error("This activity is no longer in the current plan.");return planPost(rd,"drop",{stopId:target.stopId});})
       .then(function(j){renderDraft(rd,j.diff);return commitDraft(rd,j.diff);}).catch(function(err){planMessage(rd,err.message||"Could not move the activity to Suggestions.",true);});return;}
@@ -931,7 +955,7 @@ function openPlace(pid){
 }
 function closePlace(){PP.classList.remove("on");document.body.style.overflow="";}
 PP.addEventListener("click",function(e){ if(e.target.closest(".ppx")||e.target.classList.contains("ppbg")) closePlace(); });
-document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&PP.classList.contains("on")) closePlace(); });
+document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(document.getElementById("accessModal").classList.contains("on")){closeAccessModal();return;}if(PP.classList.contains("on"))closePlace();});
 /* A block or row opens the panel.
    CAPTURE PHASE, on document, and that is not incidental: the chart already has a
    capture-phase listener that calls stopPropagation() to handle segment SELECTION,
@@ -955,7 +979,7 @@ document.addEventListener("click",function(e){
   e.preventDefault(); e.stopPropagation();
   var msg=b.parentElement.querySelector(".ppmsg")||(function(){var d=document.createElement("div");d.className="ppmsg";b.parentElement.appendChild(d);return d;})();
   var fail=function(t){ msg.textContent=t; msg.style.color="var(--bad)"; b.classList.remove("busy"); b.disabled=false; };
-  var token=plannerToken();if(!token){fail("Planning was not unlocked.");return;}
+  var token=plannerToken();if(!token){msg.textContent="";return;}
   var swap=b.dataset.replace||null, cleared=false;
   var slot={cityId:b.dataset.city,day:+b.dataset.day,meal:b.dataset.meal};
   var post=function(body){return fetch(window.__APP+"/api/meal",{method:"POST",
