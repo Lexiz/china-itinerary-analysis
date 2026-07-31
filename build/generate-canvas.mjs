@@ -414,7 +414,9 @@ for (const d of DATA) {
     // Only rows the map can actually place get one — a key with no marker behind it
     // would select nothing and read as a dead click.
     const mapped = i.lat != null && i.lng != null;
-    return `<tr${i.id ? ` data-pid="${esc(i.id)}"` : ''}${mapped ? ` data-key="${esc(nk(i.name))}"` : ''} class="idrow">`
+    const canPlan = !!i.id && !isFood && !!MUTATE_TOKEN;
+    return `<tr${i.id ? ` data-pid="${esc(i.id)}" data-idea-id="${esc(i.id)}" data-idea-name="${esc(i.name)}"` : ''}`
+      + `${mapped ? ` data-key="${esc(nk(i.name))}"` : ''}${canPlan ? ' draggable="true" title="Drag onto the Proposed timeline to plan it"' : ''} class="idrow${canPlan ? ' planidea' : ''}">`
       + `<td class="an">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}${esc(i.name)}${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</td>`
       + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
       + `<td class="iw">${esc(i.kind)}</td>`
@@ -518,7 +520,10 @@ for (const d of DATA) {
     + `</div>`;
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
-  const row2 = `<div class="row2"><div class="track2 empty" title="Proposed — nothing yet; this is where the next pass writes">${gridHTML}</div></div>`;
+  const planDisabled = !MUTATE_TOKEN ? ' title="Rebuild with MUTATE_TOKEN to enable planning"' : '';
+  const row2 = `<div class="row2"><div class="planlabel"><span>Proposed</span><span class="planstatus">Drag an activity suggestion here</span></div>`
+    + `<div class="track2 empty plantrack"${planDisabled}>${gridHTML}<div class="plandrop">Drop an activity to start planning</div></div>`
+    + `<div class="plancontrols"><button class="plancancel">Cancel</button><button class="planconfirm">Confirm plan</button></div></div>`;
   // What you actually do today — the same number the app's badge shows, counted the
   // same way (Day.activityCount): the whole timeline, meals and the hotel included,
   // minus bonuses, which are alternatives rather than commitments. This chip used to
@@ -535,7 +540,7 @@ for (const d of DATA) {
       : dsev === 'moderate' ? '<span class="pflag warn2">past 21:30</span>'
       : '<span class="pflag ok2">✓ fits</span>')
     : '';
-  out += `<div class="day${dlate ? '' : ' ok-day'} has-prop">` +
+  out += `<div class="day${dlate ? '' : ' ok-day'} has-prop" data-city-id="${esc(d.cityId)}" data-day="${d.day}" data-date="${esc(d.date)}">` +
     `<div class="dhead" role="button" tabindex="0" aria-expanded="false" aria-label="Day ${d.day} ${esc(d.city)} — expand activities">` +
       `<span class="cv">›</span><span class="dnum">Day ${d.day}</span>` +
       `<span class="ddate">${wd(d.date)} ${dm(d.date)}</span>` +
@@ -696,6 +701,87 @@ function initMaps(day){
 }
 if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
 
+/* ---- interactive proposed plan -----------------------------------------
+   The upper bar is the committed plan. The lower bar is a disposable Postgres
+   draft: drag an activity idea into it, reorder blocks, resize dwell, then
+   Confirm or Cancel. Exact times always come back from the scheduling oracle. */
+var PLAN=new WeakMap();
+var PLAN_TIME=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit",hour12:false});
+function planClock(iso){return iso?PLAN_TIME.format(new Date(iso)):"—";}
+function planMin(iso){if(!iso)return 300;var p=PLAN_TIME.formatToParts(new Date(iso)),h=0,m=0;
+  p.forEach(function(x){if(x.type==="hour")h=+x.value;if(x.type==="minute")m=+x.value;});
+  var n=h*60+m;return n<300?n+1440:n;}
+function planPct(n){return Math.max(0,Math.min(100,(n-300)/1380*100));}
+function planDur(n){n=Math.round(n||0);return n<60?n+"m":Math.floor(n/60)+"h"+(n%60?String(n%60).padStart(2,"0"):"");}
+function planState(day){var s=PLAN.get(day);if(!s){s={diff:null,busy:false,started:false};PLAN.set(day,s);}return s;}
+function planMessage(day,msg,bad){var x=day.querySelector(".planstatus");if(x){x.textContent=msg;x.classList.toggle("bad",!!bad);}}
+function planPost(day,action,extra){var s=planState(day);s.busy=true;day.classList.add("planbusy");planMessage(day,action==="commit"?"Confirming and publishing…":"Recalculating…");
+  var body=Object.assign({action:action,cityId:day.dataset.cityId,day:+day.dataset.day},extra||{});
+  return fetch(window.__APP+"/api/plan",{method:"POST",headers:{"Content-Type":"application/json","x-trip-token":window.__TOK||""},body:JSON.stringify(body)})
+    .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t);}catch(_){}if(!r.ok||!j||!j.ok)throw new Error((j&&j.error)||"Planning request failed.");return j;});})
+    .finally(function(){s.busy=false;day.classList.remove("planbusy");});
+}
+function ensurePlan(day){var s=planState(day);if(s.started&&s.diff)return Promise.resolve(s.diff);
+  return planPost(day,"start").then(function(j){s.started=true;s.diff=j.diff;renderDraft(day,j.diff);return j.diff;});}
+function draftStops(diff){return (diff&&diff.deltas||[]).filter(function(x){return x.change!=="removed";}).sort(function(a,b){return a.seq-b.seq;});}
+function makeDraftSeg(d){var start=planMin(d.startAfter),left=planPct(start),right=planPct(start+Math.max(5,d.dwellAfter||0));
+  var el=document.createElement("div");el.className="pseg"+(d.locked?" locked":"")+(d.isInfeasible?" infeasible":"")+(d.change==="added"?" added":"");
+  el.style.left=left.toFixed(2)+"%";el.style.width=Math.max(.7,right-left).toFixed(2)+"%";el.dataset.stopId=d.stopId;el.dataset.seq=d.seq;
+  el.draggable=!d.locked;el.title=d.name+" · "+planClock(d.startAfter)+" · "+planDur(d.dwellAfter)+(d.locked?" · fixed":" · drag to reorder; resize the right edge");
+  var name=document.createElement("span");name.className="pn";name.textContent=d.name;el.appendChild(name);
+  var dur=document.createElement("span");dur.className="pd";dur.textContent=planDur(d.dwellAfter);el.appendChild(dur);
+  if(!d.locked){var rm=document.createElement("button");rm.className="prm";rm.type="button";rm.textContent="×";rm.title="Move back to suggestions";el.appendChild(rm);
+    var h=document.createElement("span");h.className="ph";h.title="Drag to change time here";el.appendChild(h);}
+  return el;
+}
+function renderDraft(day,diff){var s=planState(day);s.diff=diff;var tr=day.querySelector(".plantrack");if(!tr)return;
+  tr.querySelectorAll(".pseg").forEach(function(x){x.remove();});
+  draftStops(diff).forEach(function(d){tr.appendChild(makeDraftSeg(d));});
+  tr.classList.remove("empty");day.classList.add("planning");
+  var end=diff&&diff.endsAfter?planClock(diff.endsAfter):"—";
+  var debt=diff&&diff.rushDebtAfter?" · "+planDur(diff.rushDebtAfter)+" rushed":"";
+  planMessage(day,"Draft ends "+end+debt+" · drag blocks or resize their right edge");
+}
+function stopBeforeX(day,clientX,exclude){var tr=day.querySelector(".plantrack"),r=tr.getBoundingClientRect();
+  var minute=300+Math.max(0,Math.min(1,(clientX-r.left)/r.width))*1380,last=null;
+  draftStops(planState(day).diff).filter(function(x){return x.stopId!==exclude;}).forEach(function(x){if(planMin(x.startAfter)<=minute)last=x;});return last;}
+function clearPlan(day,msg){var s=planState(day);s.diff=null;s.started=false;day.classList.remove("planning","planbusy");
+  var tr=day.querySelector(".plantrack");if(tr){tr.querySelectorAll(".pseg").forEach(function(x){x.remove();});tr.classList.add("empty");}
+  planMessage(day,msg||"Drag an activity suggestion here");
+}
+function committedFromDiff(day,diff){var top=day.querySelector(".track");if(!top)return;top.querySelectorAll(".seg,.home").forEach(function(x){x.remove();});
+  draftStops(diff).forEach(function(d){var start=planMin(d.startAfter),left=planPct(start),right=planPct(start+Math.max(5,d.dwellAfter||0));var el=document.createElement("div");
+    el.className="seg "+(d.locked?"hub":"ok")+(d.isInfeasible?" late":"");el.style.left=left.toFixed(2)+"%";el.style.width=Math.max(.7,right-left).toFixed(2)+"%";el.dataset.key=d.name.toLowerCase().replace(/[^a-z0-9]+/g,"");if(d.placeId)el.dataset.pid=d.placeId;
+    el.title=d.name+" · "+planClock(d.startAfter)+" · "+planDur(d.dwellAfter);var n=document.createElement("span");n.className="sn";n.textContent=d.name;el.appendChild(n);var q=document.createElement("span");q.className="sd";q.textContent=planDur(d.dwellAfter);el.appendChild(q);top.appendChild(el);});
+  if(diff&&diff.endsAfter){var minute=planMin(diff.endsAfter),home=document.createElement("div");home.className="seg homeseg ok2";home.style[minute>1487?"right":"left"]=minute>1487?"2px":planPct(minute).toFixed(2)+"%";home.title="Back to base · "+planClock(diff.endsAfter);home.textContent="🏠 "+planClock(diff.endsAfter);top.appendChild(home);}
+  draftStops(diff).filter(function(d){return d.change==="added"&&d.placeId;}).forEach(function(d){var row=day.querySelector('[data-idea-id="'+CSS.escape(d.placeId)+'"]');if(row)row.hidden=true;});
+}
+chart.addEventListener("dragstart",function(e){var idea=e.target.closest(".planidea"),seg=e.target.closest(".pseg");if(!idea&&!seg)return;
+  var data=idea?{kind:"idea",placeId:idea.dataset.ideaId,name:idea.dataset.ideaName}:{kind:"stop",stopId:seg.dataset.stopId};
+  e.dataTransfer.effectAllowed=idea?"copy":"move";e.dataTransfer.setData("application/json",JSON.stringify(data));});
+chart.addEventListener("dragover",function(e){if(e.target.closest(".plantrack")){e.preventDefault();e.dataTransfer.dropEffect="move";}});
+chart.addEventListener("drop",function(e){var tr=e.target.closest(".plantrack");if(!tr)return;e.preventDefault();var day=tr.closest(".day"),data=null;try{data=JSON.parse(e.dataTransfer.getData("application/json"));}catch(_){}if(!data)return;
+  ensurePlan(day).then(function(){var before=stopBeforeX(day,e.clientX,data.stopId||null);
+    if(data.kind==="idea")return planPost(day,"add",{placeId:data.placeId,afterSeq:before?before.seq:null});
+    return planPost(day,"move",{stopId:data.stopId,afterStopId:before?before.stopId:null});
+  }).then(function(j){if(j&&j.diff)renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message||"Could not update the draft.",true);});});
+chart.addEventListener("click",function(e){var rm=e.target.closest(".prm");if(rm){e.preventDefault();e.stopPropagation();var day=rm.closest(".day"),seg=rm.closest(".pseg");
+    planPost(day,"drop",{stopId:seg.dataset.stopId}).then(function(j){renderDraft(day,j.diff);}).catch(function(err){planMessage(day,err.message,true);});return;}
+  var cancel=e.target.closest(".plancancel");if(cancel){var d=cancel.closest(".day");planPost(d,"discard").then(function(){clearPlan(d);}).catch(function(err){planMessage(d,err.message,true);});return;}
+  var confirm=e.target.closest(".planconfirm");if(confirm){var d2=confirm.closest(".day"),s=planState(d2);if(!s.diff)return;var kept=s.diff;
+    planPost(d2,"commit").then(function(){committedFromDiff(d2,kept);clearPlan(d2,"Confirmed · the mobile app snapshot is updated");}).catch(function(err){planMessage(d2,err.message,true);});return;}});
+var RESIZE=null;
+chart.addEventListener("pointerdown",function(e){var h=e.target.closest(".ph");if(!h)return;e.preventDefault();e.stopPropagation();var seg=h.closest(".pseg"),day=seg.closest(".day"),d=draftStops(planState(day).diff).find(function(x){return x.stopId===seg.dataset.stopId;});if(!d)return;
+  RESIZE={day:day,seg:seg,stopId:d.stopId,startX:e.clientX,startMin:d.dwellAfter,track:day.querySelector(".plantrack").getBoundingClientRect()};h.setPointerCapture&&h.setPointerCapture(e.pointerId);});
+chart.addEventListener("pointermove",function(e){if(!RESIZE)return;var delta=(e.clientX-RESIZE.startX)/RESIZE.track.width*1380,min=Math.max(5,Math.round((RESIZE.startMin+delta)/15)*15);RESIZE.preview=min;var start=parseFloat(RESIZE.seg.style.left),w=planPct(planMin(draftStops(planState(RESIZE.day).diff).find(function(x){return x.stopId===RESIZE.stopId;}).startAfter)+min)-start;RESIZE.seg.style.width=Math.max(.7,w).toFixed(2)+"%";RESIZE.seg.querySelector(".pd").textContent=planDur(min);});
+chart.addEventListener("pointerup",function(){if(!RESIZE)return;var x=RESIZE;RESIZE=null;if(!x.preview||x.preview===x.startMin){renderDraft(x.day,planState(x.day).diff);return;}planPost(x.day,"dwell",{stopId:x.stopId,minutes:x.preview}).then(function(j){renderDraft(x.day,j.diff);}).catch(function(err){planMessage(x.day,err.message,true);});});
+
+/* Pull the compact committed plan at load so a static GitHub Pages build never
+   stays stale after a confirmation made from another browser. */
+fetch(window.__APP+"/api/plan").then(function(r){return r.json();}).then(function(j){if(!j||!j.ok)return;(j.days||[]).forEach(function(v){var day=chart.querySelector('.day[data-city-id="'+CSS.escape(v.cityId)+'"][data-day="'+v.day+'"]');if(!day)return;
+    var stops=v.stops||[],last=stops[stops.length-1],ends=last&&last.end?new Date(new Date(last.end).getTime()+(last.travelMinToNext||0)*60000).toISOString():null;
+    var diff={endsAfter:ends,deltas:stops.map(function(s){return{stopId:s.stopId,name:s.name,seq:s.seq,placeId:s.placeId,locked:s.locked,startAfter:s.start,dwellAfter:s.dwell,change:"unchanged",isInfeasible:s.infeasible};})};committedFromDiff(day,diff);});}).catch(function(){});
+
 /* ---- place detail panel -------------------------------------------------
    Opened from a timeline block or a suggestion row. It renders the SAME fields
    the app's place sheet shows, from places.json, which generate-vizdata writes
@@ -812,6 +898,29 @@ const EXTRA = `<style>
 .wrap .pflag.ok2{color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent);border-color:color-mix(in srgb,var(--ok) 34%,transparent);}
 .wrap .pflag.warn2{color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent);border-color:color-mix(in srgb,var(--warn) 34%,transparent);}
 .wrap .row2{display:block;padding:0 0 6px;}
+.wrap .planlabel{display:flex;align-items:center;gap:10px;margin:2px 0 4px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);}
+.wrap .planstatus{font-size:10px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-3);}
+.wrap .planstatus.bad{color:var(--bad);}
+.wrap .plantrack{position:relative;min-height:32px;border:1px dashed var(--line-strong);border-radius:7px;background:var(--surface-2);overflow:visible;}
+.wrap .plantrack.empty{opacity:.72;}
+.wrap .plandrop{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--ink-3);pointer-events:none;}
+.wrap .planning .plandrop{display:none;}
+.wrap .pseg{position:absolute;top:4px;height:24px;border-radius:6px;background:color-mix(in srgb,var(--target) 18%,var(--surface));border:1px solid color-mix(in srgb,var(--target) 58%,transparent);display:flex;align-items:center;gap:4px;padding:0 7px;min-width:12px;box-sizing:border-box;cursor:grab;z-index:3;overflow:visible;}
+.wrap .pseg.added{background:color-mix(in srgb,#6A5FA0 20%,var(--surface));border-color:#6A5FA0;}
+.wrap .pseg.locked{background:var(--surface-2);border-style:dashed;cursor:not-allowed;}
+.wrap .pseg.infeasible{border-color:var(--bad);box-shadow:0 0 0 1px color-mix(in srgb,var(--bad) 25%,transparent);}
+.wrap .pseg .pn{font-size:9.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.wrap .pseg .pd{font-size:8.5px;font-family:var(--mono);margin-left:auto;white-space:nowrap;}
+.wrap .pseg .prm{position:absolute;right:-7px;top:-8px;width:16px;height:16px;border-radius:50%;border:1px solid var(--bad);background:var(--surface);color:var(--bad);font-size:13px;line-height:12px;padding:0;cursor:pointer;z-index:5;}
+.wrap .pseg .ph{position:absolute;right:-3px;top:1px;bottom:1px;width:7px;border-radius:4px;background:var(--target);cursor:ew-resize;opacity:.72;z-index:4;}
+.wrap .plancontrols{display:none;justify-content:flex-end;gap:8px;margin-top:7px;}
+.wrap .planning .plancontrols{display:flex;}
+.wrap .plancontrols button{border-radius:14px;padding:6px 12px;font:700 11px var(--sans);cursor:pointer;}
+.wrap .plancancel{border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);}
+.wrap .planconfirm{border:1px solid var(--target);background:var(--target);color:#fff;}
+.wrap .planbusy .plancontrols button{opacity:.55;pointer-events:none;}
+.wrap .planidea{cursor:grab;}
+.wrap .planidea:hover{background:color-mix(in srgb,#6A5FA0 8%,transparent);}
 /* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
    day unfolded the tables ran into each other and nothing said where one day ended
    and the next began; the card edge is that boundary. */
