@@ -119,7 +119,7 @@ for (const d of s.days) {
   // read straight off the snapshot rather than being a by-product of a planner
   // deciding what to drop.
   const ideas = (s.ideas || [])
-    .filter((p) => p.cityId === d.cityId && p.day === d.cityDay)
+    .filter((p) => p.cityId === d.cityId && (p.day === d.cityDay || p.suggestedAllDays))
     .map((p) => ({
       name: normn(p.shortLabel || p.name).slice(0, 46),
       icon: p.typeIcon || null,
