@@ -136,10 +136,53 @@ function verdict(d) {
 }
 const V = new Map(DATA.map(d => [d, verdict(d)]));
 
+// Estimated walking combines the walking TRANSFERS already chosen by the route
+// planner with a deliberately conservative allowance for movement INSIDE each
+// activity. Museums involve slower indoor walking than parks and old towns;
+// performances, meals, hotels and transport add little or none. These are planning
+// estimates, not health measurements. One kilometre is shown as 1,300 steps (a
+// 77 cm average stride), rounded to the nearest hundred in the interface.
+const STEPS_PER_KM = 1300, WALK_KM_PER_MIN = 0.075;
+function activityWalkRate(s) {
+  const name = String(s.name || '').toLowerCase();
+  const kind = String(s.ptype || s.kind || '').toLowerCase();
+  const icon = String(s.icon || '').toLowerCase();
+  if (s.home || s.hub || s.meal || ['food', 'hotel', 'transport'].includes(kind)) return 0;
+  if (/great wall|hik(e|ing)|mountain|peak|gorge|trail|rice terrace|national forest|tianmen|zhangjiajie/.test(name)) return 2.4;
+  if (/park|garden|lake|hutong|old town|ancient town|street|promenade|bund|village|terrace/.test(name)
+      || ['landscape', 'park', 'forest', 'hiking'].some(x => icon.includes(x))) return 1.9;
+  if (kind === 'show' || /show|performance|opera|acrobat/.test(name)) return 0.2;
+  if (kind === 'shopping' || /market|shopping|mall/.test(name) || icon === 'storefront') return 1.5;
+  if (/museum|gallery|memorial|exhibition/.test(name) || icon === 'museum') return 0.9;
+  if (/temple|palace|city wall|tower|pagoda|mosque|cathedral/.test(name)) return 1.2;
+  return 1.1;
+}
+function estimateWalking(stops) {
+  let km = 0;
+  for (const s of (stops || [])) {
+    if (s.home || s.bonus) continue;
+    const mode = s.rec || s.chosenMode;
+    const walkMin = Number(s.w ?? s.walkMin);
+    if (mode === 'walk' && Number.isFinite(walkMin)) km += walkMin * WALK_KM_PER_MIN;
+    const dwell = Number(s.res ?? s.dwell ?? s.act ?? 0);
+    if (Number.isFinite(dwell) && dwell > 0) km += dwell / 60 * activityWalkRate(s);
+  }
+  return km;
+}
+const STEP_PARTS = Object.fromEntries(DATA.map(d => [`${d.cityId}:${d.day}`, estimateWalking(d.stops)]));
+const STEP_DATES = Object.fromEntries(DATA.map(d => [`${d.cityId}:${d.day}`, d.date]));
+const STEP_DAYS = [...new Set(DATA.map(d => d.date))].sort().map(date => ({
+  date,
+  km: Object.entries(STEP_PARTS).filter(([key]) => STEP_DATES[key] === date).reduce((n, [, km]) => n + km, 0),
+}));
+const estimatedWalkKm = STEP_DAYS.reduce((n, d) => n + d.km, 0);
+const estimatedSteps = Math.round(estimatedWalkKm * STEPS_PER_KM / 100) * 100;
+const estimatedFootMinutes = estimatedSteps / 100;
+
 const stat = (icon, n, k, id = '') => `<div class="stat"${id ? ` id="${esc(id)}"` : ''}>${ms(icon, 'stic')}<div><div class="n">${esc(n)}</div><div class="k">${esc(k)}</div></div></div>`;
 const distance = TRIP.distanceLabel || `≈${Math.round(TRIP.distanceKm).toLocaleString('en-US')} km`;
 const route = TRIP.routes;
-const walkingTime = fmtDur(route.walk.minutes);
+const walkingTime = fmtDur(estimatedFootMinutes);
 const statsHTML = `<div class="statgroup"><div class="statlabel">The journey</div><div class="statrow">`
   + stat('calendar_month', TRIP.days, 'days')
   + stat('bedtime', TRIP.nights, 'nights')
@@ -148,12 +191,27 @@ const statsHTML = `<div class="statgroup"><div class="statlabel">The journey</di
   + stat('place', TRIP.activities, 'scheduled activities', 'tripActivities')
   + stat('flight', TRIP.flights, 'internal flights')
   + stat('train', TRIP.trains, 'internal trains')
-  + `</div></div><div class="statgroup"><div class="statlabel">Between stops</div><div class="statrow">`
+  + `</div></div><div class="statgroup"><div class="statlabel">Getting around</div><div class="statrow">`
   + stat('local_taxi', route.didi.count, `Didi rides · ≈${Math.round(route.didi.km).toLocaleString('en-US')} km`)
   + stat('subway', route.metro.count, `metro trips · ≈${Math.round(route.metro.km).toLocaleString('en-US')} km`)
-  + stat('directions_walk', route.walk.count, `walks · ≈${route.walk.km.toFixed(1)} km`)
-  + stat('schedule', walkingTime, 'estimated walking time')
+  + stat('directions_walk', `≈${Math.round(estimatedWalkKm)} km`, 'total estimated walking', 'tripWalkKm')
+  + stat('footprint', estimatedSteps.toLocaleString('en-US'), 'total estimated steps', 'tripSteps')
+  + stat('schedule', walkingTime, 'estimated time on foot', 'tripWalkTime')
   + `</div></div>`;
+
+const maxStepKm = Math.max(...STEP_DAYS.map(d => d.km), 1);
+const fullWeekday = iso => new Intl.DateTimeFormat('en-GB', { weekday: 'long', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z'));
+const stepsPanelHTML = `<details class="stepspanel" id="stepsPanel"><summary>`
+  + `<span class="stepsheading">${ms('footprint', 'stepsicon')}<span><b>Estimated Steps</b><small>Daily walking across the journey</small></span></span>`
+  + `<span class="stepstotal"><b id="stepsSummaryTotal">${estimatedSteps.toLocaleString('en-US')} steps</b><small id="stepsSummaryKm">≈${Math.round(estimatedWalkKm)} km</small></span>`
+  + `<span class="stepschev">›</span></summary><div class="stepsbody">`
+  + `<div class="stepchart" role="img" aria-label="Estimated walking distance and steps for each trip date">`
+  + STEP_DAYS.map(d => { const steps = Math.round(d.km * STEPS_PER_KM / 100) * 100; return `<div class="steprow" data-date="${esc(d.date)}" data-km="${d.km.toFixed(4)}">`
+      + `<span class="steplabel"><b>${fullWeekday(d.date)}</b><small>${dm(d.date)}</small></span>`
+      + `<span class="stepbarbox"><i class="stepbar" style="width:${(d.km / maxStepKm * 100).toFixed(2)}%"></i></span>`
+      + `<span class="stepvalue"><b>${d.km.toFixed(1)} km</b><small>${steps.toLocaleString('en-US')} steps</small></span></div>`; }).join('')
+  + `</div><p class="stepsnote">Estimate = routed walking transfers plus likely walking inside each scheduled activity. Parks, old towns and hikes carry more movement than museums; meals, performances and transport carry little or none. Uses 1,300 steps per kilometre.</p>`
+  + `</div></details>`;
 
 // top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
 const clock = [[300,'05'],[420,'07'],[540,'09'],[660,'11'],[780,'13'],[900,'15'],[1020,'17'],[1140,'19'],[1260,'21'],[1380,'23'],[1500,'01'],[1620,'03']];
@@ -783,7 +841,12 @@ function reconcileDayHeader(day,v){var head=day.querySelector(".dhead"),right=he
   var total=(v.stops||[]).length+(v.home?1:0),chip=right.querySelector(".nplaces"),num=chip&&chip.querySelector(".nplacevalue"),suffix=chip&&chip.querySelector(".nplacesuffix");if(num)num.textContent=String(total);if(suffix)suffix.textContent=total===1?"y":"ies";if(chip)chip.title=total+" activit"+(total===1?"y":"ies")+" today — the whole day, meals and the hotel included";
 }
 function reconcileTripActivityTotal(){var total=Array.from(chart.querySelectorAll(".nplacevalue")).reduce(function(sum,x){return sum+(parseInt(x.textContent||"0",10)||0);},0),target=document.querySelector("#tripActivities .n");if(target)target.textContent=String(total);}
-function reconcileDay(day,v){var names=captureNameMarkup(day);planState(day).live=v;committedFromDiff(day,liveDiff(v));reconcileActivities(day,v,names);reconcileIdeas(day,v.ideas||[],names);reconcileDayHeader(day,v);reconcileTripActivityTotal();showRecalculated(day,v.recalculatedAt);refreshLiveMap(day,v);}
+var LIVE_STEP_PARTS=${JSON.stringify(STEP_PARTS)},LIVE_STEP_DATES=${JSON.stringify(STEP_DATES)};
+function liveActivityWalkRate(s){var name=String(s.name||"").toLowerCase(),kind=String(s.kind||"").toLowerCase();if(s.meal||["food","hotel","transport"].includes(kind))return 0;if(/great wall|hik(e|ing)|mountain|peak|gorge|trail|rice terrace|national forest|tianmen|zhangjiajie/.test(name))return 2.4;if(/park|garden|lake|hutong|old town|ancient town|street|promenade|bund|village|terrace/.test(name))return 1.9;if(kind==="show"||/show|performance|opera|acrobat/.test(name))return .2;if(kind==="shopping"||/market|shopping|mall/.test(name))return 1.5;if(/museum|gallery|memorial|exhibition/.test(name))return .9;if(/temple|palace|city wall|tower|pagoda|mosque|cathedral/.test(name))return 1.2;return 1.1;}
+function liveWalking(v){return(v.stops||[]).reduce(function(km,s){if(s.chosenMode==="walk"&&Number.isFinite(Number(s.walkMin)))km+=Number(s.walkMin)*.075;var dwell=Number(s.dwell||0);return km+(Number.isFinite(dwell)&&dwell>0?dwell/60*liveActivityWalkRate(s):0);},0);}
+function fmtLiveWalkTime(steps){var min=Math.round(steps/100);return min<60?min+"m":Math.floor(min/60)+"h"+(min%60?String(min%60).padStart(2,"0"):"");}
+function reconcileWalkingStats(v){var key=v.cityId+":"+v.day;LIVE_STEP_PARTS[key]=liveWalking(v);LIVE_STEP_DATES[key]=v.date;var totals={};Object.keys(LIVE_STEP_PARTS).forEach(function(k){var date=LIVE_STEP_DATES[k];totals[date]=(totals[date]||0)+LIVE_STEP_PARTS[k];});var rows=Array.from(document.querySelectorAll(".steprow")),max=Math.max.apply(null,rows.map(function(row){return totals[row.dataset.date]||0;}).concat([1]));rows.forEach(function(row){var km=totals[row.dataset.date]||0,steps=Math.round(km*1300/100)*100;row.dataset.km=km.toFixed(4);var bar=row.querySelector(".stepbar");if(bar)bar.style.width=(km/max*100).toFixed(2)+"%";var value=row.querySelector(".stepvalue");if(value)value.innerHTML="<b>"+km.toFixed(1)+" km</b><small>"+steps.toLocaleString("en-US")+" steps</small>";});var km=Object.values(totals).reduce(function(n,x){return n+x;},0),steps=Math.round(km*1300/100)*100;var heroKm=document.querySelector("#tripWalkKm .n"),heroSteps=document.querySelector("#tripSteps .n"),heroTime=document.querySelector("#tripWalkTime .n"),sumSteps=document.getElementById("stepsSummaryTotal"),sumKm=document.getElementById("stepsSummaryKm");if(heroKm)heroKm.textContent="≈"+Math.round(km)+" km";if(heroSteps)heroSteps.textContent=steps.toLocaleString("en-US");if(heroTime)heroTime.textContent=fmtLiveWalkTime(steps);if(sumSteps)sumSteps.textContent=steps.toLocaleString("en-US")+" steps";if(sumKm)sumKm.textContent="≈"+Math.round(km)+" km";}
+function reconcileDay(day,v){var names=captureNameMarkup(day);planState(day).live=v;committedFromDiff(day,liveDiff(v));reconcileActivities(day,v,names);reconcileIdeas(day,v.ideas||[],names);reconcileDayHeader(day,v);reconcileTripActivityTotal();reconcileWalkingStats(v);showRecalculated(day,v.recalculatedAt);refreshLiveMap(day,v);}
 function commitDraft(day,fallback){return planPost(day,"commit").then(function(j){if(j.day)reconcileDay(day,j.day);else committedFromDiff(day,fallback||planState(day).diff);clearPlan(day);if(j.publishWarning)planMessage(day,"Plan saved, but mobile publish failed: "+j.publishWarning,true);return j;});}
 chart.addEventListener("dragstart",function(e){var idea=e.target.closest(".planidea"),seg=e.target.closest(".pseg");if(!idea&&!seg)return;
   var data=idea?{kind:"idea",placeId:idea.dataset.ideaId,name:idea.dataset.ideaName}:{kind:"stop",stopId:seg.dataset.stopId};
@@ -1002,6 +1065,10 @@ const EXTRA = `<style>
 .wrap .authbtn.primary{border-color:var(--target);background:var(--target);color:#fff;}
 .wrap .authmsg{font:700 10.5px var(--sans);color:#ffd1cb;max-width:180px;}
 .wrap .hero .themebtn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;white-space:nowrap;}
+.wrap .stepspanel{margin:14px 0 10px;border:1px solid var(--line);border-radius:15px;background:var(--surface);box-shadow:0 10px 30px -27px rgba(42,31,23,.65);overflow:hidden;}
+.wrap .stepspanel summary{list-style:none;display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 15px;user-select:none;}
+.wrap .stepspanel summary::-webkit-details-marker{display:none}.wrap .stepsheading{display:flex;align-items:center;gap:10px;min-width:0}.wrap .stepsicon{width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,#C1443C 13%,transparent);color:#C1443C;font-size:20px}.wrap .stepsheading span{display:grid;gap:2px}.wrap .stepsheading b{font-size:13px}.wrap .stepsheading small,.wrap .stepstotal small{font-size:10.5px;color:var(--ink-3)}.wrap .stepstotal{display:grid;gap:2px;text-align:right;margin-left:auto;font-family:var(--mono)}.wrap .stepstotal b{font-size:12px}.wrap .stepschev{font-size:22px;color:var(--ink-3);transition:transform .2s}.wrap .stepspanel[open] .stepschev{transform:rotate(90deg)}
+.wrap .stepsbody{padding:4px 15px 15px;border-top:1px solid var(--line)}.wrap .stepchart{display:grid;gap:6px;padding:12px 0}.wrap .steprow{display:grid;grid-template-columns:130px minmax(120px,1fr) 118px;gap:11px;align-items:center;min-height:28px}.wrap .steplabel{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.wrap .steplabel b{font-size:11px}.wrap .steplabel small,.wrap .stepvalue small{font:10px var(--mono);color:var(--ink-3)}.wrap .stepbarbox{height:14px;border-radius:999px;background:var(--surface-2);overflow:hidden}.wrap .stepbar{display:block;height:100%;min-width:3px;border-radius:inherit;background:linear-gradient(90deg,#C1443C,#D7834D);transition:width .35s ease}.wrap .stepvalue{display:flex;justify-content:space-between;align-items:baseline;gap:7px;font-family:var(--mono)}.wrap .stepvalue b{font-size:10.5px}.wrap .stepsnote{font-size:10.5px;line-height:1.55;color:var(--ink-3);margin:1px 0 0;padding-top:10px;border-top:1px solid var(--line)}
 .wrap .toolbar{display:flex;align-items:center;gap:14px;margin:16px 0 8px;padding:0 2px 14px;border-bottom:1px solid var(--line);}
 .wrap .toolbar .legend{margin-left:auto;}
 #adminModal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:20px;}
@@ -1018,6 +1085,7 @@ const EXTRA = `<style>
 #adminModal .amstatus{min-height:16px;font-size:11px;font-weight:700;color:var(--bad);}
 @media(max-width:900px){.wrap .hero-nav{align-items:flex-start;flex-wrap:wrap}.wrap .navtools{width:100%;justify-content:flex-start;flex-wrap:wrap;margin-left:0}.wrap .authbar{justify-content:flex-start}.wrap .hero-body{padding-top:24px}}
 @media(max-width:620px){.wrap .hero{margin:0 -6px;padding:15px 15px 19px;border-radius:17px}.wrap .brandcopy span{display:none}.wrap .plannerbadge{order:3;width:100%;justify-content:center}.wrap .authstate span{max-width:135px;overflow:hidden;text-overflow:ellipsis}.wrap .toolbar{align-items:flex-start;flex-wrap:wrap}.wrap .toolbar .legend{width:100%;margin-left:0;gap:8px 13px}.wrap .hero .stat{min-width:calc(50% - 5px);flex:1}.wrap .authmsg{width:100%;max-width:none}}
+@media(max-width:620px){.wrap .stepspanel summary{padding:11px 12px}.wrap .stepsheading small{display:none}.wrap .stepstotal small{display:none}.wrap .stepsbody{padding:3px 12px 13px}.wrap .steprow{grid-template-columns:92px minmax(70px,1fr) 82px;gap:7px}.wrap .steplabel{display:grid;gap:0}.wrap .stepvalue{display:grid;justify-content:end;text-align:right;gap:0}}
 /* Each day is a CARD — surface, border, shadow — not a stripe in a list. With every
    day unfolded the tables ran into each other and nothing said where one day ended
    and the next began; the card edge is that boundary. */
@@ -1291,6 +1359,7 @@ ${GKEY
       <div class="stats" id="stats">${statsHTML}</div>
     </div>
   </header>
+  ${stepsPanelHTML}
   <div class="toolbar">
     <button id="xAll" class="xbtn">Expand all</button>
     <div class="legend">
