@@ -221,7 +221,6 @@ const OUTSTANDING_BOOKINGS = BOOKINGS.filter(b => !b.booked);
 const bookingCardHTML = b => {
   const tripLabel = b.date ? `${fullWeekday(b.date)}, ${dm(b.date)}` : 'Trip date not set';
   const location = [b.cityName, b.day != null ? `Day ${b.day}` : null, b.time].filter(Boolean).join(' · ');
-  const appDay = b.cityId && b.day != null ? `${APP_ORIGIN}/t/dev/city/${encodeURIComponent(b.cityId)}/day/${b.day}` : null;
   return `<article class="bkcard" style="--bc:${esc(b.accent || '#9A6548')}"`
     + ` data-trip-date="${esc(b.date || '9999-12-31')}" data-open-date="${esc(b.bookFrom || '')}"`
     + ` data-open-label="${esc(b.bookFromLabel || '')}" data-open-time="${esc(b.bookFromTime || '')}"`
@@ -230,7 +229,7 @@ const bookingCardHTML = b => {
     + `<h3>${esc(b.name)}</h3>${b.zh ? `<div class="bkzh">${esc(b.zh)}</div>` : ''}`
     + `<div class="bkmeta">${esc(location || b.source)}</div>`
     + (b.channel ? `<div class="bkchannel">${esc(b.channel)}</div>` : '')
-    + `<div class="bkactions">${appDay ? `<a href="${esc(appDay)}" target="_blank" rel="noopener">Open day</a>` : ''}`
+    + `<div class="bkactions">${b.source === 'place' && PLACES[b.id] ? `<button type="button" data-pid="${esc(b.id)}">View details</button>` : ''}`
     + (b.bookingLink ? `<a class="primary" href="${esc(b.bookingLink)}" target="_blank" rel="noopener">Booking site</a>` : '') + `</div></div></article>`;
 };
 const bookingManagerHTML = `<section id="bookingManager" class="bookingmanager" hidden aria-labelledby="bookingManagerTitle">`
@@ -1309,7 +1308,7 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .bkdate{color:var(--ink-3);font:700 10px var(--mono);}.wrap .bkstate{flex:none;max-width:52%;font-size:9px;font-weight:850;text-align:right;text-transform:uppercase;letter-spacing:.025em;}
 .wrap .bkstate.open{color:var(--warn)}.wrap .bkstate.later{color:var(--ink-3)}.wrap .bkcard h3{margin:5px 0 1px;font-size:14px;line-height:1.25;}
 .wrap .bkzh{color:var(--ink-2);font-size:11px}.wrap .bkmeta{margin-top:5px;color:var(--ink-2);font-size:10.5px;font-weight:700}.wrap .bkchannel{margin-top:4px;color:var(--ink-3);font-size:10.5px;line-height:1.4;}
-.wrap .bkactions{display:flex;gap:7px;margin-top:10px}.wrap .bkactions a{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--ink-2);background:var(--surface);font-size:10px;font-weight:800;text-decoration:none}.wrap .bkactions a.primary{border-color:var(--warn);color:var(--warn)}
+.wrap .bkactions{display:flex;gap:7px;margin-top:10px}.wrap .bkactions a,.wrap .bkactions button{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--ink-2);background:var(--surface);font:800 10px var(--sans);text-decoration:none;cursor:pointer}.wrap .bkactions a.primary{border-color:var(--warn);color:var(--warn)}
 .wrap .bkempty{padding:34px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--ink-3);font-size:12px}.wrap .bkempty[hidden]{display:none!important;}
 @media(max-width:760px){.wrap .bkmhero,.wrap .bkmcontrols{align-items:stretch;flex-direction:column}.wrap .bkmcount{align-items:flex-start}.wrap .bkfilters{overflow-x:auto}.wrap .bksort{align-self:flex-start}.wrap .bklist{grid-template-columns:1fr}}
 .wrap .fix.fix-prop{max-width:84ch;color:var(--ink-2);}
