@@ -544,7 +544,7 @@ for (const d of DATA) {
     return st || { name: r.name };
   });
   const pts = mapSeq.map((s, i) => (s && s.lat != null)
-    ? { n: i + 1, lat: s.lat, lng: s.lng, name: s.name || s.label, k: nk(s.name || s.label),
+    ? { n: i + 1, lat: s.lat, lng: s.lng, name: s.name || s.label, k: nk(s.name || s.label), pid: pidOf(s.name || s.label),
         t: s.ptype === 'Hotel' ? 'hotel' : s.ptype === 'Food' ? 'food' : 'act' } : null).filter(Boolean);
   // The day's SUGGESTIONS, on the same map. "Is this on the way, or across town?" is
   // the first question you ask of a suggestion, and until now the page listed them by
@@ -560,7 +560,7 @@ for (const d of DATA) {
     .filter(i => i.lat != null && i.lng != null)
     .map(i => {
       const isFood = (i.meals || []).length > 0 || i.kind === 'food';
-      return { lat: i.lat, lng: i.lng, name: i.name, k: nk(i.name),
+      return { lat: i.lat, lng: i.lng, name: i.name, k: nk(i.name), pid: i.id,
         t: isFood ? 'food' : 'act', icon: isFood ? 'restaurant' : 'attractions' };
     });
   const noCoord = mapSeq.length - pts.length;
@@ -569,7 +569,7 @@ for (const d of DATA) {
   // measured, which counts stops only and must not be moved by it.
   if (RB && RB.homeStop && RB.homeStop.lat != null) {
     pts.push({ n: pts.length + 1, lat: RB.homeStop.lat, lng: RB.homeStop.lng,
-      name: RB.homeStop.name, k: nk(RB.homeStop.name), t: 'hotel' });
+      name: RB.homeStop.name, k: nk(RB.homeStop.name), pid: RB.homeStop.pid, t: 'hotel' });
   }
   // The heading said "Route map — Beijing, day 3" directly under a card header reading
   // "Day 3 · Thu 13 Aug" inside a section headed "Beijing": the same three facts, twice,
@@ -770,11 +770,11 @@ function drawMapRoute(el,pts,fit){var map=el._gmap;if(!map)return;(el._routeMark
   el._routeLine=new google.maps.Polyline({path:path,strokeOpacity:0,map:map,icons:[{icon:{path:"M 0,-1 0,1",strokeOpacity:.75,strokeColor:"#8C5A2B",scale:3},offset:"0",repeat:"12px"}]});
   var b=new google.maps.LatLngBounds(),marks=Object.assign({},el._ideaMarks||{});pts.forEach(function(p){var col=MKCOL[p.t]||MKCOL.act;
     var m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:map,icon:mkIcon(col,false),label:{text:String(p.n),color:"#ffffff",fontSize:"11px",fontWeight:"700"},title:p.n+". "+p.name});m.__col=col;
-    var iw=new google.maps.InfoWindow({content:"<b>"+p.n+". "+p.name+"</b>"});m.addListener("click",function(){iw.open({anchor:m,map:map});});marks[p.k]=m;b.extend(m.getPosition());el._routeMarks.push(m);});
+    m.addListener("click",function(){if(p.pid)openPlacePeek(p.pid,el.closest(".day"));});marks[p.k]=m;b.extend(m.getPosition());el._routeMarks.push(m);});
   el._marks=marks;el._bounds=b;if(fit&&pts.length){map.fitBounds(b,40);if(pts.length===1)google.maps.event.addListenerOnce(map,"idle",function(){map.setZoom(15);});google.maps.event.addListenerOnce(map,"idle",function(){el._fitZoom=map.getZoom();});}}
 function drawMapIdeas(el,ideas){if(!el._gmap)return;Object.keys(el._ideaMarks||{}).forEach(function(k){el._ideaMarks[k].setMap(null);});var map=el._gmap,ideaMarks={};ideas.forEach(function(p){
   var col=MKCOL.idea,glyph=p.icon||(p.t==="food"?"restaurant":"attractions"),m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:el._showIdeas?map:null,icon:mkIcon(col,false,true),label:{text:glyph,color:"#ffffff",fontFamily:"Material Symbols Outlined",fontSize:"15px",fontWeight:"600"},title:"Suggestion: "+p.name,zIndex:0});m.__col=col;m.__idea=true;
-  var kind=p.t==="food"?"food":"activity",iw=new google.maps.InfoWindow({content:"<b>"+p.name+"</b><br>"+kind+" suggestion — not scheduled"});m.addListener("click",function(){iw.open({anchor:m,map:map});});ideaMarks[p.k]=m;});el._ideaMarks=ideaMarks;}
+  m.addListener("click",function(){if(p.pid)openPlacePeek(p.pid,el.closest(".day"));});ideaMarks[p.k]=m;});el._ideaMarks=ideaMarks;}
 function syncIdeasToggle(day){var el=day&&day.querySelector(".map"),b=day&&day.querySelector(".ideasmaptoggle");if(!b)return;var count=el&&el._ideaMarks?Object.keys(el._ideaMarks).length:0;b.disabled=!count;b.title=count?"Show or hide all mapped suggestions":"No mapped suggestions for this day";b.setAttribute("aria-pressed",el&&el._showIdeas?"true":"false");b.textContent=el&&el._showIdeas?"Hide suggestions":"Show suggestions";}
 function setIdeasVisible(day,on){var el=day&&day.querySelector(".map");if(!el)return;el._showIdeas=!!on;Object.keys(el._ideaMarks||{}).forEach(function(k){el._ideaMarks[k].setMap(el._showIdeas?el._gmap:null);});syncIdeasToggle(day);}
 function initMaps(day){
@@ -1000,8 +1000,11 @@ var stepsPanel=document.getElementById("stepsPanel");if(stepsPanel)stepsPanel.ad
    out of the very snapshot the app reads — so the two surfaces cannot describe
    one venue two different ways. */
 var PP=document.getElementById("pp"), PPB=PP.querySelector(".ppbox"),PP_CURRENT="",PP_DAY=null,PP_ENRICH={},PP_ENRICH_TIMER=null;
+var PEEK=document.getElementById("placePeek"),PEEK_CURRENT="",PEEK_DAY=null;
 var PHOTO_VIEW=document.getElementById("photoViewer"),PHOTO_IMAGE=PHOTO_VIEW.querySelector("img"),PHOTO_COUNT=PHOTO_VIEW.querySelector(".photoviewcount"),PHOTO_INDEX=0,PHOTO_LIST=[];
 function esc2(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function openPlacePeek(pid,day){var p=(window.__PLACES||{})[pid];if(!p||!PEEK)return;PEEK_CURRENT=pid;PEEK_DAY=day||null;var photo=p.photos&&p.photos[0]?'<img src="'+esc2(p.photos[0])+'" alt="">':'<span class="msym peekfallback">'+esc2(p.type==='Food'?'restaurant':p.type==='Hotel'?'hotel':p.type==='Transport'?'directions_transit':'place')+'</span>';var idea=String(p.status||'').toLowerCase()==='idea',overview=p.detailProfile&&p.detailProfile.overview?p.detailProfile.overview:(p.desc||p.planningNote||''),g=p.ratings&&p.ratings.google,t=p.ratings&&p.ratings.trip,rating=g?(g.rating+' ★ Google'):t?(t.rating+' ★ Trip.com'):'';PEEK.innerHTML='<div class="peekmedia">'+photo+'</div><div class="peekbody"><button type="button" class="peekclose" aria-label="Close">×</button><div class="peekname">'+esc2(p.name)+'</div>'+(p.zh?'<div class="peekzh">'+esc2(p.zh)+'</div>':'')+'<div class="peekchips"><span class="peekchip '+(idea?'idea':'')+'"><span class="msym">'+(idea?'lightbulb':p.type==='Food'?'restaurant':p.type==='Hotel'?'hotel':p.type==='Transport'?'directions_transit':'location_on')+'</span>'+esc2(idea?'Suggestion':(p.category||p.type||'Place'))+'</span>'+(rating?'<span class="peekrating">'+esc2(rating)+'</span>':'')+'</div>'+(overview?'<div class="peekdesc">'+esc2(overview)+'</div>':'')+'<button type="button" class="peekmore">A few more <span class="msym">arrow_forward</span></button></div>';PEEK.classList.add('on');}
+function closePlacePeek(){if(PEEK)PEEK.classList.remove('on');PEEK_CURRENT='';PEEK_DAY=null;}
 function dur(m){if(m==null)return null;m=Math.round(m);return m<60?m+"m":Math.floor(m/60)+"h"+(m%60?String(m%60).padStart(2,"0"):"");}
 function row(k,v){return v?'<div class="pprow"><b>'+esc2(k)+'</b><span>'+esc2(v)+'</span></div>':"";}
 function ppList(v){return Array.isArray(v)&&v.length?'<ul>'+v.map(function(x){return'<li>'+esc2(x)+'</li>';}).join('')+'</ul>':esc2(v||'');}
@@ -1029,6 +1032,7 @@ function enrichJobHTML(pid){var j=PP_ENRICH[pid];if(!j)return'<div class="ppenri
 function renderEnrichState(){if(!PP_CURRENT)return;var b=PPB.querySelector(".ppenrich"),host=PPB.querySelector(".ppenrichstatus"),j=PP_ENRICH[PP_CURRENT];if(host)host.innerHTML=enrichJobHTML(PP_CURRENT);if(b){var busy=j&&(j.status==="queued"||j.status==="researching");b.disabled=!!busy;b.innerHTML='<span class="msym" aria-hidden="true">travel_explore</span>'+(busy?'Enriching…':'Enrich details');}}
 function openPlace(pid,day,skipLive){
   var p=(window.__PLACES||{})[pid]; if(!p)return;
+  closePlacePeek();
   PP_CURRENT=pid;if(day)PP_DAY=day;
   var imgs=(p.photos||[]).map(function(u,i){return '<button type="button" class="ppphoto" data-photo="'+i+'" aria-label="Open photo '+(i+1)+' of '+p.photos.length+'"><img loading="lazy" src="'+esc2(u)+'" alt=""></button>';}).join("");
   /* status is already 'To book' / 'Booked' / 'Idea', so a separate booking chip
@@ -1075,7 +1079,7 @@ function pollEnrichment(pid,id){clearTimeout(PP_ENRICH_TIMER);researchRequest("/
 function startPlaceEnrichment(){if(!plannerToken()||!PP_CURRENT)return;var pid=PP_CURRENT,b=PPB.querySelector(".ppenrich");if(b)b.disabled=true;PP_ENRICH[pid]={status:"queued",stage:"queued",message:"Starting research…",progress:2};renderEnrichState();var context=PP_DAY?{cityId:PP_DAY.dataset.cityId,day:+PP_DAY.dataset.day}:{};researchRequest("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action:"enrich",placeId:pid},context))}).then(function(j){PP_ENRICH[pid]=j.job;renderEnrichState();pollEnrichment(pid,j.job.id);}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Enrichment could not start.",progress:100};renderEnrichState();});}
 PP.addEventListener("click",function(e){var photo=e.target.closest(".ppphoto");if(photo){openPhotoViewer(+photo.dataset.photo);return;}if(e.target.closest(".ppenrich")){startPlaceEnrichment();return;}if(e.target.closest(".ppx")||e.target.classList.contains("ppbg"))closePlace();});
 PHOTO_VIEW.addEventListener("click",function(e){if(e.target.closest(".photoviewclose")||e.target.classList.contains("photoviewbg")){closePhotoViewer();return;}if(e.target.closest(".photoviewprev"))showPhoto(PHOTO_INDEX-1);if(e.target.closest(".photoviewnext"))showPhoto(PHOTO_INDEX+1);});
-document.addEventListener("keydown",function(e){if(PHOTO_VIEW.classList.contains("on")){if(e.key==="Escape")closePhotoViewer();else if(e.key==="ArrowLeft")showPhoto(PHOTO_INDEX-1);else if(e.key==="ArrowRight")showPhoto(PHOTO_INDEX+1);return;}if(e.key!=="Escape")return;if(document.getElementById("suggestionModal").classList.contains("on")){closeSuggestionModal();return;}if(document.getElementById("accessModal").classList.contains("on")){closeAccessModal();return;}if(PP.classList.contains("on"))closePlace();});
+document.addEventListener("keydown",function(e){if(PHOTO_VIEW.classList.contains("on")){if(e.key==="Escape")closePhotoViewer();else if(e.key==="ArrowLeft")showPhoto(PHOTO_INDEX-1);else if(e.key==="ArrowRight")showPhoto(PHOTO_INDEX+1);return;}if(e.key!=="Escape")return;if(document.getElementById("suggestionModal").classList.contains("on")){closeSuggestionModal();return;}if(document.getElementById("accessModal").classList.contains("on")){closeAccessModal();return;}if(PP.classList.contains("on")){closePlace();return;}if(PEEK&&PEEK.classList.contains("on"))closePlacePeek();});
 /* A block or row opens the panel.
    CAPTURE PHASE, on document, and that is not incidental: the chart already has a
    capture-phase listener that calls stopPropagation() to handle segment SELECTION,
@@ -1085,8 +1089,11 @@ document.addEventListener("keydown",function(e){if(PHOTO_VIEW.classList.contains
 document.addEventListener("click",function(e){
   if(e.target.closest(".addbtn,.planadd")) return;
   var el=e.target.closest("[data-pid]");
-  if(el&&el.dataset.pid) openPlace(el.dataset.pid,el.closest(".day"));
+  if(!el||!el.dataset.pid)return;
+  if(el.matches("tr"))openPlace(el.dataset.pid,el.closest(".day"));
+  else if(el.classList.contains("seg"))openPlacePeek(el.dataset.pid,el.closest(".day"));
 },true);
+if(PEEK)PEEK.addEventListener("click",function(e){if(e.target.closest(".peekclose")){closePlacePeek();return;}if(e.target.closest(".peekmore")&&PEEK_CURRENT)openPlace(PEEK_CURRENT,PEEK_DAY);});
 
 /* ---- add a suggestion to a meal slot ------------------------------------
    The same POST the app's own button makes, to the same endpoint, cross-origin.
@@ -1495,6 +1502,11 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .idrow{cursor:pointer;}
 .wrap .idrow:hover{background:var(--surface-2);}
 .wrap .seg[data-pid]{cursor:pointer;}
+/* Map markers and timeline blocks open this compact first-look card. Table rows
+   intentionally bypass it and keep opening the full drawer directly. */
+#placePeek{position:fixed;left:50%;bottom:24px;z-index:58;width:min(500px,calc(100vw - 28px));transform:translate(-50%,24px);display:none;grid-template-columns:142px minmax(0,1fr);overflow:hidden;border:1px solid color-mix(in srgb,var(--target) 20%,var(--line));border-radius:20px;background:color-mix(in srgb,var(--surface) 96%,transparent);box-shadow:0 22px 65px rgba(38,20,16,.3);backdrop-filter:blur(16px);opacity:0;transition:transform .18s ease,opacity .18s ease}
+#placePeek.on{display:grid;transform:translate(-50%,0);opacity:1}.peekmedia{min-height:160px;background:color-mix(in srgb,var(--target) 10%,var(--surface-2));display:grid;place-items:center}.peekmedia img{width:100%;height:100%;object-fit:cover}.peekfallback{font-size:42px;color:var(--target)}.peekbody{position:relative;min-width:0;padding:16px 17px 14px}.peekclose{position:absolute;right:10px;top:9px;width:29px;height:29px;border:0;border-radius:50%;background:var(--surface-2);color:var(--ink-3);font:500 20px/1 var(--sans);cursor:pointer}.peekname{padding-right:30px;font:800 17px/1.22 var(--sans);color:var(--ink)}.peekzh{margin-top:2px;font-size:11.5px;color:var(--ink-3)}.peekchips{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px}.peekchip{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:8px;background:color-mix(in srgb,var(--target) 10%,var(--surface));color:var(--target);font:800 10px var(--sans)}.peekchip.idea{background:#FBE9E7;color:#B63530}.peekchip .msym{font-size:13px}.peekrating{font:700 10.5px var(--mono);color:var(--ink-3)}.peekdesc{margin-top:8px;font-size:11.5px;line-height:1.45;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.peekmore{float:right;display:inline-flex;align-items:center;gap:4px;margin-top:10px;border:0;border-radius:11px;background:var(--ink);color:var(--bg);padding:7px 11px;font:800 10.5px var(--sans);cursor:pointer}.peekmore .msym{font-size:14px}
+@media(max-width:520px){#placePeek{grid-template-columns:92px minmax(0,1fr);bottom:14px}.peekmedia{min-height:142px}.peekbody{padding:13px}.peekdesc{font-size:10.5px}}
 /* place detail panel — a right-hand drawer, so the timeline stays on screen behind it */
 #pp{position:fixed;inset:0;z-index:60;display:none;}
 #pp.on{display:block;}
@@ -1596,6 +1608,7 @@ ${GKEY
 </div>
 ${STYLE}
 ${EXTRA}
+<div id="placePeek" role="dialog" aria-label="Place preview"></div>
 <div id="pp" role="dialog" aria-modal="true" aria-label="Place detail"><div class="ppbg"></div><div class="ppbox"></div></div>
 <div id="photoViewer" role="dialog" aria-modal="true" aria-label="Photo viewer"><div class="photoviewbg"></div><button type="button" class="photoviewclose" aria-label="Close photo viewer">×</button><button type="button" class="photoviewprev" aria-label="Previous photo">‹</button><img alt=""><button type="button" class="photoviewnext" aria-label="Next photo">›</button><div class="photoviewcount"></div></div>
 <div id="accessModal" role="dialog" aria-modal="true" aria-labelledby="accessTitle" aria-describedby="accessCopy"><div class="accessbg"></div><div class="accessbox">
