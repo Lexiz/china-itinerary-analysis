@@ -502,12 +502,18 @@ for (const d of DATA) {
   // name only and could not answer it. They are pins like any other — selectable from
   // their row, focusing and un-focusing exactly as a committed stop does.
   //
-  // Drawn UNNUMBERED and hollow, and deliberately left out of both the route line and
-  // the fitted bounds: they are not part of the sequence you walk, and letting one
-  // stretch the frame would zoom the actual day out to accommodate a maybe.
+  // Drawn UNNUMBERED, hidden by default, and deliberately left out of both the route
+  // line and fitted bounds: they are not part of the sequence you walk, and letting
+  // one stretch the frame would zoom the actual day out to accommodate a maybe. Their
+  // food/activity type travels with the coordinate so the optional marker can carry
+  // the matching icon instead of making every suggestion look the same.
   const ideaPts = dayIdeas
     .filter(i => i.lat != null && i.lng != null)
-    .map(i => ({ lat: i.lat, lng: i.lng, name: i.name, k: nk(i.name), t: 'idea' }));
+    .map(i => {
+      const isFood = (i.meals || []).length > 0 || i.kind === 'food';
+      return { lat: i.lat, lng: i.lng, name: i.name, k: nk(i.name),
+        t: isFood ? 'food' : 'act', icon: isFood ? 'restaurant' : 'attractions' };
+    });
   const noCoord = mapSeq.length - pts.length;
   // The hotel is the day's last pin, numbered after the last stop and joined to the
   // route line — so the map ends where the table now ends. Appended after `noCoord` is
@@ -526,7 +532,8 @@ for (const d of DATA) {
     `<div class="mlg"><span class="mit"><i class="msw mk-act"></i>activity</span>` +
     `<span class="mit"><i class="msw mk-food"></i>food</span>` +
     `<span class="mit"><i class="msw mk-hotel"></i>hotel</span>` +
-    (ideaPts.length ? `<span class="mit"><i class="msw mk-idea"></i>suggestion</span>` : '') + `</div>` +
+    `<span class="mit"><i class="msw mk-idea"></i>suggestion</span>` +
+    `<button type="button" class="ideasmaptoggle" aria-pressed="false"${ideaPts.length ? '' : ' disabled title="No mapped suggestions for this day"'}>Show suggestions</button></div>` +
     `<div class="map" data-pts="${esc(JSON.stringify(pts))}" data-ideas="${esc(JSON.stringify(ideaPts))}"></div></div>`;
 
   // Two CARDS, each with a stated title — "Activity" (the committed table) and
@@ -651,6 +658,9 @@ function selectKey(day,key,from){
   Object.keys(mp._marks).forEach(k=>{const m=mp._marks[k];m.setIcon(mkIcon(m.__col,k===key,m.__idea));m.setZIndex(k===key?999:m.__idea?0:1);});
   const hit=mp._marks[key];
   if(!hit||!mp._gmap) return;
+  // A suggestion row remains a useful map shortcut even while optional suggestion
+  // pins are hidden: selecting the row turns the layer on before focusing its pin.
+  if(hit.__idea&&!mp._showIdeas)setIdeasVisible(day,true);
   // Clicking a row deep in a long table can leave the map scrolled off the top — zooming a map
   // you cannot see is no use. "nearest" is a no-op when it is already on screen.
   if(from==="row")mp.scrollIntoView({block:"nearest"});
@@ -671,6 +681,7 @@ chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;cons
 chart.addEventListener("click",e=>{if(e.target.closest("button"))return;const r=e.target.closest("tr[data-key]");if(r)selectKey(r.closest(".day"),r.dataset.key,"row");});
 chart.addEventListener("click",e=>{const r=e.target.closest(".dhead");if(r)toggleRow(r);});
 chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const r=e.target.closest(".dhead");if(r){e.preventDefault();toggleRow(r);}});
+chart.addEventListener("click",e=>{const b=e.target.closest(".ideasmaptoggle");if(!b||b.disabled)return;const day=b.closest(".day");if(!day)return;initMaps(day);const el=day.querySelector(".map");setIdeasVisible(day,!(el&&el._showIdeas));});
 // expand-all / collapse-all
 const xa=document.getElementById("xAll");if(xa)xa.onclick=()=>{const any=!document.querySelector(".day.open");document.querySelectorAll(".day").forEach(d=>{d.classList.toggle("open",any);const r=d.querySelector(".dhead");if(r)r.setAttribute("aria-expanded",any);});xa.textContent=any?"Collapse all":"Expand all";};
 // light / dark toggle — always starts light (the OS setting is deliberately
@@ -683,14 +694,12 @@ const thm=document.getElementById("thm");if(thm){const root=document.documentEle
 // and a map sized inside a hidden container comes out wrong.
 window.__gmready=false;
 window.gmapsReady=function(){window.__gmready=true;document.querySelectorAll(".day.open").forEach(initMaps);};
-const MKCOL={act:"#2F6FB5",food:"#C77A16",hotel:"#2E7D57",idea:"#6A5FA0"};
-/* A suggestion is drawn INVERTED — white fill, thick coloured ring — the same
-   "under consideration" treatment the app gives a candidate venue, so a maybe can
-   never be mistaken for something already in the day. Selected, it fills in and
-   grows like any other pin. */
-function mkIcon(col,on,idea){return{path:google.maps.SymbolPath.CIRCLE,scale:on?15:idea?9:11,
-  fillColor:idea&&!on?"#ffffff":col,fillOpacity:1,
-  strokeColor:on?"#C1443C":idea?col:"#ffffff",strokeWeight:on?4:idea?3:2};}
+const MKCOL={act:"#2F6FB5",food:"#C77A16",hotel:"#2E7D57",idea:"#D84A43"};
+/* Suggestions use a vivid coral marker, white rim and a category glyph. Route pins
+   remain the existing numbered blue/orange/green markers, so the optional layer is
+   unmistakable even where a suggestion sits close to a planned stop. */
+function mkIcon(col,on,idea){return{path:google.maps.SymbolPath.CIRCLE,scale:on?15:idea?13:11,
+  fillColor:col,fillOpacity:1,strokeColor:on?"#8F211C":"#ffffff",strokeWeight:on?4:idea?3:2};}
 function drawMapRoute(el,pts,fit){var map=el._gmap;if(!map)return;(el._routeMarks||[]).forEach(function(m){m.setMap(null);});if(el._routeLine)el._routeLine.setMap(null);
   el._routeMarks=[];var path=pts.map(function(p){return{lat:p.lat,lng:p.lng};});
   el._routeLine=new google.maps.Polyline({path:path,strokeOpacity:0,map:map,icons:[{icon:{path:"M 0,-1 0,1",strokeOpacity:.75,strokeColor:"#8C5A2B",scale:3},offset:"0",repeat:"12px"}]});
@@ -699,8 +708,10 @@ function drawMapRoute(el,pts,fit){var map=el._gmap;if(!map)return;(el._routeMark
     var iw=new google.maps.InfoWindow({content:"<b>"+p.n+". "+p.name+"</b>"});m.addListener("click",function(){iw.open({anchor:m,map:map});});marks[p.k]=m;b.extend(m.getPosition());el._routeMarks.push(m);});
   el._marks=marks;el._bounds=b;if(fit&&pts.length){map.fitBounds(b,40);if(pts.length===1)google.maps.event.addListenerOnce(map,"idle",function(){map.setZoom(15);});google.maps.event.addListenerOnce(map,"idle",function(){el._fitZoom=map.getZoom();});}}
 function drawMapIdeas(el,ideas){if(!el._gmap)return;Object.keys(el._ideaMarks||{}).forEach(function(k){el._ideaMarks[k].setMap(null);});var map=el._gmap,ideaMarks={};ideas.forEach(function(p){
-  var col=MKCOL.idea,m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:map,icon:mkIcon(col,false,true),title:"Suggestion: "+p.name,zIndex:0});m.__col=col;m.__idea=true;
-  var iw=new google.maps.InfoWindow({content:"<b>"+p.name+"</b><br>suggestion — not scheduled"});m.addListener("click",function(){iw.open({anchor:m,map:map});});ideaMarks[p.k]=m;});el._ideaMarks=ideaMarks;}
+  var col=MKCOL.idea,glyph=p.icon||(p.t==="food"?"restaurant":"attractions"),m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:el._showIdeas?map:null,icon:mkIcon(col,false,true),label:{text:glyph,color:"#ffffff",fontFamily:"Material Symbols Outlined",fontSize:"15px",fontWeight:"600"},title:"Suggestion: "+p.name,zIndex:0});m.__col=col;m.__idea=true;
+  var kind=p.t==="food"?"food":"activity",iw=new google.maps.InfoWindow({content:"<b>"+p.name+"</b><br>"+kind+" suggestion — not scheduled"});m.addListener("click",function(){iw.open({anchor:m,map:map});});ideaMarks[p.k]=m;});el._ideaMarks=ideaMarks;}
+function syncIdeasToggle(day){var el=day&&day.querySelector(".map"),b=day&&day.querySelector(".ideasmaptoggle");if(!b)return;var count=el&&el._ideaMarks?Object.keys(el._ideaMarks).length:0;b.disabled=!count;b.title=count?"Show or hide all mapped suggestions":"No mapped suggestions for this day";b.setAttribute("aria-pressed",el&&el._showIdeas?"true":"false");b.textContent=el&&el._showIdeas?"Hide suggestions":"Show suggestions";}
+function setIdeasVisible(day,on){var el=day&&day.querySelector(".map");if(!el)return;el._showIdeas=!!on;Object.keys(el._ideaMarks||{}).forEach(function(k){el._ideaMarks[k].setMap(el._showIdeas?el._gmap:null);});syncIdeasToggle(day);}
 function initMaps(day){
   if(!window.__gmready||!window.google||!google.maps)return;
   day.querySelectorAll(".map").forEach(el=>{
@@ -714,7 +725,7 @@ function initMaps(day){
        you are actually doing, and one idea across town would zoom the whole route out
        to fit a maybe. Selecting it still pans there. */
     let ideas=[];try{ideas=JSON.parse(el.dataset.ideas||"[]");}catch(e){}
-    el._gmap=map;drawMapIdeas(el,ideas);drawMapRoute(el,pts,true);
+    el._gmap=map;el._showIdeas=false;drawMapIdeas(el,ideas);drawMapRoute(el,pts,true);syncIdeasToggle(day);
   });
 }
 if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
@@ -802,8 +813,8 @@ function planKey(name){return String(name||"").toLowerCase().replace(/[^a-z0-9]+
 function mapType(x){return x.meal||x.placeKind==="food"?"food":x.placeKind==="hotel"?"hotel":"act";}
 function mapPointsFromDiff(diff){var pts=draftStops(diff).filter(function(x){return x.lat!=null&&x.lng!=null;}).map(function(x,i){return{n:i+1,lat:+x.lat,lng:+x.lng,name:x.name,k:planKey(x.name),t:mapType(x)};});
   var h=diff&&diff.homeAfter;if(h&&h.lat!=null&&h.lng!=null)pts.push({n:pts.length+1,lat:+h.lat,lng:+h.lng,name:h.name,k:planKey(h.name),t:"hotel"});return pts;}
-function mapIdeasFromLive(v,used){return (v&&v.ideas||[]).filter(function(x){return x.lat!=null&&x.lng!=null&&!used.has(String(x.placeId));}).map(function(x){return{lat:+x.lat,lng:+x.lng,name:x.name,k:planKey(x.name),t:"idea"};});}
-function setDayMap(day,pts,ideas){day.querySelectorAll(".map").forEach(function(el){el.dataset.pts=JSON.stringify(pts);if(ideas){el.dataset.ideas=JSON.stringify(ideas);if(el._gmap)drawMapIdeas(el,ideas);}if(el._gmap)drawMapRoute(el,pts,true);});}
+function mapIdeasFromLive(v,used){return (v&&v.ideas||[]).filter(function(x){return x.lat!=null&&x.lng!=null&&!used.has(String(x.placeId));}).map(function(x){var food=x.kind==="food"||(x.meals||[]).length>0;return{lat:+x.lat,lng:+x.lng,name:x.name,k:planKey(x.name),t:food?"food":"act",icon:food?"restaurant":"attractions"};});}
+function setDayMap(day,pts,ideas){day.querySelectorAll(".map").forEach(function(el){el.dataset.pts=JSON.stringify(pts);if(ideas){el.dataset.ideas=JSON.stringify(ideas);if(el._gmap)drawMapIdeas(el,ideas);}if(el._gmap)drawMapRoute(el,pts,true);});syncIdeasToggle(day);}
 function refreshDraftMap(day,diff){var live=planState(day).live,used=new Set(draftStops(diff).map(function(x){return String(x.placeId||"");}));setDayMap(day,mapPointsFromDiff(diff),mapIdeasFromLive(live,used));}
 function makeDraftSeg(d){var start=planMin(d.startAfter),left=planPct(start),right=planPct(start+Math.max(5,d.dwellAfter||0));
   var el=document.createElement("div");el.className="pseg"+(d.locked?" locked":"")+(d.isInfeasible?" infeasible":"")+(d.change==="added"?" added":"");
@@ -1288,12 +1299,17 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .nummk.mk-act{background:#2F6FB5;}
 .wrap .nummk.mk-food{background:#C77A16;}
 .wrap .nummk.mk-hotel{background:#2E7D57;}
-.wrap .mlg{display:flex;gap:14px;margin-top:6px;font-size:11px;color:var(--ink-3);}
+.wrap .mlg{display:flex;align-items:center;gap:14px;margin-top:6px;font-size:11px;color:var(--ink-3);}
 .wrap .mit{display:inline-flex;align-items:center;gap:5px;}
 .wrap .msw{width:11px;height:11px;border-radius:50%;display:inline-block;}
 .wrap .msw.mk-act{background:#2F6FB5;} .wrap .msw.mk-food{background:#C77A16;} .wrap .msw.mk-hotel{background:#2E7D57;}
-/* the suggestion swatch is hollow, like its pin */
-.wrap .msw.mk-idea{background:#fff;border:2.5px solid #6A5FA0;}
+/* The suggestion layer is optional and deliberately much warmer than route pins. */
+.wrap .msw.mk-idea{background:#D84A43;border:2px solid #fff;box-shadow:0 0 0 1px #D84A43;}
+.wrap .ideasmaptoggle{margin-left:auto;min-height:30px;padding:5px 12px;border:1px solid color-mix(in srgb,#D84A43 62%,var(--line));border-radius:999px;background:var(--surface);color:#B63530;font:700 11px/1 var(--sans);cursor:pointer;white-space:nowrap;box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 8%,transparent);}
+.wrap .ideasmaptoggle:hover:not(:disabled){background:color-mix(in srgb,#D84A43 8%,var(--surface));}
+.wrap .ideasmaptoggle[aria-pressed="true"]{background:#D84A43;border-color:#D84A43;color:#fff;}
+.wrap .ideasmaptoggle:focus-visible{outline:2px solid #D84A43;outline-offset:2px;}
+.wrap .ideasmaptoggle:disabled{cursor:not-allowed;opacity:.42;box-shadow:none;}
 /* a selected suggestion row reads like a selected stop row */
 .wrap table.acts tbody tr.idrow[data-key]{cursor:pointer;}
 .wrap .sumwrap{margin:22px 0 20px;}
