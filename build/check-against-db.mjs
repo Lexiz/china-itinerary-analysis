@@ -17,9 +17,23 @@
  * otherwise it would only be checking that a file equals itself.
  */
 import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
 import postgres from 'postgres';
 
 const RB = JSON.parse(readFileSync(new URL('./rebuilt.json', import.meta.url))).days;
+// Validate the freshly generated artifact. build.sh copies this file to
+// index.html only after the gate succeeds, so a broken build can never replace
+// the last known-good published page.
+const page = readFileSync(new URL('./china-day-load.html', import.meta.url), 'utf8');
+const inlineScripts = [...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
+  .map((match) => match[1])
+  .filter(Boolean);
+for (const [index, source] of inlineScripts.entries()) {
+  // A self-contained page can pass every data comparison and still be unusable
+  // if one generated inline script is malformed. Parse exactly what browsers run.
+  new vm.Script(source, { filename: `index.html inline script ${index + 1}` });
+}
+console.log(`inline scripts parsed: ${inlineScripts.length}`);
 const hhmm = (m) => `${String(Math.floor(((m % 1440) + 1440) % 1440 / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}${m >= 1440 ? '+1' : ''}`;
 const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 

@@ -1014,7 +1014,7 @@ function profileHTML(p){var q=p.detailProfile;if(!q)return p.desc?'<div class="p
   out+=ppSection('info','Practical details',[["Opening hours",pr.openingHours],["Last admission",pr.lastAdmission],["Booking",pr.booking],["Tickets",pr.tickets],["Price",pr.price],["Address",pr.address],["Getting there",pr.transport],["Payment",pr.payment],["Language",pr.language]]);
   out+=ppSection('reviews','Review themes',[["Google travellers say",rv.googleSummary],["Trip.com travellers say",rv.tripSummary],["Common praise",rv.commonPraise],["Worth knowing",rv.commonCriticism]]);
   out+=ppSection('lightbulb','Tips for this trip',[["Tips",q.tips||[]],["Watch out for",q.cautions||[]]]);
-  var links=[].concat((q.officialLinks||[]).map(function(x){return{label:x.label,url:x.url,kind:'Official'};}),(q.sources||[]).map(function(x){return{label:x.title||x.publisher||x.kind,url:x.url,kind:x.kind};})).filter(function(x,i,a){return x.url&&/^https?:\/\//.test(x.url)&&a.findIndex(function(y){return y.url===x.url;})===i;});
+  var links=[].concat((q.officialLinks||[]).map(function(x){return{label:x.label,url:x.url,kind:'Official'};}),(q.sources||[]).map(function(x){return{label:x.title||x.publisher||x.kind,url:x.url,kind:x.kind};})).filter(function(x,i,a){return x.url&&(x.url.indexOf('https://')===0||x.url.indexOf('http://')===0)&&a.findIndex(function(y){return y.url===x.url;})===i;});
   if(links.length)out+='<details class="ppsources"><summary>Sources · checked '+esc2(q.researchedOn||'recently')+'</summary>'+links.map(function(x){return'<a href="'+esc2(x.url)+'" target="_blank" rel="noopener">'+esc2(x.kind)+': '+esc2(x.label)+'</a>';}).join('')+'</details>';
   return out;
 }
