@@ -232,6 +232,22 @@ const bookingCardHTML = b => {
     + `<div class="bkactions">${b.source === 'place' && PLACES[b.id] ? `<button type="button" data-pid="${esc(b.id)}">View details</button>` : ''}`
     + (b.bookingLink ? `<a class="primary" href="${esc(b.bookingLink)}" target="_blank" rel="noopener">Booking site</a>` : '') + `</div></div></article>`;
 };
+const BOOKING_CITY_GROUPS = (() => {
+  const groups = new Map();
+  for (const b of OUTSTANDING_BOOKINGS) {
+    const city = b.cityName || 'Transport / unassigned';
+    if (!groups.has(city)) groups.set(city, { city, accent: b.accent || '#9A6548', items: [] });
+    groups.get(city).items.push(b);
+  }
+  return [...groups.values()].sort((a, b) => {
+    const first = xs => xs.map(x => x.date || '9999-12-31').sort()[0];
+    return first(a.items).localeCompare(first(b.items)) || a.city.localeCompare(b.city);
+  });
+})();
+const bookingCityHTML = g => `<details class="bkcity" data-city="${esc(g.city)}" style="--cityaccent:${esc(g.accent)}" open>`
+  + `<summary><span class="bkcitychev">›</span><span class="bkcitydot"></span><span class="bkcityname">${esc(g.city)}</span>`
+  + `<span class="bkcitycount">${g.items.length} booking${g.items.length === 1 ? '' : 's'}</span></summary>`
+  + `<div class="bkcitycards">${g.items.map(bookingCardHTML).join('')}</div></details>`;
 const bookingManagerHTML = `<section id="bookingManager" class="bookingmanager" hidden aria-labelledby="bookingManagerTitle">`
   + `<div class="bkmhero"><div><div class="eyebrow">Booking control</div><h2 id="bookingManagerTitle">Manage bookings</h2><p>Outstanding tickets, stays and transport from the same booking data as the mobile app. Opening windows use Beijing time.</p></div>`
   + `<div class="bkmcount"><b>${OUTSTANDING_BOOKINGS.length}</b><span>still to book</span></div></div>`
@@ -242,7 +258,7 @@ const bookingManagerHTML = `<section id="bookingManager" class="bookingmanager" 
   + `<div class="bksort" role="group" aria-label="Sort bookings"><span>Chronological by</span>`
   + `<button type="button" data-bksort="trip" aria-pressed="true">Trip date</button><button type="button" data-bksort="opening" aria-pressed="false">Opening date</button></div></div>`
   + `<div id="bookingResultSummary" class="bkresult" aria-live="polite"></div>`
-  + `<div id="bookingList" class="bklist">${OUTSTANDING_BOOKINGS.map(bookingCardHTML).join('')}</div>`
+  + `<div id="bookingList" class="bklist">${BOOKING_CITY_GROUPS.map(bookingCityHTML).join('')}</div>`
   + `<div id="bookingEmpty" class="bkempty" hidden>No bookings match this filter.</div></section>`;
 
 // top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
@@ -722,7 +738,13 @@ const xa=document.getElementById("xAll");if(xa)xa.onclick=()=>{const any=!docume
 var bookingMode=false,bookingFilter="all",bookingSort="trip";
 function bookingClock(){var p=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()),v=function(t){var x=p.find(function(q){return q.type===t;});return x?x.value:"";};return{date:v("year")+"-"+v("month")+"-"+v("day"),time:v("hour")+":"+v("minute")};}
 function bookingCardInfo(card,cn){var open=card.dataset.openDate,time=card.dataset.openTime,label=card.dataset.openLabel;if(card.dataset.sameDay==="1")return{bucket:"later",text:"Book on the day"};if(!open)return{bucket:"open",text:"Check availability now"};if(cn.date<open)return{bucket:"later",text:"Book from "+label+(time?" · "+time+" Beijing":"")};if(cn.date===open&&time&&cn.time<time)return{bucket:"later",text:"Opens today · "+time+" Beijing"};if(cn.date===open&&!time)return{bucket:"open",text:"Opens today · check booking app"};return{bucket:"open",text:"Booking should be open"};}
-function updateBookingManager(){var list=document.getElementById("bookingList");if(!list)return;var cn=bookingClock(),cards=Array.from(list.querySelectorAll(".bkcard")),counts={open:0,later:0};cards.forEach(function(card){var info=bookingCardInfo(card,cn);card.dataset.bucket=info.bucket;counts[info.bucket]++;var state=card.querySelector(".bkstate");if(state){state.className="bkstate "+info.bucket;state.textContent=info.text;}card.hidden=bookingFilter!=="all"&&bookingFilter!==info.bucket;});cards.sort(function(a,b){var ka=bookingSort==="opening"?(a.dataset.openDate||a.dataset.tripDate):(a.dataset.tripDate||"9999-12-31"),kb=bookingSort==="opening"?(b.dataset.openDate||b.dataset.tripDate):(b.dataset.tripDate||"9999-12-31");return ka.localeCompare(kb)||(a.dataset.tripDate||"").localeCompare(b.dataset.tripDate||"")||(a.dataset.name||"").localeCompare(b.dataset.name||"");}).forEach(function(card){list.appendChild(card);});document.querySelectorAll("[data-bkfilter]").forEach(function(b){var k=b.dataset.bkfilter;b.setAttribute("aria-pressed",k===bookingFilter?"true":"false");var n=b.querySelector("span");if(n)n.textContent=k==="all"?String(cards.length):String(counts[k]||0);});document.querySelectorAll("[data-bksort]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.bksort===bookingSort?"true":"false");});var shown=cards.filter(function(c){return!c.hidden;}).length,summary=document.getElementById("bookingResultSummary"),empty=document.getElementById("bookingEmpty");if(summary)summary.textContent=shown+" booking"+(shown===1?"":"s")+" · sorted by "+(bookingSort==="opening"?"opening date":"trip date");if(empty)empty.hidden=shown!==0;}
+function updateBookingManager(){var list=document.getElementById("bookingList");if(!list)return;var cn=bookingClock(),cards=Array.from(list.querySelectorAll(".bkcard")),groups=Array.from(list.querySelectorAll(".bkcity")),counts={open:0,later:0};
+  var cardKey=function(card){return bookingSort==="opening"?(card.dataset.openDate||card.dataset.tripDate||"9999-12-31"):(card.dataset.tripDate||"9999-12-31");};
+  var compareCards=function(a,b){return cardKey(a).localeCompare(cardKey(b))||(a.dataset.tripDate||"").localeCompare(b.dataset.tripDate||"")||(a.dataset.name||"").localeCompare(b.dataset.name||"");};
+  cards.forEach(function(card){var info=bookingCardInfo(card,cn);card.dataset.bucket=info.bucket;counts[info.bucket]++;var state=card.querySelector(".bkstate");if(state){state.className="bkstate "+info.bucket;state.textContent=info.text;}card.hidden=bookingFilter!=="all"&&bookingFilter!==info.bucket;});
+  groups.forEach(function(group){var box=group.querySelector(".bkcitycards"),own=Array.from(group.querySelectorAll(".bkcard")).sort(compareCards),visible=own.filter(function(card){return!card.hidden;});own.forEach(function(card){box.appendChild(card);});group.hidden=visible.length===0;group.dataset.sortKey=visible.length?cardKey(visible[0]):"9999-12-31";var count=group.querySelector(".bkcitycount");if(count)count.textContent=visible.length+" booking"+(visible.length===1?"":"s");});
+  groups.sort(function(a,b){return(a.dataset.sortKey||"").localeCompare(b.dataset.sortKey||"")||(a.dataset.city||"").localeCompare(b.dataset.city||"");}).forEach(function(group){list.appendChild(group);});
+  document.querySelectorAll("[data-bkfilter]").forEach(function(b){var k=b.dataset.bkfilter;b.setAttribute("aria-pressed",k===bookingFilter?"true":"false");var n=b.querySelector("span");if(n)n.textContent=k==="all"?String(cards.length):String(counts[k]||0);});document.querySelectorAll("[data-bksort]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.bksort===bookingSort?"true":"false");});var shown=cards.filter(function(c){return!c.hidden;}).length,summary=document.getElementById("bookingResultSummary"),empty=document.getElementById("bookingEmpty");if(summary)summary.textContent=shown+" booking"+(shown===1?"":"s")+" · "+groups.filter(function(g){return!g.hidden;}).length+" cities · sorted by "+(bookingSort==="opening"?"opening date":"trip date");if(empty)empty.hidden=shown!==0;}
 function setBookingMode(on){bookingMode=!!on;document.body.classList.toggle("bookings-mode",bookingMode);var panel=document.getElementById("bookingManager"),button=document.getElementById("manageBookings");if(panel)panel.hidden=!bookingMode;if(button){button.setAttribute("aria-pressed",bookingMode?"true":"false");button.textContent=bookingMode?"Back to itinerary":"Manage bookings";}if(bookingMode){updateBookingManager();panel&&panel.scrollIntoView({block:"start",behavior:"smooth"});}}
 var manageBookings=document.getElementById("manageBookings");if(manageBookings)manageBookings.onclick=function(){setBookingMode(!bookingMode);};
 document.addEventListener("click",function(e){var f=e.target.closest("[data-bkfilter]");if(f){bookingFilter=f.dataset.bkfilter||"all";updateBookingManager();return;}var s=e.target.closest("[data-bksort]");if(s){bookingSort=s.dataset.bksort||"trip";updateBookingManager();}});
@@ -1301,8 +1323,15 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .bksort button{border:0;border-radius:9px;background:transparent;padding:6px 9px;}
 .wrap .bksort button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px color-mix(in srgb,var(--ink) 14%,transparent);}
 .wrap .bkresult{min-height:17px;margin:1px 2px 9px;color:var(--ink-3);font:700 10.5px var(--mono);}
-.wrap .bklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-.wrap .bkcard{display:flex;gap:11px;min-width:0;padding:14px;border:1px solid var(--line);border-left:4px solid var(--bc);border-radius:14px;background:var(--surface-2);}
+.wrap .bklist{display:grid;grid-template-columns:minmax(0,1fr);gap:11px;}
+.wrap .bkcity{min-width:0;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--cityaccent) 3%,var(--surface));overflow:hidden;}
+.wrap .bkcity[hidden]{display:none!important}.wrap .bkcity>summary{display:flex;align-items:center;gap:9px;padding:12px 14px;cursor:pointer;list-style:none;background:color-mix(in srgb,var(--cityaccent) 7%,var(--surface));border-bottom:1px solid transparent;}
+.wrap .bkcity>summary::-webkit-details-marker{display:none}.wrap .bkcity[open]>summary{border-bottom-color:var(--line)}
+.wrap .bkcitychev{display:inline-block;color:var(--ink-3);font-weight:900;transition:transform .15s}.wrap .bkcity[open] .bkcitychev{transform:rotate(90deg)}
+.wrap .bkcitydot{width:9px;height:9px;border-radius:50%;background:var(--cityaccent);box-shadow:0 0 0 3px color-mix(in srgb,var(--cityaccent) 13%,transparent)}
+.wrap .bkcityname{font-size:13px;font-weight:850;color:var(--ink)}.wrap .bkcitycount{margin-left:auto;color:var(--ink-3);font:750 10px var(--mono)}
+.wrap .bkcitycards{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;padding:10px;}
+.wrap .bkcard{display:flex;box-sizing:border-box;width:100%;gap:11px;min-width:0;padding:14px;border:1px solid var(--line);border-left:4px solid var(--bc);border-radius:12px;background:var(--surface);}
 .wrap .bkcard[hidden]{display:none!important;}.wrap .bkicon{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--bc) 13%,var(--surface));color:var(--bc);}
 .wrap .bkicon .msym{font-size:18px}.wrap .bkcopy{min-width:0;flex:1}.wrap .bktop{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;}
 .wrap .bkdate{color:var(--ink-3);font:700 10px var(--mono);}.wrap .bkstate{flex:none;max-width:52%;font-size:9px;font-weight:850;text-align:right;text-transform:uppercase;letter-spacing:.025em;}
@@ -1310,7 +1339,7 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .bkzh{color:var(--ink-2);font-size:11px}.wrap .bkmeta{margin-top:5px;color:var(--ink-2);font-size:10.5px;font-weight:700}.wrap .bkchannel{margin-top:4px;color:var(--ink-3);font-size:10.5px;line-height:1.4;}
 .wrap .bkactions{display:flex;gap:7px;margin-top:10px}.wrap .bkactions a,.wrap .bkactions button{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--ink-2);background:var(--surface);font:800 10px var(--sans);text-decoration:none;cursor:pointer}.wrap .bkactions a.primary{border-color:var(--warn);color:var(--warn)}
 .wrap .bkempty{padding:34px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--ink-3);font-size:12px}.wrap .bkempty[hidden]{display:none!important;}
-@media(max-width:760px){.wrap .bkmhero,.wrap .bkmcontrols{align-items:stretch;flex-direction:column}.wrap .bkmcount{align-items:flex-start}.wrap .bkfilters{overflow-x:auto}.wrap .bksort{align-self:flex-start}.wrap .bklist{grid-template-columns:1fr}}
+@media(max-width:760px){.wrap .bkmhero,.wrap .bkmcontrols{align-items:stretch;flex-direction:column}.wrap .bkmcount{align-items:flex-start}.wrap .bkfilters{overflow-x:auto}.wrap .bksort{align-self:flex-start}}
 .wrap .fix.fix-prop{max-width:84ch;color:var(--ink-2);}
 .wrap .fix.fix-warn{color:var(--warn);}
 .wrap .fix.fix-warn::before{color:var(--warn);}
