@@ -1010,12 +1010,13 @@ function profileHTML(p){var q=p.detailProfile;if(!q)return p.desc?'<div class="p
   var out='<div class="ppdesc">'+esc2(q.overview||'')+'</div>';
   out+=ppSection('stars','Highlights',[["Don't miss",q.highlights||[]]]);
   if(food)out+=ppSection('restaurant','Food & ordering',[["Cuisine",f.cuisine],["What to order",f.signatureDishes],["Order for two",f.orderForTwo],["Dietary notes",f.dietaryNotes],["Reservations",f.reservationAdvice],["Service",f.serviceNotes],["Which branch",f.branchAdvice]]);
-  else{out+=ppSection('history_edu','Story & significance',[["History",ctx.history],["Why it matters",ctx.significance],["Architecture",ctx.architecture],["Collection",ctx.collection]]);out+=ppSection('route','How to visit',[["Best approach",visit.approach],["Entrance",visit.entrance],["Suggested route",visit.suggestedRoute],["Best time",visit.bestTime],["Time to allow",visit.expectedDuration],["Accessibility",visit.accessibility],["Facilities",visit.facilities],["Photography",visit.photography]]);}
-  out+=ppSection('info','Practical details',[["Opening hours",pr.openingHours],["Last admission",pr.lastAdmission],["Booking",pr.booking],["Tickets",pr.tickets],["Price",pr.price],["Address",pr.address],["Getting there",pr.transport],["Payment",pr.payment],["Language",pr.language]]);
+  else out+=ppSection('history_edu','Story & significance',[["History",ctx.history],["Why it matters",ctx.significance],["Architecture",ctx.architecture],["Collection",ctx.collection]]);
+  out+=ppSection('route',food?'Visit & arrival':'How to visit',[["Best approach",visit.approach],["Entrance",visit.entrance],["Suggested route",visit.suggestedRoute],["Best time",visit.bestTime],["Time to allow",visit.expectedDuration],["Accessibility",visit.accessibility],["Facilities",visit.facilities],["Photography",visit.photography]]);
+  out+=ppSection('info','Practical details',[["Opening hours",pr.openingHours],["Last admission",pr.lastAdmission],["Booking",pr.booking],["Tickets",pr.tickets],["Price",pr.price],["Address",pr.address],["Getting there",pr.transport],["Payment",pr.payment],["Language",pr.language],["Booking channel",p.bookingChannel],["Booking opens",p.bookingWindowDays==null?null:(p.bookingWindowDays===0?'On the day':p.bookingWindowDays+' days before the visit')],["Ticket release time",p.bookingOpenTime?p.bookingOpenTime+' China time':null]]);
   out+=ppSection('reviews','Review themes',[["Google travellers say",rv.googleSummary],["Trip.com travellers say",rv.tripSummary],["Common praise",rv.commonPraise],["Worth knowing",rv.commonCriticism]]);
   out+=ppSection('lightbulb','Tips for this trip',[["Tips",q.tips||[]],["Watch out for",q.cautions||[]]]);
   var links=[].concat((q.officialLinks||[]).map(function(x){return{label:x.label,url:x.url,kind:'Official'};}),(q.sources||[]).map(function(x){return{label:x.title||x.publisher||x.kind,url:x.url,kind:x.kind};})).filter(function(x,i,a){return x.url&&(x.url.indexOf('https://')===0||x.url.indexOf('http://')===0)&&a.findIndex(function(y){return y.url===x.url;})===i;});
-  if(links.length)out+='<details class="ppsources"><summary>Sources · checked '+esc2(q.researchedOn||'recently')+'</summary>'+links.map(function(x){return'<a href="'+esc2(x.url)+'" target="_blank" rel="noopener">'+esc2(x.kind)+': '+esc2(x.label)+'</a>';}).join('')+'</details>';
+  if(links.length)out+='<details class="ppsources"><summary>Sources · checked '+esc2(q.researchedOn||'recently')+'</summary>'+links.map(function(x){var source=(q.sources||[]).find(function(s){return s.url===x.url;})||{};var meta=[source.checkedOn?'Checked '+source.checkedOn:'',source.supports&&source.supports.length?'Supports: '+source.supports.join(', '):''].filter(Boolean).join(' · ');return'<div><a href="'+esc2(x.url)+'" target="_blank" rel="noopener">'+esc2(x.kind)+': '+esc2(x.label)+'</a>'+(meta?'<small>'+esc2(meta)+'</small>':'')+'</div>';}).join('')+'</details>';
   return out;
 }
 function enrichJobHTML(pid){var j=PP_ENRICH[pid];if(!j)return'<div class="ppenrichmsg">Searches current sources and fills any details or photos it can find. Existing information is kept.</div>';var busy=j.status==="queued"||j.status==="researching";return'<div class="ppenrichrail"><i style="width:'+Math.max(2,Math.min(100,j.progress||0))+'%"></i></div><div class="ppenrichmsg '+(j.status==="failed"?"bad":j.status==="complete"?"good":"")+'">'+esc2(j.message||"")+'</div>'+(busy?'<div class="ppenrichstage">'+esc2(j.stage||"researching")+'</div>':'');}
@@ -1046,14 +1047,14 @@ function openPlace(pid,day,skipLive){
     +profileHTML(p)
     +row("Advised", dur(p.advised))
     +row("Planned", dur(p.planned))
-    +row("Hours", p.hours)
-    +row("Price", p.price)
+    +row("Hours", p.detailProfile&&p.detailProfile.practical&&p.detailProfile.practical.openingHours?null:p.hours)
+    +row("Price", p.detailProfile&&p.detailProfile.practical&&p.detailProfile.practical.price?null:p.price)
     +(g?row("Google", g.rating+" ★"+(g.reviews?" ("+g.reviews+")":"")):"")
     +(t?row("Trip.com", t.rating+" ★"+(t.reviews?" ("+t.reviews+")":"")):"")
     +(p.coord?row("Coordinates", p.coord.lat.toFixed(5)+", "+p.coord.lng.toFixed(5)):"")
     +(p.planningNote?'<div class="pprow"><b>Why / note</b><span>'+esc2(p.planningNote)+'</span></div>':'')
     +(p.bookingLink?'<div class="pprow"><b>Booking</b><span><a href="'+esc2(p.bookingLink)+'" target="_blank" rel="noopener">open</a></span></div>':'')
-    +(p.credit?'<div class="ppcred">Image: '+esc2([p.credit.artist,p.credit.source,p.credit.license].filter(Boolean).join(" · "))+'</div>':'')
+    +((p.credit||(p.photoCredits||[])[0])?'<div class="ppcred">Image: '+esc2((function(c){return[c.artist,c.attribution||c.article,c.source,c.license].filter(Boolean).join(" · ");})(p.credit||(p.photoCredits||[])[0]))+'</div>':'')
     +'<div class="ppactions"><button type="button" class="ppenrich"><span class="msym" aria-hidden="true">travel_explore</span>Enrich details</button><div class="ppenrichstatus">'+enrichJobHTML(pid)+'</div></div>';
   PP.classList.add("on"); document.body.style.overflow="hidden";
   PPB.querySelector(".ppx").focus();
@@ -1513,7 +1514,7 @@ body.only-bad .wrap .day.ok-day{display:none;}
 #pp .ppsection h4 .msym{font-size:17px}#pp .ppdetailrow+ .ppdetailrow{margin-top:9px}
 #pp .ppdetailrow b{display:block;margin-bottom:2px;font:750 10px var(--sans);color:var(--ink-3)}
 #pp .ppdetailrow{font-size:12.5px;line-height:1.52;color:var(--ink-2)}#pp .ppdetailrow ul{margin:2px 0 0;padding-left:17px}
-#pp .ppsources{margin:12px 0;font-size:11px}#pp .ppsources summary{cursor:pointer;font-weight:800;color:var(--target)}#pp .ppsources a{display:block;margin-top:6px;color:var(--ink-2)}
+#pp .ppsources{margin:12px 0;font-size:11px}#pp .ppsources summary{cursor:pointer;font-weight:800;color:var(--target)}#pp .ppsources a{display:block;margin-top:6px;color:var(--ink-2)}#pp .ppsources small{display:block;margin:2px 0 0;color:var(--ink-3);line-height:1.35}
 #pp .pprow{display:flex;gap:8px;font-size:12.5px;padding:5px 0;border-top:1px solid var(--line);}
 #pp .pprow b{min-width:104px;color:var(--ink-3);font-weight:700;}
 #pp .ppwarn{font-size:12px;font-weight:700;color:var(--bad);margin:8px 0;}
