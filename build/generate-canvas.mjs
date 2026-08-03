@@ -1004,9 +1004,23 @@ var PHOTO_VIEW=document.getElementById("photoViewer"),PHOTO_IMAGE=PHOTO_VIEW.que
 function esc2(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function dur(m){if(m==null)return null;m=Math.round(m);return m<60?m+"m":Math.floor(m/60)+"h"+(m%60?String(m%60).padStart(2,"0"):"");}
 function row(k,v){return v?'<div class="pprow"><b>'+esc2(k)+'</b><span>'+esc2(v)+'</span></div>':"";}
+function ppList(v){return Array.isArray(v)&&v.length?'<ul>'+v.map(function(x){return'<li>'+esc2(x)+'</li>';}).join('')+'</ul>':esc2(v||'');}
+function ppSection(icon,title,rows){var body=rows.filter(function(r){return Array.isArray(r[1])?r[1].length:!!r[1];}).map(function(r){return'<div class="ppdetailrow"><b>'+esc2(r[0])+'</b>'+ppList(r[1])+'</div>';}).join('');return body?'<section class="ppsection"><h4><span class="msym">'+esc2(icon)+'</span>'+esc2(title)+'</h4>'+body+'</section>':'';}
+function profileHTML(p){var q=p.detailProfile;if(!q)return p.desc?'<div class="ppdesc">'+esc2(p.desc)+'</div>':'';var food=q.family==='food',ctx=q.context||{},visit=q.visit||{},f=q.food||{},pr=q.practical||{},rv=q.reviews||{};
+  var out='<div class="ppdesc">'+esc2(q.overview||'')+'</div>';
+  out+=ppSection('stars','Highlights',[["Don't miss",q.highlights||[]]]);
+  if(food)out+=ppSection('restaurant','Food & ordering',[["Cuisine",f.cuisine],["What to order",f.signatureDishes],["Order for two",f.orderForTwo],["Dietary notes",f.dietaryNotes],["Reservations",f.reservationAdvice],["Service",f.serviceNotes],["Which branch",f.branchAdvice]]);
+  else{out+=ppSection('history_edu','Story & significance',[["History",ctx.history],["Why it matters",ctx.significance],["Architecture",ctx.architecture],["Collection",ctx.collection]]);out+=ppSection('route','How to visit',[["Best approach",visit.approach],["Entrance",visit.entrance],["Suggested route",visit.suggestedRoute],["Best time",visit.bestTime],["Time to allow",visit.expectedDuration],["Accessibility",visit.accessibility],["Facilities",visit.facilities],["Photography",visit.photography]]);}
+  out+=ppSection('info','Practical details',[["Opening hours",pr.openingHours],["Last admission",pr.lastAdmission],["Booking",pr.booking],["Tickets",pr.tickets],["Price",pr.price],["Address",pr.address],["Getting there",pr.transport],["Payment",pr.payment],["Language",pr.language]]);
+  out+=ppSection('reviews','Review themes',[["Google travellers say",rv.googleSummary],["Trip.com travellers say",rv.tripSummary],["Common praise",rv.commonPraise],["Worth knowing",rv.commonCriticism]]);
+  out+=ppSection('lightbulb','Tips for this trip',[["Tips",q.tips||[]],["Watch out for",q.cautions||[]]]);
+  var links=[].concat((q.officialLinks||[]).map(function(x){return{label:x.label,url:x.url,kind:'Official'};}),(q.sources||[]).map(function(x){return{label:x.title||x.publisher||x.kind,url:x.url,kind:x.kind};})).filter(function(x,i,a){return x.url&&/^https?:\/\//.test(x.url)&&a.findIndex(function(y){return y.url===x.url;})===i;});
+  if(links.length)out+='<details class="ppsources"><summary>Sources · checked '+esc2(q.researchedOn||'recently')+'</summary>'+links.map(function(x){return'<a href="'+esc2(x.url)+'" target="_blank" rel="noopener">'+esc2(x.kind)+': '+esc2(x.label)+'</a>';}).join('')+'</details>';
+  return out;
+}
 function enrichJobHTML(pid){var j=PP_ENRICH[pid];if(!j)return'<div class="ppenrichmsg">Searches current sources and fills any details or photos it can find. Existing information is kept.</div>';var busy=j.status==="queued"||j.status==="researching";return'<div class="ppenrichrail"><i style="width:'+Math.max(2,Math.min(100,j.progress||0))+'%"></i></div><div class="ppenrichmsg '+(j.status==="failed"?"bad":j.status==="complete"?"good":"")+'">'+esc2(j.message||"")+'</div>'+(busy?'<div class="ppenrichstage">'+esc2(j.stage||"researching")+'</div>':'');}
 function renderEnrichState(){if(!PP_CURRENT)return;var b=PPB.querySelector(".ppenrich"),host=PPB.querySelector(".ppenrichstatus"),j=PP_ENRICH[PP_CURRENT];if(host)host.innerHTML=enrichJobHTML(PP_CURRENT);if(b){var busy=j&&(j.status==="queued"||j.status==="researching");b.disabled=!!busy;b.innerHTML='<span class="msym" aria-hidden="true">travel_explore</span>'+(busy?'Enriching…':'Enrich details');}}
-function openPlace(pid,day){
+function openPlace(pid,day,skipLive){
   var p=(window.__PLACES||{})[pid]; if(!p)return;
   PP_CURRENT=pid;if(day)PP_DAY=day;
   var imgs=(p.photos||[]).map(function(u,i){return '<button type="button" class="ppphoto" data-photo="'+i+'" aria-label="Open photo '+(i+1)+' of '+p.photos.length+'"><img loading="lazy" src="'+esc2(u)+'" alt=""></button>';}).join("");
@@ -1029,7 +1043,7 @@ function openPlace(pid,day){
     +(imgs?'<div class="ppimgs">'+imgs+'</div>':'')
     +(chips?'<div class="ppchips">'+chips+'</div>':'')
     +warn
-    +(p.desc?'<div class="ppdesc">'+esc2(p.desc)+'</div>':'')
+    +profileHTML(p)
     +row("Advised", dur(p.advised))
     +row("Planned", dur(p.planned))
     +row("Hours", p.hours)
@@ -1043,14 +1057,15 @@ function openPlace(pid,day){
     +'<div class="ppactions"><button type="button" class="ppenrich"><span class="msym" aria-hidden="true">travel_explore</span>Enrich details</button><div class="ppenrichstatus">'+enrichJobHTML(pid)+'</div></div>';
   PP.classList.add("on"); document.body.style.overflow="hidden";
   PPB.querySelector(".ppx").focus();
+  if(!skipLive)refreshPlaceDetail(pid).then(function(){if(PP_CURRENT===pid)openPlace(pid,PP_DAY,true);}).catch(function(){});
 }
 function closePlace(){PP.classList.remove("on");PP_CURRENT="";PP_DAY=null;document.body.style.overflow="";}
 function showPhoto(n){if(!PHOTO_LIST.length)return;PHOTO_INDEX=(n+PHOTO_LIST.length)%PHOTO_LIST.length;PHOTO_IMAGE.src=PHOTO_LIST[PHOTO_INDEX];PHOTO_IMAGE.alt="Photo "+(PHOTO_INDEX+1)+" of "+PHOTO_LIST.length;PHOTO_COUNT.textContent=(PHOTO_INDEX+1)+" / "+PHOTO_LIST.length;}
 function openPhotoViewer(n){var p=(window.__PLACES||{})[PP_CURRENT];PHOTO_LIST=p&&Array.isArray(p.photos)?p.photos.slice():[];if(!PHOTO_LIST.length)return;showPhoto(n);PHOTO_VIEW.classList.add("on");PHOTO_VIEW.querySelector(".photoviewclose").focus();}
 function closePhotoViewer(){PHOTO_VIEW.classList.remove("on");PHOTO_IMAGE.removeAttribute("src");}
 function refreshPlaceDetail(pid){return fetch(window.__APP+"/api/place?id="+encodeURIComponent(pid)).then(function(r){return r.json().then(function(j){if(!r.ok||!j.ok)throw new Error(j.error||"Could not refresh place details.");window.__PLACES[pid]=Object.assign({},window.__PLACES[pid]||{},j.place);return j.place;});});}
-function pollEnrichment(pid,id){clearTimeout(PP_ENRICH_TIMER);researchRequest("/api/research?id="+encodeURIComponent(id)).then(function(j){var job=j.jobs&&j.jobs[0];if(!job)return;PP_ENRICH[pid]=job;if(PP_CURRENT===pid)renderEnrichState();if(job.status==="queued"||job.status==="researching"){PP_ENRICH_TIMER=setTimeout(function(){pollEnrichment(pid,id);},2200);}else if(job.status==="complete"){refreshPlaceDetail(pid).then(function(){if(PP_CURRENT===pid)openPlace(pid,PP_DAY);}).catch(function(){});}}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Research status could not be loaded.",progress:100};if(PP_CURRENT===pid)renderEnrichState();});}
-function startPlaceEnrichment(){if(!plannerToken()||!PP_CURRENT||!PP_DAY)return;var pid=PP_CURRENT,b=PPB.querySelector(".ppenrich");if(b)b.disabled=true;PP_ENRICH[pid]={status:"queued",stage:"queued",message:"Starting research…",progress:2};renderEnrichState();researchRequest("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"enrich",placeId:pid,cityId:PP_DAY.dataset.cityId,day:+PP_DAY.dataset.day})}).then(function(j){PP_ENRICH[pid]=j.job;renderEnrichState();pollEnrichment(pid,j.job.id);}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Enrichment could not start.",progress:100};renderEnrichState();});}
+function pollEnrichment(pid,id){clearTimeout(PP_ENRICH_TIMER);researchRequest("/api/research?id="+encodeURIComponent(id)).then(function(j){var job=j.jobs&&j.jobs[0];if(!job)return;PP_ENRICH[pid]=job;if(PP_CURRENT===pid)renderEnrichState();if(job.status==="queued"||job.status==="researching"){PP_ENRICH_TIMER=setTimeout(function(){pollEnrichment(pid,id);},2200);}else if(job.status==="complete"){refreshPlaceDetail(pid).then(function(){if(PP_CURRENT===pid)openPlace(pid,PP_DAY,true);}).catch(function(){});}}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Research status could not be loaded.",progress:100};if(PP_CURRENT===pid)renderEnrichState();});}
+function startPlaceEnrichment(){if(!plannerToken()||!PP_CURRENT)return;var pid=PP_CURRENT,b=PPB.querySelector(".ppenrich");if(b)b.disabled=true;PP_ENRICH[pid]={status:"queued",stage:"queued",message:"Starting research…",progress:2};renderEnrichState();var context=PP_DAY?{cityId:PP_DAY.dataset.cityId,day:+PP_DAY.dataset.day}:{};researchRequest("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action:"enrich",placeId:pid},context))}).then(function(j){PP_ENRICH[pid]=j.job;renderEnrichState();pollEnrichment(pid,j.job.id);}).catch(function(err){PP_ENRICH[pid]={status:"failed",message:err.message||"Enrichment could not start.",progress:100};renderEnrichState();});}
 PP.addEventListener("click",function(e){var photo=e.target.closest(".ppphoto");if(photo){openPhotoViewer(+photo.dataset.photo);return;}if(e.target.closest(".ppenrich")){startPlaceEnrichment();return;}if(e.target.closest(".ppx")||e.target.classList.contains("ppbg"))closePlace();});
 PHOTO_VIEW.addEventListener("click",function(e){if(e.target.closest(".photoviewclose")||e.target.classList.contains("photoviewbg")){closePhotoViewer();return;}if(e.target.closest(".photoviewprev"))showPhoto(PHOTO_INDEX-1);if(e.target.closest(".photoviewnext"))showPhoto(PHOTO_INDEX+1);});
 document.addEventListener("keydown",function(e){if(PHOTO_VIEW.classList.contains("on")){if(e.key==="Escape")closePhotoViewer();else if(e.key==="ArrowLeft")showPhoto(PHOTO_INDEX-1);else if(e.key==="ArrowRight")showPhoto(PHOTO_INDEX+1);return;}if(e.key!=="Escape")return;if(document.getElementById("suggestionModal").classList.contains("on")){closeSuggestionModal();return;}if(document.getElementById("accessModal").classList.contains("on")){closeAccessModal();return;}if(PP.classList.contains("on"))closePlace();});
@@ -1493,6 +1508,12 @@ body.only-bad .wrap .day.ok-day{display:none;}
 #pp .ppchip{font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:8px;background:var(--surface-2);
   color:var(--ink-2);border:1px solid var(--line);font-family:var(--mono);}
 #pp .ppdesc{font-size:13.5px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;margin-bottom:12px;}
+#pp .ppsection{margin:12px 0;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}
+#pp .ppsection h4{display:flex;align-items:center;gap:7px;margin:0 0 9px;font:800 10px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+#pp .ppsection h4 .msym{font-size:17px}#pp .ppdetailrow+ .ppdetailrow{margin-top:9px}
+#pp .ppdetailrow b{display:block;margin-bottom:2px;font:750 10px var(--sans);color:var(--ink-3)}
+#pp .ppdetailrow{font-size:12.5px;line-height:1.52;color:var(--ink-2)}#pp .ppdetailrow ul{margin:2px 0 0;padding-left:17px}
+#pp .ppsources{margin:12px 0;font-size:11px}#pp .ppsources summary{cursor:pointer;font-weight:800;color:var(--target)}#pp .ppsources a{display:block;margin-top:6px;color:var(--ink-2)}
 #pp .pprow{display:flex;gap:8px;font-size:12.5px;padding:5px 0;border-top:1px solid var(--line);}
 #pp .pprow b{min-width:104px;color:var(--ink-3);font-weight:700;}
 #pp .ppwarn{font-size:12px;font-weight:700;color:var(--bad);margin:8px 0;}
