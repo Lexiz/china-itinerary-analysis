@@ -9,6 +9,7 @@ const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf
 // so the panel here and the sheet there cannot describe one venue two ways.
 const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)));
 const TRIP = JSON.parse(readFileSync(new URL('./trip-stats.json', import.meta.url)));
+const BOOKINGS = JSON.parse(readFileSync(new URL('./bookings.json', import.meta.url)));
 // Where the app lives. Google Sign-In returns a verified, short-lived planner
 // session from that app; no write credential is ever built into this public page.
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
@@ -212,6 +213,38 @@ const stepsPanelHTML = `<details class="stepspanel" id="stepsPanel"><summary>`
       + `<span class="stepvalue"><b>${d.km.toFixed(1)} km</b><small>${steps.toLocaleString('en-US')} steps</small></span></div>`; }).join('')
   + `</div><p class="stepsnote">Estimate = routed walking transfers plus likely walking inside each scheduled activity. Parks, old towns and hikes carry more movement than museums; meals, performances and transport carry little or none. Uses 1,300 steps per kilometre.</p>`
   + `</div></details>`;
+
+// The Canvas booking manager is another view over the mobile app's booking records.
+// It intentionally contains only outstanding items: completion stays visible in the
+// mobile booking archive, while this wide planning surface focuses on the next action.
+const OUTSTANDING_BOOKINGS = BOOKINGS.filter(b => !b.booked);
+const bookingCardHTML = b => {
+  const tripLabel = b.date ? `${fullWeekday(b.date)}, ${dm(b.date)}` : 'Trip date not set';
+  const location = [b.cityName, b.day != null ? `Day ${b.day}` : null, b.time].filter(Boolean).join(' · ');
+  const appDay = b.cityId && b.day != null ? `${APP_ORIGIN}/t/dev/city/${encodeURIComponent(b.cityId)}/day/${b.day}` : null;
+  return `<article class="bkcard" style="--bc:${esc(b.accent || '#9A6548')}"`
+    + ` data-trip-date="${esc(b.date || '9999-12-31')}" data-open-date="${esc(b.bookFrom || '')}"`
+    + ` data-open-label="${esc(b.bookFromLabel || '')}" data-open-time="${esc(b.bookFromTime || '')}"`
+    + ` data-same-day="${b.bookFromLabel === 'same day' ? '1' : '0'}" data-name="${esc(b.name)}">`
+    + `<div class="bkicon">${ms(b.icon || 'event')}</div><div class="bkcopy"><div class="bktop"><span class="bkdate">${esc(tripLabel)}</span><span class="bkstate"></span></div>`
+    + `<h3>${esc(b.name)}</h3>${b.zh ? `<div class="bkzh">${esc(b.zh)}</div>` : ''}`
+    + `<div class="bkmeta">${esc(location || b.source)}</div>`
+    + (b.channel ? `<div class="bkchannel">${esc(b.channel)}</div>` : '')
+    + `<div class="bkactions">${appDay ? `<a href="${esc(appDay)}" target="_blank" rel="noopener">Open day</a>` : ''}`
+    + (b.bookingLink ? `<a class="primary" href="${esc(b.bookingLink)}" target="_blank" rel="noopener">Booking site</a>` : '') + `</div></div></article>`;
+};
+const bookingManagerHTML = `<section id="bookingManager" class="bookingmanager" hidden aria-labelledby="bookingManagerTitle">`
+  + `<div class="bkmhero"><div><div class="eyebrow">Booking control</div><h2 id="bookingManagerTitle">Manage bookings</h2><p>Outstanding tickets, stays and transport from the same booking data as the mobile app. Opening windows use Beijing time.</p></div>`
+  + `<div class="bkmcount"><b>${OUTSTANDING_BOOKINGS.length}</b><span>still to book</span></div></div>`
+  + `<div class="bkmcontrols"><div class="bkfilters" role="group" aria-label="Filter booking availability">`
+  + `<button type="button" data-bkfilter="all" aria-pressed="true">All <span>${OUTSTANDING_BOOKINGS.length}</span></button>`
+  + `<button type="button" data-bkfilter="open" aria-pressed="false">Book now <span></span></button>`
+  + `<button type="button" data-bkfilter="later" aria-pressed="false">Opens later <span></span></button></div>`
+  + `<div class="bksort" role="group" aria-label="Sort bookings"><span>Chronological by</span>`
+  + `<button type="button" data-bksort="trip" aria-pressed="true">Trip date</button><button type="button" data-bksort="opening" aria-pressed="false">Opening date</button></div></div>`
+  + `<div id="bookingResultSummary" class="bkresult" aria-live="polite"></div>`
+  + `<div id="bookingList" class="bklist">${OUTSTANDING_BOOKINGS.map(bookingCardHTML).join('')}</div>`
+  + `<div id="bookingEmpty" class="bkempty" hidden>No bookings match this filter.</div></section>`;
 
 // top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
 const clock = [[300,'05'],[420,'07'],[540,'09'],[660,'11'],[780,'13'],[900,'15'],[1020,'17'],[1140,'19'],[1260,'21'],[1380,'23'],[1500,'01'],[1620,'03']];
@@ -684,6 +717,16 @@ chart.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;cons
 chart.addEventListener("click",e=>{const b=e.target.closest(".ideasmaptoggle");if(!b||b.disabled)return;const day=b.closest(".day");if(!day)return;initMaps(day);const el=day.querySelector(".map");setIdeasVisible(day,!(el&&el._showIdeas));});
 // expand-all / collapse-all
 const xa=document.getElementById("xAll");if(xa)xa.onclick=()=>{const any=!document.querySelector(".day.open");document.querySelectorAll(".day").forEach(d=>{d.classList.toggle("open",any);const r=d.querySelector(".dhead");if(r)r.setAttribute("aria-expanded",any);});xa.textContent=any?"Collapse all":"Expand all";};
+// Booking manager: a focused alternate view, not a second page. Availability is
+// evaluated in Beijing time on every filter pass, so an exact 20:00 release moves
+// from "Opens later" to "Book now" without a rebuild or timezone ambiguity.
+var bookingMode=false,bookingFilter="all",bookingSort="trip";
+function bookingClock(){var p=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()),v=function(t){var x=p.find(function(q){return q.type===t;});return x?x.value:"";};return{date:v("year")+"-"+v("month")+"-"+v("day"),time:v("hour")+":"+v("minute")};}
+function bookingCardInfo(card,cn){var open=card.dataset.openDate,time=card.dataset.openTime,label=card.dataset.openLabel;if(card.dataset.sameDay==="1")return{bucket:"later",text:"Book on the day"};if(!open)return{bucket:"open",text:"Check availability now"};if(cn.date<open)return{bucket:"later",text:"Book from "+label+(time?" · "+time+" Beijing":"")};if(cn.date===open&&time&&cn.time<time)return{bucket:"later",text:"Opens today · "+time+" Beijing"};if(cn.date===open&&!time)return{bucket:"open",text:"Opens today · check booking app"};return{bucket:"open",text:"Booking should be open"};}
+function updateBookingManager(){var list=document.getElementById("bookingList");if(!list)return;var cn=bookingClock(),cards=Array.from(list.querySelectorAll(".bkcard")),counts={open:0,later:0};cards.forEach(function(card){var info=bookingCardInfo(card,cn);card.dataset.bucket=info.bucket;counts[info.bucket]++;var state=card.querySelector(".bkstate");if(state){state.className="bkstate "+info.bucket;state.textContent=info.text;}card.hidden=bookingFilter!=="all"&&bookingFilter!==info.bucket;});cards.sort(function(a,b){var ka=bookingSort==="opening"?(a.dataset.openDate||a.dataset.tripDate):(a.dataset.tripDate||"9999-12-31"),kb=bookingSort==="opening"?(b.dataset.openDate||b.dataset.tripDate):(b.dataset.tripDate||"9999-12-31");return ka.localeCompare(kb)||(a.dataset.tripDate||"").localeCompare(b.dataset.tripDate||"")||(a.dataset.name||"").localeCompare(b.dataset.name||"");}).forEach(function(card){list.appendChild(card);});document.querySelectorAll("[data-bkfilter]").forEach(function(b){var k=b.dataset.bkfilter;b.setAttribute("aria-pressed",k===bookingFilter?"true":"false");var n=b.querySelector("span");if(n)n.textContent=k==="all"?String(cards.length):String(counts[k]||0);});document.querySelectorAll("[data-bksort]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.bksort===bookingSort?"true":"false");});var shown=cards.filter(function(c){return!c.hidden;}).length,summary=document.getElementById("bookingResultSummary"),empty=document.getElementById("bookingEmpty");if(summary)summary.textContent=shown+" booking"+(shown===1?"":"s")+" · sorted by "+(bookingSort==="opening"?"opening date":"trip date");if(empty)empty.hidden=shown!==0;}
+function setBookingMode(on){bookingMode=!!on;document.body.classList.toggle("bookings-mode",bookingMode);var panel=document.getElementById("bookingManager"),button=document.getElementById("manageBookings");if(panel)panel.hidden=!bookingMode;if(button){button.setAttribute("aria-pressed",bookingMode?"true":"false");button.textContent=bookingMode?"Back to itinerary":"Manage bookings";}if(bookingMode){updateBookingManager();panel&&panel.scrollIntoView({block:"start",behavior:"smooth"});}}
+var manageBookings=document.getElementById("manageBookings");if(manageBookings)manageBookings.onclick=function(){setBookingMode(!bookingMode);};
+document.addEventListener("click",function(e){var f=e.target.closest("[data-bkfilter]");if(f){bookingFilter=f.dataset.bkfilter||"all";updateBookingManager();return;}var s=e.target.closest("[data-bksort]");if(s){bookingSort=s.dataset.bksort||"trip";updateBookingManager();}});
 // light / dark toggle — always starts light (the OS setting is deliberately
 // ignored; this canvas is read in light mode), then lets you override.
 const thm=document.getElementById("thm");if(thm){const root=document.documentElement;
@@ -1239,6 +1282,36 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .xbtn{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:6px 12px;cursor:pointer;}
 .wrap .xbtn:hover{color:var(--ink);}
 .wrap .xbtn:focus-visible{outline:2px solid var(--target);outline-offset:2px;}
+.wrap .bookingbtn{color:var(--target);border-color:color-mix(in srgb,var(--target) 40%,var(--line));background:color-mix(in srgb,var(--target) 7%,var(--surface));}
+.wrap .bookingbtn[aria-pressed="true"]{background:var(--target);border-color:var(--target);color:#fff;}
+.bookings-mode .wrap #xAll,.bookings-mode .wrap .toolbar .legend,.bookings-mode .wrap #stepsPanel,.bookings-mode .wrap #chart,.bookings-mode .wrap .foot{display:none!important;}
+.wrap .bookingmanager{margin:16px 0 28px;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);scroll-margin-top:18px;}
+.wrap .bookingmanager[hidden]{display:none!important;}
+.wrap .bkmhero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-bottom:18px;border-bottom:1px solid var(--line);}
+.wrap .bkmhero h2{margin:3px 0 5px;font-size:26px;letter-spacing:-.025em;}
+.wrap .bkmhero p{margin:0;max-width:680px;color:var(--ink-2);font-size:13px;line-height:1.5;}
+.wrap .bkmcount{flex:none;display:flex;flex-direction:column;align-items:center;min-width:106px;padding:12px 15px;border-radius:14px;background:color-mix(in srgb,var(--warn) 13%,var(--surface));color:var(--warn);}
+.wrap .bkmcount b{font:800 25px/1 var(--mono);}.wrap .bkmcount span{margin-top:5px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;}
+.wrap .bkmcontrols{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0 10px;}
+.wrap .bkfilters,.wrap .bksort{display:flex;align-items:center;gap:6px;}
+.wrap .bkfilters button,.wrap .bksort button{border:1px solid var(--line);border-radius:999px;background:var(--surface-2);color:var(--ink-2);padding:7px 11px;font:800 11px/1 var(--sans);cursor:pointer;white-space:nowrap;}
+.wrap .bkfilters button span{margin-left:4px;font-family:var(--mono);opacity:.72;}
+.wrap .bkfilters button[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#fff;}
+.wrap .bksort{padding:3px;border-radius:12px;background:var(--surface-2);}
+.wrap .bksort>span{padding:0 6px;color:var(--ink-3);font-size:10px;font-weight:700;}
+.wrap .bksort button{border:0;border-radius:9px;background:transparent;padding:6px 9px;}
+.wrap .bksort button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px color-mix(in srgb,var(--ink) 14%,transparent);}
+.wrap .bkresult{min-height:17px;margin:1px 2px 9px;color:var(--ink-3);font:700 10.5px var(--mono);}
+.wrap .bklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.wrap .bkcard{display:flex;gap:11px;min-width:0;padding:14px;border:1px solid var(--line);border-left:4px solid var(--bc);border-radius:14px;background:var(--surface-2);}
+.wrap .bkcard[hidden]{display:none!important;}.wrap .bkicon{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--bc) 13%,var(--surface));color:var(--bc);}
+.wrap .bkicon .msym{font-size:18px}.wrap .bkcopy{min-width:0;flex:1}.wrap .bktop{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;}
+.wrap .bkdate{color:var(--ink-3);font:700 10px var(--mono);}.wrap .bkstate{flex:none;max-width:52%;font-size:9px;font-weight:850;text-align:right;text-transform:uppercase;letter-spacing:.025em;}
+.wrap .bkstate.open{color:var(--warn)}.wrap .bkstate.later{color:var(--ink-3)}.wrap .bkcard h3{margin:5px 0 1px;font-size:14px;line-height:1.25;}
+.wrap .bkzh{color:var(--ink-2);font-size:11px}.wrap .bkmeta{margin-top:5px;color:var(--ink-2);font-size:10.5px;font-weight:700}.wrap .bkchannel{margin-top:4px;color:var(--ink-3);font-size:10.5px;line-height:1.4;}
+.wrap .bkactions{display:flex;gap:7px;margin-top:10px}.wrap .bkactions a{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--ink-2);background:var(--surface);font-size:10px;font-weight:800;text-decoration:none}.wrap .bkactions a.primary{border-color:var(--warn);color:var(--warn)}
+.wrap .bkempty{padding:34px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--ink-3);font-size:12px}.wrap .bkempty[hidden]{display:none!important;}
+@media(max-width:760px){.wrap .bkmhero,.wrap .bkmcontrols{align-items:stretch;flex-direction:column}.wrap .bkmcount{align-items:flex-start}.wrap .bkfilters{overflow-x:auto}.wrap .bksort{align-self:flex-start}.wrap .bklist{grid-template-columns:1fr}}
 .wrap .fix.fix-prop{max-width:84ch;color:var(--ink-2);}
 .wrap .fix.fix-warn{color:var(--warn);}
 .wrap .fix.fix-warn::before{color:var(--warn);}
@@ -1446,6 +1519,7 @@ ${GKEY
   ${stepsPanelHTML}
   <div class="toolbar">
     <button id="xAll" class="xbtn">Expand all</button>
+    <button id="manageBookings" class="xbtn bookingbtn" aria-pressed="false">Manage bookings</button>
     <div class="legend">
       <span class="it"><span class="sw" style="background:var(--ok)"></span>Home by 21:30</span>
       <span class="it"><span class="sw" style="background:var(--warn)"></span>A bit late</span>
@@ -1453,6 +1527,7 @@ ${GKEY
       <span class="it"><span class="pip" style="position:static;width:9px;height:9px;border-radius:50%;background:var(--bad);border:1.5px solid var(--bg);display:inline-block"></span>late meal</span>
     </div>
   </div>
+  ${bookingManagerHTML}
   <main id="chart">${out}</main>
   <p class="foot">The day now ends when you <b>arrive back at the hotel</b> — recommended time at each stop, real walk/metro/DiDi legs, and the trip home. Over-packed evenings and long commutes (e.g. Wulingyuan's mountain roads, Tianmen downtown) both push the end past a sane hour. Fixes suggest how to pull each day back under ~21:30.</p>
 </div>

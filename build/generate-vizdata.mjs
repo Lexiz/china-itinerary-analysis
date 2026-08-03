@@ -208,6 +208,33 @@ writeFileSync(new URL('./trip-stats.json', import.meta.url), JSON.stringify({
   routes: routeModes,
 }));
 
+// Booking manager sidecar. These are the exact booking records the mobile screen
+// renders, not a second scan of activity labels. Keeping the calculated opening date,
+// release clock and channel together lets the static Canvas apply the same Beijing-
+// time availability rules in the browser without exposing the full app snapshot.
+writeFileSync(new URL('./bookings.json', import.meta.url), JSON.stringify((s.bookings || []).map((b) => ({
+  source: b.source,
+  id: b.id,
+  cityId: b.cityId || null,
+  cityName: b.cityName || null,
+  accent: b.accent || null,
+  day: b.day ?? null,
+  date: b.date || null,
+  dateLabel: b.dateLabel || null,
+  name: b.name,
+  zh: b.zh || null,
+  icon: b.icon || 'event',
+  time: b.time || null,
+  number: b.number || null,
+  ref: b.ref || null,
+  booked: !!b.booked,
+  bookFrom: b.bookFrom || null,
+  bookFromLabel: b.bookFromLabel || null,
+  bookFromTime: b.bookFromTime || null,
+  channel: b.channel || null,
+  bookingLink: b.bookingLink || null,
+}))));
+
 // ---- place details, for the canvas's own detail panel ----------------------
 //
 // Written as a SIDECAR rather than folded into viz-data.json, which is an array
