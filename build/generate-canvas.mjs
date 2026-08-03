@@ -992,6 +992,7 @@ chart.addEventListener("pointerup",function(){if(!RESIZE)return;var x=RESIZE;RES
 fetch(window.__APP+"/api/plan").then(function(r){return r.json();}).then(function(j){if(!j||!j.ok)return;(j.days||[]).forEach(function(v){var day=chart.querySelector('.day[data-city-id="'+CSS.escape(v.cityId)+'"][data-day="'+v.day+'"]');if(!day)return;
     reconcileDay(day,v);});}).catch(function(){});
 fetch(window.__APP+"/api/steps").then(function(r){return r.json();}).then(applyActualSteps).catch(function(){});
+var stepsPanel=document.getElementById("stepsPanel");if(stepsPanel)stepsPanel.addEventListener("toggle",function(){if(stepsPanel.open)fetch(window.__APP+"/api/steps").then(function(r){return r.json();}).then(applyActualSteps).catch(function(){});});
 
 /* ---- place detail panel -------------------------------------------------
    Opened from a timeline block or a suggestion row. It renders the SAME fields
