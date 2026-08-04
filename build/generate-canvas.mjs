@@ -1567,6 +1567,7 @@ body.only-bad .wrap .day.ok-day{display:none;}
 </style>`;
 
 const html = `<meta charset="utf-8"><title>China Journey Planner</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#9f3028">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=block" rel="stylesheet">
 ${GKEY
