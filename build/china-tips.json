@@ -1,0 +1,108 @@
+{
+  "updated": "4 August 2026",
+  "intro": "A field guide for travelling smoothly, reading the room and enjoying the small surprises that make China feel different.",
+  "quickWins": [
+    { "icon": "qr_code_2", "title": "Set up two ways to pay", "body": "Link an international card to both Alipay and WeChat Pay before departure, then carry a small RMB cash backup." },
+    { "icon": "badge", "title": "Your passport is your ticket", "body": "Keep the original passport accessible on rail and flight days. China Railway uses real-name ticketing and the passport used to book." },
+    { "icon": "translate", "title": "Save names in Chinese", "body": "Screenshot every hotel, station and important destination in Chinese. A pin plus Chinese characters solves most taxi conversations." },
+    { "icon": "battery_charging_full", "title": "Protect the phone plan", "body": "Keep a power bank, cable and offline screenshots together. Payment, tickets, maps and translation all depend on the phone." }
+  ],
+  "sections": [
+    {
+      "id": "ready",
+      "icon": "flight_takeoff",
+      "title": "Before landing",
+      "subtitle": "Do these while every app and verification message still works normally.",
+      "tips": [
+        { "icon": "payments", "title": "Test mobile payments", "body": "Register Alipay and WeChat Pay with the same name as your passport, bind at least one international card, and complete a small test if the app permits it. Keep cards in both apps so one can rescue the other." },
+        { "icon": "wifi", "title": "Choose connectivity before departure", "body": "International roaming or a travel eSIM is the simplest continuity option. Mainland internet access is controlled and several familiar services are unavailable; download offline maps, translation packs and important documents before leaving." },
+        { "icon": "cloud_download", "title": "Build an offline pocket", "body": "Save passport and insurance copies, all booking confirmations, hotel addresses, transport numbers and the day-by-day plan offline. Share a second copy with each other." },
+        { "icon": "health_and_safety", "title": "Register the trip", "body": "Belgian travellers can register with Travellers Online so Foreign Affairs can contact and assist them during a serious incident." }
+      ]
+    },
+    {
+      "id": "moving",
+      "icon": "train",
+      "title": "Moving through China",
+      "subtitle": "Stations are efficient, enormous and security-led. Build in calm rather than sprinting.",
+      "tips": [
+        { "icon": "confirmation_number", "title": "The document is the rail ticket", "body": "Use the original passport attached to the booking at station gates. If the automatic gate does not read it, use the staffed manual channel—this is normal for foreign passports." },
+        { "icon": "schedule", "title": "Arrive with a real buffer", "body": "Large stations involve an entrance security check, long internal walks and a second ticket check. Aim for 45–60 minutes before high-speed rail and more when collecting or fixing a ticket." },
+        { "icon": "local_taxi", "title": "Pin the pickup, then read the plate", "body": "DiDi works through its own app and inside Alipay or WeChat. Confirm the pickup side of the road, compare the last digits of the plate and show the Chinese destination if conversation stalls." },
+        { "icon": "subway", "title": "Metro means a bag scan", "body": "Expect security at metro entrances. Alipay transport codes work in many cities, but each city may require a separate activation; a single-journey ticket is a perfectly good fallback." }
+      ]
+    },
+    {
+      "id": "table",
+      "icon": "restaurant",
+      "title": "Food & the shared table",
+      "subtitle": "Order for the table, taste widely and let the meal unfold instead of treating dishes as courses.",
+      "tips": [
+        { "icon": "dinner_dining", "title": "Share first, portion second", "body": "Most dishes arrive for everyone. Take a little at a time into your own bowl; use serving chopsticks or spoons when they are provided." },
+        { "icon": "do_not_disturb_on", "title": "Never park chopsticks upright", "body": "Upright chopsticks in rice resemble funeral incense. Rest them across the holder or bowl edge instead." },
+        { "icon": "water_drop", "title": "Ask for bottled or boiled water", "body": "Do not assume tap water is drinkable. Hotels commonly provide bottled water or a kettle, and warm water is often the default in restaurants." },
+        { "icon": "receipt_long", "title": "Tipping is not routine", "body": "Restaurants and taxis generally do not expect a tip. Check whether an international hotel or fine-dining venue has already added a service charge." },
+        { "icon": "local_fire_department", "title": "Describe spice precisely", "body": "‘Not spicy’ and ‘a little spicy’ are more useful than hoping a dish is mild. In Sichuan and Chongqing, numbing málà heat can be very different from chilli heat." }
+      ]
+    },
+    {
+      "id": "etiquette",
+      "icon": "diversity_1",
+      "title": "Politeness without theatre",
+      "subtitle": "Warmth, patience and a little awareness matter more than performing perfect etiquette.",
+      "tips": [
+        { "icon": "waving_hand", "title": "A small nod is enough", "body": "A smile, ‘nǐ hǎo’ and a light nod work in almost every casual encounter. Handshakes are common in formal introductions; let the other person set the tone." },
+        { "icon": "front_hand", "title": "Use two hands for important things", "body": "Offer or receive a business card, gift, passport or document with two hands when practical. It reads as attentive and respectful." },
+        { "icon": "sentiment_satisfied", "title": "Keep corrections private and calm", "body": "Avoid publicly embarrassing or sharply confronting someone. A quiet, practical request usually gets farther than proving who is wrong." },
+        { "icon": "photo_camera", "title": "Ask before close-up portraits", "body": "Photography is usually relaxed at public sights, but ask before photographing people closely and obey every no-photo sign in temples, museums, performances and sensitive locations." },
+        { "icon": "temple_buddhist", "title": "Be a quiet guest in sacred spaces", "body": "Keep voices low, do not interrupt worship, follow the local flow and avoid touching altars or sacred objects. Rules differ by site, so signs and staff take priority." }
+      ]
+    },
+    {
+      "id": "everyday",
+      "icon": "lightbulb",
+      "title": "Small things that surprise visitors",
+      "subtitle": "The useful differences you notice after the first day—and wish somebody had mentioned.",
+      "tips": [
+        { "icon": "qr_code", "title": "The QR code is an interface", "body": "Menus, ordering, payment, transport and attraction entry may all begin with a scan. Look for a staffed alternative when a mini-program will not accept a foreign account." },
+        { "icon": "wc", "title": "Carry tissues", "body": "Public toilets can be excellent or very basic, and paper may sit outside the cubicle—or not be supplied. Carry tissues and hand sanitiser; expect both squat and Western-style toilets." },
+        { "icon": "groups", "title": "Crowds move differently", "body": "Personal space and queue behaviour may feel more fluid than in Belgium, especially at transport hubs. Hold your place calmly, keep bags close and avoid turning normal bustle into conflict." },
+        { "icon": "thermostat", "title": "Hot water is hospitality", "body": "Warm or hot water is commonly offered at restaurants, hotels and trains. If you want cold water, ask specifically and expect it may arrive without ice." },
+        { "icon": "campaign", "title": "Announcements are part of the landscape", "body": "Stations, parks and attractions can be loud and highly organised. The volume is functional rather than hostile—follow signs, screens and the crowd flow." }
+      ]
+    },
+    {
+      "id": "backup",
+      "icon": "sos",
+      "title": "Backup & emergencies",
+      "subtitle": "Keep this section boring, visible and available offline.",
+      "tips": [
+        { "icon": "emergency", "title": "China emergency numbers", "body": "Police 110 · Fire 119 · Ambulance 120 · Traffic police 122. English service may not always be available, so show your location in Chinese." },
+        { "icon": "passport", "title": "If a passport disappears", "body": "Report the loss immediately at the nearest police station, retain the police report and contact the nearest Belgian diplomatic post. Replacement and exit formalities can take several days." },
+        { "icon": "account_balance", "title": "Belgian consular emergency", "body": "For urgent after-hours cases: Beijing +86 138 100 491 54 · Guangzhou +86 139 251 018 34 · Shanghai +86 139 016 561 17. Use the post responsible for your location; these lines are not for visa questions." },
+        { "icon": "credit_card_off", "title": "Separate the backups", "body": "Carry one payment card and some RMB separately from the main wallet. Belgian Card Stop is +32 78 170 170 if a Belgian bank card is lost or stolen." }
+      ]
+    }
+  ],
+  "phrases": [
+    { "zh": "你好", "pinyin": "nǐ hǎo", "en": "Hello", "note": "Friendly and safe everywhere." },
+    { "zh": "谢谢", "pinyin": "xièxie", "en": "Thank you", "note": "The most useful two syllables." },
+    { "zh": "请问…", "pinyin": "qǐngwèn…", "en": "Excuse me, may I ask…", "note": "A polite way to begin a question." },
+    { "zh": "不好意思", "pinyin": "bù hǎoyìsi", "en": "Excuse me / sorry", "note": "Useful for squeezing past or a small mistake." },
+    { "zh": "没关系", "pinyin": "méi guānxi", "en": "No problem", "note": "A gentle response to an apology." },
+    { "zh": "我听不懂", "pinyin": "wǒ tīng bù dǒng", "en": "I don't understand", "note": "Say it slowly and offer the phone." },
+    { "zh": "洗手间在哪里？", "pinyin": "xǐshǒujiān zài nǎlǐ?", "en": "Where is the toilet?", "note": "‘WC’ signs are also common." },
+    { "zh": "这个", "pinyin": "zhège", "en": "This one", "note": "Pointing plus zhège solves many menus." },
+    { "zh": "不要辣", "pinyin": "bú yào là", "en": "Not spicy", "note": "For zero chilli, not merely mild." },
+    { "zh": "微辣", "pinyin": "wēilà", "en": "A little spicy", "note": "Still potentially lively in Sichuan." },
+    { "zh": "买单，谢谢", "pinyin": "mǎidān, xièxie", "en": "The bill, please", "note": "Often you pay by scanning at the table." },
+    { "zh": "可以拍照吗？", "pinyin": "kěyǐ pāizhào ma?", "en": "May I take a photo?", "note": "Useful with people and small interiors." }
+  ],
+  "sources": [
+    { "title": "China government · Working and Living Guide 2025", "url": "https://english.www.gov.cn/2025special/bizexpatsinchina2025", "note": "Payments, rail, metro, ride-hailing and emergency numbers" },
+    { "title": "China government · Payment guide for overseas visitors", "url": "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html", "note": "International cards, mobile payments and cash" },
+    { "title": "Belgian Foreign Affairs · Practical information for China", "url": "https://diplomatie.belgium.be/fr/pays/chine/voyager-en-chine-conseils-aux-voyageurs/informations-pratiques-pour-la-chine", "note": "Connectivity, payment backups and consular guidance" },
+    { "title": "Embassy of Belgium in China · Travelling in China", "url": "https://china.diplomatie.belgium.be/en/travelling-china", "note": "Current consular emergency contacts and Travellers Online" },
+    { "title": "Travel China · During your trip", "url": "https://www.travelchina.org.cn/en/channel/during-your-trip", "note": "Official Ministry of Culture and Tourism visitor guidance" }
+  ]
+}

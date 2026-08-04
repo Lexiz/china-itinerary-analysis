@@ -10,6 +10,7 @@ const STYLE = readFileSync(new URL('./canvas-style.html', import.meta.url), 'utf
 const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)));
 const TRIP = JSON.parse(readFileSync(new URL('./trip-stats.json', import.meta.url)));
 const BOOKINGS = JSON.parse(readFileSync(new URL('./bookings.json', import.meta.url)));
+const TIPS = JSON.parse(readFileSync(new URL('./china-tips.json', import.meta.url)));
 // Where the app lives. Google Sign-In returns a verified, short-lived planner
 // session from that app; no write credential is ever built into this public page.
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
@@ -261,6 +262,21 @@ const bookingManagerHTML = `<section id="bookingManager" class="bookingmanager" 
   + `<div id="bookingResultSummary" class="bkresult" aria-live="polite"></div>`
   + `<div id="bookingList" class="bklist">${BOOKING_CITY_GROUPS.map(bookingCityHTML).join('')}</div>`
   + `<div id="bookingEmpty" class="bkempty" hidden>No bookings match this filter.</div></section>`;
+
+const TIPS_COLORS = ['#C1443C', '#9A6548', '#B8621B', '#6A5FA0', '#2E7D57', '#376F89'];
+const tipsManagerHTML = `<section id="tipsManager" class="tipsmanager" hidden aria-labelledby="tipsManagerTitle">`
+  + `<div class="tipshero"><div><div class="eyebrow">China field notes</div><h2 id="tipsManagerTitle">Travel lighter. Notice more.</h2><p>${esc(TIPS.intro)}</p></div>`
+  + `<div class="tipsverified">${ms('verified')}<span>Reviewed<br><b>${esc(TIPS.updated)}</b></span></div></div>`
+  + `<div class="tipsfirst"><div class="tipseyebrow">Four things to do first</div><div class="tipsquick">`
+  + TIPS.quickWins.map((tip, i) => `<article style="--tc:${TIPS_COLORS[i % TIPS_COLORS.length]}"><span class="tipsicon">${ms(tip.icon)}</span><div><h3>${esc(tip.title)}</h3><p>${esc(tip.body)}</p></div></article>`).join('')
+  + `</div></div>`
+  + `<div class="phraseshead"><div><div class="tipseyebrow">Pocket phrasebook</div><h3>Say less, connect faster.</h3></div>${ms('translate')}</div>`
+  + `<div class="phrasegrid">${TIPS.phrases.map(p => `<article><div class="phrasezh">${esc(p.zh)}</div><div class="phrasepin">${esc(p.pinyin)}</div><b>${esc(p.en)}</b><p>${esc(p.note)}</p></article>`).join('')}</div>`
+  + `<div class="tipscategories"><div class="tipseyebrow">Know before you go</div>`
+  + TIPS.sections.map((section, i) => `<details class="tipcategory" style="--tc:${TIPS_COLORS[i % TIPS_COLORS.length]}"${i === 0 ? ' open' : ''}><summary><span class="tipsicon">${ms(section.icon)}</span><span><b>${esc(section.title)}</b><small>${esc(section.subtitle)}</small></span><span class="tipschev">›</span></summary><div class="tipcards">${section.tips.map(tip => `<article>${ms(tip.icon)}<div><h3>${esc(tip.title)}</h3><p>${esc(tip.body)}</p></div></article>`).join('')}</div></details>`).join('')
+  + `</div><div class="tipssources"><div class="tipssourcetitle">${ms('fact_check')}<span><b>Research & official guidance</b><small>Operational facts were checked against current Chinese government and Belgian Foreign Affairs guidance. Etiquette varies by region, generation and setting—considerate defaults, not rigid rules.</small></span></div>`
+  + TIPS.sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${ms('open_in_new')}<span><b>${esc(source.title)}</b><small>${esc(source.note)}</small></span></a>`).join('')
+  + `</div></section>`;
 
 // top clock: even 3-hour fragments anchored at 05:00 (the first activity of the trip), plus the special 21:30 target
 const clock = [[300,'05'],[420,'07'],[540,'09'],[660,'11'],[780,'13'],[900,'15'],[1020,'17'],[1140,'19'],[1260,'21'],[1380,'23'],[1500,'01'],[1620,'03']];
@@ -736,7 +752,7 @@ const xa=document.getElementById("xAll");if(xa)xa.onclick=()=>{const any=!docume
 // Booking manager: a focused alternate view, not a second page. Availability is
 // evaluated in Beijing time on every filter pass, so an exact 20:00 release moves
 // from "Opens later" to "Book now" without a rebuild or timezone ambiguity.
-var bookingMode=false,bookingFilter="all",bookingSort="trip";
+var bookingMode=false,tipsMode=false,bookingFilter="all",bookingSort="trip";
 function bookingClock(){var p=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()),v=function(t){var x=p.find(function(q){return q.type===t;});return x?x.value:"";};return{date:v("year")+"-"+v("month")+"-"+v("day"),time:v("hour")+":"+v("minute")};}
 function bookingCardInfo(card,cn){var open=card.dataset.openDate,time=card.dataset.openTime,label=card.dataset.openLabel;if(card.dataset.sameDay==="1")return{bucket:"later",text:"Book on the day"};if(!open)return{bucket:"open",text:"Check availability now"};if(cn.date<open)return{bucket:"later",text:"Book from "+label+(time?" · "+time+" Beijing":"")};if(cn.date===open&&time&&cn.time<time)return{bucket:"later",text:"Opens today · "+time+" Beijing"};if(cn.date===open&&!time)return{bucket:"open",text:"Opens today · check booking app"};return{bucket:"open",text:"Booking should be open"};}
 function updateBookingManager(){var list=document.getElementById("bookingList");if(!list)return;var cn=bookingClock(),cards=Array.from(list.querySelectorAll(".bkcard")),groups=Array.from(list.querySelectorAll(".bkcity")),counts={open:0,later:0};
@@ -746,8 +762,10 @@ function updateBookingManager(){var list=document.getElementById("bookingList");
   groups.forEach(function(group){var box=group.querySelector(".bkcitycards"),own=Array.from(group.querySelectorAll(".bkcard")).sort(compareCards),visible=own.filter(function(card){return!card.hidden;});own.forEach(function(card){box.appendChild(card);});group.hidden=visible.length===0;group.dataset.sortKey=visible.length?cardKey(visible[0]):"9999-12-31";var count=group.querySelector(".bkcitycount");if(count)count.textContent=visible.length+" booking"+(visible.length===1?"":"s");});
   groups.sort(function(a,b){return(a.dataset.sortKey||"").localeCompare(b.dataset.sortKey||"")||(a.dataset.city||"").localeCompare(b.dataset.city||"");}).forEach(function(group){list.appendChild(group);});
   document.querySelectorAll("[data-bkfilter]").forEach(function(b){var k=b.dataset.bkfilter;b.setAttribute("aria-pressed",k===bookingFilter?"true":"false");var n=b.querySelector("span");if(n)n.textContent=k==="all"?String(cards.length):String(counts[k]||0);});document.querySelectorAll("[data-bksort]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.bksort===bookingSort?"true":"false");});var shown=cards.filter(function(c){return!c.hidden;}).length,summary=document.getElementById("bookingResultSummary"),empty=document.getElementById("bookingEmpty");if(summary)summary.textContent=shown+" booking"+(shown===1?"":"s")+" · "+groups.filter(function(g){return!g.hidden;}).length+" cities · sorted by "+(bookingSort==="opening"?"opening date":"trip date");if(empty)empty.hidden=shown!==0;}
-function setBookingMode(on){bookingMode=!!on;document.body.classList.toggle("bookings-mode",bookingMode);var panel=document.getElementById("bookingManager"),button=document.getElementById("manageBookings");if(panel)panel.hidden=!bookingMode;if(button){button.setAttribute("aria-pressed",bookingMode?"true":"false");button.textContent=bookingMode?"Back to itinerary":"Manage bookings";}if(bookingMode){updateBookingManager();panel&&panel.scrollIntoView({block:"start",behavior:"smooth"});}}
+function setBookingMode(on){bookingMode=!!on;if(bookingMode&&tipsMode)setTipsMode(false);document.body.classList.toggle("bookings-mode",bookingMode);var panel=document.getElementById("bookingManager"),button=document.getElementById("manageBookings");if(panel)panel.hidden=!bookingMode;if(button){button.setAttribute("aria-pressed",bookingMode?"true":"false");button.textContent=bookingMode?"Back to itinerary":"Manage bookings";}if(bookingMode){updateBookingManager();panel&&panel.scrollIntoView({block:"start",behavior:"smooth"});}}
 var manageBookings=document.getElementById("manageBookings");if(manageBookings)manageBookings.onclick=function(){setBookingMode(!bookingMode);};
+function setTipsMode(on){tipsMode=!!on;if(tipsMode&&bookingMode)setBookingMode(false);document.body.classList.toggle("tips-mode",tipsMode);var panel=document.getElementById("tipsManager"),button=document.getElementById("showTips");if(panel)panel.hidden=!tipsMode;if(button){button.setAttribute("aria-pressed",tipsMode?"true":"false");button.textContent=tipsMode?"Back to itinerary":"Tips";}if(tipsMode)panel&&panel.scrollIntoView({block:"start",behavior:"smooth"});}
+var showTips=document.getElementById("showTips");if(showTips)showTips.onclick=function(){setTipsMode(!tipsMode);};
 document.addEventListener("click",function(e){var f=e.target.closest("[data-bkfilter]");if(f){bookingFilter=f.dataset.bkfilter||"all";updateBookingManager();return;}var s=e.target.closest("[data-bksort]");if(s){bookingSort=s.dataset.bksort||"trip";updateBookingManager();}});
 // light / dark toggle — always starts light (the OS setting is deliberately
 // ignored; this canvas is read in light mode), then lets you override.
@@ -1348,7 +1366,10 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .xbtn:focus-visible{outline:2px solid var(--target);outline-offset:2px;}
 .wrap .bookingbtn{color:var(--target);border-color:color-mix(in srgb,var(--target) 40%,var(--line));background:color-mix(in srgb,var(--target) 7%,var(--surface));}
 .wrap .bookingbtn[aria-pressed="true"]{background:var(--target);border-color:var(--target);color:#fff;}
-.bookings-mode .wrap #xAll,.bookings-mode .wrap .toolbar .legend,.bookings-mode .wrap #stepsPanel,.bookings-mode .wrap #chart,.bookings-mode .wrap .foot{display:none!important;}
+.wrap .tipsbtn{color:#2E7D57;border-color:color-mix(in srgb,#2E7D57 40%,var(--line));background:color-mix(in srgb,#2E7D57 7%,var(--surface));}
+.wrap .tipsbtn[aria-pressed="true"]{background:#2E7D57;border-color:#2E7D57;color:#fff;}
+.bookings-mode .wrap #xAll,.bookings-mode .wrap #showTips,.bookings-mode .wrap .toolbar .legend,.bookings-mode .wrap #stepsPanel,.bookings-mode .wrap #chart,.bookings-mode .wrap .foot{display:none!important;}
+.tips-mode .wrap #xAll,.tips-mode .wrap #manageBookings,.tips-mode .wrap .toolbar .legend,.tips-mode .wrap #stepsPanel,.tips-mode .wrap #chart,.tips-mode .wrap .foot{display:none!important;}
 .wrap .bookingmanager{margin:16px 0 28px;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);scroll-margin-top:18px;}
 .wrap .bookingmanager[hidden]{display:none!important;}
 .wrap .bkmhero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-bottom:18px;border-bottom:1px solid var(--line);}
@@ -1383,6 +1404,20 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .bkactions{display:flex;gap:7px;margin-top:10px}.wrap .bkactions a,.wrap .bkactions button{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--ink-2);background:var(--surface);font:800 10px var(--sans);text-decoration:none;cursor:pointer}.wrap .bkactions a.primary{border-color:var(--warn);color:var(--warn)}
 .wrap .bkempty{padding:34px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--ink-3);font-size:12px}.wrap .bkempty[hidden]{display:none!important;}
 @media(max-width:760px){.wrap .bkmhero,.wrap .bkmcontrols{align-items:stretch;flex-direction:column}.wrap .bkmcount{align-items:flex-start}.wrap .bkfilters{overflow-x:auto}.wrap .bksort{align-self:flex-start}}
+.wrap .tipsmanager{margin:16px 0 30px;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:18px;}
+.wrap .tipsmanager[hidden]{display:none!important;}
+.wrap .tipshero{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:28px;padding:28px;color:#fff;background:radial-gradient(circle at 88% 12%,rgba(244,205,131,.34) 0 10%,transparent 10.5%),linear-gradient(145deg,#6E2020,#A84334 58%,#C97948);overflow:hidden;}
+.wrap .tipshero h2{margin:6px 0 7px;font-size:32px;letter-spacing:-.035em}.wrap .tipshero p{max-width:660px;margin:0;color:rgba(255,255,255,.8);font-size:13px;line-height:1.52}.wrap .tipshero .eyebrow{color:#F4CD83}
+.wrap .tipsverified{flex:none;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid rgba(255,255,255,.2);border-radius:13px;background:rgba(255,255,255,.1);font-size:9.5px;color:rgba(255,255,255,.72)}.wrap .tipsverified>.msym{color:#F4CD83;font-size:19px}.wrap .tipsverified b{color:#fff;font-size:10.5px}
+.wrap .tipseyebrow{font:850 9.5px var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.wrap .tipsfirst{padding:22px 24px 8px}.wrap .tipsquick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:9px}.wrap .tipsquick article{display:flex;gap:12px;min-width:0;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--surface-2)}
+.wrap .tipsicon{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:color-mix(in srgb,var(--tc) 13%,var(--surface));color:var(--tc)}.wrap .tipsicon .msym{font-size:21px}.wrap .tipsquick h3,.wrap .tipcards h3{margin:1px 0 4px;font-size:12.5px}.wrap .tipsquick p,.wrap .tipcards p{margin:0;color:var(--ink-2);font-size:10.8px;line-height:1.48}
+.wrap .phraseshead{display:flex;align-items:flex-end;justify-content:space-between;padding:22px 24px 9px}.wrap .phraseshead h3{margin:4px 0 0;font-size:20px}.wrap .phraseshead>.msym{font-size:26px;color:var(--target)}
+.wrap .phrasegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;padding:0 24px 10px}.wrap .phrasegrid article{min-width:0;padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--surface-2)}.wrap .phrasezh{font:750 23px var(--sans);color:var(--target)}.wrap .phrasepin{margin-top:2px;color:var(--ink-2);font:700 10.5px var(--sans)}.wrap .phrasegrid article>b{display:block;margin-top:7px;font-size:11.5px}.wrap .phrasegrid p{margin:3px 0 0;color:var(--ink-3);font-size:9.8px;line-height:1.36}
+.wrap .tipscategories{display:grid;gap:9px;padding:22px 24px 10px}.wrap .tipcategory{border:1px solid var(--line);border-radius:16px;background:var(--surface-2);overflow:hidden}.wrap .tipcategory>summary{display:flex;align-items:center;gap:11px;padding:13px 14px;list-style:none;cursor:pointer}.wrap .tipcategory>summary::-webkit-details-marker{display:none}.wrap .tipcategory>summary>span:nth-child(2){display:grid;gap:2px;min-width:0}.wrap .tipcategory>summary b{font-size:13px}.wrap .tipcategory>summary small{color:var(--ink-3);font-size:10.5px;line-height:1.35}.wrap .tipschev{margin-left:auto;color:var(--ink-3);font-size:22px;font-weight:850;transition:transform .16s}.wrap .tipcategory[open] .tipschev{transform:rotate(90deg)}
+.wrap .tipcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 12px 12px}.wrap .tipcards article{display:flex;gap:9px;padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}.wrap .tipcards article>.msym{margin-top:1px;color:var(--tc);font-size:18px}
+.wrap .tipssources{margin:14px 24px 24px;padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,#2E7D57 5%,var(--surface))}.wrap .tipssourcetitle{display:flex;align-items:flex-start;gap:10px}.wrap .tipssourcetitle>.msym{color:#2E7D57;font-size:20px}.wrap .tipssourcetitle span{display:grid;gap:3px}.wrap .tipssourcetitle b{font-size:12px}.wrap .tipssourcetitle small{max-width:760px;color:var(--ink-3);font-size:10.5px;line-height:1.45}.wrap .tipssources>a{display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid var(--line);color:var(--ink-2);text-decoration:none}.wrap .tipssources>a:first-of-type{margin-top:11px}.wrap .tipssources>a>.msym{font-size:15px;color:var(--ink-3)}.wrap .tipssources>a span{display:grid;gap:1px}.wrap .tipssources>a b{font-size:10.5px;color:var(--ink)}.wrap .tipssources>a small{font-size:9.5px;color:var(--ink-3)}
+@media(max-width:760px){.wrap .tipshero{flex-direction:column;padding:22px}.wrap .tipshero h2{font-size:27px}.wrap .tipsquick,.wrap .tipcards{grid-template-columns:1fr}.wrap .phrasegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap .tipsfirst,.wrap .phraseshead,.wrap .tipscategories{padding-left:15px;padding-right:15px}.wrap .phrasegrid{padding-left:15px;padding-right:15px}.wrap .tipssources{margin-left:15px;margin-right:15px}}
 .wrap .fix.fix-prop{max-width:84ch;color:var(--ink-2);}
 .wrap .fix.fix-warn{color:var(--warn);}
 .wrap .fix.fix-warn::before{color:var(--warn);}
@@ -1605,6 +1640,7 @@ ${GKEY
   <div class="toolbar">
     <button id="xAll" class="xbtn">Expand all</button>
     <button id="manageBookings" class="xbtn bookingbtn" aria-pressed="false">Manage bookings</button>
+    <button id="showTips" class="xbtn tipsbtn" aria-pressed="false">Tips</button>
     <div class="legend">
       <span class="it"><span class="sw" style="background:var(--ok)"></span>Home by 21:30</span>
       <span class="it"><span class="sw" style="background:var(--warn)"></span>A bit late</span>
@@ -1613,6 +1649,7 @@ ${GKEY
     </div>
   </div>
   ${bookingManagerHTML}
+  ${tipsManagerHTML}
   <main id="chart">${out}</main>
   <p class="foot">The day now ends when you <b>arrive back at the hotel</b> — recommended time at each stop, real walk/metro/DiDi legs, and the trip home. Over-packed evenings and long commutes (e.g. Wulingyuan's mountain roads, Tianmen downtown) both push the end past a sane hour. Fixes suggest how to pull each day back under ~21:30.</p>
 </div>
