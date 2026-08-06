@@ -11,6 +11,9 @@ const PLACES = JSON.parse(readFileSync(new URL('./places.json', import.meta.url)
 const TRIP = JSON.parse(readFileSync(new URL('./trip-stats.json', import.meta.url)));
 const BOOKINGS = JSON.parse(readFileSync(new URL('./bookings.json', import.meta.url)));
 const TIPS = JSON.parse(readFileSync(new URL('./china-tips.json', import.meta.url)));
+// City food guidance is one shared content contract with the mobile app. The Canvas
+// build embeds it into the static page, so the live site never needs the sibling repo.
+const CULINARY = JSON.parse(readFileSync(new URL('../../app/data/culinary-guides.json', import.meta.url)));
 // Where the app lives. Google Sign-In returns a verified, short-lived planner
 // session from that app; no write credential is ever built into this public page.
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://china-trip-app.vercel.app';
@@ -73,6 +76,21 @@ const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MO = ['Jan','Feb',
 const wd = iso => WD[new Date(iso + 'T00:00:00Z').getUTCDay()];
 const dm = iso => { const d = new Date(iso + 'T00:00:00Z'); return d.getUTCDate() + ' ' + MO[d.getUTCMonth()]; };
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+function culinaryGuideHTML(cityId) {
+  const g = CULINARY[cityId];
+  if (!g) return '';
+  const dishes = g.dishes.map(x => `<div class="cgdish"><b>${esc(x.name)}</b><span>${esc(x.local)}</span><p>${esc(x.note)}</p></div>`).join('');
+  const experiences = g.experiences.map(x => `<div class="cgexperience">${ms(x.icon, 'cgicon')}<div><div class="cgxtop"><b>${esc(x.title)}</b><span>${esc(x.when)}</span></div><p>${esc(x.note)}</p></div></div>`).join('');
+  const tips = g.tips.map((x, i) => `<div class="cgtip"><i>0${i + 1}</i><p><b>${esc(x.title)}.</b> ${esc(x.note)}</p></div>`).join('');
+  const sources = g.sources.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${ms('open_in_new')} ${esc(x.label)}</a>`).join('');
+  return `<div class="culinaryguide" hidden><div class="cghero"><div class="cgk">${ms('local_dining')} ${esc(g.city)} food compass</div><h3>${esc(g.kicker)}</h3><p>${esc(g.intro)}</p></div>`
+    + `<div class="cgtitle">${ms('restaurant_menu')} Taste these</div><div class="cgdishes">${dishes}</div>`
+    + `<div class="cgtitle">${ms('explore')} Food experiences</div><div class="cgexperiences">${experiences}</div>`
+    + `<div class="cgmove"><div>${ms('auto_awesome')} The perfect move</div><p>${esc(g.perfectMove)}</p></div>`
+    + `<div class="cgtitle">${ms('tips_and_updates')} Plan like a local</div><div class="cgtips">${tips}</div>`
+    + `<div class="cgsources">${sources}</div></div>`;
+}
 
 // --- segmented activity bar -------------------------------------------------
 const tkc = t => { const m = String(t || '').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
@@ -548,7 +566,7 @@ for (const d of DATA) {
       + (canPlan ? `<button type="button" class="planadd" draggable="true" title="Drag this onto Proposed, or click to add it">↗ <span>plan</span></button>` : '')
       + `</td></tr>`;
   }).join('');
-  const ideasHTML = `<table class="acts idt"><thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody>${ideaRows}</tbody></table>`;
+  const ideasHTML = `<table class="acts idt"><colgroup><col class="wiName"><col class="wiAdvice"><col class="wiKind"><col class="wiAdd"></colgroup><thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody>${ideaRows}</tbody></table>`;
 
   // Per-day map: the stops in the sequence you actually walk them, numbered. Uses the proposed
   // order when there is one, otherwise the current order. Coordless places are skipped.
@@ -627,8 +645,9 @@ for (const d of DATA) {
     + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Scheduled</th><th></th>`
     + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table></div>`
     + `<div class="sect suggestionsect"><div class="secth">${ms('lightbulb', 'sic')}<span>Suggestions</span><span class="scount">${dayIdeas.length}</span>`
+    + `<button type="button" class="foodguidebtn" aria-expanded="false">Food guide</button>`
     + `<button type="button" class="addsuggestion">Add suggestion</button></div>`
-    + `<div class="suggestionjobs" aria-live="polite"></div>${ideasHTML}</div>`
+    + `<div class="suggestionjobs" aria-live="polite"></div>${culinaryGuideHTML(d.cityId)}${ideasHTML}</div>`
     + `</div>`;
   // Proposed second line — an alternative segmented track under the day's bar (only when a proposal exists).
   // The proposed bar is deliberately empty — this is where the next review pass will write.
@@ -874,7 +893,7 @@ document.getElementById("suggestionModal").addEventListener("click",function(e){
 document.getElementById("suggestionForm").addEventListener("change",function(e){var input=e.target.closest('input[name="suggestionKind"]');if(!input)return;var all=this.querySelectorAll('input[name="suggestionKind"]'),activity=this.querySelector('input[value="activity"]');if(input.value==="activity"&&input.checked){all.forEach(function(x){if(x!==activity)x.checked=false;});}else if(input.checked){activity.checked=false;}if(!Array.from(all).some(function(x){return x.checked;}))input.checked=true;});
 document.getElementById("suggestionAllDays").addEventListener("click",function(){var on=this.getAttribute("aria-pressed")!=="true";this.setAttribute("aria-pressed",String(on));this.classList.toggle("on",on);});
 document.getElementById("suggestionForm").addEventListener("submit",function(e){e.preventDefault();if(!SUGGESTION_DAY)return;var prompt=document.getElementById("suggestionPrompt").value.trim(),kinds=Array.from(this.querySelectorAll('input[name="suggestionKind"]:checked')).map(function(x){return x.value;}),allDays=document.getElementById("suggestionAllDays").getAttribute("aria-pressed")==="true",err=document.getElementById("suggestionError"),submit=this.querySelector("button[type=submit]"),day=SUGGESTION_DAY;if(prompt.length<3){err.textContent="Please give the place name or a short description.";return;}submit.disabled=true;submit.textContent="Starting…";err.textContent="";researchRequest("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({cityId:day.dataset.cityId,day:+day.dataset.day,kinds:kinds,allDays:allDays,prompt:prompt})}).then(function(){closeSuggestionModal();day.classList.add("open");day.querySelector(".dhead").setAttribute("aria-expanded","true");loadSuggestionJobs(day);day.querySelector(".suggestionsect").scrollIntoView({behavior:"smooth",block:"center"});}).catch(function(x){err.textContent=x.message;}).finally(function(){submit.disabled=false;submit.textContent="Start research";});});
-chart.addEventListener("click",function(e){var add=e.target.closest(".addsuggestion");if(add){e.preventDefault();e.stopPropagation();openSuggestionModal(add.closest(".day"));return;}var retry=e.target.closest(".sugretry");if(retry){e.preventDefault();var card=retry.closest(".sjob"),input=card.querySelector("input"),day=card.closest(".day"),guidance=input.value.trim();if(!guidance)return;retry.disabled=true;researchRequest("/api/research",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:card.dataset.jobId,guidance:guidance})}).then(function(){loadSuggestionJobs(day);}).catch(function(x){card.querySelector(".sjobmsg").textContent=x.message;}).finally(function(){retry.disabled=false;});return;}});
+chart.addEventListener("click",function(e){var guide=e.target.closest(".foodguidebtn");if(guide){e.preventDefault();e.stopPropagation();var panel=guide.closest(".suggestionsect").querySelector(".culinaryguide"),open=guide.getAttribute("aria-expanded")!=="true";guide.setAttribute("aria-expanded",String(open));guide.textContent=open?"Hide food guide":"Food guide";if(panel)panel.hidden=!open;return;}var add=e.target.closest(".addsuggestion");if(add){e.preventDefault();e.stopPropagation();openSuggestionModal(add.closest(".day"));return;}var retry=e.target.closest(".sugretry");if(retry){e.preventDefault();var card=retry.closest(".sjob"),input=card.querySelector("input"),day=card.closest(".day"),guidance=input.value.trim();if(!guidance)return;retry.disabled=true;researchRequest("/api/research",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:card.dataset.jobId,guidance:guidance})}).then(function(){loadSuggestionJobs(day);}).catch(function(x){card.querySelector(".sjobmsg").textContent=x.message;}).finally(function(){retry.disabled=false;});return;}});
 document.getElementById("adminModal").addEventListener("click",function(e){if(e.target.classList.contains("ambg")||e.target.classList.contains("amclose")){this.classList.remove("on");return;}var remove=e.target.closest(".amremove");if(!remove)return;var status=document.getElementById("adminStatus");status.textContent="Removing…";adminRequest("DELETE",{email:remove.dataset.email}).then(function(j){renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
 document.getElementById("adminForm").addEventListener("submit",function(e){e.preventDefault();var input=document.getElementById("adminEmail"),status=document.getElementById("adminStatus"),email=input.value.trim().toLowerCase();if(!email)return;status.textContent="Adding…";adminRequest("POST",{email:email}).then(function(j){input.value="";renderAdmins(j.admins);status.textContent="";}).catch(function(err){status.textContent=err.message;});});
 var authWait=setInterval(function(){if(window.google&&google.accounts&&google.accounts.id){clearInterval(authWait);renderGoogleButton();}},200);setTimeout(function(){clearInterval(authWait);if((!window.google||!google.accounts||!google.accounts.id)&&!AUTH.user)authMessage("Google sign-in could not load. Refresh to try again.",true);},10000);restoreAuth();
@@ -949,7 +968,7 @@ function addCell(row,text,cls){var td=document.createElement("td");if(cls)td.cla
 function captureNameMarkup(day){var names=new Map();day.querySelectorAll("tr td.an").forEach(function(cell){var row=cell.closest("tr"),copy=cell.cloneNode(true);copy.querySelectorAll(".removeplan").forEach(function(x){x.remove();});var html=copy.innerHTML;if(row&&row.dataset.pid)names.set("p:"+row.dataset.pid,html);if(row&&row.dataset.key)names.set("n:"+row.dataset.key,html);});return names;}
 function liveIcon(s){if(s.meal==="breakfast")return"bakery_dining";if(s.meal==="lunch")return"lunch_dining";if(s.meal==="dinner")return"dinner_dining";if(s.kind==="hotel")return"hotel";if(s.kind==="show")return"theater_comedy";if(s.kind==="shopping")return"storefront";if(s.kind==="food")return"restaurant";return"place";}
 function appendLiveTags(main,item){main.querySelectorAll(".tag").forEach(function(x){x.remove();});if(item.meal){var meal=document.createElement("span");meal.className="tag ml";meal.textContent="meal";main.appendChild(meal);}if(item.booking){var book=document.createElement("span");book.className="tag "+(item.booking==="booked"?"bkd":"bkg");book.textContent=item.booking==="booked"?"booked":"book";main.appendChild(book);}}
-function restoreNameCell(cell,item,names){var html=names.get("n:"+planKey(item.name))||(item.placeId&&names.get("p:"+item.placeId));if(html){cell.innerHTML=html;var oldLabel=cell.querySelector(".antext");if(oldLabel)oldLabel.textContent=item.name;}else{var main=document.createElement("span");main.className="anmain";var icon=document.createElement("span");icon.className="msym "+(item.meal||item.kind==="food"?"ic-meal":"ic-act");icon.setAttribute("aria-hidden","true");icon.textContent=liveIcon(item);var label=document.createElement("span");label.className="antext";label.textContent=item.name;main.appendChild(icon);main.appendChild(label);cell.appendChild(main);}var wrap=cell.querySelector(".anmain")||cell;appendLiveTags(wrap,item);}
+function restoreNameCell(cell,item,names){var html=names.get("n:"+planKey(item.name))||(item.placeId&&names.get("p:"+item.placeId)),display=item.shortName||item.name;if(html){cell.innerHTML=html;var oldLabel=cell.querySelector(".antext");if(oldLabel)oldLabel.textContent=display;}else{var main=document.createElement("span");main.className="anmain";var icon=document.createElement("span");icon.className="msym "+(item.meal||item.kind==="food"?"ic-meal":"ic-act");icon.setAttribute("aria-hidden","true");icon.textContent=liveIcon(item);var label=document.createElement("span");label.className="antext";label.textContent=display;main.appendChild(icon);main.appendChild(label);cell.appendChild(main);}cell.title=item.name;var wrap=cell.querySelector(".anmain")||cell;appendLiveTags(wrap,item);}
 function reconcileActivities(day,v,names){var table=day.querySelector(".detail .acts:not(.idt)"),body=table&&table.tBodies[0];if(!body)return;body.textContent="";
   (v.stops||[]).slice().sort(function(a,b){return a.seq-b.seq;}).forEach(function(s){var row=document.createElement("tr");row.className="idrow";row.dataset.stopId=s.stopId;row.dataset.key=planKey(s.name);if(s.placeId)row.dataset.pid=s.placeId;var name=addCell(row,"","an");restoreNameCell(name,s,names);name.title=s.name;if(s.removable){row.classList.add("canremove");var rm=document.createElement("button");rm.type="button";rm.className="removeplan";rm.dataset.stopId=s.stopId;rm.dataset.placeId=s.placeId||"";rm.dataset.name=s.name;rm.textContent="Move to suggestions";name.appendChild(rm);}addCell(row,planClock(s.start),"tm");addCell(row,planClock(s.end),"tm");var total=minuteSpan(s.start,s.end);addCell(row,total==null?"—":planDur(total),"tm");addCell(row,s.advised==null?"—":planDur(s.advised),"tm sug");addCell(row,s.walkMin==null?"—":planDur(s.walkMin),"tm");addCell(row,s.metroMin==null?"—":planDur(s.metroMin),"tm");addCell(row,s.didiMin==null?"—":planDur(s.didiMin),"tm");body.appendChild(row);});
   if(v.home){var h=document.createElement("tr");h.className="rhome idrow";h.dataset.key=planKey(v.home.name);if(v.home.placeId)h.dataset.pid=v.home.placeId;var hn=addCell(h,"","an");restoreNameCell(hn,{placeId:v.home.placeId,name:v.home.name||"Back to the hotel",kind:"hotel"},names);addCell(h,planClock(v.home.arrivalAt),"tm");for(var i=0;i<6;i++)addCell(h,"—",i===2?"tm sug":"tm");body.appendChild(h);}
@@ -960,7 +979,7 @@ function liveMealTaken(day,meal){var live=planState(day).live,stop=live&&(live.s
 function addLiveMealButton(action,day,idea,meal){var taken=liveMealTaken(day,meal),b=document.createElement("button");b.type="button";b.className="addbtn"+(taken?" swap":"");b.dataset.pid=idea.placeId;b.dataset.city=day.dataset.cityId;b.dataset.day=day.dataset.day;b.dataset.meal=meal==="lunch"?"Lunch":"Dinner";b.dataset.name=idea.name;if(taken)b.dataset.replace=taken;b.title=taken?meal+" is "+taken+" — replace it with "+idea.name:"Put "+idea.name+" in this day's "+meal+" slot";b.textContent=taken?"replace "+meal:"+ "+meal;action.appendChild(b);}
 function buildLiveIdeaRow(day,idea,names){var id=String(idea.placeId),isFood=idea.kind==="food",row=document.createElement("tr");row.className="idrow"+(isFood?"":" planidea");row.dataset.pid=id;row.dataset.key=planKey(idea.name);row.dataset.ideaId=id;row.dataset.ideaName=idea.name;if(!isFood){row.draggable=true;row.title="Drag onto the Proposed timeline to plan it";}var name=addCell(row,"","an");restoreNameCell(name,idea,names);addCell(row,idea.advised==null?"—":planDur(idea.advised),"tm sug");addCell(row,isFood?(liveIdeaMeals(idea).join("/")||"food"):(idea.kind||"activity"),"iw");var action=addCell(row,"","iw addcell");if(isFood){liveIdeaMeals(idea).forEach(function(meal){if(meal==="lunch"||meal==="dinner")addLiveMealButton(action,day,idea,meal);});}else{var button=document.createElement("button");button.type="button";button.className="planadd";button.draggable=true;button.title="Drag this onto Proposed, or click to add it";button.innerHTML="↗ <span>plan</span>";action.appendChild(button);}return row;}
 function reconcileIdeas(day,ideas,names){var current=new Map((ideas||[]).map(function(x){return[String(x.placeId),x];})),table=day.querySelector(".detail .acts.idt"),sect=table&&table.closest(".sect"),detail=day.querySelector(".detail");
-  if(!table&&current.size&&detail){sect=document.createElement("div");sect.className="sect";var hd=document.createElement("div");hd.className="secth";var ttl=document.createElement("span");ttl.textContent="Suggestions";var cnt=document.createElement("span");cnt.className="scount";hd.appendChild(ttl);hd.appendChild(cnt);sect.appendChild(hd);table=document.createElement("table");table.className="acts idt";table.innerHTML="<thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody></tbody>";sect.appendChild(table);detail.appendChild(sect);}
+  if(!table&&current.size&&detail){sect=document.createElement("div");sect.className="sect";var hd=document.createElement("div");hd.className="secth";var ttl=document.createElement("span");ttl.textContent="Suggestions";var cnt=document.createElement("span");cnt.className="scount";hd.appendChild(ttl);hd.appendChild(cnt);sect.appendChild(hd);table=document.createElement("table");table.className="acts idt";table.innerHTML="<colgroup><col class='wiName'><col class='wiAdvice'><col class='wiKind'><col class='wiAdd'></colgroup><thead><tr><th>Name</th><th>Advice</th><th>Kind</th><th>Add</th></tr></thead><tbody></tbody>";sect.appendChild(table);detail.appendChild(sect);}
   if(!table)return;var body=table.tBodies[0];body.textContent="";current.forEach(function(idea){syncLivePlace(idea);body.appendChild(buildLiveIdeaRow(day,idea,names));});
   var visible=body.querySelectorAll("tr:not([hidden])").length;if(sect){sect.hidden=false;var count=sect.querySelector(".scount");if(count)count.textContent=visible;}
 }
@@ -1213,15 +1232,16 @@ const EXTRA = `<style>
 .wrap .planidea:hover{background:color-mix(in srgb,#6A5FA0 8%,transparent);}
 .wrap .planadd{border:1px solid var(--target);border-radius:12px;background:color-mix(in srgb,var(--target) 9%,var(--surface));color:var(--target);padding:3px 8px;font:800 10px var(--sans);white-space:nowrap;cursor:grab;}
 .wrap .planadd:active{cursor:grabbing;}
-.wrap .adjustplan,.wrap .addsuggestion{margin-left:8px;border:1px solid color-mix(in srgb,var(--cx,var(--target)) 55%,var(--line));border-radius:999px;background:color-mix(in srgb,var(--cx,var(--target)) 10%,var(--surface));color:var(--cx,var(--target));padding:5px 10px;font:800 10px var(--sans);text-transform:none;letter-spacing:0;cursor:pointer;white-space:nowrap;}
-.wrap .adjustplan:hover,.wrap .addsuggestion:hover{background:color-mix(in srgb,var(--cx,var(--target)) 18%,var(--surface));}
+.wrap .adjustplan,.wrap .addsuggestion,.wrap .foodguidebtn{margin-left:8px;border:1px solid color-mix(in srgb,var(--cx,var(--target)) 55%,var(--line));border-radius:999px;background:color-mix(in srgb,var(--cx,var(--target)) 10%,var(--surface));color:var(--cx,var(--target));padding:5px 10px;font:800 10px var(--sans);text-transform:none;letter-spacing:0;cursor:pointer;white-space:nowrap;}
+.wrap .adjustplan:hover,.wrap .addsuggestion:hover,.wrap .foodguidebtn:hover{background:color-mix(in srgb,var(--cx,var(--target)) 18%,var(--surface));}
+.wrap .foodguidebtn[aria-expanded="true"]{background:var(--cx,var(--target));color:#fff;border-color:var(--cx,var(--target));}
 .wrap table.acts td.an{position:relative;}
 .wrap table.acts td.an .anmain{display:flex;align-items:center;min-width:0;max-width:100%;}
 .wrap table.acts td.an .antext{min-width:0;overflow:hidden;text-overflow:ellipsis;}
 .wrap table.acts td.an .tag{flex:none;}
 .wrap .removeplan{position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:0;pointer-events:none;border:1px solid color-mix(in srgb,var(--bad) 48%,var(--line));border-radius:999px;background:var(--surface);color:var(--bad);padding:3px 8px;font:800 9.5px var(--sans);white-space:nowrap;transition:opacity .14s ease;}
 .wrap tr.canremove:hover .removeplan,.wrap .removeplan:focus-visible{opacity:1;pointer-events:auto;}
-.wrap .activitysect .secth .adjustplan,.wrap .suggestionsect .secth .addsuggestion{margin-left:auto;}
+.wrap .activitysect .secth .adjustplan,.wrap .suggestionsect .secth .foodguidebtn{margin-left:auto;}
 .wrap .hero{position:relative;overflow:hidden;border-radius:22px;padding:18px 22px 22px;color:#fff;background:linear-gradient(125deg,#651d22 0%,#9f3028 46%,#c06a31 100%);box-shadow:0 20px 55px -30px rgba(80,20,12,.8);isolation:isolate;}
 .wrap .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 82% 18%,rgba(255,218,137,.36) 0 8%,transparent 8.5%),linear-gradient(145deg,transparent 46%,rgba(61,18,25,.24) 46.2% 55%,transparent 55.2%);}
 .wrap .hero:after{content:"";position:absolute;left:-4%;right:-4%;bottom:-58px;height:150px;z-index:-1;opacity:.42;background:linear-gradient(155deg,transparent 0 22%,#36151d 22.5% 36%,transparent 36.5%),linear-gradient(25deg,transparent 0 38%,#4b1920 38.5% 51%,transparent 51.5%),linear-gradient(165deg,transparent 0 59%,#32151c 59.5% 74%,transparent 74.5%);}
@@ -1352,9 +1372,13 @@ body.modalopen{overflow:hidden;}
 .wrap .track2.empty{background:repeating-linear-gradient(90deg,var(--surface-2) 0 6px,transparent 6px 12px);opacity:.5;}
 .wrap table.acts tr.rhub td{font-weight:700;}
 .wrap .ideas{margin:18px 0 4px;}
-.wrap table.acts.idt{min-width:0;width:100%;table-layout:auto;}
+.wrap table.acts.idt{min-width:680px;width:100%;table-layout:fixed;}
+.wrap table.acts.idt col.wiName{width:52%;}.wrap table.acts.idt col.wiAdvice{width:10%;}.wrap table.acts.idt col.wiKind{width:13%;}.wrap table.acts.idt col.wiAdd{width:25%;}
 .wrap table.acts.idt td.iw{color:var(--ink-2);white-space:normal;font-size:10.5px;}
 .wrap table.acts.idt td.an{color:var(--ink-2);}
+.wrap table.acts.idt td.an .anmain{width:100%;white-space:nowrap;overflow:hidden;}
+.wrap table.acts.idt td.an .antext{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wrap table.acts.idt td.addcell{white-space:nowrap;overflow:hidden;text-overflow:clip;}
 .wrap table.acts tbody tr.rowsel td,.wrap table.acts tbody tr.rowsel td.pc{background:color-mix(in srgb,var(--target) 13%,transparent);}
 .wrap table.acts tbody tr:hover td,.wrap table.acts tbody tr:hover td.pc{background:color-mix(in srgb,var(--target) 7%,transparent);}
 /* a row with a key IS its stop — clicking it selects and focuses the pin, same as its block */
@@ -1521,6 +1545,21 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .secth .msym.sic{font-size:16px;color:var(--cx,var(--ink-2));}
 .wrap .secth .scount{font-weight:700;color:var(--ink-3);text-transform:none;letter-spacing:0;
   font-family:var(--mono);font-size:11px;}
+/* City-level culinary guidance is deliberately a planning card, not another place
+   suggestion. It repeats on each city day but stays closed until requested. */
+.wrap .culinaryguide{margin:10px 0 14px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);color:var(--ink);}
+.wrap .culinaryguide[hidden]{display:none!important;}
+.wrap .cghero{padding:18px 19px 16px;background:linear-gradient(145deg,color-mix(in srgb,var(--cx) 13%,var(--surface)),var(--surface) 72%);}
+.wrap .cgk{display:flex;align-items:center;gap:6px;color:var(--cx);font:800 9.5px var(--sans);letter-spacing:.09em;text-transform:uppercase;}
+.wrap .cgk .msym{font-size:16px}.wrap .cghero h3{margin:7px 0 5px;font-size:20px;letter-spacing:-.02em;}.wrap .cghero p{max-width:860px;margin:0;color:var(--ink-2);font-size:11.5px;line-height:1.55;}
+.wrap .cgtitle{display:flex;align-items:center;gap:6px;padding:15px 18px 9px;color:var(--ink-3);font:800 9.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;}.wrap .cgtitle .msym{font-size:15px;}
+.wrap .cgdishes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 14px 14px;}
+.wrap .cgdish{min-width:0;padding:10px;border-radius:11px;background:var(--surface-2);}.wrap .cgdish b{display:block;font-size:11.5px;}.wrap .cgdish span{display:block;color:var(--cx);font-size:10px;margin-top:2px;}.wrap .cgdish p,.wrap .cgexperience p,.wrap .cgmove p,.wrap .cgtip p{margin:5px 0 0;color:var(--ink-2);font-size:10px;line-height:1.45;}
+.wrap .cgexperiences{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 14px 14px;}.wrap .cgexperience{display:flex;align-items:flex-start;gap:9px;padding:10px;border:1px solid var(--line);border-radius:11px;}.wrap .cgicon{width:29px;height:29px;border-radius:9px;background:color-mix(in srgb,var(--cx) 12%,var(--surface));color:var(--cx);font-size:16px;}.wrap .cgexperience>div{min-width:0;flex:1}.wrap .cgxtop{display:flex;justify-content:space-between;align-items:baseline;gap:7px}.wrap .cgxtop b{font-size:10.5px}.wrap .cgxtop span{flex:none;color:var(--cx);font-size:8px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;}
+.wrap .cgmove{margin:0 14px 10px;padding:11px 12px;border-left:4px solid var(--cx);border-radius:11px;background:color-mix(in srgb,var(--cx) 10%,var(--surface));}.wrap .cgmove>div{display:flex;align-items:center;gap:6px;color:var(--cx);font:800 8.5px var(--sans);letter-spacing:.07em;text-transform:uppercase}.wrap .cgmove .msym{font-size:14px}.wrap .cgmove p{font-size:10.5px;color:var(--ink);}
+.wrap .cgtips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;padding:0 16px 14px}.wrap .cgtip{display:flex;gap:7px;min-width:0}.wrap .cgtip i{color:var(--cx);font:800 9px var(--mono);font-style:normal}.wrap .cgtip p{margin:0}.wrap .cgtip b{color:var(--ink)}
+.wrap .cgsources{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 13px;border-top:1px solid var(--line)}.wrap .cgsources a{display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border-radius:8px;background:var(--surface-2);color:var(--ink-2);font-size:9px;text-decoration:none}.wrap .cgsources .msym{font-size:11px}
+@media(max-width:850px){.wrap .cgdishes{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap .cgexperiences,.wrap .cgtips{grid-template-columns:1fr}}
 /* per-day count badges, mirroring the app's day cards. Idea counts only — they sit at
    the LEFT of the header row, beside the date, because they describe what is still
    open about the day. */
