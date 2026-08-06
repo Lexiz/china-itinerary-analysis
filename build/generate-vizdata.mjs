@@ -119,17 +119,23 @@ for (const d of s.days) {
   // read straight off the snapshot rather than being a by-product of a planner
   // deciding what to drop.
   const ideas = (s.ideas || [])
-    .filter((p) => p.cityId === d.cityId && (p.day === d.cityDay || p.suggestedAllDays))
-    .map((p) => ({
+    .filter((p) => p.cityId === d.cityId && (
+      p.day === d.cityDay || p.suggestedAllDays
+      || (p.suggestionDays || []).some((assignment) => assignment.day === d.cityDay)
+    ))
+    .map((p) => {
+      const assignment = (p.suggestionDays || []).find((item) => item.day === d.cityDay);
+      const meals = assignment?.meals || p.meal || [];
+      return ({
       name: normn(p.shortLabel || p.name).slice(0, 46),
       icon: p.typeIcon || null,
-      kind: p.type === 'Food' ? (p.meal?.length ? p.meal.join('/').toLowerCase() : 'food') : 'activity',
+      kind: p.type === 'Food' ? (meals.length ? meals.join('/').toLowerCase() : 'food') : 'activity',
       res: RES[normn(p.shortLabel || p.name)]?.m ?? p.advisedDuration ?? null,
       // The identity a button needs. `id` is what /api/meal expects as `placeId`,
       // and `meals` says which slots this venue is actually a candidate for — so the
       // page offers "Add to lunch" only where the catalogue says lunch is plausible.
       id: p.id,
-      meals: (p.meal || []).map((m) => m.toLowerCase()),
+      meals: meals.map((m) => m.toLowerCase()),
       full: p.name,
       booking: p.bookingRequired ? (p.booked ? 'booked' : 'to-book') : null,
       // Where it actually is. A suggestion you cannot place on the map is a name and
@@ -139,7 +145,7 @@ for (const d of s.days) {
       // cannot be drawn in two different places.
       lat: COORDS[normn(p.shortLabel || p.name)]?.lat ?? p.coord?.lat ?? null,
       lng: COORDS[normn(p.shortLabel || p.name)]?.lng ?? p.coord?.lng ?? null,
-    }))
+    }); })
     .sort((a, b) => a.name.localeCompare(b.name));
 
   out.push({ city: c.name, cityId: d.cityId, accent: c.accent, order: c.order, day: d.cityDay, date: addDays(c.dates.start, d.cityDay - 1),
