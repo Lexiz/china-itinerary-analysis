@@ -35,3 +35,8 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # GitHub's Pages queue has recently exceeded the action's ten-minute
+          # default even after the artifact was accepted. Keep waiting for the
+          # queued release instead of cancelling a healthy deployment.
+          timeout: 1800000
