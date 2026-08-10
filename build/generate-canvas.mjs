@@ -803,16 +803,25 @@ const MKCOL={act:"#2F6FB5",food:"#C77A16",hotel:"#2E7D57",idea:"#D84A43"};
    unmistakable even where a suggestion sits close to a planned stop. */
 function mkIcon(col,on,idea){return{path:google.maps.SymbolPath.CIRCLE,scale:on?15:idea?13:11,
   fillColor:col,fillOpacity:1,strokeColor:on?"#8F211C":"#ffffff",strokeWeight:on?4:idea?3:2};}
+function showMarkerTile(el,marker,p){
+  if(!el||!el._gmap)return;
+  if(el._markerInfo)el._markerInfo.close();
+  var card=document.createElement("div");card.className="maptile";
+  var title=document.createElement("b");title.textContent=p.name||"Place";card.appendChild(title);
+  var meta=document.createElement("span");meta.textContent=p.__idea?"Suggestion":("Stop "+p.n+" · "+(p.t==="food"?"Food":p.t==="hotel"?"Hotel":"Activity"));card.appendChild(meta);
+  if(p.pid){var more=document.createElement("button");more.type="button";more.textContent="View details";more.addEventListener("click",function(){openPlacePeek(p.pid,el.closest(".day"));});card.appendChild(more);}
+  el._markerInfo=new google.maps.InfoWindow({content:card});el._markerInfo.open(el._gmap,marker);
+}
 function drawMapRoute(el,pts,fit){var map=el._gmap;if(!map)return;(el._routeMarks||[]).forEach(function(m){m.setMap(null);});if(el._routeLine)el._routeLine.setMap(null);
   el._routeMarks=[];var path=pts.map(function(p){return{lat:p.lat,lng:p.lng};});
   el._routeLine=new google.maps.Polyline({path:path,strokeOpacity:0,map:map,icons:[{icon:{path:"M 0,-1 0,1",strokeOpacity:.75,strokeColor:"#8C5A2B",scale:3},offset:"0",repeat:"12px"}]});
   var b=new google.maps.LatLngBounds(),marks=Object.assign({},el._ideaMarks||{});pts.forEach(function(p){var col=MKCOL[p.t]||MKCOL.act;
     var m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:map,icon:mkIcon(col,false),label:{text:String(p.n),color:"#ffffff",fontSize:"11px",fontWeight:"700"},title:p.n+". "+p.name});m.__col=col;
-    m.addListener("click",function(){if(p.pid)openPlacePeek(p.pid,el.closest(".day"));});marks[p.k]=m;b.extend(m.getPosition());el._routeMarks.push(m);});
+    m.addListener("click",function(){showMarkerTile(el,m,p);});marks[p.k]=m;b.extend(m.getPosition());el._routeMarks.push(m);});
   el._marks=marks;el._bounds=b;if(fit&&pts.length){map.fitBounds(b,40);if(pts.length===1)google.maps.event.addListenerOnce(map,"idle",function(){map.setZoom(15);});google.maps.event.addListenerOnce(map,"idle",function(){el._fitZoom=map.getZoom();});}}
 function drawMapIdeas(el,ideas){if(!el._gmap)return;Object.keys(el._ideaMarks||{}).forEach(function(k){el._ideaMarks[k].setMap(null);});var map=el._gmap,ideaMarks={};ideas.forEach(function(p){
   var col=MKCOL.idea,glyph=p.icon||(p.t==="food"?"restaurant":"attractions"),m=new google.maps.Marker({position:{lat:p.lat,lng:p.lng},map:el._showIdeas?map:null,icon:mkIcon(col,false,true),label:{text:glyph,color:"#ffffff",fontFamily:"Material Symbols Outlined",fontSize:"15px",fontWeight:"600"},title:"Suggestion: "+p.name,zIndex:0});m.__col=col;m.__idea=true;
-  m.addListener("click",function(){if(p.pid)openPlacePeek(p.pid,el.closest(".day"));});ideaMarks[p.k]=m;});el._ideaMarks=ideaMarks;}
+  p.__idea=true;m.addListener("click",function(){showMarkerTile(el,m,p);});ideaMarks[p.k]=m;});el._ideaMarks=ideaMarks;}
 function syncIdeasToggle(day){var el=day&&day.querySelector(".map"),b=day&&day.querySelector(".ideasmaptoggle");if(!b)return;var count=el&&el._ideaMarks?Object.keys(el._ideaMarks).length:0;b.disabled=!count;b.title=count?"Show or hide all mapped suggestions":"No mapped suggestions for this day";b.setAttribute("aria-pressed",el&&el._showIdeas?"true":"false");b.textContent=el&&el._showIdeas?"Hide suggestions":"Show suggestions";}
 function setIdeasVisible(day,on){var el=day&&day.querySelector(".map");if(!el)return;el._showIdeas=!!on;Object.keys(el._ideaMarks||{}).forEach(function(k){el._ideaMarks[k].setMap(el._showIdeas?el._gmap:null);});syncIdeasToggle(day);}
 function initMaps(day){
@@ -829,6 +838,7 @@ function initMaps(day){
        to fit a maybe. Selecting it still pans there. */
     let ideas=[];try{ideas=JSON.parse(el.dataset.ideas||"[]");}catch(e){}
     el._gmap=map;el._showIdeas=false;drawMapIdeas(el,ideas);drawMapRoute(el,pts,true);syncIdeasToggle(day);
+    map.addListener("click",function(){if(el._markerInfo)el._markerInfo.close();});
   });
 }
 if(window.__gmready)document.querySelectorAll(".day.open").forEach(initMaps);
@@ -1499,6 +1509,8 @@ body.only-bad .wrap .day.ok-day{display:none;}
 .wrap .day.open .mapwrap{display:block;}
 .wrap .map{height:330px;border:1px solid var(--line);border-radius:12px;margin-top:7px;background:var(--surface-2);z-index:0;}
 .wrap .mapempty{display:flex;align-items:center;justify-content:center;height:100%;font-size:12px;color:var(--ink-3);}
+.wrap .maptile{min-width:150px;max-width:230px;padding:2px 1px 1px;color:#2E2825;font-family:var(--sans)}
+.wrap .maptile b{display:block;font-size:13px;line-height:1.3}.wrap .maptile span{display:block;margin-top:3px;color:#746A64;font-size:10px;font-weight:700}.wrap .maptile button{margin-top:8px;border:0;border-radius:9px;background:#9F3028;color:#fff;padding:6px 9px;font:800 10px var(--sans);cursor:pointer}
 .wrap .nummk{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--target);color:#fff;font:700 11px/1 var(--sans);box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.35);}
 .wrap .nummk.mk-act{background:#2F6FB5;}
 .wrap .nummk.mk-food{background:#C77A16;}
