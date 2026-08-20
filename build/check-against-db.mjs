@@ -88,9 +88,17 @@ try {
   for (const [k, day] of Object.entries(RB)) {
     const dbStops = byDay.get(k);
     if (!dbStops) { problems.push(`${k}: the database has no such day`); continue; }
+    // A real itinerary may visit the same named place twice in one day (for
+    // example Lijiang Station on both sides of a Shangri-La day trip). Match
+    // occurrences in database order instead of repeatedly finding the first
+    // row with that name, or the return journey is compared with the outbound
+    // journey's clock.
+    const claimed = new Set();
     for (const st of day.stops) {
-      const hit = dbStops.find((r) => norm(r.name) === norm(st.name));
+      const hitIndex = dbStops.findIndex((r, i) => !claimed.has(i) && norm(r.name) === norm(st.name));
+      const hit = hitIndex >= 0 ? dbStops[hitIndex] : undefined;
       if (!hit) { missing++; problems.push(`${k}: "${st.name}" is on the page but not in the database`); continue; }
+      claimed.add(hitIndex);
       checked++;
       // The page must show the database's clock. Dwell is deliberately NOT compared:
       // the snapshot reports elapsed time per stop (dwell + the 8-minute slack the
@@ -103,11 +111,19 @@ try {
   }
 
   // …and the other direction: is anything in the database absent from the page?
-  const onPage = new Set();
-  for (const [k, day] of Object.entries(RB)) for (const st of day.stops) onPage.add(`${k}::${norm(st.name)}`);
+  const onPage = new Map();
+  const countDrawn = (key) => onPage.set(key, (onPage.get(key) ?? 0) + 1);
+  for (const [k, day] of Object.entries(RB)) {
+    for (const st of day.stops) countDrawn(`${k}::${norm(st.name)}`);
+    // The hotel return is rendered as the distinct home chip rather than as a
+    // regular activity bar, but it is still a drawn committed stop.
+    if (day.homeStop) countDrawn(`${k}::${norm(day.homeStop.name)}`);
+  }
   const notDrawn = [];
   for (const r of rows) {
-    if (onPage.has(`${r.city}|${r.day}::${norm(r.name)}`)) continue;
+    const key = `${r.city}|${r.day}::${norm(r.name)}`;
+    const drawn = onPage.get(key) ?? 0;
+    if (drawn > 0) { onPage.set(key, drawn - 1); continue; }
     if (r.is_meal && sharedDates.has(r.date)) { twinMeals.push(r); continue; }
     notDrawn.push(r);
   }
