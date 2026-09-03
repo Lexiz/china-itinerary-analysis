@@ -150,7 +150,7 @@ for (const d of V) {
   // without them the canvas can list a restaurant but not offer to use it, which is
   // the difference between a report and a tool.
   if (d.ideas?.length) ideasByDay[key] = d.ideas.map((i) => ({
-    name: i.name, icon: i.icon || null, why: i.kind, res: i.res,
+    name: i.name, icon: i.icon || null, why: i.why || null, res: i.res,
     id: i.id || null, meals: i.meals || [], kind: i.kind, full: i.full || i.name,
     booking: i.booking || null,
     lat: i.lat ?? null, lng: i.lng ?? null,

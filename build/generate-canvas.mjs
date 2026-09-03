@@ -557,7 +557,7 @@ for (const d of DATA) {
     const canPlan = !!i.id && !isFood;
     return `<tr${i.id ? ` data-pid="${esc(i.id)}" data-idea-id="${esc(i.id)}" data-idea-name="${esc(i.name)}"` : ''}`
       + `${mapped ? ` data-key="${esc(nk(i.name))}"` : ''}${canPlan ? ' draggable="true" title="Drag onto the Proposed timeline to plan it"' : ''} class="idrow${canPlan ? ' planidea' : ''}">`
-      + `<td class="an"><span class="anmain">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}<span class="antext">${esc(i.name)}</span>${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</span></td>`
+      + `<td class="an"><span class="anmain">${ms(i.icon || (isFood ? 'restaurant' : 'lightbulb'), isFood ? 'ic-meal' : 'ic-act')}<span class="antext">${esc(i.name)}</span>${i.booking === 'to-book' ? ' <span class="tag bkg">book</span>' : i.booking === 'booked' ? ' <span class="tag bkd">booked</span>' : ''}</span>${!isFood && i.why ? `<small style="display:block;margin:5px 0 0 27px;line-height:1.35;color:#715f55">${esc(i.why)}</small>` : ''}</td>`
       + `<td class="tm sug">${res != null ? fmtDur(res) : '—'}</td>`
       + `<td class="iw">${esc(i.kind)}</td>`
       + `<td class="iw addcell">`
@@ -644,7 +644,7 @@ for (const d of DATA) {
     + `<tbody>${rows}${homeRow}</tbody>`
     + `<tfoot><tr class="grp gfoot"><th></th><th class="b1 b1r gh" colspan="3">Scheduled</th><th></th>`
     + `<th class="gt b3 b3r" colspan="3">Travel to next</th></tr></tfoot></table></div>`
-    + `<div class="sect suggestionsect"><div class="secth">${ms('lightbulb', 'sic')}<span>Suggestions</span><span class="scount">${dayIdeas.length}</span>`
+    + `<div class="sect suggestionsect"><div class="secth">${ms('lightbulb', 'sic')}<span>${d.city === 'Shanghai' && d.day >= 2 ? 'No time for these' : 'Suggestions'}</span><span class="scount">${dayIdeas.length}</span>`
     + `<button type="button" class="foodguidebtn" aria-expanded="false">Food guide</button>`
     + `<button type="button" class="addsuggestion">Add suggestion</button></div>`
     + `<div class="suggestionjobs" aria-live="polite"></div>${culinaryGuideHTML(d.cityId)}${ideasHTML}</div>`

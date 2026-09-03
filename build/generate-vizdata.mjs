@@ -138,6 +138,7 @@ for (const d of s.days) {
       meals: meals.map((m) => m.toLowerCase()),
       full: p.name,
       booking: p.bookingRequired ? (p.booked ? 'booked' : 'to-book') : null,
+      why: p.planningNote || null,
       // Where it actually is. A suggestion you cannot place on the map is a name and
       // nothing else — "is this on the way, or across town?" is the first question you
       // ask of one, and until now the page could not answer it. Same corrected-coord

@@ -50,7 +50,10 @@ try {
            -- the same name the snapshot emits: the STOP's own short label first (breakfast
            -- borrows a hotel row and must not be called by it), then the PLACE's short label,
            -- which is what most timeline rows actually read
-           coalesce(s.short_label, p.short_label, p.name, s.label) as name,
+           case when s.slot_kind = 'breakfast'
+                then coalesce(s.short_label, s.label, 'Breakfast')
+                else coalesce(s.short_label, p.short_label, p.name, s.label)
+           end as name,
            s.planned_dwell_min as dwell,
            round(extract(epoch from (sch.start_at - (d.date::timestamp at time zone 'Asia/Shanghai'))) / 60)::int as start_min,
            s.is_bonus as bonus, s.slot_kind::text as slot,
